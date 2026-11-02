@@ -106,18 +106,19 @@ def extract_pages(pdf_bytes: bytes, document_id: str, extraction_run_id: str) ->
 
 
 def has_scanned_statement_page(pages: list[PageExtract]) -> bool:
-    """True if any STATEMENT page is a scan (text density too low or
-    garbled). Such a document is excluded as scanned_pdf."""
-    for p in pages:
-        if p.page_type == PageType.STATEMENT and p.page_type == PageType.SCAN:
-            return True
-        if p.page_type == PageType.SCAN and _page_type(p.page_text, p.has_table) == PageType.SCAN:
-            # only fatal if the page looks like it should have text
-            if p.character_count < TEXT_DENSITY_MIN_CHARS and any(
-                k in p.page_text.lower() for k in ("revenue", "assets", "liabilities")
-            ):
-                return True
-    return False
+    """True if any page fails native-digital text validation.
+
+    The LLD excludes a whole DOCUMENT when a statement page is scanned or its
+    text is garbled. Without OCR, an image-only page cannot be proven to be a
+    non-statement page, so the document-level gate is deliberately
+    conservative: any scan/density/garbled page excludes the document.
+    """
+    return any(
+        page.page_type == PageType.SCAN
+        or page.character_count < TEXT_DENSITY_MIN_CHARS
+        or _is_garbled(page.page_text)
+        for page in pages
+    )
 
 
 def text_density_ok(text: str) -> bool:

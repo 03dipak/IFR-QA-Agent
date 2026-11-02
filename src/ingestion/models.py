@@ -121,6 +121,7 @@ class Candidate(BaseModel):
     doc_type: DocType
     source_url: str | None = None
     first_seen_url: str | None = None
+    announcement_id: str | None = None
     state: CandidateState = CandidateState.DISCOVERED
     fetch_attempts: list[FetchAttempt] = Field(default_factory=list)
     document_id: str | None = None

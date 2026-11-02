@@ -35,6 +35,31 @@ uv run uvicorn src.api.main:app --host 0.0.0.0 --port 8000
 uv run streamlit run src/ui/app.py
 ```
 
+## Commands
+
+```bash
+# Download corpus PDFs through the ingestion pipeline (fetch -> checksum ->
+# dedupe -> extract; QA + freeze are follow-on steps)
+# URL-driven mode (LLD-34): pass source URLs directly, repeatable --url
+uv run -m src.ingestion.pipeline run \
+    --url https://www.bseindia.com/xml-data/corpfiling/AttachHis/<real-filename>.pdf \
+    --storage-dir data/corpus/raw
+
+# ...or via a candidates file (each entry needs a real source_url)
+uv run -m src.ingestion.pipeline run \
+    --candidates data/candidates.example.json \
+    --storage-dir data/corpus/raw
+
+# Run the test suite
+uv run pytest tests/ -q
+
+# Lint
+uv run ruff check src tests
+
+# Typecheck
+uv run mypy --ignore-missing-imports src tests
+```
+
 
 ## Constraints
 

@@ -47,3 +47,6 @@ htmlcov/
 .tox/
 # Agent instructions (local)
 AGENTS.md
+
+# Locally downloaded annual-report corpus
+/data/corpus/raw/*.pdf

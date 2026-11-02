@@ -1,0 +1,5 @@
+{
+  "fiscal_years": ["FY2023", "FY2024", "FY2025"],
+  "doc_types": ["annual", "quarterly", "disclosure"],
+  "listing_urls": {}
+}
