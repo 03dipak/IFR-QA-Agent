@@ -45,3 +45,5 @@ build/
 .coverage
 htmlcov/
 .tox/
+# Agent instructions (local)
+AGENTS.md
