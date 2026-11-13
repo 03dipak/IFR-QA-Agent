@@ -1,0 +1,46 @@
+{
+ "gold_v1.4_rows": 195,
+ "cap_rows": 9,
+ "over_cap": {
+  "multi": {
+   "rows": 16,
+   "excess": 7,
+   "cut_candidate_ids": [
+    "G-140",
+    "G-141",
+    "G-142",
+    "G-143",
+    "G-144",
+    "G-145",
+    "G-146"
+   ],
+   "cut_categories": {
+    "unanswerable_abstain": 7
+   },
+   "remaining_after_cut": 9
+  },
+  "hcl": {
+   "rows": 11,
+   "excess": 2,
+   "cut_candidate_ids": [
+    "G-012",
+    "G-013"
+   ],
+   "cut_categories": {
+    "cross_company_comparison": 2
+   },
+   "remaining_after_cut": 9
+  },
+  "ambig": {
+   "rows": 10,
+   "excess": 1,
+   "cut_candidate_ids": [
+    "G-170"
+   ],
+   "cut_categories": {
+    "unanswerable_abstain": 1
+   },
+   "remaining_after_cut": 9
+  }
+ }
+}
