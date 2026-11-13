@@ -1,0 +1,887 @@
+[
+ {
+  "checksum": "0f0f3f61dc31cb64aec14302e09c3f41d2f189c7960e51e4f1e3c1a422b6b280",
+  "company_id": "ashok_leyland",
+  "doc_type": "secretarial_audit",
+  "fiscal_year": "FY2023",
+  "prior_gate_decision": null,
+  "decision": "exclude",
+  "fired_rules": [
+   "statements_not_found"
+  ],
+  "pages": 6,
+  "anomalies": []
+ },
+ {
+  "checksum": "97554a6094b59655a5315d4d81631336941dc1f5cd989bd7d3a264502474295e",
+  "company_id": "ashok_leyland",
+  "doc_type": "sustainability_report",
+  "fiscal_year": "FY2017",
+  "prior_gate_decision": null,
+  "decision": "exclude",
+  "fired_rules": [
+   "statements_not_found"
+  ],
+  "pages": 86,
+  "anomalies": [
+   "high_image_share"
+  ]
+ },
+ {
+  "checksum": "2103a728d9576fc96c049d716c87d0fe6472b328fabd643bbd25a06902437b7a",
+  "company_id": "asian_paints",
+  "doc_type": "annual",
+  "fiscal_year": "FY2025",
+  "prior_gate_decision": null,
+  "decision": "keep",
+  "fired_rules": [],
+  "pages": 283,
+  "anomalies": []
+ },
+ {
+  "checksum": "3830a0f2a74c3215d03d33cb20038b52ef668990b116e1ed943f79502ec17663",
+  "company_id": "aurobindo_pharma",
+  "doc_type": "disclosure",
+  "fiscal_year": "Q3FY2024",
+  "prior_gate_decision": "exclude",
+  "decision": "exclude",
+  "fired_rules": [
+   "image_share"
+  ],
+  "pages": 10,
+  "anomalies": [
+   "high_image_share"
+  ]
+ },
+ {
+  "checksum": "c40c41d8de3080c27b292b29966853848638e576ece79cb5aa449ad25e75b1bf",
+  "company_id": "berger_paints",
+  "doc_type": "quarterly",
+  "fiscal_year": "Q3FY2025",
+  "prior_gate_decision": "exclude",
+  "decision": "exclude",
+  "fired_rules": [
+   "image_share",
+   "statements_not_found"
+  ],
+  "pages": 13,
+  "anomalies": [
+   "high_image_share"
+  ]
+ },
+ {
+  "checksum": "0da0be8184c0003bdab6ea7e5c9db237e8c133cdf267ca7721ceec70979a7dfc",
+  "company_id": "coal_india",
+  "doc_type": "quarterly",
+  "fiscal_year": "Q3FY2024",
+  "prior_gate_decision": "exclude",
+  "decision": "exclude",
+  "fired_rules": [
+   "image_share",
+   "statements_not_found"
+  ],
+  "pages": 21,
+  "anomalies": [
+   "high_image_share"
+  ]
+ },
+ {
+  "checksum": "170ece5e85f74dc1c8637f21c44ce2de9c073305743a524a0683a1c30c3a5edf",
+  "company_id": "coal_india",
+  "doc_type": "sustainability_report",
+  "fiscal_year": "FY2018",
+  "prior_gate_decision": null,
+  "decision": "exclude",
+  "fired_rules": [
+   "statements_not_found"
+  ],
+  "pages": 89,
+  "anomalies": []
+ },
+ {
+  "checksum": "7c080850e3e0cbc032e4a3463b077fc75c690532395e46199bfc57444e6a95d1",
+  "company_id": "coal_india",
+  "doc_type": "annual",
+  "fiscal_year": "FY2024",
+  "prior_gate_decision": null,
+  "decision": "keep",
+  "fired_rules": [],
+  "pages": 262,
+  "anomalies": []
+ },
+ {
+  "checksum": "901502e15bda4976c3d34e260a1307a974619fd46416150d1a30ab2eff65c9b6",
+  "company_id": "coal_india",
+  "doc_type": "sustainability_report",
+  "fiscal_year": "FY2019",
+  "prior_gate_decision": null,
+  "decision": "exclude",
+  "fired_rules": [
+   "statements_not_found"
+  ],
+  "pages": 104,
+  "anomalies": []
+ },
+ {
+  "checksum": "9ea1d0a145362dad5a80561638248f68b2dce22d9878f8ebea3c601a463e748a",
+  "company_id": "coal_india",
+  "doc_type": "quarterly",
+  "fiscal_year": "Q2FY2025",
+  "prior_gate_decision": "exclude",
+  "decision": "exclude",
+  "fired_rules": [
+   "statements_not_found"
+  ],
+  "pages": 22,
+  "anomalies": [
+   "high_image_share"
+  ]
+ },
+ {
+  "checksum": "a68f50efcb451cf4f2e22e20bbfe9492ee2d929ef605a537ca1871ea69e1b282",
+  "company_id": "coal_india",
+  "doc_type": "sustainability_report",
+  "fiscal_year": "FY2020",
+  "prior_gate_decision": null,
+  "decision": "exclude",
+  "fired_rules": [
+   "statements_not_found"
+  ],
+  "pages": 93,
+  "anomalies": []
+ },
+ {
+  "checksum": "1dc13224a9e1b0c143d374be8f1798d35d585fab67c541df21961a564fab14b5",
+  "company_id": "cummins_india",
+  "doc_type": "disclosure",
+  "fiscal_year": "Q4FY2024",
+  "prior_gate_decision": "exclude",
+  "decision": "exclude",
+  "fired_rules": [
+   "image_share"
+  ],
+  "pages": 19,
+  "anomalies": [
+   "high_image_share"
+  ]
+ },
+ {
+  "checksum": "7bca53100d7a6aa34b15e0e05b9c0473bc0230ddb66bf66a603780022e4d4150",
+  "company_id": "cummins_india",
+  "doc_type": "sustainability_report",
+  "fiscal_year": "FY2018",
+  "prior_gate_decision": null,
+  "decision": "exclude",
+  "fired_rules": [
+   "statements_not_found"
+  ],
+  "pages": 8,
+  "anomalies": [
+   "high_image_share"
+  ]
+ },
+ {
+  "checksum": "fd8ae7d066044070e537c8bde6e36215b3a38f22b5a701402ebfed3058f113a2",
+  "company_id": "cummins_india",
+  "doc_type": "annual",
+  "fiscal_year": "FY2026",
+  "prior_gate_decision": null,
+  "decision": "keep",
+  "fired_rules": [],
+  "pages": 403,
+  "anomalies": []
+ },
+ {
+  "checksum": "2fb3799e4eb213afd8c72ac215a582c57ee483d7c0ef81e787c25d611ee57dad",
+  "company_id": "dabur",
+  "doc_type": "quarterly",
+  "fiscal_year": "Q3FY2025",
+  "prior_gate_decision": "exclude",
+  "decision": "exclude",
+  "fired_rules": [
+   "statements_not_found"
+  ],
+  "pages": 13,
+  "anomalies": []
+ },
+ {
+  "checksum": "34da40b7b87fa39e6f5ae30db1bb381e2b880ac49a009a0ef7fb1cf694bb6b5e",
+  "company_id": "dabur",
+  "doc_type": "quarterly",
+  "fiscal_year": "Q3FY2024",
+  "prior_gate_decision": "exclude",
+  "decision": "exclude",
+  "fired_rules": [
+   "statements_not_found"
+  ],
+  "pages": 13,
+  "anomalies": []
+ },
+ {
+  "checksum": "4f2d4f10847e8a9a4857ce13141c3c08ee13200a23eec45d69c13d5bb8ec7ddb",
+  "company_id": "dabur",
+  "doc_type": "sustainability_report",
+  "fiscal_year": "FY2020",
+  "prior_gate_decision": null,
+  "decision": "exclude",
+  "fired_rules": [
+   "statements_not_found"
+  ],
+  "pages": 16,
+  "anomalies": []
+ },
+ {
+  "checksum": "b90eb913e80d640afe7be3288c5eed04f75325f926ee9d2d916a2092315aef23",
+  "company_id": "dabur",
+  "doc_type": "sustainability_report",
+  "fiscal_year": "FY2017",
+  "prior_gate_decision": null,
+  "decision": "exclude",
+  "fired_rules": [
+   "statements_not_found"
+  ],
+  "pages": 21,
+  "anomalies": []
+ },
+ {
+  "checksum": "d2296207bf974f7f5f68c9b7e0f8bb0018d92dac1ed1e39003565f8f96103483",
+  "company_id": "dabur",
+  "doc_type": "annual",
+  "fiscal_year": "FY2017",
+  "prior_gate_decision": null,
+  "decision": "keep",
+  "fired_rules": [],
+  "pages": 245,
+  "anomalies": []
+ },
+ {
+  "checksum": "e8ceb3e7d3118faf32bcb41b227d38f319a8f2ef51c100131a473abd384af411",
+  "company_id": "dabur",
+  "doc_type": "annual",
+  "fiscal_year": "FY2024",
+  "prior_gate_decision": null,
+  "decision": "keep",
+  "fired_rules": [],
+  "pages": 597,
+  "anomalies": []
+ },
+ {
+  "checksum": "f60261a96de3fa2ee5dfef7d47a4c03c444e28166d05203346a733b5f6e5b963",
+  "company_id": "dabur",
+  "doc_type": "sustainability_report",
+  "fiscal_year": "FY2019",
+  "prior_gate_decision": null,
+  "decision": "exclude",
+  "fired_rules": [
+   "statements_not_found"
+  ],
+  "pages": 15,
+  "anomalies": []
+ },
+ {
+  "checksum": "d6cf651a3b764bdfda630ba8b8a0df534ec997685926653375bbdfea76d89ee6",
+  "company_id": "eicher_motors",
+  "doc_type": "sustainability_report",
+  "fiscal_year": "FY2020",
+  "prior_gate_decision": null,
+  "decision": "exclude",
+  "fired_rules": [
+   "statements_not_found"
+  ],
+  "pages": 137,
+  "anomalies": []
+ },
+ {
+  "checksum": "068decf83d662cd6f5e4fe82bfdb1d98214b6f3c1568fe76fd5bd0c0c59add6c",
+  "company_id": "force_motors",
+  "doc_type": "annual",
+  "fiscal_year": "FY2024",
+  "prior_gate_decision": null,
+  "decision": "exclude",
+  "fired_rules": [
+   "statements_not_found"
+  ],
+  "pages": 182,
+  "anomalies": []
+ },
+ {
+  "checksum": "edb08060a8062736b945963f8005772c6ca399506a706d49714cdddad096124f",
+  "company_id": "glenmark_pharmaceuticals",
+  "doc_type": "annual",
+  "fiscal_year": "FY2022",
+  "prior_gate_decision": null,
+  "decision": "keep",
+  "fired_rules": [],
+  "pages": 372,
+  "anomalies": []
+ },
+ {
+  "checksum": "2e29dbc58cee9140f804f281799f79e0f27c5eb7850274b5c67bf11eaf3e4a52",
+  "company_id": "godrej_consumer_products",
+  "doc_type": "sustainability_report",
+  "fiscal_year": "FY2018",
+  "prior_gate_decision": null,
+  "decision": "exclude",
+  "fired_rules": [
+   "statements_not_found"
+  ],
+  "pages": 24,
+  "anomalies": []
+ },
+ {
+  "checksum": "711b7399985c48c5d8c909c8000e375ab574fe5ebf0fe07536893f8c9389549f",
+  "company_id": "godrej_consumer_products",
+  "doc_type": "annual",
+  "fiscal_year": "FY2020",
+  "prior_gate_decision": null,
+  "decision": "keep",
+  "fired_rules": [],
+  "pages": 413,
+  "anomalies": []
+ },
+ {
+  "checksum": "b747317315487e6dff9650f332f0d02e4c8bd90c6429472736ab538722ccfc4d",
+  "company_id": "godrej_consumer_products",
+  "doc_type": "sustainability_report",
+  "fiscal_year": "FY2019",
+  "prior_gate_decision": null,
+  "decision": "exclude",
+  "fired_rules": [
+   "statements_not_found"
+  ],
+  "pages": 35,
+  "anomalies": []
+ },
+ {
+  "checksum": "01ea8d198ff9a780010b9189a61ea7612b8d87f89593a42b602d2a4fc77bea1d",
+  "company_id": "havells_india",
+  "doc_type": "annual",
+  "fiscal_year": "FY2025",
+  "prior_gate_decision": null,
+  "decision": "keep",
+  "fired_rules": [],
+  "pages": 387,
+  "anomalies": []
+ },
+ {
+  "checksum": "5ff743f82c2114095011d215a8664da4e1e05dc2364707bd4f94039b6e84a86e",
+  "company_id": "havells_india",
+  "doc_type": "sustainability_report",
+  "fiscal_year": "FY2018",
+  "prior_gate_decision": null,
+  "decision": "exclude",
+  "fired_rules": [
+   "statements_not_found"
+  ],
+  "pages": 116,
+  "anomalies": [
+   "high_image_share"
+  ]
+ },
+ {
+  "checksum": "a94eb7cbb9bd88f5e96e4e2bcc63d3a18b3f3b6ffda5413e9ed033de436fe142",
+  "company_id": "havells_india",
+  "doc_type": "sustainability_report",
+  "fiscal_year": "FY2019",
+  "prior_gate_decision": null,
+  "decision": "exclude",
+  "fired_rules": [
+   "statements_not_found"
+  ],
+  "pages": 84,
+  "anomalies": []
+ },
+ {
+  "checksum": "f8a0b0ac0e3affdcdae94cceff81f20c9f1f116ae42420ce8e6f1d2bc9d5b988",
+  "company_id": "havells_india",
+  "doc_type": "sustainability_report",
+  "fiscal_year": "FY2020",
+  "prior_gate_decision": null,
+  "decision": "exclude",
+  "fired_rules": [
+   "statements_not_found"
+  ],
+  "pages": 76,
+  "anomalies": []
+ },
+ {
+  "checksum": "77e41f69632469bc6636715018831b6e556f45566bf14b956e8bcdf25efe12d7",
+  "company_id": "hcl",
+  "doc_type": "sustainability_report",
+  "fiscal_year": "FY2017",
+  "prior_gate_decision": null,
+  "decision": "exclude",
+  "fired_rules": [
+   "statements_not_found"
+  ],
+  "pages": 18,
+  "anomalies": []
+ },
+ {
+  "checksum": "c7ee670b855e9dc735135ddd1e8ef4aed3959c64440deeff65edb29616787adc",
+  "company_id": "hcl",
+  "doc_type": "quarterly",
+  "fiscal_year": "Q3FY2024",
+  "prior_gate_decision": "exclude",
+  "decision": "exclude",
+  "fired_rules": [
+   "statements_not_found"
+  ],
+  "pages": 19,
+  "anomalies": []
+ },
+ {
+  "checksum": "e5d66881e54b657ab49696ae801d3959ca8bc99b7baee9a6ff14457d01bafd21",
+  "company_id": "hindalco",
+  "doc_type": "sustainability_report",
+  "fiscal_year": "FY2019",
+  "prior_gate_decision": null,
+  "decision": "exclude",
+  "fired_rules": [
+   "statements_not_found"
+  ],
+  "pages": 3,
+  "anomalies": []
+ },
+ {
+  "checksum": "799a8e5b11ae1d9a31513d5758478842b3ed71ec788b42ca0cc93822fcfb41f5",
+  "company_id": "jk_cement",
+  "doc_type": "sustainability_report",
+  "fiscal_year": "FY2017",
+  "prior_gate_decision": null,
+  "decision": "exclude",
+  "fired_rules": [
+   "statements_not_found"
+  ],
+  "pages": 94,
+  "anomalies": []
+ },
+ {
+  "checksum": "a18b89295a26759e8aa48bfa7f729e3c288e4aa2f250e76a54f5ddd7cbb167ce",
+  "company_id": "jk_cement",
+  "doc_type": "sustainability_report",
+  "fiscal_year": "FY2018",
+  "prior_gate_decision": null,
+  "decision": "exclude",
+  "fired_rules": [
+   "statements_not_found"
+  ],
+  "pages": 10,
+  "anomalies": []
+ },
+ {
+  "checksum": "1aff5da9a76420eac1a0f328a415943df8930129905d6964a860ac671f7a07c7",
+  "company_id": "jsw_steel",
+  "doc_type": "sustainability_report",
+  "fiscal_year": "FY2019",
+  "prior_gate_decision": null,
+  "decision": "exclude",
+  "fired_rules": [
+   "statements_not_found"
+  ],
+  "pages": 24,
+  "anomalies": []
+ },
+ {
+  "checksum": "4b33f3e6ee343884256bc53204aac42f39c259633d2db36c8f9d98cb42cd9467",
+  "company_id": "jsw_steel",
+  "doc_type": "disclosure",
+  "fiscal_year": "Q3FY2024",
+  "prior_gate_decision": "exclude",
+  "decision": "exclude",
+  "fired_rules": [
+   "image_share"
+  ],
+  "pages": 19,
+  "anomalies": [
+   "high_image_share"
+  ]
+ },
+ {
+  "checksum": "5d7cc941daa9531020e91e75e78074d86a5e0685d971451fd89744d95d49e598",
+  "company_id": "jsw_steel",
+  "doc_type": "sustainability_report",
+  "fiscal_year": "FY2018",
+  "prior_gate_decision": null,
+  "decision": "exclude",
+  "fired_rules": [
+   "statements_not_found"
+  ],
+  "pages": 95,
+  "anomalies": [
+   "high_image_share"
+  ]
+ },
+ {
+  "checksum": "6c2941b6d73ca3d102acd9e3292c06a0a21ca718856a7e32858b9819214808c1",
+  "company_id": "jsw_steel",
+  "doc_type": "sustainability_report",
+  "fiscal_year": "FY2020",
+  "prior_gate_decision": null,
+  "decision": "exclude",
+  "fired_rules": [
+   "statements_not_found"
+  ],
+  "pages": 24,
+  "anomalies": [
+   "high_image_share"
+  ]
+ },
+ {
+  "checksum": "a19b85577dc23ce50b986f085e119e8ea56776bb88bd672ad0a930f778582792",
+  "company_id": "jsw_steel",
+  "doc_type": "disclosure",
+  "fiscal_year": "Q3FY2025",
+  "prior_gate_decision": "exclude",
+  "decision": "exclude",
+  "fired_rules": [
+   "image_share"
+  ],
+  "pages": 20,
+  "anomalies": [
+   "high_image_share"
+  ]
+ },
+ {
+  "checksum": "d83dc3e4237b25dc882fae3c2eb8e0bef865890e17aee9fae73f2ef5a2793ec9",
+  "company_id": "jsw_steel",
+  "doc_type": "disclosure",
+  "fiscal_year": "Q1FY2025",
+  "prior_gate_decision": "exclude",
+  "decision": "exclude",
+  "fired_rules": [
+   "image_share"
+  ],
+  "pages": 19,
+  "anomalies": [
+   "high_image_share"
+  ]
+ },
+ {
+  "checksum": "f090ca158bec5c734a91d54dc576a5878ca0b1a5e9860a9133fea975ec4c099c",
+  "company_id": "jsw_steel",
+  "doc_type": "disclosure",
+  "fiscal_year": "Q2FY2025",
+  "prior_gate_decision": "exclude",
+  "decision": "exclude",
+  "fired_rules": [
+   "image_share"
+  ],
+  "pages": 24,
+  "anomalies": [
+   "high_image_share"
+  ]
+ },
+ {
+  "checksum": "c7b9c5f59940a4c9667c5a848ab739b601cc211e035488158beb08acfbcf8ab4",
+  "company_id": "kpi_tech",
+  "doc_type": "sustainability_report",
+  "fiscal_year": "FY2020",
+  "prior_gate_decision": null,
+  "decision": "exclude",
+  "fired_rules": [
+   "statements_not_found"
+  ],
+  "pages": 13,
+  "anomalies": []
+ },
+ {
+  "checksum": "77f08eaf4fb9d9f66d23c399b8a31d28abf3b74a8eeee2987e17fc93da0905df",
+  "company_id": "l_and_t",
+  "doc_type": "annual",
+  "fiscal_year": "FY2023",
+  "prior_gate_decision": null,
+  "decision": "keep",
+  "fired_rules": [],
+  "pages": 701,
+  "anomalies": []
+ },
+ {
+  "checksum": "a7c3a85f3748cebb7b8811d66080568f2fbd6d8f67ebe18335e749f1ed8fdfc1",
+  "company_id": "local",
+  "doc_type": "disclosure",
+  "fiscal_year": "unknown",
+  "prior_gate_decision": null,
+  "decision": "keep",
+  "fired_rules": [],
+  "pages": 404,
+  "anomalies": []
+ },
+ {
+  "checksum": "53a77f8521070a093c03206615bd85af6dcac62c74f49b5e7158674520a7fcc6",
+  "company_id": "lupin",
+  "doc_type": "annual",
+  "fiscal_year": "FY2025",
+  "prior_gate_decision": null,
+  "decision": "keep",
+  "fired_rules": [],
+  "pages": 441,
+  "anomalies": []
+ },
+ {
+  "checksum": "fac846b21f566d03ddfca7f96384be30f90ce834eca7e5c0bd21c2e5e4859d80",
+  "company_id": "lupin",
+  "doc_type": "quarterly",
+  "fiscal_year": "Q3FY2025",
+  "prior_gate_decision": "exclude",
+  "decision": "exclude",
+  "fired_rules": [
+   "statements_not_found"
+  ],
+  "pages": 10,
+  "anomalies": []
+ },
+ {
+  "checksum": "7516c205c17c3fe6c30ae60ce6c1ab16a4a69a9b76ac6b54d6308c300e8acfe3",
+  "company_id": "marico",
+  "doc_type": "annual",
+  "fiscal_year": "FY2025",
+  "prior_gate_decision": null,
+  "decision": "keep",
+  "fired_rules": [],
+  "pages": 278,
+  "anomalies": []
+ },
+ {
+  "checksum": "122f36b10d04d07609f03564e7477ba78c56dd98912a5d2c7e85e6b6c4940b58",
+  "company_id": "pidilite",
+  "doc_type": "quarterly",
+  "fiscal_year": "Q1FY2025",
+  "prior_gate_decision": "exclude",
+  "decision": "exclude",
+  "fired_rules": [
+   "image_share",
+   "statements_not_found"
+  ],
+  "pages": 14,
+  "anomalies": [
+   "high_image_share"
+  ]
+ },
+ {
+  "checksum": "3147e38b85c25efbcfbbb3f26fbdddb5d2e0f22d65c7132e1fc6115ccaec7ac2",
+  "company_id": "pidilite",
+  "doc_type": "quarterly",
+  "fiscal_year": "Q3FY2024",
+  "prior_gate_decision": "exclude",
+  "decision": "exclude",
+  "fired_rules": [
+   "statements_not_found"
+  ],
+  "pages": 14,
+  "anomalies": [
+   "high_image_share"
+  ]
+ },
+ {
+  "checksum": "e4c6bb23059c3739bb7f0e917ace03a78d4c8db4526276292f4bfd1d8abadfa6",
+  "company_id": "pidilite",
+  "doc_type": "quarterly",
+  "fiscal_year": "Q3FY2025",
+  "prior_gate_decision": "exclude",
+  "decision": "exclude",
+  "fired_rules": [
+   "statements_not_found"
+  ],
+  "pages": 13,
+  "anomalies": []
+ },
+ {
+  "checksum": "dc770ad483d32e86e225391f38b3ce972bfa2c75615635214ac372fb6a068384",
+  "company_id": "polycab",
+  "doc_type": "disclosure",
+  "fiscal_year": "Q1FY2025",
+  "prior_gate_decision": "exclude",
+  "decision": "exclude",
+  "fired_rules": [
+   "image_share"
+  ],
+  "pages": 11,
+  "anomalies": [
+   "high_image_share"
+  ]
+ },
+ {
+  "checksum": "f6c3f835f5f952d5bf709ef96a6fbe5f1611ee2af03c3ec31493ffd07464261d",
+  "company_id": "polycab",
+  "doc_type": "disclosure",
+  "fiscal_year": "Q4FY2024",
+  "prior_gate_decision": "exclude",
+  "decision": "exclude",
+  "fired_rules": [
+   "image_share"
+  ],
+  "pages": 25,
+  "anomalies": [
+   "high_image_share"
+  ]
+ },
+ {
+  "checksum": "11ad4882035af14847c7747bfa6384ef19e495181dcb1513045cd92034bd78aa",
+  "company_id": "power_grid",
+  "doc_type": "sustainability_report",
+  "fiscal_year": "FY2019",
+  "prior_gate_decision": null,
+  "decision": "exclude",
+  "fired_rules": [
+   "statements_not_found"
+  ],
+  "pages": 10,
+  "anomalies": []
+ },
+ {
+  "checksum": "e250887b207b20483cf040589ab9723a935dca317ce9bccd050cfdef059c0a8b",
+  "company_id": "power_grid",
+  "doc_type": "annual",
+  "fiscal_year": "FY2024",
+  "prior_gate_decision": null,
+  "decision": "keep",
+  "fired_rules": [],
+  "pages": 317,
+  "anomalies": []
+ },
+ {
+  "checksum": "4eb1b8e23c9a2123fc730dbe9dd0f54c54d19f9309d91f365f2c10a42d5b98b7",
+  "company_id": "sail",
+  "doc_type": "annual",
+  "fiscal_year": "FY2023",
+  "prior_gate_decision": null,
+  "decision": "keep",
+  "fired_rules": [],
+  "pages": 330,
+  "anomalies": []
+ },
+ {
+  "checksum": "f87de7027d1e4b322205402ccf5a186da103aed6945e6de85244c72c42d645ab",
+  "company_id": "sail",
+  "doc_type": "annual",
+  "fiscal_year": "FY2024",
+  "prior_gate_decision": null,
+  "decision": "keep",
+  "fired_rules": [],
+  "pages": 366,
+  "anomalies": [
+   "high_image_share"
+  ]
+ },
+ {
+  "checksum": "2299e7060d3b3004d5c197df49a7bfefc0e58f9f80458e18668cc5f9e97ffa3f",
+  "company_id": "samvardhana_motherson",
+  "doc_type": "annual",
+  "fiscal_year": "FY2017",
+  "prior_gate_decision": null,
+  "decision": "keep",
+  "fired_rules": [],
+  "pages": 332,
+  "anomalies": []
+ },
+ {
+  "checksum": "bd5ed1a3c43a3fe81e09a2cb1a2d4f1524bcc210818ad58db93c800916d61b21",
+  "company_id": "samvardhana_motherson",
+  "doc_type": "annual",
+  "fiscal_year": "FY2019",
+  "prior_gate_decision": null,
+  "decision": "keep",
+  "fired_rules": [],
+  "pages": 423,
+  "anomalies": []
+ },
+ {
+  "checksum": "d19018a30ffe9eae67cbd13ae2bd9a1153b568c088451597f6ab6ed342e28d5c",
+  "company_id": "srf",
+  "doc_type": "sustainability_report",
+  "fiscal_year": "FY2019",
+  "prior_gate_decision": null,
+  "decision": "exclude",
+  "fired_rules": [
+   "statements_not_found"
+  ],
+  "pages": 13,
+  "anomalies": []
+ },
+ {
+  "checksum": "d0bdc7fe1ae741b07bb76a158019cae05ab18abd2c2eeda43177d367bef24eb8",
+  "company_id": "tcs",
+  "doc_type": "annual",
+  "fiscal_year": "FY2026",
+  "prior_gate_decision": null,
+  "decision": "keep",
+  "fired_rules": [],
+  "pages": 361,
+  "anomalies": []
+ },
+ {
+  "checksum": "8c206f3e49141652b90b4da7f99bd22b022a10e5fcd1082368b0e459defa7aec",
+  "company_id": "tech_mahindra",
+  "doc_type": "annual",
+  "fiscal_year": "FY2021",
+  "prior_gate_decision": null,
+  "decision": "keep",
+  "fired_rules": [],
+  "pages": 539,
+  "anomalies": []
+ },
+ {
+  "checksum": "06e6223a584c61b814d12ebe8837ac948eb5d2fc029235bb11e60d55506a755e",
+  "company_id": "thermax",
+  "doc_type": "sustainability_report",
+  "fiscal_year": "FY2018",
+  "prior_gate_decision": null,
+  "decision": "exclude",
+  "fired_rules": [
+   "statements_not_found"
+  ],
+  "pages": 15,
+  "anomalies": []
+ },
+ {
+  "checksum": "f92840b66876f1865f7b552e375464799a533771bb3d0ac71d27cede37890dd0",
+  "company_id": "thermax",
+  "doc_type": "annual",
+  "fiscal_year": "FY2024",
+  "prior_gate_decision": null,
+  "decision": "keep",
+  "fired_rules": [],
+  "pages": 221,
+  "anomalies": []
+ },
+ {
+  "checksum": "fbbe1881377bb26557cd34c3e8e19cd590c8f84ff5865f4bf479770d2fc41eca",
+  "company_id": "thermax",
+  "doc_type": "annual",
+  "fiscal_year": "FY2024",
+  "prior_gate_decision": "exclude",
+  "decision": "exclude",
+  "fired_rules": [
+   "statements_not_found"
+  ],
+  "pages": 12,
+  "anomalies": [
+   "high_image_share"
+  ]
+ },
+ {
+  "checksum": "062c700e5430737a3a8682eaa17b3aadc8373d1854418010ba48d4adf884b4b2",
+  "company_id": "upl",
+  "doc_type": "quarterly",
+  "fiscal_year": "Q3FY2025",
+  "prior_gate_decision": "exclude",
+  "decision": "exclude",
+  "fired_rules": [
+   "statements_not_found"
+  ],
+  "pages": 27,
+  "anomalies": []
+ },
+ {
+  "checksum": "b6bb3ee9a97b6d1d35804b7f6c00fae2a4de1c6fbd5b3bef98f46b8f0dd397bc",
+  "company_id": "zydus_lifesciences",
+  "doc_type": "annual",
+  "fiscal_year": "FY2022",
+  "prior_gate_decision": null,
+  "decision": "keep",
+  "fired_rules": [],
+  "pages": 308,
+  "anomalies": []
+ }
+]
