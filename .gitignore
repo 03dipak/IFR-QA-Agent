@@ -50,3 +50,34 @@ AGENTS.md
 
 # Locally downloaded annual-report corpus
 /data/corpus/raw/*.pdf
+
+# Secrets
+*.key
+secrets/
+.env.*
+
+# Tool caches
+.mypy_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+
+# Vector stores / local models
+chroma/
+faiss_index/
+*.faiss
+*.sqlite
+models/
+*.gguf
+*.safetensors
+*.bin
+
+# Experiment tracking
+wandb/
+mlruns/
+
+# Outputs / traces
+outputs/
+traces/
+
+# Local backups
+src/eval.bak/

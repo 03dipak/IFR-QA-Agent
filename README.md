@@ -69,3 +69,29 @@ uv run mypy --ignore-missing-imports src tests
 - Native-digital PDFs only (no OCR)
 - Exactly 3 tools: retriever, calculator, comparator
 - Hard 10-step cap on agent loop
+## Reflection loop (Track B skeleton)
+
+Minimal generate -> critic -> revise loop for an OpenAI-compatible <=8B endpoint.
+No RAG, tools, UI, or Docker involved. Config comes from `.env`
+(`REFLECTION_MAX_ITERATIONS`, `REFLECTION_MAX_TOTAL_TOKENS`, plus `LLM_BASE_URL`,
+`LLM_API_KEY`, `LLM_MODEL`); copy `.env.example` to `.env` first.
+
+Run one query with a trace:
+
+```
+uv run python scripts/run_reflection_demo.py --query "What was FY26 revenue?"
+```
+
+The critic must return strict JSON (`{"score": 1-5, "issues": [...], "verdict": "pass"|"revise"}`);
+malformed JSON is retried once, then the loop falls back to verdict `pass` and logs the failure.
+
+Test offline with a fake client (no network, no key needed):
+
+```
+uv run pytest tests/unit/test_reflection_loop.py -q
+uv run ruff check src/agents tests/unit/test_reflection_loop.py scripts/run_reflection_demo.py
+```
+
+Modules: `src/agents/reflection_loop.py` (orchestrator + trace), `src/agents/generator.py`,
+`src/agents/critic.py` (pydantic validation), `src/agents/reviser.py`,
+`src/agents/llm_client.py` (thin adapter over `src/llm/client.py`), `src/agents/prompts.py`.

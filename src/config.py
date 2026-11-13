@@ -45,6 +45,21 @@ class CorpusConfig:
 
 
 @dataclass(frozen=True)
+class ReflectionConfig:
+    """Reflection loop settings (Track B skeleton)."""
+    max_iterations: int
+    max_total_tokens: int
+
+
+def load_reflection_config() -> ReflectionConfig:
+    """Load reflection loop settings from environment variables with defaults."""
+    return ReflectionConfig(
+        max_iterations=int(os.environ.get("REFLECTION_MAX_ITERATIONS", "2")),
+        max_total_tokens=int(os.environ.get("REFLECTION_MAX_TOTAL_TOKENS", "4000")),
+    )
+
+
+@dataclass(frozen=True)
 class AppConfig:
     """Application configuration."""
     log_level: str
