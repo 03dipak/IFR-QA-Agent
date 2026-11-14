@@ -160,6 +160,23 @@ def check_evidence_resolvable(rows, fids):
 
 _NUM = re.compile(r"-?\(?\d[\d,]*(?:\.\d+)?\)?")
 
+_UNIT_SCALE = (("crore", 1e7), ("lakh", 1e5))
+
+
+def _value_on_page(flat: str, value: float) -> bool:
+    """Match a value against page tokens, normalising lakh/crore prints."""
+    for tok in _NUM.findall(flat):
+        try:
+            v = float(tok.replace(",", ""))
+        except ValueError:
+            continue
+        if abs(v - value) < 0.005:
+            return True
+        for unit, scale in _UNIT_SCALE:
+            if unit in flat and abs(v * scale - value) < 0.005:
+                return True
+    return False
+
 
 def check_numeric_grounded(rows):
     problems, warnings = [], []
@@ -171,14 +188,25 @@ def check_numeric_grounded(rows):
         unit = r.get("expected_unit")
         if not unit:
             problems.append((r["id"], "expected_unit empty (unit not stated)"))
-        if not tokens:
-            continue
+        formula = r.get("expected_formula")
+        if formula:
+            expr = str(formula).split("=")[0]
+            required = [t for t in _NUM.findall(expr) if len(t.replace(",", "")) >= 3]
+        else:
+            required = tokens
+        flats = []
         for e in r.get("evidence") or []:
             text = _page_text(e.get("document_id"), e.get("pdf_page")) or ""
-            flat = " ".join(text.split()).replace(",", "")
-            if any(t.replace(",", "") in flat for t in tokens):
-                break
+            flats.append(" ".join(text.split()).replace(",", ""))
+        if required and formula:
+            ok = all(any(t.replace(",", "") in flat for flat in flats) for t in required)
+        elif required:
+            ok = any(any(t.replace(",", "") in flat for t in tokens) for flat in flats)
         else:
+            ok = True
+        if not ok and isinstance(r.get("expected_value"), (int, float)):
+            ok = any(_value_on_page(flat, float(r["expected_value"])) for flat in flats)
+        if not ok:
             problems.append((r["id"], "no numeric token of the answer found on its cited page"))
         joined = " ".join((r.get("question") or "").split()).lower()
         if not any(k in joined for k in ("standalone", "consolidated", "combined", "single")):
