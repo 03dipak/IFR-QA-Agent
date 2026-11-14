@@ -58,6 +58,12 @@ uv run ruff check src tests
 
 # Typecheck
 uv run mypy --ignore-missing-imports src tests
+
+# Gold v2 (after gold_v2.jsonl is built & signed; --out avoids touching v1.4)
+# gold_check needs --input wired (defaults to gold_data.jsonl); freeze/export are path-configurable.
+# uv run python -m src.eval.gold_check --input data/eval/datasets/gold_v2.jsonl
+uv run python -m src.eval.gold_freeze --input data/eval/datasets/gold_v2.jsonl --out data/eval/datasets/gold_v2.split_manifest.json --seed 42 --splitter-version v2
+PYTHONPATH=. uv run python scripts/make_gold_public.py --input data/eval/datasets/gold_v2.jsonl --out data/eval/datasets/gold_v2_public.jsonl
 ```
 
 
