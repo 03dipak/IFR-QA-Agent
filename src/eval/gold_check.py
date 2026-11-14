@@ -372,8 +372,12 @@ def run_all(rows, allocation=None):
 
 
 def main():
+    import argparse
     from .gold_rows import load_rows
-    rows = load_rows("data/eval/datasets/gold_data.jsonl", active_only=True)
+    ap = argparse.ArgumentParser(prog="src.eval.gold_check")
+    ap.add_argument("--input", default="data/eval/datasets/gold_data.jsonl")
+    args = ap.parse_args()
+    rows = load_rows(args.input, active_only=True)
     fails, warns, summary = run_all(rows, ALLOCATION)
     print(f"GOLD SET CHECKS  rows={summary['n_rows']} live={summary['n_live']} "
           f"reviewed={summary['n_reviewed']} two_reviewers={summary['n_two_reviewers']} "
