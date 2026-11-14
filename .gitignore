@@ -25,11 +25,17 @@ env/
 .DS_Store
 Thumbs.db
 
+#.temp
+.temp/
 # Data (not committed)
 data/raw/
 data/processed/
 *.jsonl
 *.csv
+!data/eval/datasets/gold_data.jsonl
+!data/eval/datasets/gold_data.split_manifest.json
+!data/eval/datasets/gold_data.corrections.jsonl
+!data/eval/datasets/packs/drafts.jsonl
 
 # Logs
 *.log
@@ -51,6 +57,11 @@ AGENTS.md
 # Locally downloaded annual-report corpus
 /data/corpus/raw/*.pdf
 
+# LLM disk cache (not committed)
+data/llm_cache/
+
+# Local html files
+data/manual_inbox/_nse_pages/
 # Secrets
 *.key
 secrets/

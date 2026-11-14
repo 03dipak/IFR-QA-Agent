@@ -23,6 +23,8 @@ class DocType(StrEnum):
     ANNUAL = "annual"
     QUARTERLY = "quarterly"
     DISCLOSURE = "disclosure"
+    SUSTAINABILITY_REPORT = "sustainability_report"
+    SECRETARIAL_AUDIT = "secretarial_audit"
 
 
 class ExtractionStatus(StrEnum):
@@ -87,6 +89,18 @@ class PageType(StrEnum):
     SCAN = "scan"
 
 
+class PageClass(StrEnum):
+    """Native-PDF page class for the document-level scan gate (LLD-45)."""
+    BLANK = "blank"
+    LOW_TEXT = "low_text"
+    # alias retained for the LLD's divider wording
+    DIVIDER = "low_text"
+    TEXT = "text"
+    IMAGE_ONLY = "image_only"
+    IMAGE_DOMINANT = "image_dominant"
+    GARBLED = "garbled"
+
+
 class EffectiveStatus(StrEnum):
     CURRENT = "current"
     SUPERSEDED = "superseded"
@@ -110,6 +124,7 @@ class FetchAttempt(BaseModel):
     attempt_number: int = 1
     error_code: str | None = None
     retryable: bool = False
+    checksum: str | None = None
 
 
 class Candidate(BaseModel):
@@ -160,6 +175,7 @@ class DocumentLedgerRow(BaseModel):
     candidate_id: str | None = None
     ingestion_registry_version: str = "v0"
     terms_review_ref: str | None = None
+    source: str | None = None  # None=discovery pipeline, "local"=registered from local raw PDF
 
     @staticmethod
     def make_document_id(file_bytes: bytes) -> str:
@@ -201,6 +217,36 @@ class RetiredRecord(BaseModel):
     recorded_at: datetime = Field(default_factory=lambda: datetime.now(UTC))
 
 
+class WithdrawnRecord(BaseModel):
+    """Append-only withdrawal action for a manual document.
+
+    The source PDF in ``data/corpus/raw`` is kept; only the document's
+    effective status changes.
+    """
+    document_id: str
+    company_id: str | None = None
+    checksum: str | None = None
+    reason: str
+    raw_kept: bool = True
+    recorded_at: datetime = Field(default_factory=lambda: datetime.now(UTC))
+
+
+class SupersededRecord(BaseModel):
+    """Append-only marker for the older version of a superseded pair.
+
+    Mirrors the WithdrawnRecord sidecar: the raw PDF is kept; the
+    document's effective status becomes superseded (newer hash exists for
+    the same company+period+variant). Pairs with the revision rows.
+    """
+    document_id: str
+    superseded_by: str
+    relationship_reason: str | None = None
+    source: str | None = None  # "manual-ingest" for the 2026-11-08 repair
+    reason: str | None = None
+    raw_kept: bool = True
+    recorded_at: datetime = Field(default_factory=lambda: datetime.now(UTC))
+
+
 # ---------------------------------------------------------------------------
 # Page extraction (LLD 5.4)
 # ---------------------------------------------------------------------------
@@ -214,6 +260,9 @@ class PageExtract(BaseModel):
     page_text: str
     extraction_hash: str  # sha256 of page_text (normalised)
     page_type: PageType = PageType.PROSE
+    page_class: PageClass = PageClass.TEXT
+    usable_as_evidence: bool = True
+    ufffd_count: int = 0
     has_table: bool = False
     character_count: int = 0
     extraction_status: ExtractionStatus = ExtractionStatus.EXTRACTED

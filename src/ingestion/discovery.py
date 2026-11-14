@@ -3,6 +3,11 @@
 Phase 1 of the bulk-acquisition plan (task LLD-35): read the owner-supplied
 companies file and discovery config, list filing candidates per company from
 the configured BSE-hosted listing pages, and emit candidates.csv.
+
+HTML listing mode (2026-11-04): company IR/archive pages are ordinary HTML,
+which the strict PDF Fetcher rejects, so listing-page link harvest and
+bounded PDF URL probing live here and are usable independently of
+`Fetcher.fetch`.
 """
 
 from __future__ import annotations
@@ -11,10 +16,15 @@ import csv
 import datetime
 import json
 import re
+import urllib.request
 from dataclasses import dataclass, field
 from pathlib import Path
 
 from .fetcher import Fetcher
+
+# Honest client identity for listing/probe requests (no browser spoofing).
+DEFAULT_USER_AGENT = "IFR-QA-Agent/0.1 (academic QA research; contact: repo owner)"
+PROBE_MAX_BYTES = 512
 
 CANDIDATES_COLUMNS = [
     "company_id",
@@ -56,6 +66,90 @@ class Filing:
     doc_type: str | None = None
     fiscal_period: str | None = None
     source_page: str | None = None
+
+
+@dataclass
+class ProbeResult:
+    url: str
+    status: int | None = None
+    content_type: str = ""
+    pdf_magic: bool = False
+    error: str | None = None
+
+    @property
+    def ok(self) -> bool:
+        return self.status in (200, 206) and self.pdf_magic
+
+
+def extract_pdf_links(html_text: str) -> list[str]:
+    """Harvest ``href=...pdf`` links from a listing page, order-preserving,
+    de-duplicated. Mirrors the historical discovery semantics."""
+    seen: set[str] = set()
+    links: list[str] = []
+    for match in _PDF_LINK_RE.finditer(html_text):
+        url = match.group(1).strip()
+        if url and url not in seen:
+            seen.add(url)
+            links.append(url)
+    return links
+
+
+def probe_pdf_url(
+    url: str,
+    *,
+    max_bytes: int = PROBE_MAX_BYTES,
+    timeout: float = 30.0,
+    user_agent: str = DEFAULT_USER_AGENT,
+) -> ProbeResult:
+    """Probe a candidate URL with a bounded ranged GET (<= max_bytes) and
+    report status/content-type/%PDF magic. Never downloads whole documents."""
+    req = urllib.request.Request(
+        url,
+        headers={
+            "User-Agent": user_agent,
+            "Accept": "application/pdf,*/*",
+            "Range": f"bytes=0-{max_bytes - 1}",
+        },
+    )
+    try:
+        with urllib.request.urlopen(req, timeout=timeout) as resp:
+            body = resp.read(max_bytes)
+            return ProbeResult(
+                url=url,
+                status=getattr(resp, "status", None),
+                content_type=resp.headers.get("Content-Type", ""),
+                pdf_magic=body.startswith(b"%PDF"),
+            )
+    except Exception as exc:  # probe must never raise; callers report it
+        return ProbeResult(url=url, error=str(exc))
+
+
+def candidates_from_listing_html(
+    html_text: str,
+    *,
+    company_id: str,
+    scrip_code: str,
+    document_type: str,
+    fiscal_period: str,
+    source_page: str,
+) -> list[dict]:
+    """Build candidate rows from an already-fetched listing page (HTML
+    listing mode). Fields left blank by design are filled by the caller's
+    annotation step, matching build_candidates behaviour."""
+    now = datetime.datetime.now(datetime.UTC).isoformat()
+    return [
+        {
+            "company_id": company_id,
+            "scrip_code": scrip_code,
+            "document_type": document_type,
+            "fiscal_period": fiscal_period,
+            "filing_date": "",
+            "url": url,
+            "source_page": source_page,
+            "discovered_at": now,
+        }
+        for url in extract_pdf_links(html_text)
+    ]
 
 
 def load_company_rows(path: str | Path) -> list[dict]:

@@ -47,6 +47,7 @@ def _make_text_pdf(pages: list[list[str]]) -> bytes:
         ops = ["BT", "/F1 12 Tf", "72 720 Td"]
         for line in lines:
             escaped = line.replace("\\", "\\\\").replace("(", "\\(").replace(")", "\\)")
+            escaped = escaped.encode("latin-1", "ignore").decode("latin-1")
             ops.extend((f"({escaped}) Tj", "0 -16 Td"))
         ops.append("ET")
         stream = DecodedStreamObject()
@@ -58,10 +59,15 @@ def _make_text_pdf(pages: list[list[str]]) -> bytes:
 
 
 def _make_pdf(
-    text: str = "Hello world revenue 100 total assets 200 liabilities 50 "
-                 "cash flow 25",
+    text: str = "Balance Sheet total assets 100 revenue 200 liabilities 50 "
+                 "cash flow 10 profit 5",
 ) -> bytes:
-    return _make_text_pdf([[text]])
+    stmt = "Balance Sheet total assets 100 revenue 200 liabilities 50 cash flow 10 profit 5"
+    return _make_text_pdf([
+        [stmt],
+        ["Statement of Profit and Loss revenue 100 expenses 50 profit 25 tax 5 net 20"],
+        ["Cash Flow operating 100 investing 20 financing 10 net 5 total 5"],
+    ])
 
 
 def test_sha256_bytes_deterministic():
@@ -203,10 +209,11 @@ def _statement_candidate(candidate_id: str, url: str) -> Candidate:
 def test_native_text_pdf_registers_document(tmp_path):
     from src.ingestion.pipeline import process_candidate
 
-    pdf = _make_text_pdf([[
-        "Balance Sheet",
-        "Total assets 100 revenue 200 liabilities 50 cash flow 10",
-    ]])
+    pdf = _make_text_pdf([
+        ["Balance Sheet total assets 100 revenue 200 liabilities 50 cash flow 10 profit 5"],
+        ["Statement of Profit and Loss revenue 100 expenses 50 profit 25 tax 5 net 20"],
+        ["Cash Flow operating 100 investing 20 financing 10 net 5 total 5"],
+    ])
     ledger = Ledger()
     candidate = _statement_candidate("native-1", "https://ok/native.pdf")
     state = process_candidate(

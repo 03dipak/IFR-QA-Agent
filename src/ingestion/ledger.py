@@ -32,6 +32,8 @@ from .models import (
     ExtractionStatus,
     LedgerRevisionRecord,
     RetiredRecord,
+    SupersededRecord,
+    WithdrawnRecord,
 )
 
 LEDGER_SCHEMA_VERSION = 1
@@ -56,6 +58,8 @@ class Ledger:
         self.exclusions: list[ExclusionRecord] = []
         self.revisions: list[LedgerRevisionRecord] = []
         self.retired: list[RetiredRecord] = []
+        self.withdrawn: list[WithdrawnRecord] = []
+        self.superseded: list[SupersededRecord] = []
         self.candidates: dict[str, Candidate] = {}
         self._checksum_index: dict[str, str] = {}  # checksum -> document_id
         if self.path is not None and self.path.exists():
@@ -112,6 +116,12 @@ class Ledger:
                 return
             if kind == "retired":
                 self.retired.append(RetiredRecord.model_validate(data))
+                return
+            if kind == "withdrawn":
+                self.withdrawn.append(WithdrawnRecord.model_validate(data))
+                return
+            if kind == "superseded":
+                self.superseded.append(SupersededRecord.model_validate(data))
                 return
         except LedgerError:
             raise
@@ -199,6 +209,10 @@ class Ledger:
         self.retired.append(rec)
         self._append("retired", rec.model_dump(mode="json"))
 
+    def add_withdrawn(self, rec: WithdrawnRecord) -> None:
+        self.withdrawn.append(rec)
+        self._append("withdrawn", rec.model_dump(mode="json"))
+
     # -- accounting ---------------------------------------------------------
     ACCEPTED_STATES = frozenset({
         CandidateState.VALIDATED,
@@ -251,7 +265,9 @@ class Ledger:
         for exclusion in self.exclusions:
             exclusions_by_candidate.setdefault(exclusion.candidate_id, []).append(exclusion)
         for cid in exclusions_by_candidate:
-            if cid in known_ids:
+            # An exclusion record is historical; a candidate whose final
+            # state is accepted (e.g. append-only re-acceptance) supersedes it.
+            if cid in known_ids and cid not in accepted_ids:
                 excluded_ids.add(cid)
 
         orphan_ids = sorted(set(exclusions_by_candidate) - set(self.candidates))
