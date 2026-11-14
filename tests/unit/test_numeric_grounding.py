@@ -88,3 +88,13 @@ def test_formula_missing_operand_fails(tmp_path, monkeypatch):
                formula="18898800000 - 1122500000 = 17776300000")
     fails, _ = gchk.check_numeric_grounded([row])
     assert any("no numeric token" in m for _, m in fails)
+
+
+def test_no_declared_unit_does_not_scale(tmp_path, monkeypatch):
+    _seed_pages(tmp_path, monkeypatch)
+    row = _row("G-906", BRIT_DOC, "54046300000 INR", 54046300000)
+    (tmp_path / "pe" / f"{BRIT_DOC}.pages.jsonl").write_text(
+        json.dumps({"pdf_page_index": 3,
+                    "page_text": "Revenue from operations 540463.00"}) + "\n")
+    fails, _ = gchk.check_numeric_grounded([row])
+    assert any("no numeric token" in m for _, m in fails)

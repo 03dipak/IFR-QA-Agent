@@ -25,7 +25,8 @@ ALLOCATION = {"cross_company_comparison": 0.20, "unanswerable_abstain": 0.15,
               "same_company_cross_period": 0.15, "multi_hop": 0.15}
 MIN_REVIEWED = 60
 HOLDOUT_FRAC = 0.25
-ABSTAIN_SUBTYPES = ("not_in_corpus", "out_of_scope")
+ABSTAIN_SUBTYPES = ("not_in_corpus", "company_not_in_corpus",
+                     "near_miss_absent", "out_of_scope")
 SPLITTER_VERSION = "gold_freeze.v1"
 GOLD_SET_VERSION = "gold_v1"
 GOLD_SCHEMA_VERSION = "2.0"
@@ -98,10 +99,13 @@ def validate_row(row: dict) -> list[str]:
         problems.append("evidence empty")
     else:
         if not ev:
-            # lld_eval.txt section ROW TYPE: not_in_corpus abstention rows are
+            # lld_eval.txt section ROW TYPE: absence-verified abstention rows
+            # (not_in_corpus, company_not_in_corpus, near_miss_absent) are
             # evidence empty; out_of_scope rows carry >=1 near_miss span.
             if not (row.get("category") == "unanswerable_abstain"
-                    and row.get("abstention_subtype") == "not_in_corpus"):
+                    and row.get("abstention_subtype") in ("not_in_corpus",
+                                                          "company_not_in_corpus",
+                                                          "near_miss_absent")):
                 problems.append("evidence empty")
         for i, e in enumerate(ev):
             if not isinstance(e, dict):
