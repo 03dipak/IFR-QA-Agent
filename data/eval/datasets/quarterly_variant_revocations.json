@@ -1,0 +1,502 @@
+{
+ "generated_at": "2026-11-14T04:42:18Z",
+ "revocation_count": 62,
+ "pairs": [
+  {
+   "company_id": "ashok_leyland",
+   "fiscal_year": "Q1FY2026",
+   "kept_document_id": "8ab5f858562fbe4d9cecab2d40652a2491823c9bd70859c3d25e2b3123a5fac6",
+   "kept_print_basis": "standalone",
+   "revoked_document_id": "5ba9dd091bfc759a8adc412ffb7bbf2ecbd3c3d7de4e132961548767a961a284",
+   "revoked_print_basis": "consolidated"
+  },
+  {
+   "company_id": "ashok_leyland",
+   "fiscal_year": "Q4FY2025",
+   "kept_document_id": "f117909abde65cf5c2a16259135eb98d873ec7f0654d91d6556fd067612114bc",
+   "kept_print_basis": "standalone",
+   "revoked_document_id": "61458f3b65572df95bcdaff7f047979bb519125eb917b201d52db8660e14fdcc",
+   "revoked_print_basis": "consolidated"
+  },
+  {
+   "company_id": "asian_paints",
+   "fiscal_year": "Q1FY2026",
+   "kept_document_id": "e30cff4ecdf10dd16051d53f6c505212f996fce6254eaa5ee49f371364054b35",
+   "kept_print_basis": "standalone",
+   "revoked_document_id": "3363861e3edb31717efb65874d93eb4f47867d3786c42439b760a28d1d8f6bc8",
+   "revoked_print_basis": "consolidated"
+  },
+  {
+   "company_id": "asian_paints",
+   "fiscal_year": "Q2FY2027",
+   "kept_document_id": "3b8549717158a6fe3c3f23f0f085f8d09da55117b1d2004963d53b2167c55474",
+   "kept_print_basis": "standalone",
+   "revoked_document_id": "52e287b1bd17f04c5f78b4c2ec700590e03325e106b57c4d3b5842046e7a51bc",
+   "revoked_print_basis": "consolidated"
+  },
+  {
+   "company_id": "aurobindo_pharma",
+   "fiscal_year": "Q1FY2026",
+   "kept_document_id": "7d053a0a92c77e0e055ce0f6e61723d2721f635d41c81211980d23199534284a",
+   "kept_print_basis": "standalone",
+   "revoked_document_id": "6030f6c63ce833c491f28c83454a9280532afe192e8d4837d6baa39e72158203",
+   "revoked_print_basis": "consolidated"
+  },
+  {
+   "company_id": "aurobindo_pharma",
+   "fiscal_year": "Q4FY2025",
+   "kept_document_id": "3136cbe842dbea7de663751fb2288a9c7ad0c98b0ee712ddc6004a34344b0375",
+   "kept_print_basis": "standalone",
+   "revoked_document_id": "e3b93585e2286b0726fe0db2195972160a75ac79412360d6c6320a33467b62f1",
+   "revoked_print_basis": "consolidated"
+  },
+  {
+   "company_id": "berger_paints",
+   "fiscal_year": "Q1FY2026",
+   "kept_document_id": "bfdf0772731dd9408794e8658d19c0ba6edb94f3b7f7711fdb46d0ffe9fbcca2",
+   "kept_print_basis": "standalone",
+   "revoked_document_id": "7438427ae3307a4bfb92ae23092af927cb0cd254c6c9e111b0da93e38290a127",
+   "revoked_print_basis": "consolidated"
+  },
+  {
+   "company_id": "berger_paints",
+   "fiscal_year": "Q4FY2025",
+   "kept_document_id": "df68943e2f18a8978e9418661d4a50bcb7abdba0ce3748775594d2f5c7439dc9",
+   "kept_print_basis": "standalone",
+   "revoked_document_id": "c39394c0515b188560600fff05e946a4c8882db9bfa1ae72bd18520aba226e64",
+   "revoked_print_basis": "consolidated"
+  },
+  {
+   "company_id": "bharat_electronics",
+   "fiscal_year": "Q1FY2026",
+   "kept_document_id": "6ead6d73d8d47ddb3630c3cfc7f8da54d55da85521940b6f194dcfcf04038c4b",
+   "kept_print_basis": "standalone",
+   "revoked_document_id": "d8c0e6590bf1d49d99cc717106f6c33139e0fae1d8aebb535d72bbf30c1e4b91",
+   "revoked_print_basis": "consolidated"
+  },
+  {
+   "company_id": "bharat_electronics",
+   "fiscal_year": "Q4FY2025",
+   "kept_document_id": "e3fe736c9f55483cf861231285458e03014bd667fa1be72079210361d09faef4",
+   "kept_print_basis": "standalone",
+   "revoked_document_id": "37a2f3e8253dce2c9f44bfd936e3f4e7d02a8fbc50e66e54faf2de20bab5060c",
+   "revoked_print_basis": "consolidated"
+  },
+  {
+   "company_id": "bhel",
+   "fiscal_year": "Q1FY2026",
+   "kept_document_id": "2177af4a0be8a4387317a3e56c05cd7fdb11fc3a70b5293a28af4eda630c823c",
+   "kept_print_basis": "standalone",
+   "revoked_document_id": "85aaacb954b4a32f06468456547605415ac4f278372d01753e86404a9f7851c0",
+   "revoked_print_basis": "consolidated"
+  },
+  {
+   "company_id": "biocon",
+   "fiscal_year": "Q1FY2026",
+   "kept_document_id": "5d003d73d805ab187524fd793493db1ac1696c72a2d66f1c7eabcb89bc618788",
+   "kept_print_basis": "standalone",
+   "revoked_document_id": "3ac2082d755d38c232ec60838c77d4ff3bcac8bfd5e6bcaf12cf4de08f19337b",
+   "revoked_print_basis": "consolidated"
+  },
+  {
+   "company_id": "biocon",
+   "fiscal_year": "Q4FY2025",
+   "kept_document_id": "e7ab0ff6e4df5be9f65fb0d7fa8a27841d298285d47a234e332567926a57fe4a",
+   "kept_print_basis": "standalone",
+   "revoked_document_id": "bdc2898775cd1716fcf642fde4bdabbd80cddc66b06c87a873717a2006700174",
+   "revoked_print_basis": "consolidated"
+  },
+  {
+   "company_id": "bosch",
+   "fiscal_year": "Q1FY2026",
+   "kept_document_id": "a6e6c9ebf04b3d0f6bab9bda81f7e844e61d1f3dd2271f07aec5129531122570",
+   "kept_print_basis": "standalone",
+   "revoked_document_id": "7ebb1e010b551bf4281b604be59cacb5dbbcb6f2707900efc3bc6486ae5d01dd",
+   "revoked_print_basis": "consolidated"
+  },
+  {
+   "company_id": "bosch",
+   "fiscal_year": "Q4FY2025",
+   "kept_document_id": "69ed77c40bf86651f9506843388dd4520878e157596330cdf41877c0e8a53bd8",
+   "kept_print_basis": "standalone",
+   "revoked_document_id": "919f2609880a496fb76b2ff60e7383c3c973b65dae4c23f218bbcd030aa686b9",
+   "revoked_print_basis": "consolidated"
+  },
+  {
+   "company_id": "britannia",
+   "fiscal_year": "Q1FY2026",
+   "kept_document_id": "5ca5ffc7ecb43eff796273351265cedde0c3c106736138d9206bb4715f2898e3",
+   "kept_print_basis": "standalone",
+   "revoked_document_id": "e83c7dc77bcdaa84a8baa7349143e58749c4e5675ec3908652559b2c07a50889",
+   "revoked_print_basis": "consolidated"
+  },
+  {
+   "company_id": "britannia",
+   "fiscal_year": "Q4FY2025",
+   "kept_document_id": "f974b12bd4c9031978fe95dd5ffef33e904dc5d5170d6e7cdf77166ba723f66d",
+   "kept_print_basis": "standalone",
+   "revoked_document_id": "07e76f67c9a5cff58773aef507f5eafa3a63bfe75b76ef24ffea71e35af57184",
+   "revoked_print_basis": "consolidated"
+  },
+  {
+   "company_id": "cipla",
+   "fiscal_year": "Q1FY2026",
+   "kept_document_id": "81359b35c551c8e64cfb7d0de1abe1c186c024fe3c0e8cc7d0762262bcede5e4",
+   "kept_print_basis": "standalone",
+   "revoked_document_id": "e262f00404d4ea052ef36cdd9cf621bdc71d2919292042a4f121a862fd4e332a",
+   "revoked_print_basis": "consolidated"
+  },
+  {
+   "company_id": "coal_india",
+   "fiscal_year": "Q1FY2026",
+   "kept_document_id": "e888c19cf856ff96a1a8a96fd6657192ac3cf4912f3b70af8a06146a1beb0927",
+   "kept_print_basis": "standalone",
+   "revoked_document_id": "2f820dd91c445a4308b7fe00b4fee4bc1e5a8818f5c573977a452f4a7741c9b8",
+   "revoked_print_basis": "consolidated"
+  },
+  {
+   "company_id": "coforge",
+   "fiscal_year": "Q1FY2026",
+   "kept_document_id": "ac2275e86208f80b826c4162e65e1ddca93c1171c611bc067904a2497ba73169",
+   "kept_print_basis": "standalone",
+   "revoked_document_id": "1a083df3953d9bc02d698b0f54802e146b8f9d8b1260c7c0710f562b2f58ed70",
+   "revoked_print_basis": "consolidated"
+  },
+  {
+   "company_id": "cummins_india",
+   "fiscal_year": "Q1FY2026",
+   "kept_document_id": "f366e5c79d3d40c0bf093b879c3ab8d66518f383797c01366a909fda0f2cab94",
+   "kept_print_basis": "standalone",
+   "revoked_document_id": "6613497cd6fd91312f93085ed6793cbe519230bd5b77cc57f7fea9791d878b91",
+   "revoked_print_basis": "consolidated"
+  },
+  {
+   "company_id": "cummins_india",
+   "fiscal_year": "Q4FY2025",
+   "kept_document_id": "3eacad709f5326fa1e96afcd38048806db7ac5ad59d43c11a1b2906aaff9b19b",
+   "kept_print_basis": "standalone",
+   "revoked_document_id": "6a8a0189dd38f69ecf381428858286c36ef662292f086d22a79d1612f9e749bd",
+   "revoked_print_basis": "consolidated"
+  },
+  {
+   "company_id": "dabur",
+   "fiscal_year": "Q1FY2026",
+   "kept_document_id": "15af052f93abfb0c61f0e0dabc44061b2378aee793b9ceccdd474c018b1c49cb",
+   "kept_print_basis": "standalone",
+   "revoked_document_id": "1d4f045e7fb2a13e5e3a8ae2b9310e9d607c1f336a1e6dce745d43a4beae950e",
+   "revoked_print_basis": "consolidated"
+  },
+  {
+   "company_id": "deepak_nitrite",
+   "fiscal_year": "Q4FY2025",
+   "kept_document_id": "e188fa08c4d60476df3b617bc394fbfe3ec9509638a927a22f3678951622eb80",
+   "kept_print_basis": "standalone",
+   "revoked_document_id": "b04b8f03d999cb88a126e9304fcd6a9e2b4002c6c57e610b38aa8fb70ca8e9d9",
+   "revoked_print_basis": "consolidated"
+  },
+  {
+   "company_id": "dr_reddys",
+   "fiscal_year": "Q1FY2026",
+   "kept_document_id": "71fc48ffc522bb0b7fdd119ea592eea32e1519bff06878f2c1f23ade61f1cce6",
+   "kept_print_basis": "standalone",
+   "revoked_document_id": "b421a116698036c3bc0ed9f5c99da21027ec1be92d7e97504e78ff3e9af96c83",
+   "revoked_print_basis": "consolidated"
+  },
+  {
+   "company_id": "dr_reddys",
+   "fiscal_year": "Q4FY2025",
+   "kept_document_id": "289539a093b42a4353b384a478c56726d99cae548ea7b57c09c04f1dbeeef69c",
+   "kept_print_basis": "standalone",
+   "revoked_document_id": "95085c03dd832c293ac75e502d045afa7f60fac68fca64905338e4a16d6d68b0",
+   "revoked_print_basis": "consolidated"
+  },
+  {
+   "company_id": "eicher_motors",
+   "fiscal_year": "Q1FY2026",
+   "kept_document_id": "f6bf50e6754e3aef17ebe4d843a4ffce1e3f9347515ea5f77fb4ed3ec75f26e4",
+   "kept_print_basis": "standalone",
+   "revoked_document_id": "afeb5ac81de09335aacd19343fac691e3cfff4c0209d67a2308ef883844d6ce4",
+   "revoked_print_basis": "consolidated"
+  },
+  {
+   "company_id": "eicher_motors",
+   "fiscal_year": "Q4FY2025",
+   "kept_document_id": "7d65b4fb891b170b8ea67209380552fd25b89f60b2a6d1cb6753137c3e8934b5",
+   "kept_print_basis": "standalone",
+   "revoked_document_id": "d5339471418f123028c20e87e58b167a9c79f1e08ecb8e2af6ca53ed33b9ca58",
+   "revoked_print_basis": "consolidated"
+  },
+  {
+   "company_id": "force_motors",
+   "fiscal_year": "Q1FY2026",
+   "kept_document_id": "8c4f639bec2163b9120fc0ccacf55588d207ccf5acf5fb1a93494da3ed921856",
+   "kept_print_basis": "standalone",
+   "revoked_document_id": "fa091cb6159cf7357bdb5671778f20d70ef35fb2d35cd50d177950d8ac85a62e",
+   "revoked_print_basis": "consolidated"
+  },
+  {
+   "company_id": "glenmark_pharmaceuticals",
+   "fiscal_year": "Q1FY2026",
+   "kept_document_id": "3c14c9e2b4082dead154dd787c2253ba5694039b2ef62c23d63197f37a46d508",
+   "kept_print_basis": "standalone",
+   "revoked_document_id": "b4745bb586d1bf8e0dc6e09b14576e0ca4d2b4a20fd5ce047ac0f63cce714bb6",
+   "revoked_print_basis": "consolidated"
+  },
+  {
+   "company_id": "glenmark_pharmaceuticals",
+   "fiscal_year": "Q4FY2025",
+   "kept_document_id": "aaa4cd17c49687f03e77a2c108283fd2013864cd9989436b3eb8141382c77a29",
+   "kept_print_basis": "standalone",
+   "revoked_document_id": "183a9c59b161f3332b6851c31d948212b8a0879260c6366f0d59f43018053e2f",
+   "revoked_print_basis": "consolidated"
+  },
+  {
+   "company_id": "godrej_consumer_products",
+   "fiscal_year": "Q1FY2026",
+   "kept_document_id": "bf7a86b5c59818244f2bb23e41e88e922ff44e6513671949c7b648ffea3fb9b6",
+   "kept_print_basis": "standalone",
+   "revoked_document_id": "463b3fa590f88190f2fabc6788ca86ee8d17350b889528b1295a9de4814f778b",
+   "revoked_print_basis": "consolidated"
+  },
+  {
+   "company_id": "godrej_consumer_products",
+   "fiscal_year": "Q4FY2025",
+   "kept_document_id": "6fcd5ee599556bf25371f166840df51175187b3ee8767543f575fa1df0c9640b",
+   "kept_print_basis": "standalone",
+   "revoked_document_id": "2022f2afe5be8a4a77bdfef7aa205c4877579e40c5ef512b9a29e06fededd29f",
+   "revoked_print_basis": "consolidated"
+  },
+  {
+   "company_id": "havells_india",
+   "fiscal_year": "Q1FY2026",
+   "kept_document_id": "5dcb28f2a1badb30c276fe62b2909468a495468e35e10d51be158294abe8a57c",
+   "kept_print_basis": "standalone",
+   "revoked_document_id": "f77455dd11c9a3fc23969b65dbde9c34dd92d4bd046c8ab7fe6113f5468f7807",
+   "revoked_print_basis": "consolidated"
+  },
+  {
+   "company_id": "havells_india",
+   "fiscal_year": "Q4FY2025",
+   "kept_document_id": "4ccb204b6cb7023af37ec84bc4a081aa7f0bc43401e47ead6c6e9cd11d93a987",
+   "kept_print_basis": "standalone",
+   "revoked_document_id": "f95a4956c769c0fc5b3da021b6e81970c5608917bd4d17c5f1f9e586fcc8f93b",
+   "revoked_print_basis": "consolidated"
+  },
+  {
+   "company_id": "hindalco",
+   "fiscal_year": "Q1FY2026",
+   "kept_document_id": "681d713b9ccc3209b1a6f1d466a9efc3e4767f4e3938da4effb91b0555d5aa02",
+   "kept_print_basis": "standalone",
+   "revoked_document_id": "42db54f390e0209ef809dfec2d9cd4afeef38d3c0d957e86c0a5035823694a77",
+   "revoked_print_basis": "consolidated"
+  },
+  {
+   "company_id": "jk_cement",
+   "fiscal_year": "Q1FY2026",
+   "kept_document_id": "9ebb944061735f85b83de2f0ad0805af2068f2e4ac06d7493c25ecb0a874dc6c",
+   "kept_print_basis": "standalone",
+   "revoked_document_id": "f133e1d04fa612616ac76fad5452398bb488fd909e86b160914030f7f1a99c32",
+   "revoked_print_basis": "consolidated"
+  },
+  {
+   "company_id": "kpi_tech",
+   "fiscal_year": "Q1FY2026",
+   "kept_document_id": "c1de00ee89998cae2a2d614eebcc37b25acb3d7aa24ffc55da40202a9080691e",
+   "kept_print_basis": "standalone",
+   "revoked_document_id": "7244c854ef30735d9e857fb931db38785e8d5449a952243e7a6249ab3f831d18",
+   "revoked_print_basis": "consolidated"
+  },
+  {
+   "company_id": "kpi_tech",
+   "fiscal_year": "Q4FY2025",
+   "kept_document_id": "f4ebfe7f243c6b8502ff7f371653c5403c32f348ffdab1e0adbb92ffe2d071e5",
+   "kept_print_basis": "standalone",
+   "revoked_document_id": "58174de4c20747c5fec5dbaa7832d61a0b066ba0e97c7e150984e137a68e439e",
+   "revoked_print_basis": "consolidated"
+  },
+  {
+   "company_id": "lupin",
+   "fiscal_year": "Q1FY2026",
+   "kept_document_id": "a6b363623c3b68e0dad53fdfb4133a4ee78cc5c458460dfab561df1fdcd46c54",
+   "kept_print_basis": "standalone",
+   "revoked_document_id": "2b04955e3dd7b0936d7d32569e9cb7c2142f582f2e1e146564ab2518559c59f2",
+   "revoked_print_basis": "consolidated"
+  },
+  {
+   "company_id": "marico",
+   "fiscal_year": "Q1FY2026",
+   "kept_document_id": "76b671980e471241b82fb3e445543911ec0bfa85e970cb92585b26fd7dd4f353",
+   "kept_print_basis": "standalone",
+   "revoked_document_id": "668c513d48df970c0872750d56ee97a8dad87c229d44a6f1f5f32382e5d86537",
+   "revoked_print_basis": "consolidated"
+  },
+  {
+   "company_id": "maruti_suzuki",
+   "fiscal_year": "Q1FY2026",
+   "kept_document_id": "70e9b545556fc22b198d038c9ee08169b026b371f3d65636082c1d7f458141ca",
+   "kept_print_basis": "standalone",
+   "revoked_document_id": "e40b059eab180711721441bf3d6cb08cf3b47e9c4f2033165c43bc869e462ce2",
+   "revoked_print_basis": "consolidated"
+  },
+  {
+   "company_id": "ntpc",
+   "fiscal_year": "Q1FY2026",
+   "kept_document_id": "cd85a60533cdd224e757b77ddecae3d09640f7d373036ba242e00d1c465b2407",
+   "kept_print_basis": "standalone",
+   "revoked_document_id": "a688d049bedb178d253d229d4b77e419f827a332e82c97b0743295dde798ceee",
+   "revoked_print_basis": "consolidated"
+  },
+  {
+   "company_id": "pidilite",
+   "fiscal_year": "Q1FY2026",
+   "kept_document_id": "cb5d6385c504174a07dfc80a8e0ecfd2262b9b6540adaffd566ae8bc30ccb082",
+   "kept_print_basis": "standalone",
+   "revoked_document_id": "33c0bccf81f0dcf41033f79c38a55861e06b459de0ba1fd5bfe120dc0e551836",
+   "revoked_print_basis": "consolidated"
+  },
+  {
+   "company_id": "pidilite",
+   "fiscal_year": "Q4FY2025",
+   "kept_document_id": "5afda8ea7c16b851e5de04734c4334b50b1a6c91d715064857e0dce2ce2dcc27",
+   "kept_print_basis": "standalone",
+   "revoked_document_id": "426a4bd845789a268d70261cd26ac15a32cba8f06da32116549dd664fb8b507f",
+   "revoked_print_basis": "consolidated"
+  },
+  {
+   "company_id": "polycab",
+   "fiscal_year": "Q1FY2026",
+   "kept_document_id": "bba8be1a1ea0bad109ff560c46e2b6339f0c47bac8cdb7c70081df7c4079fe7e",
+   "kept_print_basis": "standalone",
+   "revoked_document_id": "437baa132c29615c6dabc2cccdb1553060675bf8029e72d1120929415d66fdff",
+   "revoked_print_basis": "consolidated"
+  },
+  {
+   "company_id": "polycab",
+   "fiscal_year": "Q4FY2025",
+   "kept_document_id": "3021f3a016f0e11410b0698edfc6d40f6b00ea4deb0c056fc6df256da245fd2c",
+   "kept_print_basis": "standalone",
+   "revoked_document_id": "c4020fd59cae32f5cb99d8dad664f75a85755a7a3b295676be4c18f67af2c95e",
+   "revoked_print_basis": "consolidated"
+  },
+  {
+   "company_id": "sail",
+   "fiscal_year": "Q1FY2026",
+   "kept_document_id": "fe1de8ded9781849a6983f80fb8e94d34e6bad7daada6836ecbb653a727660d6",
+   "kept_print_basis": "standalone",
+   "revoked_document_id": "da1ea040908ac1aaa81adb56831995604241fc4c0a12b23b18193f5e64e5190c",
+   "revoked_print_basis": "consolidated"
+  },
+  {
+   "company_id": "sail",
+   "fiscal_year": "Q4FY2025",
+   "kept_document_id": "d13c0841c0df0c82273c00a059bcaadf21dc197fd20c446509c20a330bb1f004",
+   "kept_print_basis": "standalone",
+   "revoked_document_id": "ee7ae79e9259db826f1f7f035296a3299613f3a6cc4ad746cb3161740c6e1e11",
+   "revoked_print_basis": "consolidated"
+  },
+  {
+   "company_id": "srf",
+   "fiscal_year": "Q1FY2026",
+   "kept_document_id": "7a11525f711cffb2f6c9f238fa3cdc89ad4af050af8ce97517acbc9314535d8d",
+   "kept_print_basis": "standalone",
+   "revoked_document_id": "6562aecb4682f9c00ecebd410d046ce2da5acb08a949ad5e214d954c0fad0b1e",
+   "revoked_print_basis": "consolidated"
+  },
+  {
+   "company_id": "srf",
+   "fiscal_year": "Q4FY2025",
+   "kept_document_id": "f5b4dc0dd5207e57629176068b9b1fe1f9058b4980ca5c1f3dcdeab05c4a2da8",
+   "kept_print_basis": "standalone",
+   "revoked_document_id": "d7ee0e86722994865c4568d964eea9936a6fc1ad4f8aeb0e53c75a84e1bdab72",
+   "revoked_print_basis": "consolidated"
+  },
+  {
+   "company_id": "tata_chemicals",
+   "fiscal_year": "Q1FY2026",
+   "kept_document_id": "2502d906b241ab29b771f17d9e301aa5ef615c89f8adaaee8515fe012d5349d7",
+   "kept_print_basis": "standalone",
+   "revoked_document_id": "b6a9969ae0a00e949ff62b061b7bd3664fadbcdcd4158c062c6ee9efa9da6dc0",
+   "revoked_print_basis": "consolidated"
+  },
+  {
+   "company_id": "tata_chemicals",
+   "fiscal_year": "Q4FY2025",
+   "kept_document_id": "fd5d774311d60ad79be3d02d500ed87345e495839325122641f83ef419ccc503",
+   "kept_print_basis": "standalone",
+   "revoked_document_id": "ccdcfcd824b4d728685138f0276fb7ddf292a6d7078834baf64e6848bf64a291",
+   "revoked_print_basis": "consolidated"
+  },
+  {
+   "company_id": "tata_steel",
+   "fiscal_year": "Q1FY2026",
+   "kept_document_id": "2177abf1d1d7247c88dc0ab382da105acf4d9e1e69bd66eb86b60347a72c0282",
+   "kept_print_basis": "standalone",
+   "revoked_document_id": "21bae6b65bd9393d01bb4df370879f2ff9b8126e0acdbbf2d520a242aa53c46d",
+   "revoked_print_basis": "consolidated"
+  },
+  {
+   "company_id": "tcs",
+   "fiscal_year": "Q1FY2026",
+   "kept_document_id": "1c28d4f128810c825e108f2448643273af5a0637c9d9bc033f914e61b784abec",
+   "kept_print_basis": "standalone",
+   "revoked_document_id": "385b5a65e07bac8b03390d11cda0c1e3d31f924c11d4c3999a832db2f5880d43",
+   "revoked_print_basis": "consolidated"
+  },
+  {
+   "company_id": "tech_mahindra",
+   "fiscal_year": "Q1FY2026",
+   "kept_document_id": "9bfb4b7234e6f139e5f4532a9a861b7ad375713e83f03597dcb1b006bd555267",
+   "kept_print_basis": "standalone",
+   "revoked_document_id": "cd7c108df8239c32f5a6dc9f592728cc77dc124ac6b6f6e8521c72cb293a2337",
+   "revoked_print_basis": "consolidated"
+  },
+  {
+   "company_id": "tech_mahindra",
+   "fiscal_year": "Q4FY2025",
+   "kept_document_id": "2b81f43340e52424261276e736608047a64813eb933e23e7cec2c1dc47ce45e7",
+   "kept_print_basis": "standalone",
+   "revoked_document_id": "22922ffb0a87cda3c3deb3050382176e2a105417f545988e3c567b63e9dbcf8d",
+   "revoked_print_basis": "consolidated"
+  },
+  {
+   "company_id": "thermax",
+   "fiscal_year": "Q1FY2026",
+   "kept_document_id": "4ff7a744485975fa2a4ffa41522a23cb9b459dadb3c167e356fe9947d7e6ac92",
+   "kept_print_basis": "standalone",
+   "revoked_document_id": "4f12cdc6b1cb94b80a8f458d0b2ad05c4b27599410286c8a393a3da0d87eb25d",
+   "revoked_print_basis": "consolidated"
+  },
+  {
+   "company_id": "thermax",
+   "fiscal_year": "Q4FY2025",
+   "kept_document_id": "c31b64075ff3ecc9b79785367be1b60cc294876b4ab80f4ce1184eef004f981f",
+   "kept_print_basis": "standalone",
+   "revoked_document_id": "aae0199a7c14262ca659a29ab95d76a726266ee53836a8585db4e5641adde9d2",
+   "revoked_print_basis": "consolidated"
+  },
+  {
+   "company_id": "torrent_pharma",
+   "fiscal_year": "Q1FY2026",
+   "kept_document_id": "64499d1cd7223126f71070e3491b059e8a4a5799d7be62194bcd7fac0bc74e08",
+   "kept_print_basis": "standalone",
+   "revoked_document_id": "e256d23e326ae387e30a90a10e1b5c4494ed073a2923543d47b7803bee8c4d12",
+   "revoked_print_basis": "consolidated"
+  },
+  {
+   "company_id": "zydus_lifesciences",
+   "fiscal_year": "Q1FY2026",
+   "kept_document_id": "88c51b0633cd0e1d6f85bccb2a84faed17a73a8f8831ba52361816c35ed7f095",
+   "kept_print_basis": "standalone",
+   "revoked_document_id": "cfa67014dea89f4c89fdaaa7b57c50eae6e8991b49ef851ec328a4d636de88f3",
+   "revoked_print_basis": "consolidated"
+  },
+  {
+   "company_id": "zydus_lifesciences",
+   "fiscal_year": "Q4FY2025",
+   "kept_document_id": "811afb648f5594465c53839b6bf24695a550382e124b5677229f79dfa10f1bc6",
+   "kept_print_basis": "standalone",
+   "revoked_document_id": "a032c2a0ba95c74eaea8bfb05cbc7659572d67f9fba614e872f02a090c9f3b72",
+   "revoked_print_basis": "consolidated"
+  }
+ ]
+}

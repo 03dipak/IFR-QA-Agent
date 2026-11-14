@@ -16,6 +16,8 @@ PAGES = Path("data/corpus/extract/page_extracts")
 FREEZE_V1 = Path("data/corpus/freeze_v1.json")
 FREEZE_V2 = Path("data/corpus/freeze_v2.json")
 GATE_PASS = Path("data/corpus/gate_pass_v2.json")
+CORRECTIONS = [Path("data/corpus/ledger_corrections_v2.json"),
+                Path("data/corpus/ledger_corrections_v3.jsonl")]
 
 DOC_KEYS = ["company_id", "doc_type", "doc_type_confidence", "document_id",
             "extraction_config_hash", "extraction_status", "fiscal_year",
@@ -68,12 +70,42 @@ def load_gate_pass() -> dict[str, dict]:
     return {row["checksum"]: row for row in rows}
 
 
-def build_freeze(gate_pass: dict[str, dict]) -> tuple[list[dict], Counter]:
+def load_corrections() -> tuple[dict[str, str], set[str]]:
+    """Variant overrides and revoked supersessions from the corrections files."""
+    overrides: dict[str, str] = {}
+    revoked: set[str] = set()
+    for path in CORRECTIONS:
+        if not path.exists():
+            continue
+        if path.suffix == ".jsonl":
+            entries = [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines()
+                       if line.strip()]
+        else:
+            data = json.loads(path.read_text(encoding="utf-8"))
+            entries = [data]
+        for entry in entries:
+            kind = entry.get("kind")
+            if kind == "variant_override":
+                overrides[entry["document_id"]] = entry["to"]
+            elif kind == "supersession_revocation":
+                revoked.add(entry["from_document_id"])
+            elif kind is None:
+                overrides.update(entry.get("variant_overrides") or {})
+                revoked.update(entry.get("revoked_supersessions") or [])
+    return overrides, revoked
+
+
+def build_freeze(gate_pass: dict[str, dict], corrections: tuple[dict[str, str], set[str]]
+                 ) -> tuple[list[dict], Counter]:
     docs, superseded, withdrawn = replay_ledger(LEDGER)
+    overrides, revoked = corrections
+    superseded -= revoked
     reasons: Counter = Counter()
     kept: list[dict] = []
     for doc in docs.values():
         checksum = doc.get("checksum")
+        if checksum in overrides:
+            doc = {**doc, "variant": overrides[checksum]}
         gate = gate_pass.get(checksum, {}).get("decision", doc.get("gate_decision"))
         if gate != "keep":
             reasons[f"gate:{gate}"] += 1
@@ -114,6 +146,10 @@ def manifest(kept: list[dict]) -> dict:
     body = json.dumps(manifest["documents"], sort_keys=True, separators=(",", ":"))
     manifest["manifest_sha256"] = hashlib.sha256(body.encode()).hexdigest()
     manifest["source_ledger_sha256"] = hashlib.sha256(LEDGER.read_bytes()).hexdigest()
+    if CORRECTIONS:
+        blob = b"".join(p.read_bytes() for p in CORRECTIONS if p.exists())
+        manifest["corrections_sha256"] = hashlib.sha256(blob).hexdigest()
+        manifest["corrections_files"] = [str(p) for p in CORRECTIONS if p.exists()]
     return manifest
 
 
@@ -122,7 +158,7 @@ def main() -> int:
     parser.add_argument("--apply", action="store_true", help="write freeze_v2.json")
     args = parser.parse_args()
     started = time.time()
-    kept, reasons = build_freeze(load_gate_pass())
+    kept, reasons = build_freeze(load_gate_pass(), load_corrections())
     doc = manifest(kept)
     v1 = json.loads(FREEZE_V1.read_text(encoding="utf-8"))
     v1_ids = {d["document_id"] for d in v1["documents"]}

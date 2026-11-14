@@ -27,6 +27,7 @@ from pathlib import Path
 from .gold_schema import (
     ALLOCATION,
     FREEZE_SHA_V1,
+    FREEZE_SHA_V2,
     FREEZE_SHAS,
     freeze_sha_of,
     signed_content_hash,
@@ -35,6 +36,7 @@ from .gold_schema import (
 from .textnorm import normalise_for_hash
 
 FREEZE = "data/corpus/freeze_v1.json"
+FREEZE_FILES = {FREEZE_SHA_V1: FREEZE, FREEZE_SHA_V2: "data/corpus/freeze_v2.json"}
 PAGE_DIR = "data/corpus/extract/page_extracts"
 INDAS_LINES = [
     "revenue from operations", "total income", "total expenses",
@@ -43,12 +45,19 @@ INDAS_LINES = [
 ]
 
 
-def freeze_ids() -> set[str]:
-    return set(json.load(open(FREEZE, encoding="utf-8"))["kept_ids"])
+def freeze_ids(path: str | None = None) -> set[str]:
+    data = json.load(open(path or FREEZE, encoding="utf-8"))
+    if "kept_ids" in data:
+        return set(data["kept_ids"])
+    return {d["document_id"] for d in data["documents"]}
 
 
-def _frozen_company_docs() -> dict[str, set[str]]:
-    docs = json.load(open(FREEZE, encoding="utf-8"))["documents"]
+def _freeze_path_for(sha: str) -> str:
+    return FREEZE if sha == FREEZE_SHA_V1 else FREEZE_FILES.get(sha, FREEZE)
+
+
+def _frozen_company_docs(path: str | None = None) -> dict[str, set[str]]:
+    docs = json.load(open(path or FREEZE, encoding="utf-8"))["documents"]
     out = defaultdict(set)
     for d in docs:
         out[d.get("company_id")].add(d["document_id"])
@@ -132,11 +141,12 @@ def check_drift(rows, apply=False):
 def check_evidence_resolvable(rows, fids):
     problems = []
     for r in rows:
+        row_fids = fids.get(freeze_sha_of(r), set()) if isinstance(fids, dict) else fids
         for j, e in enumerate(r.get("evidence") or []):
             did = e.get("document_id")
             pg = e.get("pdf_page")
-            if did not in fids:
-                problems.append((r["id"], f"evidence[{j}] doc {did[:12]} not in freeze_v1"))
+            if did not in row_fids:
+                problems.append((r["id"], f"evidence[{j}] doc {did[:12]} not in freeze"))
                 continue
             text = _page_text(did, pg)
             if text is None:
@@ -222,10 +232,14 @@ def abstain_keyword_report(rows):
     may in fact be printed there and the row needs human verification.
     """
     report = []
-    company_docs = _frozen_company_docs()
+    by_path: dict[str, dict[str, set[str]]] = {}
     for r in rows:
         if r.get("category") != "unanswerable_abstain":
             continue
+        path = _freeze_path_for(freeze_sha_of(r))
+        if path not in by_path:
+            by_path[path] = _frozen_company_docs(path)
+        company_docs = by_path[path]
         q = normalise_for_hash(r.get("question") or "")
         metric = next((m for m in INDAS_LINES if m in q), None)
         comp = r.get("company_id")
@@ -282,7 +296,9 @@ def check_freeze_sha(rows) -> list:
 def run_all(rows, allocation=None):
     n_superseded = sum(1 for r in rows if r.get("status") == "superseded")
     rows = [r for r in rows if r.get("status") == "active"]
-    fids = freeze_ids()
+    shas = {freeze_sha_of(r) for r in rows}
+    fids = {sha: (freeze_ids() if sha == FREEZE_SHA_V1 else freeze_ids(FREEZE_FILES[sha]))
+            for sha in shas}
     fails, warns = [], []
     for r in rows:
         for p in validate_row(r):

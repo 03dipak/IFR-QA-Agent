@@ -1,69 +1,69 @@
 {
- "created_at": "2026-11-13T16:37:28Z",
+ "created_at": "2026-11-14T04:50:57Z",
  "counts_by_company": {
   "ICICI": 1,
   "RELIANCE": 1,
   "adani_green": 25,
-  "ashok_leyland": 21,
-  "asian_paints": 22,
-  "aurobindo_pharma": 20,
-  "berger_paints": 19,
-  "bharat_electronics": 22,
-  "bhel": 22,
-  "biocon": 20,
-  "bosch": 22,
-  "britannia": 21,
-  "cipla": 21,
-  "coal_india": 16,
-  "coforge": 18,
-  "cummins_india": 20,
-  "dabur": 20,
-  "deepak_nitrite": 21,
-  "dr_reddys": 22,
-  "eicher_motors": 20,
+  "ashok_leyland": 23,
+  "asian_paints": 24,
+  "aurobindo_pharma": 22,
+  "berger_paints": 21,
+  "bharat_electronics": 24,
+  "bhel": 23,
+  "biocon": 22,
+  "bosch": 24,
+  "britannia": 23,
+  "cipla": 22,
+  "coal_india": 17,
+  "coforge": 19,
+  "cummins_india": 22,
+  "dabur": 21,
+  "deepak_nitrite": 23,
+  "dr_reddys": 24,
+  "eicher_motors": 22,
   "emami": 3,
-  "force_motors": 13,
-  "glenmark_pharmaceuticals": 18,
-  "godrej_consumer_products": 22,
-  "havells_india": 22,
+  "force_motors": 14,
+  "glenmark_pharmaceuticals": 20,
+  "godrej_consumer_products": 24,
+  "havells_india": 24,
   "hcl": 31,
-  "hindalco": 21,
+  "hindalco": 22,
   "hindustan_unilever": 1,
   "infosys": 7,
   "itc": 16,
-  "jk_cement": 22,
+  "jk_cement": 23,
   "jsw_steel": 7,
-  "kpi_tech": 19,
+  "kpi_tech": 21,
   "l_and_t": 17,
   "local": 6,
-  "lupin": 19,
-  "marico": 20,
-  "maruti_suzuki": 22,
+  "lupin": 20,
+  "marico": 21,
+  "maruti_suzuki": 23,
   "mrf": 2,
-  "ntpc": 12,
+  "ntpc": 13,
   "ongc": 21,
-  "pidilite": 18,
-  "polycab": 17,
+  "pidilite": 20,
+  "polycab": 19,
   "power_grid": 17,
-  "sail": 18,
+  "sail": 20,
   "samvardhana_motherson": 22,
-  "srf": 24,
+  "srf": 26,
   "sun_pharma": 21,
-  "tata_chemicals": 21,
-  "tata_steel": 26,
-  "tcs": 16,
-  "tech_mahindra": 22,
-  "thermax": 19,
-  "torrent_pharma": 25,
+  "tata_chemicals": 23,
+  "tata_steel": 27,
+  "tcs": 17,
+  "tech_mahindra": 24,
+  "thermax": 21,
+  "torrent_pharma": 26,
   "tvs_motor": 19,
   "upl": 20,
   "wipro": 12,
-  "zydus_lifesciences": 21
+  "zydus_lifesciences": 23
  },
  "counts_by_doc_type": {
   "annual": 447,
   "disclosure": 151,
-  "quarterly": 430,
+  "quarterly": 493,
   "sustainability_report": 5
  },
  "definition": "freeze v1 definition re-run on current ledger: last-wins doc rows with gate_decision=='keep', not superseded/withdrawn, extraction_status=='extracted', raw sha256 verified, page extracts present",
@@ -121,7 +121,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -191,7 +191,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v3"
   },
   {
@@ -331,7 +331,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -359,7 +359,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -373,7 +373,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -415,7 +415,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -541,7 +541,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -583,7 +583,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -597,7 +597,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -672,6 +672,20 @@
   },
   {
    "company_id": "britannia",
+   "doc_type": "quarterly",
+   "doc_type_confidence": "medium",
+   "document_id": "07e76f67c9a5cff58773aef507f5eafa3a63bfe75b76ef24ffea71e35af57184",
+   "extraction_config_hash": "cfg-0",
+   "extraction_status": "extracted",
+   "fiscal_year": "Q4FY2025",
+   "period_type": "quarterly",
+   "sha256": null,
+   "source": "manual",
+   "variant": "consolidated",
+   "version": "A"
+  },
+  {
+   "company_id": "britannia",
    "doc_type": "annual",
    "doc_type_confidence": "high",
    "document_id": "08190eece27acd8478085311428e94c13aeff14dd2f946e678c96a566aa90e73",
@@ -695,7 +709,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -863,7 +877,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -877,7 +891,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -919,7 +933,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -933,7 +947,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -1017,7 +1031,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -1031,7 +1045,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -1045,7 +1059,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -1087,7 +1101,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -1101,7 +1115,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -1129,7 +1143,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -1171,7 +1185,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -1199,7 +1213,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -1255,7 +1269,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -1311,7 +1325,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -1325,7 +1339,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v3"
   },
   {
@@ -1339,7 +1353,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -1381,7 +1395,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -1465,7 +1479,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -1535,7 +1549,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -1605,7 +1619,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -1621,6 +1635,20 @@
    "source": "manual",
    "variant": "consolidated",
    "version": "single"
+  },
+  {
+   "company_id": "glenmark_pharmaceuticals",
+   "doc_type": "quarterly",
+   "doc_type_confidence": "medium",
+   "document_id": "183a9c59b161f3332b6851c31d948212b8a0879260c6366f0d59f43018053e2f",
+   "extraction_config_hash": "cfg-0",
+   "extraction_status": "extracted",
+   "fiscal_year": "Q4FY2025",
+   "period_type": "quarterly",
+   "sha256": null,
+   "source": "manual",
+   "variant": "consolidated",
+   "version": "A"
   },
   {
    "company_id": "marico",
@@ -1647,7 +1675,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -1703,7 +1731,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -1735,6 +1763,20 @@
    "version": "single"
   },
   {
+   "company_id": "coforge",
+   "doc_type": "quarterly",
+   "doc_type_confidence": "medium",
+   "document_id": "1a083df3953d9bc02d698b0f54802e146b8f9d8b1260c7c0710f562b2f58ed70",
+   "extraction_config_hash": "cfg-0",
+   "extraction_status": "extracted",
+   "fiscal_year": "Q1FY2026",
+   "period_type": "quarterly",
+   "sha256": null,
+   "source": "manual",
+   "variant": "consolidated",
+   "version": "U"
+  },
+  {
    "company_id": "torrent_pharma",
    "doc_type": "annual",
    "doc_type_confidence": "high",
@@ -1759,7 +1801,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -1773,7 +1815,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -1815,7 +1857,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -1843,7 +1885,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -1857,7 +1899,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -1873,6 +1915,20 @@
    "source": "manual",
    "variant": "consolidated",
    "version": "single"
+  },
+  {
+   "company_id": "dabur",
+   "doc_type": "quarterly",
+   "doc_type_confidence": "medium",
+   "document_id": "1d4f045e7fb2a13e5e3a8ae2b9310e9d607c1f336a1e6dce745d43a4beae950e",
+   "extraction_config_hash": "cfg-0",
+   "extraction_status": "extracted",
+   "fiscal_year": "Q1FY2026",
+   "period_type": "quarterly",
+   "sha256": null,
+   "source": "manual",
+   "variant": "consolidated",
+   "version": "U"
   },
   {
    "company_id": "ntpc",
@@ -1899,7 +1955,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -1927,7 +1983,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -1941,7 +1997,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -2025,8 +2081,22 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
+  },
+  {
+   "company_id": "godrej_consumer_products",
+   "doc_type": "quarterly",
+   "doc_type_confidence": "medium",
+   "document_id": "2022f2afe5be8a4a77bdfef7aa205c4877579e40c5ef512b9a29e06fededd29f",
+   "extraction_config_hash": "cfg-0",
+   "extraction_status": "extracted",
+   "fiscal_year": "Q4FY2025",
+   "period_type": "quarterly",
+   "sha256": null,
+   "source": "manual",
+   "variant": "consolidated",
+   "version": "A"
   },
   {
    "company_id": "zydus_lifesciences",
@@ -2041,6 +2111,20 @@
    "source": "manual",
    "variant": "consolidated",
    "version": "single"
+  },
+  {
+   "company_id": "deepak_nitrite",
+   "doc_type": "quarterly",
+   "doc_type_confidence": "medium",
+   "document_id": "2069af1494ab6b0f5dbc11c93922cf031bcfe286a59e3248795de647552e0684",
+   "extraction_config_hash": "cfg-0",
+   "extraction_status": "extracted",
+   "fiscal_year": "Q1FY2026",
+   "period_type": "quarterly",
+   "sha256": null,
+   "source": "manual",
+   "variant": "consolidated",
+   "version": "U"
   },
   {
    "company_id": "deepak_nitrite",
@@ -2081,7 +2165,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -2109,7 +2193,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -2123,8 +2207,22 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
+  },
+  {
+   "company_id": "tata_steel",
+   "doc_type": "quarterly",
+   "doc_type_confidence": "medium",
+   "document_id": "21bae6b65bd9393d01bb4df370879f2ff9b8126e0acdbbf2d520a242aa53c46d",
+   "extraction_config_hash": "cfg-0",
+   "extraction_status": "extracted",
+   "fiscal_year": "Q1FY2026",
+   "period_type": "quarterly",
+   "sha256": null,
+   "source": "manual",
+   "variant": "consolidated",
+   "version": "U"
   },
   {
    "company_id": "tata_chemicals",
@@ -2151,7 +2249,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -2181,6 +2279,20 @@
    "source": "manual",
    "variant": "single",
    "version": "single"
+  },
+  {
+   "company_id": "tech_mahindra",
+   "doc_type": "quarterly",
+   "doc_type_confidence": "medium",
+   "document_id": "22922ffb0a87cda3c3deb3050382176e2a105417f545988e3c567b63e9dbcf8d",
+   "extraction_config_hash": "cfg-0",
+   "extraction_status": "extracted",
+   "fiscal_year": "Q4FY2025",
+   "period_type": "quarterly",
+   "sha256": null,
+   "source": "manual",
+   "variant": "consolidated",
+   "version": "A"
   },
   {
    "company_id": "samvardhana_motherson",
@@ -2263,7 +2375,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -2277,7 +2389,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -2291,7 +2403,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -2305,7 +2417,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -2319,7 +2431,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -2361,7 +2473,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -2389,7 +2501,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -2445,7 +2557,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v3"
   },
   {
@@ -2543,7 +2655,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -2557,7 +2669,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -2585,7 +2697,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -2599,7 +2711,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -2683,8 +2795,22 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
+  },
+  {
+   "company_id": "lupin",
+   "doc_type": "quarterly",
+   "doc_type_confidence": "medium",
+   "document_id": "2b04955e3dd7b0936d7d32569e9cb7c2142f582f2e1e146564ab2518559c59f2",
+   "extraction_config_hash": "cfg-0",
+   "extraction_status": "extracted",
+   "fiscal_year": "Q1FY2026",
+   "period_type": "quarterly",
+   "sha256": null,
+   "source": "manual",
+   "variant": "consolidated",
+   "version": "U"
   },
   {
    "company_id": "dabur",
@@ -2739,7 +2865,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -2767,7 +2893,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -2781,7 +2907,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -2879,7 +3005,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -2893,7 +3019,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -2907,8 +3033,22 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
+  },
+  {
+   "company_id": "coal_india",
+   "doc_type": "quarterly",
+   "doc_type_confidence": "medium",
+   "document_id": "2f820dd91c445a4308b7fe00b4fee4bc1e5a8818f5c573977a452f4a7741c9b8",
+   "extraction_config_hash": "cfg-0",
+   "extraction_status": "extracted",
+   "fiscal_year": "Q1FY2026",
+   "period_type": "quarterly",
+   "sha256": null,
+   "source": "manual",
+   "variant": "consolidated",
+   "version": "U"
   },
   {
    "company_id": "tata_steel",
@@ -2935,7 +3075,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -2991,7 +3131,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v3"
   },
   {
@@ -3005,7 +3145,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v3"
   },
   {
@@ -3019,7 +3159,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -3033,7 +3173,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -3075,7 +3215,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -3117,7 +3257,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -3135,6 +3275,20 @@
    "version": null
   },
   {
+   "company_id": "asian_paints",
+   "doc_type": "quarterly",
+   "doc_type_confidence": "medium",
+   "document_id": "3363861e3edb31717efb65874d93eb4f47867d3786c42439b760a28d1d8f6bc8",
+   "extraction_config_hash": "cfg-0",
+   "extraction_status": "extracted",
+   "fiscal_year": "Q1FY2026",
+   "period_type": "quarterly",
+   "sha256": null,
+   "source": "manual",
+   "variant": "consolidated",
+   "version": "U"
+  },
+  {
    "company_id": "samvardhana_motherson",
    "doc_type": "disclosure",
    "doc_type_confidence": "high",
@@ -3147,6 +3301,20 @@
    "source": "manual",
    "variant": "standalone",
    "version": "single"
+  },
+  {
+   "company_id": "pidilite",
+   "doc_type": "quarterly",
+   "doc_type_confidence": "medium",
+   "document_id": "33c0bccf81f0dcf41033f79c38a55861e06b459de0ba1fd5bfe120dc0e551836",
+   "extraction_config_hash": "cfg-0",
+   "extraction_status": "extracted",
+   "fiscal_year": "Q1FY2026",
+   "period_type": "quarterly",
+   "sha256": null,
+   "source": "manual",
+   "variant": "consolidated",
+   "version": "U"
   },
   {
    "company_id": "upl",
@@ -3215,7 +3383,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -3243,7 +3411,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -3313,7 +3481,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -3331,6 +3499,20 @@
    "version": "A"
   },
   {
+   "company_id": "bharat_electronics",
+   "doc_type": "quarterly",
+   "doc_type_confidence": "medium",
+   "document_id": "37a2f3e8253dce2c9f44bfd936e3f4e7d02a8fbc50e66e54faf2de20bab5060c",
+   "extraction_config_hash": "cfg-0",
+   "extraction_status": "extracted",
+   "fiscal_year": "Q4FY2025",
+   "period_type": "quarterly",
+   "sha256": null,
+   "source": "manual",
+   "variant": "consolidated",
+   "version": "A"
+  },
+  {
    "company_id": "sun_pharma",
    "doc_type": "quarterly",
    "doc_type_confidence": "medium",
@@ -3341,8 +3523,22 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
+  },
+  {
+   "company_id": "tcs",
+   "doc_type": "quarterly",
+   "doc_type_confidence": "medium",
+   "document_id": "385b5a65e07bac8b03390d11cda0c1e3d31f924c11d4c3999a832db2f5880d43",
+   "extraction_config_hash": "cfg-0",
+   "extraction_status": "extracted",
+   "fiscal_year": "Q1FY2026",
+   "period_type": "quarterly",
+   "sha256": null,
+   "source": "manual",
+   "variant": "consolidated",
+   "version": "A"
   },
   {
    "company_id": "sun_pharma",
@@ -3355,7 +3551,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -3397,7 +3593,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -3425,7 +3621,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -3467,7 +3663,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -3481,8 +3677,22 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
+  },
+  {
+   "company_id": "biocon",
+   "doc_type": "quarterly",
+   "doc_type_confidence": "medium",
+   "document_id": "3ac2082d755d38c232ec60838c77d4ff3bcac8bfd5e6bcaf12cf4de08f19337b",
+   "extraction_config_hash": "cfg-0",
+   "extraction_status": "extracted",
+   "fiscal_year": "Q1FY2026",
+   "period_type": "quarterly",
+   "sha256": null,
+   "source": "manual",
+   "variant": "consolidated",
+   "version": "U"
   },
   {
    "company_id": "samvardhana_motherson",
@@ -3509,7 +3719,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -3523,7 +3733,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -3537,7 +3747,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -3579,7 +3789,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -3593,7 +3803,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v4"
   },
   {
@@ -3607,7 +3817,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -3649,7 +3859,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -3663,7 +3873,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -3677,7 +3887,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -3691,7 +3901,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -3803,7 +4013,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -3859,8 +4069,22 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
+  },
+  {
+   "company_id": "pidilite",
+   "doc_type": "quarterly",
+   "doc_type_confidence": "medium",
+   "document_id": "426a4bd845789a268d70261cd26ac15a32cba8f06da32116549dd664fb8b507f",
+   "extraction_config_hash": "cfg-0",
+   "extraction_status": "extracted",
+   "fiscal_year": "Q4FY2025",
+   "period_type": "quarterly",
+   "sha256": null,
+   "source": "manual",
+   "variant": "consolidated",
+   "version": "A"
   },
   {
    "company_id": "godrej_consumer_products",
@@ -3891,6 +4115,20 @@
    "version": "A"
   },
   {
+   "company_id": "hindalco",
+   "doc_type": "quarterly",
+   "doc_type_confidence": "medium",
+   "document_id": "42db54f390e0209ef809dfec2d9cd4afeef38d3c0d957e86c0a5035823694a77",
+   "extraction_config_hash": "cfg-0",
+   "extraction_status": "extracted",
+   "fiscal_year": "Q1FY2026",
+   "period_type": "quarterly",
+   "sha256": null,
+   "source": "manual",
+   "variant": "consolidated",
+   "version": "U"
+  },
+  {
    "company_id": "cipla",
    "doc_type": "quarterly",
    "doc_type_confidence": "high",
@@ -3915,8 +4153,22 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
+  },
+  {
+   "company_id": "polycab",
+   "doc_type": "quarterly",
+   "doc_type_confidence": "medium",
+   "document_id": "437baa132c29615c6dabc2cccdb1553060675bf8029e72d1120929415d66fdff",
+   "extraction_config_hash": "cfg-0",
+   "extraction_status": "extracted",
+   "fiscal_year": "Q1FY2026",
+   "period_type": "quarterly",
+   "sha256": null,
+   "source": "manual",
+   "variant": "consolidated",
+   "version": "U"
   },
   {
    "company_id": "samvardhana_motherson",
@@ -3929,7 +4181,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -3943,7 +4195,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -3985,7 +4237,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -4013,7 +4265,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -4041,7 +4293,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -4069,7 +4321,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -4083,8 +4335,22 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
+  },
+  {
+   "company_id": "godrej_consumer_products",
+   "doc_type": "quarterly",
+   "doc_type_confidence": "medium",
+   "document_id": "463b3fa590f88190f2fabc6788ca86ee8d17350b889528b1295a9de4814f778b",
+   "extraction_config_hash": "cfg-0",
+   "extraction_status": "extracted",
+   "fiscal_year": "Q1FY2026",
+   "period_type": "quarterly",
+   "sha256": null,
+   "source": "manual",
+   "variant": "consolidated",
+   "version": "U"
   },
   {
    "company_id": "torrent_pharma",
@@ -4167,7 +4433,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -4195,7 +4461,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -4209,7 +4475,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -4265,7 +4531,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -4293,7 +4559,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -4321,7 +4587,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -4335,7 +4601,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -4363,7 +4629,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -4377,7 +4643,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -4461,7 +4727,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -4545,7 +4811,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -4575,6 +4841,20 @@
    "source": "manual",
    "variant": "consolidated",
    "version": "single"
+  },
+  {
+   "company_id": "thermax",
+   "doc_type": "quarterly",
+   "doc_type_confidence": "medium",
+   "document_id": "4f12cdc6b1cb94b80a8f458d0b2ad05c4b27599410286c8a393a3da0d87eb25d",
+   "extraction_config_hash": "cfg-0",
+   "extraction_status": "extracted",
+   "fiscal_year": "Q1FY2026",
+   "period_type": "quarterly",
+   "sha256": null,
+   "source": "manual",
+   "variant": "consolidated",
+   "version": "U"
   },
   {
    "company_id": "aurobindo_pharma",
@@ -4643,7 +4923,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -4671,7 +4951,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -4685,7 +4965,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -4727,7 +5007,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v3"
   },
   {
@@ -4741,7 +5021,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -4769,7 +5049,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -4785,6 +5065,20 @@
    "source": "manual",
    "variant": "consolidated",
    "version": "single"
+  },
+  {
+   "company_id": "asian_paints",
+   "doc_type": "quarterly",
+   "doc_type_confidence": "medium",
+   "document_id": "52e287b1bd17f04c5f78b4c2ec700590e03325e106b57c4d3b5842046e7a51bc",
+   "extraction_config_hash": "cfg-0",
+   "extraction_status": "extracted",
+   "fiscal_year": "Q2FY2027",
+   "period_type": "quarterly",
+   "sha256": null,
+   "source": "manual",
+   "variant": "consolidated",
+   "version": "U"
   },
   {
    "company_id": "power_grid",
@@ -4811,7 +5105,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -4839,7 +5133,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -4895,7 +5189,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -5007,7 +5301,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -5049,7 +5343,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -5105,7 +5399,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -5133,7 +5427,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -5147,8 +5441,22 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
+  },
+  {
+   "company_id": "kpi_tech",
+   "doc_type": "quarterly",
+   "doc_type_confidence": "medium",
+   "document_id": "58174de4c20747c5fec5dbaa7832d61a0b066ba0e97c7e150984e137a68e439e",
+   "extraction_config_hash": "cfg-0",
+   "extraction_status": "extracted",
+   "fiscal_year": "Q4FY2025",
+   "period_type": "quarterly",
+   "sha256": null,
+   "source": "manual",
+   "variant": "consolidated",
+   "version": "A"
   },
   {
    "company_id": "biocon",
@@ -5217,7 +5525,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -5329,7 +5637,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -5345,6 +5653,20 @@
    "source": "manual",
    "variant": "consolidated",
    "version": "single"
+  },
+  {
+   "company_id": "ashok_leyland",
+   "doc_type": "quarterly",
+   "doc_type_confidence": "medium",
+   "document_id": "5ba9dd091bfc759a8adc412ffb7bbf2ecbd3c3d7de4e132961548767a961a284",
+   "extraction_config_hash": "cfg-0",
+   "extraction_status": "extracted",
+   "fiscal_year": "Q1FY2026",
+   "period_type": "quarterly",
+   "sha256": null,
+   "source": "manual",
+   "variant": "consolidated",
+   "version": "U"
   },
   {
    "company_id": "godrej_consumer_products",
@@ -5413,7 +5735,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -5441,7 +5763,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -5483,7 +5805,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -5511,7 +5833,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -5641,6 +5963,20 @@
    "version": null
   },
   {
+   "company_id": "aurobindo_pharma",
+   "doc_type": "quarterly",
+   "doc_type_confidence": "medium",
+   "document_id": "6030f6c63ce833c491f28c83454a9280532afe192e8d4837d6baa39e72158203",
+   "extraction_config_hash": "cfg-0",
+   "extraction_status": "extracted",
+   "fiscal_year": "Q1FY2026",
+   "period_type": "quarterly",
+   "sha256": null,
+   "source": "manual",
+   "variant": "consolidated",
+   "version": "U"
+  },
+  {
    "company_id": "kpi_tech",
    "doc_type": "quarterly",
    "doc_type_confidence": "medium",
@@ -5651,7 +5987,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -5665,7 +6001,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -5679,7 +6015,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -5693,8 +6029,22 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
+  },
+  {
+   "company_id": "ashok_leyland",
+   "doc_type": "quarterly",
+   "doc_type_confidence": "medium",
+   "document_id": "61458f3b65572df95bcdaff7f047979bb519125eb917b201d52db8660e14fdcc",
+   "extraction_config_hash": "cfg-0",
+   "extraction_status": "extracted",
+   "fiscal_year": "Q4FY2025",
+   "period_type": "quarterly",
+   "sha256": null,
+   "source": "manual",
+   "variant": "consolidated",
+   "version": "A"
   },
   {
    "company_id": "cipla",
@@ -5707,7 +6057,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -5749,7 +6099,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -5875,7 +6225,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -5907,6 +6257,20 @@
    "version": "single"
   },
   {
+   "company_id": "srf",
+   "doc_type": "quarterly",
+   "doc_type_confidence": "medium",
+   "document_id": "6562aecb4682f9c00ecebd410d046ce2da5acb08a949ad5e214d954c0fad0b1e",
+   "extraction_config_hash": "cfg-0",
+   "extraction_status": "extracted",
+   "fiscal_year": "Q1FY2026",
+   "period_type": "quarterly",
+   "sha256": null,
+   "source": "manual",
+   "variant": "consolidated",
+   "version": "U"
+  },
+  {
    "company_id": "sail",
    "doc_type": "annual",
    "doc_type_confidence": "high",
@@ -5921,6 +6285,20 @@
    "version": "single"
   },
   {
+   "company_id": "cummins_india",
+   "doc_type": "quarterly",
+   "doc_type_confidence": "medium",
+   "document_id": "6613497cd6fd91312f93085ed6793cbe519230bd5b77cc57f7fea9791d878b91",
+   "extraction_config_hash": "cfg-0",
+   "extraction_status": "extracted",
+   "fiscal_year": "Q1FY2026",
+   "period_type": "quarterly",
+   "sha256": null,
+   "source": "manual",
+   "variant": "consolidated",
+   "version": "U"
+  },
+  {
    "company_id": "godrej_consumer_products",
    "doc_type": "annual",
    "doc_type_confidence": "high",
@@ -5933,6 +6311,20 @@
    "source": "manual",
    "variant": "single",
    "version": "single"
+  },
+  {
+   "company_id": "marico",
+   "doc_type": "quarterly",
+   "doc_type_confidence": "medium",
+   "document_id": "668c513d48df970c0872750d56ee97a8dad87c229d44a6f1f5f32382e5d86537",
+   "extraction_config_hash": "cfg-0",
+   "extraction_status": "extracted",
+   "fiscal_year": "Q1FY2026",
+   "period_type": "quarterly",
+   "sha256": null,
+   "source": "manual",
+   "variant": "consolidated",
+   "version": "U"
   },
   {
    "company_id": "emami",
@@ -5959,7 +6351,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -5987,7 +6379,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -6099,7 +6491,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -6113,7 +6505,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -6129,6 +6521,20 @@
    "source": "manual",
    "variant": "consolidated",
    "version": "single"
+  },
+  {
+   "company_id": "cummins_india",
+   "doc_type": "quarterly",
+   "doc_type_confidence": "medium",
+   "document_id": "6a8a0189dd38f69ecf381428858286c36ef662292f086d22a79d1612f9e749bd",
+   "extraction_config_hash": "cfg-0",
+   "extraction_status": "extracted",
+   "fiscal_year": "Q4FY2025",
+   "period_type": "quarterly",
+   "sha256": null,
+   "source": "manual",
+   "variant": "consolidated",
+   "version": "U"
   },
   {
    "company_id": "tata_chemicals",
@@ -6169,7 +6575,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -6225,7 +6631,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -6295,7 +6701,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -6449,7 +6855,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -6505,7 +6911,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -6519,7 +6925,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -6561,7 +6967,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -6589,7 +6995,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -6631,7 +7037,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -6743,7 +7149,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -6757,7 +7163,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -6773,6 +7179,20 @@
    "source": "manual",
    "variant": "consolidated",
    "version": "single"
+  },
+  {
+   "company_id": "kpi_tech",
+   "doc_type": "quarterly",
+   "doc_type_confidence": "medium",
+   "document_id": "7244c854ef30735d9e857fb931db38785e8d5449a952243e7a6249ab3f831d18",
+   "extraction_config_hash": "cfg-0",
+   "extraction_status": "extracted",
+   "fiscal_year": "Q1FY2026",
+   "period_type": "quarterly",
+   "sha256": null,
+   "source": "manual",
+   "variant": "consolidated",
+   "version": "U"
   },
   {
    "company_id": "sail",
@@ -6813,7 +7233,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -6855,7 +7275,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -6871,6 +7291,20 @@
    "source": "manual",
    "variant": "single",
    "version": "single"
+  },
+  {
+   "company_id": "berger_paints",
+   "doc_type": "quarterly",
+   "doc_type_confidence": "medium",
+   "document_id": "7438427ae3307a4bfb92ae23092af927cb0cd254c6c9e111b0da93e38290a127",
+   "extraction_config_hash": "cfg-0",
+   "extraction_status": "extracted",
+   "fiscal_year": "Q1FY2026",
+   "period_type": "quarterly",
+   "sha256": null,
+   "source": "manual",
+   "variant": "consolidated",
+   "version": "U"
   },
   {
    "company_id": "maruti_suzuki",
@@ -6897,7 +7331,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -6911,7 +7345,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -6953,7 +7387,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -7023,7 +7457,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -7079,7 +7513,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -7107,7 +7541,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -7121,7 +7555,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -7191,7 +7625,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -7219,7 +7653,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -7275,7 +7709,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -7317,7 +7751,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -7331,7 +7765,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -7359,7 +7793,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -7373,7 +7807,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -7415,7 +7849,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -7429,7 +7863,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -7457,7 +7891,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -7501,6 +7935,20 @@
    "source": "manual",
    "variant": "single",
    "version": "single"
+  },
+  {
+   "company_id": "bosch",
+   "doc_type": "quarterly",
+   "doc_type_confidence": "medium",
+   "document_id": "7ebb1e010b551bf4281b604be59cacb5dbbcb6f2707900efc3bc6486ae5d01dd",
+   "extraction_config_hash": "cfg-0",
+   "extraction_status": "extracted",
+   "fiscal_year": "Q1FY2026",
+   "period_type": "quarterly",
+   "sha256": null,
+   "source": "manual",
+   "variant": "consolidated",
+   "version": "U"
   },
   {
    "company_id": "hcl",
@@ -7569,7 +8017,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v3"
   },
   {
@@ -7625,7 +8073,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -7653,7 +8101,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -7667,7 +8115,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -7681,7 +8129,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -7723,7 +8171,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -7737,7 +8185,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -7779,7 +8227,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v3"
   },
   {
@@ -7793,7 +8241,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v4"
   },
   {
@@ -7835,7 +8283,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -7937,6 +8385,20 @@
    "version": "single"
   },
   {
+   "company_id": "bhel",
+   "doc_type": "quarterly",
+   "doc_type_confidence": "medium",
+   "document_id": "85aaacb954b4a32f06468456547605415ac4f278372d01753e86404a9f7851c0",
+   "extraction_config_hash": "cfg-0",
+   "extraction_status": "extracted",
+   "fiscal_year": "Q1FY2026",
+   "period_type": "quarterly",
+   "sha256": null,
+   "source": "manual",
+   "variant": "consolidated",
+   "version": "U"
+  },
+  {
    "company_id": "cummins_india",
    "doc_type": "quarterly",
    "doc_type_confidence": "medium",
@@ -7947,7 +8409,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -8017,7 +8479,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -8073,7 +8535,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -8087,7 +8549,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -8171,7 +8633,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -8269,7 +8731,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -8311,7 +8773,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -8325,7 +8787,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -8339,7 +8801,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -8521,7 +8983,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -8549,7 +9011,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -8565,6 +9027,20 @@
    "source": "gate_report",
    "variant": null,
    "version": null
+  },
+  {
+   "company_id": "bosch",
+   "doc_type": "quarterly",
+   "doc_type_confidence": "medium",
+   "document_id": "919f2609880a496fb76b2ff60e7383c3c973b65dae4c23f218bbcd030aa686b9",
+   "extraction_config_hash": "cfg-0",
+   "extraction_status": "extracted",
+   "fiscal_year": "Q4FY2025",
+   "period_type": "quarterly",
+   "sha256": null,
+   "source": "manual",
+   "variant": "consolidated",
+   "version": "A"
   },
   {
    "company_id": "tata_chemicals",
@@ -8605,7 +9081,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -8675,7 +9151,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -8721,6 +9197,20 @@
    "version": "A"
   },
   {
+   "company_id": "dr_reddys",
+   "doc_type": "quarterly",
+   "doc_type_confidence": "medium",
+   "document_id": "95085c03dd832c293ac75e502d045afa7f60fac68fca64905338e4a16d6d68b0",
+   "extraction_config_hash": "cfg-0",
+   "extraction_status": "extracted",
+   "fiscal_year": "Q4FY2025",
+   "period_type": "quarterly",
+   "sha256": null,
+   "source": "manual",
+   "variant": "consolidated",
+   "version": "A"
+  },
+  {
    "company_id": "thermax",
    "doc_type": "quarterly",
    "doc_type_confidence": "medium",
@@ -8731,7 +9221,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -8773,7 +9263,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -8801,7 +9291,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v4"
   },
   {
@@ -8843,7 +9333,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -8857,7 +9347,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -8871,7 +9361,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -8983,7 +9473,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -9081,7 +9571,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -9109,7 +9599,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -9137,7 +9627,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -9151,7 +9641,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -9221,7 +9711,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -9263,7 +9753,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -9277,7 +9767,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v4"
   },
   {
@@ -9305,7 +9795,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -9321,6 +9811,20 @@
    "source": "manual",
    "variant": "consolidated",
    "version": "single"
+  },
+  {
+   "company_id": "zydus_lifesciences",
+   "doc_type": "quarterly",
+   "doc_type_confidence": "medium",
+   "document_id": "a032c2a0ba95c74eaea8bfb05cbc7659572d67f9fba614e872f02a090c9f3b72",
+   "extraction_config_hash": "cfg-0",
+   "extraction_status": "extracted",
+   "fiscal_year": "Q4FY2025",
+   "period_type": "quarterly",
+   "sha256": null,
+   "source": "manual",
+   "variant": "consolidated",
+   "version": "U"
   },
   {
    "company_id": "bhel",
@@ -9529,7 +10033,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -9557,7 +10061,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -9571,7 +10075,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -9603,6 +10107,20 @@
    "version": "A"
   },
   {
+   "company_id": "ntpc",
+   "doc_type": "quarterly",
+   "doc_type_confidence": "medium",
+   "document_id": "a688d049bedb178d253d229d4b77e419f827a332e82c97b0743295dde798ceee",
+   "extraction_config_hash": "cfg-0",
+   "extraction_status": "extracted",
+   "fiscal_year": "Q1FY2026",
+   "period_type": "quarterly",
+   "sha256": null,
+   "source": "manual",
+   "variant": "consolidated",
+   "version": "U"
+  },
+  {
    "company_id": "lupin",
    "doc_type": "quarterly",
    "doc_type_confidence": "medium",
@@ -9613,7 +10131,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -9627,7 +10145,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -9655,7 +10173,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -9767,7 +10285,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -9823,7 +10341,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -9893,7 +10411,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v4"
   },
   {
@@ -9921,7 +10439,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -9935,7 +10453,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -9949,7 +10467,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -9981,6 +10499,20 @@
    "version": "single"
   },
   {
+   "company_id": "thermax",
+   "doc_type": "quarterly",
+   "doc_type_confidence": "medium",
+   "document_id": "aae0199a7c14262ca659a29ab95d76a726266ee53836a8585db4e5641adde9d2",
+   "extraction_config_hash": "cfg-0",
+   "extraction_status": "extracted",
+   "fiscal_year": "Q4FY2025",
+   "period_type": "quarterly",
+   "sha256": null,
+   "source": "manual",
+   "variant": "consolidated",
+   "version": "A"
+  },
+  {
    "company_id": "aurobindo_pharma",
    "doc_type": "quarterly",
    "doc_type_confidence": "medium",
@@ -9991,7 +10523,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -10005,7 +10537,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -10075,7 +10607,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -10229,7 +10761,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -10271,7 +10803,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -10313,8 +10845,36 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
+  },
+  {
+   "company_id": "eicher_motors",
+   "doc_type": "quarterly",
+   "doc_type_confidence": "medium",
+   "document_id": "afeb5ac81de09335aacd19343fac691e3cfff4c0209d67a2308ef883844d6ce4",
+   "extraction_config_hash": "cfg-0",
+   "extraction_status": "extracted",
+   "fiscal_year": "Q1FY2026",
+   "period_type": "quarterly",
+   "sha256": null,
+   "source": "manual",
+   "variant": "consolidated",
+   "version": "U"
+  },
+  {
+   "company_id": "deepak_nitrite",
+   "doc_type": "quarterly",
+   "doc_type_confidence": "medium",
+   "document_id": "b04b8f03d999cb88a126e9304fcd6a9e2b4002c6c57e610b38aa8fb70ca8e9d9",
+   "extraction_config_hash": "cfg-0",
+   "extraction_status": "extracted",
+   "fiscal_year": "Q4FY2025",
+   "period_type": "quarterly",
+   "sha256": null,
+   "source": "manual",
+   "variant": "consolidated",
+   "version": "A"
   },
   {
    "company_id": "ongc",
@@ -10355,7 +10915,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -10439,7 +10999,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -10469,6 +11029,34 @@
    "source": "manual",
    "variant": "single",
    "version": "A"
+  },
+  {
+   "company_id": "dr_reddys",
+   "doc_type": "quarterly",
+   "doc_type_confidence": "medium",
+   "document_id": "b421a116698036c3bc0ed9f5c99da21027ec1be92d7e97504e78ff3e9af96c83",
+   "extraction_config_hash": "cfg-0",
+   "extraction_status": "extracted",
+   "fiscal_year": "Q1FY2026",
+   "period_type": "quarterly",
+   "sha256": null,
+   "source": "manual",
+   "variant": "consolidated",
+   "version": "U"
+  },
+  {
+   "company_id": "glenmark_pharmaceuticals",
+   "doc_type": "quarterly",
+   "doc_type_confidence": "medium",
+   "document_id": "b4745bb586d1bf8e0dc6e09b14576e0ca4d2b4a20fd5ce047ac0f63cce714bb6",
+   "extraction_config_hash": "cfg-0",
+   "extraction_status": "extracted",
+   "fiscal_year": "Q1FY2026",
+   "period_type": "quarterly",
+   "sha256": null,
+   "source": "manual",
+   "variant": "consolidated",
+   "version": "U"
   },
   {
    "company_id": "upl",
@@ -10509,7 +11097,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -10537,7 +11125,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -10579,7 +11167,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -10595,6 +11183,20 @@
    "source": "manual",
    "variant": "consolidated",
    "version": "single"
+  },
+  {
+   "company_id": "tata_chemicals",
+   "doc_type": "quarterly",
+   "doc_type_confidence": "medium",
+   "document_id": "b6a9969ae0a00e949ff62b061b7bd3664fadbcdcd4158c062c6ee9efa9da6dc0",
+   "extraction_config_hash": "cfg-0",
+   "extraction_status": "extracted",
+   "fiscal_year": "Q1FY2026",
+   "period_type": "quarterly",
+   "sha256": null,
+   "source": "manual",
+   "variant": "consolidated",
+   "version": "U"
   },
   {
    "company_id": "zydus_lifesciences",
@@ -10887,7 +11489,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -10901,7 +11503,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -10915,7 +11517,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -10929,7 +11531,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -10943,7 +11545,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -11017,6 +11619,20 @@
    "version": "A"
   },
   {
+   "company_id": "biocon",
+   "doc_type": "quarterly",
+   "doc_type_confidence": "medium",
+   "document_id": "bdc2898775cd1716fcf642fde4bdabbd80cddc66b06c87a873717a2006700174",
+   "extraction_config_hash": "cfg-0",
+   "extraction_status": "extracted",
+   "fiscal_year": "Q4FY2025",
+   "period_type": "quarterly",
+   "sha256": null,
+   "source": "manual",
+   "variant": "consolidated",
+   "version": "A"
+  },
+  {
    "company_id": "godrej_consumer_products",
    "doc_type": "annual",
    "doc_type_confidence": "high",
@@ -11069,7 +11685,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -11083,7 +11699,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -11111,7 +11727,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -11139,7 +11755,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -11153,7 +11769,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -11181,7 +11797,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -11223,7 +11839,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -11279,7 +11895,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -11297,6 +11913,34 @@
    "version": "single"
   },
   {
+   "company_id": "berger_paints",
+   "doc_type": "quarterly",
+   "doc_type_confidence": "medium",
+   "document_id": "c39394c0515b188560600fff05e946a4c8882db9bfa1ae72bd18520aba226e64",
+   "extraction_config_hash": "cfg-0",
+   "extraction_status": "extracted",
+   "fiscal_year": "Q4FY2025",
+   "period_type": "quarterly",
+   "sha256": null,
+   "source": "manual",
+   "variant": "consolidated",
+   "version": "A"
+  },
+  {
+   "company_id": "polycab",
+   "doc_type": "quarterly",
+   "doc_type_confidence": "medium",
+   "document_id": "c4020fd59cae32f5cb99d8dad664f75a85755a7a3b295676be4c18f67af2c95e",
+   "extraction_config_hash": "cfg-0",
+   "extraction_status": "extracted",
+   "fiscal_year": "Q4FY2025",
+   "period_type": "quarterly",
+   "sha256": null,
+   "source": "manual",
+   "variant": "consolidated",
+   "version": "A"
+  },
+  {
    "company_id": "tvs_motor",
    "doc_type": "quarterly",
    "doc_type_confidence": "medium",
@@ -11307,7 +11951,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -11321,7 +11965,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -11349,7 +11993,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -11377,7 +12021,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -11405,7 +12049,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -11475,7 +12119,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -11503,7 +12147,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -11517,7 +12161,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -11531,7 +12175,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -11545,7 +12189,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -11601,7 +12245,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -11671,7 +12315,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -11685,7 +12329,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -11699,7 +12343,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -11727,7 +12371,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -11741,8 +12385,22 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
+  },
+  {
+   "company_id": "tata_chemicals",
+   "doc_type": "quarterly",
+   "doc_type_confidence": "medium",
+   "document_id": "ccdcfcd824b4d728685138f0276fb7ddf292a6d7078834baf64e6848bf64a291",
+   "extraction_config_hash": "cfg-0",
+   "extraction_status": "extracted",
+   "fiscal_year": "Q4FY2025",
+   "period_type": "quarterly",
+   "sha256": null,
+   "source": "manual",
+   "variant": "consolidated",
+   "version": "A"
   },
   {
    "company_id": "godrej_consumer_products",
@@ -11773,6 +12431,20 @@
    "version": "A"
   },
   {
+   "company_id": "tech_mahindra",
+   "doc_type": "quarterly",
+   "doc_type_confidence": "medium",
+   "document_id": "cd7c108df8239c32f5a6dc9f592728cc77dc124ac6b6f6e8521c72cb293a2337",
+   "extraction_config_hash": "cfg-0",
+   "extraction_status": "extracted",
+   "fiscal_year": "Q1FY2026",
+   "period_type": "quarterly",
+   "sha256": null,
+   "source": "manual",
+   "variant": "consolidated",
+   "version": "A"
+  },
+  {
    "company_id": "ntpc",
    "doc_type": "quarterly",
    "doc_type_confidence": "medium",
@@ -11783,7 +12455,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -11871,6 +12543,20 @@
    "version": "single"
   },
   {
+   "company_id": "zydus_lifesciences",
+   "doc_type": "quarterly",
+   "doc_type_confidence": "medium",
+   "document_id": "cfa67014dea89f4c89fdaaa7b57c50eae6e8991b49ef851ec328a4d636de88f3",
+   "extraction_config_hash": "cfg-0",
+   "extraction_status": "extracted",
+   "fiscal_year": "Q1FY2026",
+   "period_type": "quarterly",
+   "sha256": null,
+   "source": "manual",
+   "variant": "consolidated",
+   "version": "U"
+  },
+  {
    "company_id": "hindalco",
    "doc_type": "quarterly",
    "doc_type_confidence": "medium",
@@ -11881,7 +12567,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -11951,7 +12637,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -11965,7 +12651,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -11979,7 +12665,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v3"
   },
   {
@@ -11993,7 +12679,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -12049,7 +12735,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -12077,7 +12763,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -12105,7 +12791,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v3"
   },
   {
@@ -12179,6 +12865,20 @@
    "version": "single"
   },
   {
+   "company_id": "eicher_motors",
+   "doc_type": "quarterly",
+   "doc_type_confidence": "medium",
+   "document_id": "d5339471418f123028c20e87e58b167a9c79f1e08ecb8e2af6ca53ed33b9ca58",
+   "extraction_config_hash": "cfg-0",
+   "extraction_status": "extracted",
+   "fiscal_year": "Q4FY2025",
+   "period_type": "quarterly",
+   "sha256": null,
+   "source": "manual",
+   "variant": "consolidated",
+   "version": "A"
+  },
+  {
    "company_id": "tech_mahindra",
    "doc_type": "quarterly",
    "doc_type_confidence": "medium",
@@ -12189,7 +12889,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -12203,7 +12903,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -12249,6 +12949,20 @@
    "version": "single"
   },
   {
+   "company_id": "srf",
+   "doc_type": "quarterly",
+   "doc_type_confidence": "medium",
+   "document_id": "d7ee0e86722994865c4568d964eea9936a6fc1ad4f8aeb0e53c75a84e1bdab72",
+   "extraction_config_hash": "cfg-0",
+   "extraction_status": "extracted",
+   "fiscal_year": "Q4FY2025",
+   "period_type": "quarterly",
+   "sha256": null,
+   "source": "manual",
+   "variant": "consolidated",
+   "version": "A"
+  },
+  {
    "company_id": "bhel",
    "doc_type": "quarterly",
    "doc_type_confidence": "medium",
@@ -12259,8 +12973,22 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
+  },
+  {
+   "company_id": "bharat_electronics",
+   "doc_type": "quarterly",
+   "doc_type_confidence": "medium",
+   "document_id": "d8c0e6590bf1d49d99cc717106f6c33139e0fae1d8aebb535d72bbf30c1e4b91",
+   "extraction_config_hash": "cfg-0",
+   "extraction_status": "extracted",
+   "fiscal_year": "Q1FY2026",
+   "period_type": "quarterly",
+   "sha256": null,
+   "source": "manual",
+   "variant": "consolidated",
+   "version": "U"
   },
   {
    "company_id": "RELIANCE",
@@ -12277,6 +13005,20 @@
    "version": null
   },
   {
+   "company_id": "sail",
+   "doc_type": "quarterly",
+   "doc_type_confidence": "medium",
+   "document_id": "da1ea040908ac1aaa81adb56831995604241fc4c0a12b23b18193f5e64e5190c",
+   "extraction_config_hash": "cfg-0",
+   "extraction_status": "extracted",
+   "fiscal_year": "Q1FY2026",
+   "period_type": "quarterly",
+   "sha256": null,
+   "source": "manual",
+   "variant": "consolidated",
+   "version": "U"
+  },
+  {
    "company_id": "bharat_electronics",
    "doc_type": "quarterly",
    "doc_type_confidence": "medium",
@@ -12287,7 +13029,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -12469,7 +13211,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v4"
   },
   {
@@ -12511,7 +13253,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -12539,7 +13281,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -12595,7 +13337,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -12651,7 +13393,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -12665,7 +13407,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -12679,7 +13421,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -12777,7 +13519,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -12791,7 +13533,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -12837,6 +13579,34 @@
    "version": "v2"
   },
   {
+   "company_id": "torrent_pharma",
+   "doc_type": "quarterly",
+   "doc_type_confidence": "medium",
+   "document_id": "e256d23e326ae387e30a90a10e1b5c4494ed073a2923543d47b7803bee8c4d12",
+   "extraction_config_hash": "cfg-0",
+   "extraction_status": "extracted",
+   "fiscal_year": "Q1FY2026",
+   "period_type": "quarterly",
+   "sha256": null,
+   "source": "manual",
+   "variant": "consolidated",
+   "version": "U"
+  },
+  {
+   "company_id": "cipla",
+   "doc_type": "quarterly",
+   "doc_type_confidence": "medium",
+   "document_id": "e262f00404d4ea052ef36cdd9cf621bdc71d2919292042a4f121a862fd4e332a",
+   "extraction_config_hash": "cfg-0",
+   "extraction_status": "extracted",
+   "fiscal_year": "Q1FY2026",
+   "period_type": "quarterly",
+   "sha256": null,
+   "source": "manual",
+   "variant": "consolidated",
+   "version": "U"
+  },
+  {
    "company_id": "dabur",
    "doc_type": "annual",
    "doc_type_confidence": "high",
@@ -12861,7 +13631,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -12903,7 +13673,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -12935,6 +13705,20 @@
    "version": null
   },
   {
+   "company_id": "aurobindo_pharma",
+   "doc_type": "quarterly",
+   "doc_type_confidence": "medium",
+   "document_id": "e3b93585e2286b0726fe0db2195972160a75ac79412360d6c6320a33467b62f1",
+   "extraction_config_hash": "cfg-0",
+   "extraction_status": "extracted",
+   "fiscal_year": "Q4FY2025",
+   "period_type": "quarterly",
+   "sha256": null,
+   "source": "manual",
+   "variant": "consolidated",
+   "version": "U"
+  },
+  {
    "company_id": "bharat_electronics",
    "doc_type": "quarterly",
    "doc_type_confidence": "medium",
@@ -12945,8 +13729,22 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
+  },
+  {
+   "company_id": "maruti_suzuki",
+   "doc_type": "quarterly",
+   "doc_type_confidence": "medium",
+   "document_id": "e40b059eab180711721441bf3d6cb08cf3b47e9c4f2033165c43bc869e462ce2",
+   "extraction_config_hash": "cfg-0",
+   "extraction_status": "extracted",
+   "fiscal_year": "Q1FY2026",
+   "period_type": "quarterly",
+   "sha256": null,
+   "source": "manual",
+   "variant": "consolidated",
+   "version": "U"
   },
   {
    "company_id": "torrent_pharma",
@@ -12973,7 +13771,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -13001,7 +13799,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v3"
   },
   {
@@ -13099,7 +13897,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v3"
   },
   {
@@ -13169,7 +13967,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -13197,7 +13995,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -13211,7 +14009,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -13243,6 +14041,20 @@
    "version": "single"
   },
   {
+   "company_id": "britannia",
+   "doc_type": "quarterly",
+   "doc_type_confidence": "medium",
+   "document_id": "e83c7dc77bcdaa84a8baa7349143e58749c4e5675ec3908652559b2c07a50889",
+   "extraction_config_hash": "cfg-0",
+   "extraction_status": "extracted",
+   "fiscal_year": "Q1FY2026",
+   "period_type": "quarterly",
+   "sha256": null,
+   "source": "manual",
+   "variant": "consolidated",
+   "version": "U"
+  },
+  {
    "company_id": "adani_green",
    "doc_type": "quarterly",
    "doc_type_confidence": "high",
@@ -13267,7 +14079,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -13295,7 +14107,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -13435,7 +14247,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -13449,7 +14261,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -13477,7 +14289,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -13505,7 +14317,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -13547,7 +14359,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -13561,7 +14373,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -13575,7 +14387,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -13635,6 +14447,20 @@
    "version": "single"
   },
   {
+   "company_id": "sail",
+   "doc_type": "quarterly",
+   "doc_type_confidence": "medium",
+   "document_id": "ee7ae79e9259db826f1f7f035296a3299613f3a6cc4ad746cb3161740c6e1e11",
+   "extraction_config_hash": "cfg-0",
+   "extraction_status": "extracted",
+   "fiscal_year": "Q4FY2025",
+   "period_type": "quarterly",
+   "sha256": null,
+   "source": "manual",
+   "variant": "consolidated",
+   "version": "A"
+  },
+  {
    "company_id": "dabur",
    "doc_type": "quarterly",
    "doc_type_confidence": "medium",
@@ -13645,7 +14471,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -13771,8 +14597,22 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
+  },
+  {
+   "company_id": "jk_cement",
+   "doc_type": "quarterly",
+   "doc_type_confidence": "medium",
+   "document_id": "f133e1d04fa612616ac76fad5452398bb488fd909e86b160914030f7f1a99c32",
+   "extraction_config_hash": "cfg-0",
+   "extraction_status": "extracted",
+   "fiscal_year": "Q1FY2026",
+   "period_type": "quarterly",
+   "sha256": null,
+   "source": "manual",
+   "variant": "consolidated",
+   "version": "U"
   },
   {
    "company_id": "kpi_tech",
@@ -13841,7 +14681,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -13855,7 +14695,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -13883,7 +14723,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -13967,7 +14807,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -13995,7 +14835,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -14023,7 +14863,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -14037,7 +14877,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -14065,7 +14905,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -14079,7 +14919,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -14093,7 +14933,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -14109,6 +14949,20 @@
    "source": "manual",
    "variant": "consolidated",
    "version": "single"
+  },
+  {
+   "company_id": "havells_india",
+   "doc_type": "quarterly",
+   "doc_type_confidence": "medium",
+   "document_id": "f77455dd11c9a3fc23969b65dbde9c34dd92d4bd046c8ab7fe6113f5468f7807",
+   "extraction_config_hash": "cfg-0",
+   "extraction_status": "extracted",
+   "fiscal_year": "Q1FY2026",
+   "period_type": "quarterly",
+   "sha256": null,
+   "source": "manual",
+   "variant": "consolidated",
+   "version": "U"
   },
   {
    "company_id": "maruti_suzuki",
@@ -14209,6 +15063,20 @@
    "version": "single"
   },
   {
+   "company_id": "havells_india",
+   "doc_type": "quarterly",
+   "doc_type_confidence": "medium",
+   "document_id": "f95a4956c769c0fc5b3da021b6e81970c5608917bd4d17c5f1f9e586fcc8f93b",
+   "extraction_config_hash": "cfg-0",
+   "extraction_status": "extracted",
+   "fiscal_year": "Q4FY2025",
+   "period_type": "quarterly",
+   "sha256": null,
+   "source": "manual",
+   "variant": "consolidated",
+   "version": "A"
+  },
+  {
    "company_id": "britannia",
    "doc_type": "quarterly",
    "doc_type_confidence": "medium",
@@ -14219,7 +15087,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -14233,8 +15101,22 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
+  },
+  {
+   "company_id": "force_motors",
+   "doc_type": "quarterly",
+   "doc_type_confidence": "medium",
+   "document_id": "fa091cb6159cf7357bdb5671778f20d70ef35fb2d35cd50d177950d8ac85a62e",
+   "extraction_config_hash": "cfg-0",
+   "extraction_status": "extracted",
+   "fiscal_year": "Q1FY2026",
+   "period_type": "quarterly",
+   "sha256": null,
+   "source": "manual",
+   "variant": "consolidated",
+   "version": "U"
   },
   {
    "company_id": "dabur",
@@ -14247,7 +15129,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -14303,7 +15185,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -14317,7 +15199,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -14387,7 +15269,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -14443,7 +15325,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -14457,7 +15339,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -14485,7 +15367,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -14499,7 +15381,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -14513,7 +15395,7 @@
    "period_type": "quarterly",
    "sha256": null,
    "source": "manual",
-   "variant": "consolidated",
+   "variant": "standalone",
    "version": "v2"
   },
   {
@@ -14533,6 +15415,11 @@
  ],
  "freeze_version": "v2",
  "source_ledger": "data/corpus/ledger.jsonl",
- "manifest_sha256": "e37de3a899ac70572f5861da9ac11980f19226e3aadc6f79ab1a6ef479693d3c",
- "source_ledger_sha256": "67f84ef8875a701b008dc6d3d73e8408ded2e38639a5de8522a089fe5ee94392"
+ "manifest_sha256": "fb2f85ae5c071cad676e42c5a1650dc5701c58fd706bdd0e663d59601827a7b5",
+ "source_ledger_sha256": "67f84ef8875a701b008dc6d3d73e8408ded2e38639a5de8522a089fe5ee94392",
+ "corrections_sha256": "b3f72e0f542e4accdd1a70497016e72cd206021f345a9669ba13d9c3d9776a86",
+ "corrections_files": [
+  "data/corpus/ledger_corrections_v2.json",
+  "data/corpus/ledger_corrections_v3.jsonl"
+ ]
 }

@@ -1,0 +1,6702 @@
+{
+ "generated_at": "2026-11-14T04:51:30Z",
+ "freeze_manifest_sha256": "fb2f85ae5c071cad676e42c5a1650dc5701c58fd706bdd0e663d59601827a7b5",
+ "ambiguous_count": 379,
+ "ambiguous_in_freeze_v2": 99,
+ "ambiguous_docs": [
+  {
+   "document_id": "e87f3d247be71728b04deaed4b8d200d553b615fff6fc74de60a290886ff361e",
+   "company_id": "adani_green",
+   "fiscal_year": "Q1FY2027",
+   "freeze_variant": "consolidated",
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": true,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    7
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "e1d96f67b38e6ab5772fe5239946d58f71f3f5de9b391b870b319c7f7610dba9",
+   "company_id": "adani_green",
+   "fiscal_year": "Q2FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    8,
+    10,
+    11
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "e224326eaa36718999f24c53a92a5225501d455d028af1c8d71b92f1a7279c01",
+   "company_id": "adani_green",
+   "fiscal_year": "Q2FY2026",
+   "freeze_variant": "consolidated",
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": true,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    8,
+    10,
+    11
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "685549fb7aef1c8f05f4b1e74dbf8b0b0baf76cd2cd8584851d93becb4b78503",
+   "company_id": "adani_green",
+   "fiscal_year": "Q2FY2027",
+   "freeze_variant": "consolidated",
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": true,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    9,
+    11
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "f634b5e006aa7deb45a91f316b99812002ecfa16c292e714593e35f3d1690d7f",
+   "company_id": "adani_green",
+   "fiscal_year": "Q3FY2026",
+   "freeze_variant": "consolidated",
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": true,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    7
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "4f87bfd668ed28fa5a71396fdcc8b301c91bfeb8aa8a4b0153ab012a2c248a55",
+   "company_id": "adani_green",
+   "fiscal_year": "Q4FY2026",
+   "freeze_variant": "consolidated",
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": true,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    9,
+    11
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "a5bd950a766ba619bb86d5738e53fdcd52dc5937b80a2d69711a133f31f80ef6",
+   "company_id": "ashok_leyland",
+   "fiscal_year": "Q1FY2027",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    7
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "12c652345d5b499938b3ba957353cfbed82a4faaf9a9d4009594e26e6e003095",
+   "company_id": "ashok_leyland",
+   "fiscal_year": "Q2FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    8,
+    10,
+    11
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "13f6709d10b22e5d9e489fbfae80c86e5bcee5d4bd6c0d2002b28b920026fb25",
+   "company_id": "ashok_leyland",
+   "fiscal_year": "Q3FY2024",
+   "freeze_variant": "combined",
+   "basis": "ambiguous_no_marker",
+   "in_freeze_v2": true,
+   "marker_pages": [],
+   "markers": [],
+   "reason": "no nature-of-report marker on any page"
+  },
+  {
+   "document_id": "e1e9852669b552ed60c2c48f2bcd453f63a156cbcb5525d5d8dd43badf31aa0b",
+   "company_id": "ashok_leyland",
+   "fiscal_year": "Q3FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    7
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "14c14d562099465d903037d71edd63933d40cd0cce879f7676be10ad32b27109",
+   "company_id": "ashok_leyland",
+   "fiscal_year": "Q4FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    9,
+    10,
+    11
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "90ba85afb43d6d7c3ccebb14c1172a1900df3a3145e4e06c045852c5489f3cf4",
+   "company_id": "asian_paints",
+   "fiscal_year": "Q1FY2027",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    7
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "59ecdd1748093b0a347ca07fdfcc8e44452f777d519b349206106eda85f13e30",
+   "company_id": "asian_paints",
+   "fiscal_year": "Q2FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    6,
+    9,
+    10,
+    11
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "d729097244b77142ec1a63bf6c1d89f1738f928c5d8d8473fb1943a526db6075",
+   "company_id": "asian_paints",
+   "fiscal_year": "Q3FY2024",
+   "freeze_variant": "combined",
+   "basis": "ambiguous_no_marker",
+   "in_freeze_v2": true,
+   "marker_pages": [],
+   "markers": [],
+   "reason": "no nature-of-report marker on any page"
+  },
+  {
+   "document_id": "8e651a4ecc27353ca3c3801ea807b70b831c938f96d76ae00322c4c29208bf2a",
+   "company_id": "asian_paints",
+   "fiscal_year": "Q3FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    7
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "55f786bd7cddf61febcd581fab08263597024ae7653814227fa52e512f52c325",
+   "company_id": "asian_paints",
+   "fiscal_year": "Q4FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    6,
+    9,
+    10,
+    11
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "a61ff76988232e369a1ee36f5a7127e49c063bfd6b62c7d7b062803ed3b1c2a8",
+   "company_id": "asian_paints",
+   "fiscal_year": "Q4FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    6,
+    9,
+    10,
+    11
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "bca25d0d32577fa1429e644d3ff991005ebeb29d94dd56071a14d8234e5f5ac6",
+   "company_id": "aurobindo_pharma",
+   "fiscal_year": "Q1FY2025",
+   "freeze_variant": "combined",
+   "basis": "ambiguous_no_marker",
+   "in_freeze_v2": true,
+   "marker_pages": [],
+   "markers": [],
+   "reason": "no nature-of-report marker on any page"
+  },
+  {
+   "document_id": "5d628d95e2b543e159f196abaf8484fc644546d797a849d8d3eb8b5c9196b51d",
+   "company_id": "aurobindo_pharma",
+   "fiscal_year": "Q1FY2027",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    7,
+    8
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "1796cc1549661a4529f6fd0f52db34f3f094d11949f4f8d8e6f504851c9ad885",
+   "company_id": "aurobindo_pharma",
+   "fiscal_year": "Q2FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    6,
+    9,
+    10,
+    11
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "4cf82f6b33fb9a0f52c0d90b365abb397ee7740730c2b5a4bae24c061b2f92b3",
+   "company_id": "aurobindo_pharma",
+   "fiscal_year": "Q2FY2027",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    7,
+    11,
+    12,
+    13
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "f1ece031ce69fc765168713950c5703481fc3bfee3c66c7f9ae11ec4698498a0",
+   "company_id": "aurobindo_pharma",
+   "fiscal_year": "Q3FY2025",
+   "freeze_variant": "consolidated",
+   "basis": "ambiguous_no_marker",
+   "in_freeze_v2": true,
+   "marker_pages": [],
+   "markers": [],
+   "reason": "no nature-of-report marker on any page"
+  },
+  {
+   "document_id": "156bd1a356088afaf298afc9b37dab61f6c2c777c7b0c3caeac62b67bbf34de7",
+   "company_id": "aurobindo_pharma",
+   "fiscal_year": "Q3FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    6,
+    8
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "93cd515fe8fd53f097840ebe45940ead3095eaf232b847e9c0a470dcb0023a39",
+   "company_id": "aurobindo_pharma",
+   "fiscal_year": "Q4FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    7,
+    11,
+    12,
+    13
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "8b68a14aaa16c8344da5491b46218078343a9d4ba18f755c40d158149bb7d648",
+   "company_id": "berger_paints",
+   "fiscal_year": "Q1FY2025",
+   "freeze_variant": "combined",
+   "basis": "ambiguous_no_marker",
+   "in_freeze_v2": true,
+   "marker_pages": [],
+   "markers": [],
+   "reason": "no nature-of-report marker on any page"
+  },
+  {
+   "document_id": "2252bb8f26dd1d633f0afe0011a2eb101263176c8b27a2ceb4e88c7bb28e32cd",
+   "company_id": "berger_paints",
+   "fiscal_year": "Q1FY2027",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    6
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "105ade136d8c3d5d4496fda679033c807cf27254ec22efd0007378d688c4933b",
+   "company_id": "berger_paints",
+   "fiscal_year": "Q2FY2025",
+   "freeze_variant": "combined",
+   "basis": "ambiguous_no_marker",
+   "in_freeze_v2": true,
+   "marker_pages": [],
+   "markers": [],
+   "reason": "no nature-of-report marker on any page"
+  },
+  {
+   "document_id": "ad878b61b001400ca1cb85737b899da3a2a423eca9bdde9c9115fe25a6b492e2",
+   "company_id": "berger_paints",
+   "fiscal_year": "Q2FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    8,
+    9,
+    10
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "bbdf7580eddc1954debaa83d84ed92752957d3ab4ae8db2578f3da361c331e3d",
+   "company_id": "berger_paints",
+   "fiscal_year": "Q2FY2027",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    9,
+    10,
+    11
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "d05d1cddba8f2e58e6eb5dba4b3d8688ddd9e1ba0d35ab30769ff812221e2871",
+   "company_id": "berger_paints",
+   "fiscal_year": "Q3FY2024",
+   "freeze_variant": "combined",
+   "basis": "ambiguous_no_marker",
+   "in_freeze_v2": true,
+   "marker_pages": [],
+   "markers": [],
+   "reason": "no nature-of-report marker on any page"
+  },
+  {
+   "document_id": "c40c41d8de3080c27b292b29966853848638e576ece79cb5aa449ad25e75b1bf",
+   "company_id": "berger_paints",
+   "fiscal_year": "Q3FY2025",
+   "freeze_variant": null,
+   "basis": "ambiguous_no_marker",
+   "in_freeze_v2": false,
+   "marker_pages": [],
+   "markers": [],
+   "reason": "no nature-of-report marker on any page"
+  },
+  {
+   "document_id": "9bccdae4478cb94eb3b881544c1e42ec9a7f9eace21ab6e5457c7a4ea0b07c83",
+   "company_id": "berger_paints",
+   "fiscal_year": "Q3FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    6
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "59eff271a35c2b1fdcfba2de59be54a85e49ff6ab912c4695a86f8434d152e76",
+   "company_id": "berger_paints",
+   "fiscal_year": "Q4FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    9,
+    10,
+    11
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "a09713bf4c07a6dd49597e52b5cd9ee3800f69e70c5fa9bad2908e2592f28ac2",
+   "company_id": "bharat_electronics",
+   "fiscal_year": "Q1FY2027",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    7
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "c6095f633d1ae0a6e4f6bafb9601ba73bc901f9b09b4c2edf81443f1a77c72b4",
+   "company_id": "bharat_electronics",
+   "fiscal_year": "Q2FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    8,
+    10,
+    11
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "10a754146adaed0e1370e19177e5169ba84775ac29b12a633cdbee4e4ecf01fb",
+   "company_id": "bharat_electronics",
+   "fiscal_year": "Q2FY2027",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    9,
+    10,
+    11
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "7a7297020d28d07a79857e119cfbf04fa75acc3d3d7be21cf1798ad5ab753483",
+   "company_id": "bharat_electronics",
+   "fiscal_year": "Q3FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    7
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "c4f459dfcc06e46460e5c6611e057a6a8ed8b4b0e1e9f01cd3868a384bfd5b58",
+   "company_id": "bharat_electronics",
+   "fiscal_year": "Q4FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    9,
+    10,
+    11
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "9bbb1158a7a003b5f17522e6ea83c1e5c0159c38522768c72296a751d26aaee0",
+   "company_id": "bhel",
+   "fiscal_year": "Q1FY2027",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    6,
+    8
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "ac5915baee2ea3baf6a0674f4357bbc4bad85ab9f375abaa2d18031798197825",
+   "company_id": "bhel",
+   "fiscal_year": "Q1FY2425",
+   "freeze_variant": "consolidated",
+   "basis": "ambiguous_no_marker",
+   "in_freeze_v2": true,
+   "marker_pages": [],
+   "markers": [],
+   "reason": "no nature-of-report marker on any page"
+  },
+  {
+   "document_id": "6d980b90847a0045dd4f43d36868db5120eb9d3138fb773b13247ef308d51448",
+   "company_id": "bhel",
+   "fiscal_year": "Q2FY2025",
+   "freeze_variant": "standalone",
+   "basis": "ambiguous_no_marker",
+   "in_freeze_v2": true,
+   "marker_pages": [],
+   "markers": [],
+   "reason": "no nature-of-report marker on any page"
+  },
+  {
+   "document_id": "e1c06124d4b768c9c5a601048057538d8af0f50a8f9e8e633d3f0b4fefd8be72",
+   "company_id": "bhel",
+   "fiscal_year": "Q2FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    6,
+    9,
+    11,
+    12
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "17a532188571115da7ee9e528215d301a57049e42f8f645d744e0f8a44d03fcd",
+   "company_id": "bhel",
+   "fiscal_year": "Q2FY2027",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    6,
+    10,
+    12,
+    13
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "e1027b514517e31d3233cae10c5e4b293e6d86b957fb19a9e87e6e4a1d168462",
+   "company_id": "bhel",
+   "fiscal_year": "Q3FY2024",
+   "freeze_variant": "standalone",
+   "basis": "ambiguous_no_marker",
+   "in_freeze_v2": true,
+   "marker_pages": [],
+   "markers": [],
+   "reason": "no nature-of-report marker on any page"
+  },
+  {
+   "document_id": "7b4b5f8f989809d7151744b5bceb162977031b14b63a8c423a4740bca237adfc",
+   "company_id": "bhel",
+   "fiscal_year": "Q3FY2025",
+   "freeze_variant": "standalone",
+   "basis": "ambiguous_no_marker",
+   "in_freeze_v2": true,
+   "marker_pages": [],
+   "markers": [],
+   "reason": "no nature-of-report marker on any page"
+  },
+  {
+   "document_id": "6268a33d125faa68f4a19b24a0bb67222b732283170892b7da5783b3c97ab5f2",
+   "company_id": "bhel",
+   "fiscal_year": "Q3FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    6,
+    8
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "6cb66ac0455859b2e14ec6a577b4a0da9747ea0ad3fb42ad58c6c6d927a79d89",
+   "company_id": "bhel",
+   "fiscal_year": "Q4FY2024",
+   "freeze_variant": "standalone",
+   "basis": "ambiguous_no_marker",
+   "in_freeze_v2": true,
+   "marker_pages": [],
+   "markers": [],
+   "reason": "no nature-of-report marker on any page"
+  },
+  {
+   "document_id": "20c9576e63297997fc68ded3e6378553e27bc0c380ff6ef49bf5196b2376483a",
+   "company_id": "bhel",
+   "fiscal_year": "Q4FY2025",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    8,
+    11,
+    13,
+    14
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "4bb2d3cac182c7f64305e5673cd95a225f6f687d5de3943daf950acf52968692",
+   "company_id": "bhel",
+   "fiscal_year": "Q4FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    6,
+    10,
+    13
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "de571ec5d262d0e18f9f1c3408d70a1093d52a8c6f43558a5a65fe9c6121299d",
+   "company_id": "biocon",
+   "fiscal_year": "Q1FY2027",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    9,
+    15
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "36667e8681b4e3637667fbc9c4b693a9414c383cccce553a26a32ba0bf907df8",
+   "company_id": "biocon",
+   "fiscal_year": "Q2FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    8,
+    13,
+    18,
+    19
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "0ad5262c6333537155a2b8ef1889a7e301ce1a972fad83b49087598145dfa09a",
+   "company_id": "biocon",
+   "fiscal_year": "Q2FY2027",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    9,
+    17,
+    22,
+    23
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "b56f9daa4fc7daec6502796554ab568507aa9a344b4322cc4b32f5dcf8eea233",
+   "company_id": "biocon",
+   "fiscal_year": "Q3FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    9,
+    14
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "1c86a9562ce11dcf53c05396a982d484a9ee0a6e8e317e416dc4ad66cb8217a6",
+   "company_id": "biocon",
+   "fiscal_year": "Q4FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    14,
+    20,
+    21
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "17307ae09118c31f8190baf4fb3286eea6d43d324abfb4a9795cc5f0e825752d",
+   "company_id": "bosch",
+   "fiscal_year": "Q1FY2025",
+   "freeze_variant": "standalone",
+   "basis": "ambiguous_no_marker",
+   "in_freeze_v2": true,
+   "marker_pages": [],
+   "markers": [],
+   "reason": "no nature-of-report marker on any page"
+  },
+  {
+   "document_id": "1c2625d3df1ee8347d7fb80585343ab05b1d8c724919a63ad43779a20672ebf9",
+   "company_id": "bosch",
+   "fiscal_year": "Q1FY2027",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    7
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "43feb6a068a80747cf91eee43c321c0c908a80e511910a0b58941a22b00c9884",
+   "company_id": "bosch",
+   "fiscal_year": "Q2FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    8,
+    10,
+    11
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "e4168134fbb78c6c2f3a9c98d1fd3f12f85353f48d688013e28b9c684fab85a2",
+   "company_id": "bosch",
+   "fiscal_year": "Q2FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    8,
+    10,
+    11
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "dc14382d6ae902b4555c1535b2e5290da9c6b3cd44556240e305e5b9f4ca014d",
+   "company_id": "bosch",
+   "fiscal_year": "Q2FY2027",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    9,
+    10,
+    11
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "2a44543c3c48001e6cb74f6d01e5a5fa34ad16041649f67bacb8d0f904de1d94",
+   "company_id": "bosch",
+   "fiscal_year": "Q3FY2024",
+   "freeze_variant": "standalone",
+   "basis": "ambiguous_no_marker",
+   "in_freeze_v2": true,
+   "marker_pages": [],
+   "markers": [],
+   "reason": "no nature-of-report marker on any page"
+  },
+  {
+   "document_id": "5b33fb3f2289caa6995dd311e2086fd6d150bddcce6cefcd3975e0c50ecb8d5a",
+   "company_id": "bosch",
+   "fiscal_year": "Q3FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    7
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "d2a4d51cbc97d2cf3bdc56a7b8d025a53cf897acb60987d7a5292ce473ed96f3",
+   "company_id": "bosch",
+   "fiscal_year": "Q4FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    9,
+    10,
+    11
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "0a10267024303f952411d48c2771b0c49a7e38810cf4ed444da59d853f62969e",
+   "company_id": "britannia",
+   "fiscal_year": "Q1FY2027",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    6
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "1a8bf1e56d85f076cbeb572225e6dc0b1c7d200b4a122d0ed8cdc2e0cb3f442a",
+   "company_id": "britannia",
+   "fiscal_year": "Q2FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    8,
+    9,
+    10
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "7911f24649606d3922d58e594f3b76d01efaaee1c160c414a02ed882394c60ae",
+   "company_id": "britannia",
+   "fiscal_year": "Q2FY2027",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    6,
+    9,
+    10,
+    11
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "695989f429f055a36d4968f4cee8502d3766ed88a7fcd32e9442a22ee53f3569",
+   "company_id": "britannia",
+   "fiscal_year": "Q3FY2024",
+   "freeze_variant": "combined",
+   "basis": "ambiguous_no_marker",
+   "in_freeze_v2": true,
+   "marker_pages": [],
+   "markers": [],
+   "reason": "no nature-of-report marker on any page"
+  },
+  {
+   "document_id": "678de4ffba8a0e8893bed42bcea51ae98f3940bab2970d2a81b6b710c2637cb7",
+   "company_id": "britannia",
+   "fiscal_year": "Q3FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    6
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "2036171ca24cd94657f097249d96acb6b881569af0ffdd21cabac4f90bbd6ff6",
+   "company_id": "britannia",
+   "fiscal_year": "Q4FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    9,
+    10,
+    11
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "a85e1d3fa0b41854effc170006b1e6046e194685568694ca3916d3d66398a0f1",
+   "company_id": "cipla",
+   "fiscal_year": "Q1FY2025",
+   "freeze_variant": "consolidated",
+   "basis": "ambiguous_no_marker",
+   "in_freeze_v2": true,
+   "marker_pages": [],
+   "markers": [],
+   "reason": "no nature-of-report marker on any page"
+  },
+  {
+   "document_id": "a51f1ce447ad6a8fc158c34c1db15598443cf6cc292927c1731727a8bd8a0cb1",
+   "company_id": "cipla",
+   "fiscal_year": "Q1FY2027",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    7,
+    8
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "435d70dec9ad9d8d1341408d9001a3c56a8900650dd230526634b08f9b6673b3",
+   "company_id": "cipla",
+   "fiscal_year": "Q2FY2025",
+   "freeze_variant": "consolidated",
+   "basis": "ambiguous_no_marker",
+   "in_freeze_v2": true,
+   "marker_pages": [],
+   "markers": [],
+   "reason": "no nature-of-report marker on any page"
+  },
+  {
+   "document_id": "15321f54641005ebf4173667a28ad2eac4d7fe4deef9097fd43e0a95af5178b4",
+   "company_id": "cipla",
+   "fiscal_year": "Q2FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    6,
+    10,
+    11,
+    12
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "da3e59fb7b9a2193a0b4e9eb1922cf531b79b00064bdc0d1fb6286a3e52db38a",
+   "company_id": "cipla",
+   "fiscal_year": "Q2FY2027",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    7,
+    11,
+    12,
+    13
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "b288496d610c54ff2d97bf8361c26ca88a36841b230120bc0752904a6e5899ff",
+   "company_id": "cipla",
+   "fiscal_year": "Q3FY2024",
+   "freeze_variant": "consolidated",
+   "basis": "ambiguous_no_marker",
+   "in_freeze_v2": true,
+   "marker_pages": [],
+   "markers": [],
+   "reason": "no nature-of-report marker on any page"
+  },
+  {
+   "document_id": "652659775822b6428b8a9126278114820815540e73e3e32dfe76342060fbcd44",
+   "company_id": "cipla",
+   "fiscal_year": "Q3FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    7,
+    8
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "5eca94b9cc3ec6a84ab96a032a6faa64ca45afa92826472f682e425f569c0d79",
+   "company_id": "cipla",
+   "fiscal_year": "Q4FY2025",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    9,
+    10,
+    11
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "4796e4e09a2cb81d9363934ced7ffb08560a3cb51c2e02efb93f8e742a5cf8ce",
+   "company_id": "cipla",
+   "fiscal_year": "Q4FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    11,
+    13
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "700d68c2611ab3b8b0d7c76be24f0626694270efdaff17c72a0824c9d691668b",
+   "company_id": "coal_india",
+   "fiscal_year": "Q1FY2025",
+   "freeze_variant": "consolidated",
+   "basis": "ambiguous_no_marker",
+   "in_freeze_v2": true,
+   "marker_pages": [],
+   "markers": [],
+   "reason": "no nature-of-report marker on any page"
+  },
+  {
+   "document_id": "10f7cb1ea011aaf2c7ea98b85522701e724e82b0a558fb920794fc1d18e22531",
+   "company_id": "coal_india",
+   "fiscal_year": "Q1FY2027",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    7
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "9ea1d0a145362dad5a80561638248f68b2dce22d9878f8ebea3c601a463e748a",
+   "company_id": "coal_india",
+   "fiscal_year": "Q2FY2025",
+   "freeze_variant": null,
+   "basis": "ambiguous_no_marker",
+   "in_freeze_v2": false,
+   "marker_pages": [],
+   "markers": [],
+   "reason": "no nature-of-report marker on any page"
+  },
+  {
+   "document_id": "0342b1dd60e3ef109b0da5e32c358e2c644d1bc536d06cbd21ce6b3a13bf1e68",
+   "company_id": "coal_india",
+   "fiscal_year": "Q2FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    8,
+    9,
+    10
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "9edb2ec93231c0491a54c41cbae649f40dacc7eab0d8cd56b203969972d62e7e",
+   "company_id": "coal_india",
+   "fiscal_year": "Q2FY2027",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    9,
+    11,
+    12
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "0da0be8184c0003bdab6ea7e5c9db237e8c133cdf267ca7721ceec70979a7dfc",
+   "company_id": "coal_india",
+   "fiscal_year": "Q3FY2024",
+   "freeze_variant": null,
+   "basis": "ambiguous_no_marker",
+   "in_freeze_v2": false,
+   "marker_pages": [],
+   "markers": [],
+   "reason": "no nature-of-report marker on any page"
+  },
+  {
+   "document_id": "8563aaa22d109b83e59a5ee68a22f141f740a11f0abc69ccaedb7291db9f1233",
+   "company_id": "coal_india",
+   "fiscal_year": "Q3FY2025",
+   "freeze_variant": "consolidated",
+   "basis": "ambiguous_no_marker",
+   "in_freeze_v2": true,
+   "marker_pages": [],
+   "markers": [],
+   "reason": "no nature-of-report marker on any page"
+  },
+  {
+   "document_id": "f9759121643e815e6875528f111083a81fceefc27d4a66369a6f6d10a37a5371",
+   "company_id": "coal_india",
+   "fiscal_year": "Q3FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    6
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "4ae650937f8ce41a3f469f183a20cea9971d0ed7c4f3541c8b0ddcbd2749746b",
+   "company_id": "coal_india",
+   "fiscal_year": "Q4FY2025",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    8,
+    9,
+    10
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "46f68fb1ca5f256d71daaae9fccf60ea38000a3c90a29b094e81d684d219a7e0",
+   "company_id": "coal_india",
+   "fiscal_year": "Q4FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    9,
+    10,
+    11
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "7eff1c5461e41933354e64cde8e5c2c06631fdab19dd1dd2cc808ef8a6e1b832",
+   "company_id": "coal_india",
+   "fiscal_year": "Q4FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    9,
+    10,
+    11
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "edd90b1a2b092e0595d06338c36ab167cf32d44af7e31073e20829d8fb675685",
+   "company_id": "coforge",
+   "fiscal_year": "Q1FY2027",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    7
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "e6fbd1b1224de6e9b56f4ee8edeae1ffcdb5a1df17cc89999decd543b68bd230",
+   "company_id": "coforge",
+   "fiscal_year": "Q2FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    8,
+    10,
+    11
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "55cfdd15d68e7bff89a059f1df04e89de936e37c392b7518145038474036ee93",
+   "company_id": "coforge",
+   "fiscal_year": "Q2FY2027",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    9,
+    11,
+    12
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "a8ca013533b75d72d4e8b0dcc4c7282c573484d9c6dc7ac84619c3b634659cb7",
+   "company_id": "coforge",
+   "fiscal_year": "Q2FY2027",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    9,
+    11,
+    12
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "fd0c6bc8d13118883b9c03b457509a4e6442bc0e68e0033a6c45e0edfa568ab4",
+   "company_id": "coforge",
+   "fiscal_year": "Q3FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    7
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "78d8f79ddd7e500e2fb7e2ffe5e131a709e8cd0c59c7f2ce74c08141e8d71e93",
+   "company_id": "coforge",
+   "fiscal_year": "Q4FY2025",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    8,
+    10,
+    11
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "2356e865062329056265dc7641b45ccfe68b26356dc58f9c7b96543ff307e2d0",
+   "company_id": "coforge",
+   "fiscal_year": "Q4FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    9,
+    10,
+    11
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "6579e8af9afbb65339a92d39358a0237d59ed3f399b2d349c1a043d6ef736c2a",
+   "company_id": "cummins_india",
+   "fiscal_year": "Q1FY2027",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    6,
+    7
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "c48e86174ab1387fc66b48824b8a23fc5b5ff76563374b0455b9bb4703106f92",
+   "company_id": "cummins_india",
+   "fiscal_year": "Q2FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    9,
+    10,
+    11
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "ee96ba6226de2b3951e8097e7add9b0bb87bb4d92b53151b0e876ad5376a4e3d",
+   "company_id": "cummins_india",
+   "fiscal_year": "Q2FY2027",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    6,
+    9,
+    11,
+    12
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "6c2d6848b084d18da6bdcf8cbca59b91fcea444922f574bb5fafe5ce8c23c998",
+   "company_id": "cummins_india",
+   "fiscal_year": "Q3FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    6,
+    8
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "ce5f77005f15a0e83d7fd20c7ba5ef7725b3e69280451cd84505dfcd893fe7ff",
+   "company_id": "cummins_india",
+   "fiscal_year": "Q4FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    10,
+    11,
+    12
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "707ded555188e7ae07a11fab078490693af5b40cf2ef70da906a81d8917ee386",
+   "company_id": "dabur",
+   "fiscal_year": "Q1FY2025",
+   "freeze_variant": "consolidated",
+   "basis": "ambiguous_no_marker",
+   "in_freeze_v2": true,
+   "marker_pages": [],
+   "markers": [],
+   "reason": "no nature-of-report marker on any page"
+  },
+  {
+   "document_id": "f5cc4000505407241cd29f861387780a1411a21d4ab5fb8435f2662f225ad54d",
+   "company_id": "dabur",
+   "fiscal_year": "Q1FY2027",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    7
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "c5d2341a3b31d0aebd8d2a24b5f294a8e313721b5b089105d647a3317c2cba45",
+   "company_id": "dabur",
+   "fiscal_year": "Q2FY2025",
+   "freeze_variant": "consolidated",
+   "basis": "ambiguous_no_marker",
+   "in_freeze_v2": true,
+   "marker_pages": [],
+   "markers": [],
+   "reason": "no nature-of-report marker on any page"
+  },
+  {
+   "document_id": "4bfeef8ad81c0397374b08ed3895dfdebe1cf5d2a2c3ea5c15b78cd9a8950655",
+   "company_id": "dabur",
+   "fiscal_year": "Q2FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    9,
+    11
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "7629f0d6ca15f1b4a15fe3160d6265897aa53699690e283f0ee06db781e23882",
+   "company_id": "dabur",
+   "fiscal_year": "Q2FY2027",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    9,
+    11
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "34da40b7b87fa39e6f5ae30db1bb381e2b880ac49a009a0ef7fb1cf694bb6b5e",
+   "company_id": "dabur",
+   "fiscal_year": "Q3FY2024",
+   "freeze_variant": null,
+   "basis": "ambiguous_no_marker",
+   "in_freeze_v2": false,
+   "marker_pages": [],
+   "markers": [],
+   "reason": "no nature-of-report marker on any page"
+  },
+  {
+   "document_id": "2fb3799e4eb213afd8c72ac215a582c57ee483d7c0ef81e787c25d611ee57dad",
+   "company_id": "dabur",
+   "fiscal_year": "Q3FY2025",
+   "freeze_variant": null,
+   "basis": "ambiguous_no_marker",
+   "in_freeze_v2": false,
+   "marker_pages": [],
+   "markers": [],
+   "reason": "no nature-of-report marker on any page"
+  },
+  {
+   "document_id": "9cfd95f2258eca59030d2c05636d0b9ad1a7169d1f96edeaae48ebc665cd40fb",
+   "company_id": "dabur",
+   "fiscal_year": "Q3FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    7
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "b8a21c32135a3fc4dbab35db1189eef570c090ea2774f13404d8a42092b75b86",
+   "company_id": "dabur",
+   "fiscal_year": "Q4FY2025",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    7,
+    10,
+    12,
+    13
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "39ac44f2dcd2bb808e7c1f8c07a5b863e096ac5905845a34fd15524cd4516ee4",
+   "company_id": "dabur",
+   "fiscal_year": "Q4FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    9,
+    11,
+    12
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "0b4d218d78ad9b3ed19cb4f7f751dcbd3cb207c3c9357457ce6bcc6385251e61",
+   "company_id": "deepak_nitrite",
+   "fiscal_year": "Q1FY2025",
+   "freeze_variant": "consolidated",
+   "basis": "ambiguous_no_marker",
+   "in_freeze_v2": true,
+   "marker_pages": [],
+   "markers": [],
+   "reason": "no nature-of-report marker on any page"
+  },
+  {
+   "document_id": "0763d4f0a37e3e14b700df4935d068d4ee1e3b252422391acedbfc34686a931e",
+   "company_id": "deepak_nitrite",
+   "fiscal_year": "Q1FY2027",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    7
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "053506c1d7a58c4ad623b998c020369970b489823556eab43472779a5508db2b",
+   "company_id": "deepak_nitrite",
+   "fiscal_year": "Q2FY2025",
+   "freeze_variant": "combined",
+   "basis": "ambiguous_no_marker",
+   "in_freeze_v2": true,
+   "marker_pages": [],
+   "markers": [],
+   "reason": "no nature-of-report marker on any page"
+  },
+  {
+   "document_id": "9f268555b99ec59d3ef33e588075f01bb5383698f95b3952cd88c4d0aee17e4b",
+   "company_id": "deepak_nitrite",
+   "fiscal_year": "Q2FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    8,
+    10,
+    11
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "a2586e2f7c469df8b838354487b695930e71df2a4725199f25861633b7f4cc8f",
+   "company_id": "deepak_nitrite",
+   "fiscal_year": "Q2FY2027",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    9,
+    11,
+    12
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "4877128aa7ab0d9169ea2e8a2f8d2fe06e1828df21a627cec228ddd52636b129",
+   "company_id": "deepak_nitrite",
+   "fiscal_year": "Q3FY2025",
+   "freeze_variant": "standalone",
+   "basis": "ambiguous_no_marker",
+   "in_freeze_v2": true,
+   "marker_pages": [],
+   "markers": [],
+   "reason": "no nature-of-report marker on any page"
+  },
+  {
+   "document_id": "f18b55722dda3de7e33360406bd583cf60288fdbe3a6e8b05929f04f4e8f8576",
+   "company_id": "deepak_nitrite",
+   "fiscal_year": "Q3FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    7
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "27093026fb1321c50dcbb308fb3d33582c4170f55e043af88d902ee42d08455b",
+   "company_id": "deepak_nitrite",
+   "fiscal_year": "Q4FY2024",
+   "freeze_variant": "standalone",
+   "basis": "ambiguous_no_marker",
+   "in_freeze_v2": true,
+   "marker_pages": [],
+   "markers": [],
+   "reason": "no nature-of-report marker on any page"
+  },
+  {
+   "document_id": "080a3e7adf0cb3e926eabc1b79e5ba925fb34008551f0c5e66ec0d65dc5c3efe",
+   "company_id": "deepak_nitrite",
+   "fiscal_year": "Q4FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    9,
+    10,
+    11
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "980ce531f72c98b13439577b1da657cef8d8c4ac489761d9f34d3ea64e0261db",
+   "company_id": "dr_reddys",
+   "fiscal_year": "Q1FY2027",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    7
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "585d9023f1ca50dbebba7eeb85cdc9316bb93667c562e6a9c858eddb01357af5",
+   "company_id": "dr_reddys",
+   "fiscal_year": "Q2FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    8,
+    10,
+    11
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "51fb636b82b55ffa74d31a46869d979e064260b728f84658233cd171b3f08112",
+   "company_id": "dr_reddys",
+   "fiscal_year": "Q2FY2027",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    9,
+    11
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "3cf3bceb652156d0f2d4bf71a873e4f2c49a8f964a6d980dcf4e0e731cc138ab",
+   "company_id": "dr_reddys",
+   "fiscal_year": "Q3FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    7
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "f07a81297ba638c587cc87bfbe71f59d3f110819550ecf0dad6ef908a874f272",
+   "company_id": "dr_reddys",
+   "fiscal_year": "Q4FY2024",
+   "freeze_variant": "consolidated",
+   "basis": "ambiguous_no_marker",
+   "in_freeze_v2": true,
+   "marker_pages": [],
+   "markers": [],
+   "reason": "no nature-of-report marker on any page"
+  },
+  {
+   "document_id": "f5f028061c3f749351b5b13e43eebe7214ff37882c154bbdb2008934e5af536b",
+   "company_id": "dr_reddys",
+   "fiscal_year": "Q4FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    9,
+    11
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "e2777a1c985701308efc1ef759c8053df6ec75fe45f41c11fc14c95e459b158d",
+   "company_id": "eicher_motors",
+   "fiscal_year": "Q1FY2027",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    6
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "a8202ff1005bb644fe41f8210599e0efe91149bd1917046325c908753129a3ff",
+   "company_id": "eicher_motors",
+   "fiscal_year": "Q2FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    8,
+    9,
+    10
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "5a269fe9d6ae369863025bb36916957deb3fbf0d23f14232a5ec8a80c0a71926",
+   "company_id": "eicher_motors",
+   "fiscal_year": "Q3FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    6
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "65cb28f3647a3c00d0be8225c654e57458d30459374ba34740d3b914ed85d98e",
+   "company_id": "eicher_motors",
+   "fiscal_year": "Q4FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    9,
+    10,
+    11
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "d377fdb1a51c940d9c355fbb4cb25acac6d08345093547b4b90fc4de9269372d",
+   "company_id": "force_motors",
+   "fiscal_year": "Q1FY2027",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    6,
+    7
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "42a3b880c4e28bc2be221cb1c80b219a374e77a839f3150523ddcd9bc065702f",
+   "company_id": "force_motors",
+   "fiscal_year": "Q2FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    6,
+    9,
+    10,
+    11
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "8461e722de2dd61c2613000e73d6f82f7c3fdcb7362bb96eb62083448c9f62c0",
+   "company_id": "force_motors",
+   "fiscal_year": "Q2FY2027",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    6,
+    9,
+    11
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "215a12e6ef3be0ed593390c51d1376e8996e93cabb2408250de184ce68d73599",
+   "company_id": "force_motors",
+   "fiscal_year": "Q3FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    6,
+    7
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "aaf0e00dc5add2e26ddaf483fdcb6e25f34040a6ec09d336ea29c19307d823fe",
+   "company_id": "force_motors",
+   "fiscal_year": "Q4FY2025",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    7,
+    10,
+    11,
+    12
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "86929f13a6f2fe5937b91e41114a99852f9884185b007e772d8c813b2109fffb",
+   "company_id": "force_motors",
+   "fiscal_year": "Q4FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    6,
+    10,
+    11,
+    12
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "df4b934f1fc28be3873a346e53cc5185602243d0682a191df48f610598aa904d",
+   "company_id": "glenmark_pharmaceuticals",
+   "fiscal_year": "Q1FY2027",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    6
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "02233bf0e1f3bcd0c32a64f7ca79a982129c79a4306f6641759f5d18b898cca5",
+   "company_id": "glenmark_pharmaceuticals",
+   "fiscal_year": "Q2FY2025",
+   "freeze_variant": "consolidated",
+   "basis": "ambiguous_no_marker",
+   "in_freeze_v2": true,
+   "marker_pages": [],
+   "markers": [],
+   "reason": "no nature-of-report marker on any page"
+  },
+  {
+   "document_id": "1a0bf0650de86e5826ce4a3c9956de5ad087072bbd2ec1ae05fc28c9251154e4",
+   "company_id": "glenmark_pharmaceuticals",
+   "fiscal_year": "Q2FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    8,
+    9,
+    10
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "86741be584dbdba52f8b449e09b39dcce206fb7e22a7ac8b3a5ed70d89ef5276",
+   "company_id": "glenmark_pharmaceuticals",
+   "fiscal_year": "Q2FY2027",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    9,
+    10,
+    11
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "87233b5f5887afffeee9d5b6fd28622842ee6b65a931105e64ad65c1b95e02c1",
+   "company_id": "glenmark_pharmaceuticals",
+   "fiscal_year": "Q3FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    6
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "eadd7f1739ec876a1c2aa8f39bfa485287c2435c0fc2c84f3561852c8abe132c",
+   "company_id": "glenmark_pharmaceuticals",
+   "fiscal_year": "Q4FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    9,
+    10,
+    11
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "541fe9f09c343d1ab23c748a0471b3c99412981859af1365a80813e179dcfdf0",
+   "company_id": "godrej_consumer_products",
+   "fiscal_year": "Q1FY2027",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    7
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "1401d012b2539bde7fabd29aa5f00cdeba9a1a00e0c9afcfa1deb62ee0b90a0f",
+   "company_id": "godrej_consumer_products",
+   "fiscal_year": "Q2FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    8,
+    10,
+    11
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "cbc55bd6acdec8f1bbb7274c4c66571511007f65a1a47e5f814ceba6f8d8635e",
+   "company_id": "godrej_consumer_products",
+   "fiscal_year": "Q2FY2027",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    9,
+    11,
+    12
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "e121cdb875f4a191b449c770345625bb9f71fbdccbdedefe439db51ed436c641",
+   "company_id": "godrej_consumer_products",
+   "fiscal_year": "Q3FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    7
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "3f850f5e6e07aebb9f30b76c33eb0fa1f43f5d5c6fbe543875eb5b31930db7a3",
+   "company_id": "godrej_consumer_products",
+   "fiscal_year": "Q4FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    9,
+    11,
+    12
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "1785fe49b6ee9903c35af74de9e009c98449ee37f26a233a9f2b84d48f62b8d2",
+   "company_id": "havells_india",
+   "fiscal_year": "Q1FY2025",
+   "freeze_variant": "standalone",
+   "basis": "ambiguous_no_marker",
+   "in_freeze_v2": true,
+   "marker_pages": [],
+   "markers": [],
+   "reason": "no nature-of-report marker on any page"
+  },
+  {
+   "document_id": "174d61a7ddc656d584e644777e057ae23add3525c5fbbc36b3f40af9a4e6f362",
+   "company_id": "havells_india",
+   "fiscal_year": "Q1FY2027",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    7
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "a197291f523f66df6db53d5f8c816dce1292a84fc7cc9a515ffde35348eb43a8",
+   "company_id": "havells_india",
+   "fiscal_year": "Q2FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    8,
+    10
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "c80b336315adc256b1d95e56243f2780251574853ee4ee06089db28c50a4bf8f",
+   "company_id": "havells_india",
+   "fiscal_year": "Q2FY2027",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    9,
+    11,
+    12
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "5ea0c21b5ad14485b4c012bf43cc60dfd8758e6e9a05b40fdc63cc1152f338b0",
+   "company_id": "havells_india",
+   "fiscal_year": "Q3FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    7
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "33dc80e5dbb717338f36aadfcf1a2899adb4edbbda4215d36a4fe4545ebacdfe",
+   "company_id": "havells_india",
+   "fiscal_year": "Q4FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    9,
+    11,
+    12
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "7f227016d185ec0472aeb377b74e96cc11ac77fb5a62284969a443588fc10922",
+   "company_id": "hcl",
+   "fiscal_year": "Q1FY2025",
+   "freeze_variant": null,
+   "basis": "ambiguous_no_marker",
+   "in_freeze_v2": true,
+   "marker_pages": [],
+   "markers": [],
+   "reason": "no nature-of-report marker on any page"
+  },
+  {
+   "document_id": "78270a4d4615b698b8f0aadb39c9110dbd219362e55354b5dcef1a747d4a900c",
+   "company_id": "hcl",
+   "fiscal_year": "Q1FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_no_marker",
+   "in_freeze_v2": true,
+   "marker_pages": [],
+   "markers": [],
+   "reason": "no nature-of-report marker on any page"
+  },
+  {
+   "document_id": "d38ac5d96104e895d0c118c4ec091ebf2dd09b8c2452b3b75b30d712f919584b",
+   "company_id": "hcl",
+   "fiscal_year": "Q1FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    6,
+    8
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "94c4ec83ec0c605d5d58b5b6c4a41c2504b82283a227578ec131bfba052f2722",
+   "company_id": "hcl",
+   "fiscal_year": "Q1FY2027",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    6,
+    8
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "ebd29de8acc56b98e6b1c91cfd43b57f310b31d084e5a226d9d19e72a7188be2",
+   "company_id": "hcl",
+   "fiscal_year": "Q1FY2027",
+   "freeze_variant": null,
+   "basis": "ambiguous_no_marker",
+   "in_freeze_v2": true,
+   "marker_pages": [],
+   "markers": [],
+   "reason": "no nature-of-report marker on any page"
+  },
+  {
+   "document_id": "6ed27a73009032287f5c11f25c2f0615338136978b8c4accc8982904b6b0cf6a",
+   "company_id": "hcl",
+   "fiscal_year": "Q2FY2025",
+   "freeze_variant": null,
+   "basis": "ambiguous_no_marker",
+   "in_freeze_v2": true,
+   "marker_pages": [],
+   "markers": [],
+   "reason": "no nature-of-report marker on any page"
+  },
+  {
+   "document_id": "916d84e6771e4ea2d5ce553b6861467739c03406ac56978d5b804bd91659aedf",
+   "company_id": "hcl",
+   "fiscal_year": "Q2FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_no_marker",
+   "in_freeze_v2": true,
+   "marker_pages": [],
+   "markers": [],
+   "reason": "no nature-of-report marker on any page"
+  },
+  {
+   "document_id": "9d7eae4fa557722d0fcc42050706616289b93590d67ba8f058cfc0ecc0b4d66c",
+   "company_id": "hcl",
+   "fiscal_year": "Q2FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    6,
+    9,
+    10,
+    11
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "ec0f2ea8de76af4d281c4a95730a07c7b4cc686c6d9aaa84a62cf418d7c727ae",
+   "company_id": "hcl",
+   "fiscal_year": "Q2FY2027",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    6,
+    10,
+    12,
+    13
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "c7ee670b855e9dc735135ddd1e8ef4aed3959c64440deeff65edb29616787adc",
+   "company_id": "hcl",
+   "fiscal_year": "Q3FY2024",
+   "freeze_variant": null,
+   "basis": "ambiguous_no_marker",
+   "in_freeze_v2": false,
+   "marker_pages": [],
+   "markers": [],
+   "reason": "no nature-of-report marker on any page"
+  },
+  {
+   "document_id": "961964d275ffa47dcf64de645a17ddb8ad528ee485225ed4d61d043abbe22584",
+   "company_id": "hcl",
+   "fiscal_year": "Q3FY2025",
+   "freeze_variant": null,
+   "basis": "ambiguous_no_marker",
+   "in_freeze_v2": true,
+   "marker_pages": [],
+   "markers": [],
+   "reason": "no nature-of-report marker on any page"
+  },
+  {
+   "document_id": "84026afbc7109a93c918a17f694664800f626c5d699292a8dd650dcfdf00b64b",
+   "company_id": "hcl",
+   "fiscal_year": "Q3FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_no_marker",
+   "in_freeze_v2": true,
+   "marker_pages": [],
+   "markers": [],
+   "reason": "no nature-of-report marker on any page"
+  },
+  {
+   "document_id": "dba5860fc8c7b37802f5c407ecfbf12a2a06d21b7af942514ca04c9256d6e7e6",
+   "company_id": "hcl",
+   "fiscal_year": "Q3FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    6,
+    8
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "5391043b792a05e56bdefde04a2d1315ba7d7307b0f1ef21a55f1603022b73bd",
+   "company_id": "hcl",
+   "fiscal_year": "Q4FY2024",
+   "freeze_variant": "consolidated",
+   "basis": "ambiguous_no_marker",
+   "in_freeze_v2": true,
+   "marker_pages": [],
+   "markers": [],
+   "reason": "no nature-of-report marker on any page"
+  },
+  {
+   "document_id": "22abfa630a99e36950a02f5045ef23a795f0e764827d85e19c0142771276167f",
+   "company_id": "hcl",
+   "fiscal_year": "Q4FY2025",
+   "freeze_variant": null,
+   "basis": "ambiguous_no_marker",
+   "in_freeze_v2": true,
+   "marker_pages": [],
+   "markers": [],
+   "reason": "no nature-of-report marker on any page"
+  },
+  {
+   "document_id": "7d06bf22c8693ea0326d6826bf913ce009c8201556df7d647deb7855b9751e7d",
+   "company_id": "hcl",
+   "fiscal_year": "Q4FY2025",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    7,
+    10,
+    12,
+    13
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "b0ffc8faf99d8c13b03b52e0c7a0cc923132697928c378e7030c23dd493b21cb",
+   "company_id": "hcl",
+   "fiscal_year": "Q4FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    6,
+    10,
+    12,
+    13
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "b4faeba22e9b6c6d99b141db92c5ad9085456b6f753fc0c6f82aa9f78eacacdd",
+   "company_id": "hcl",
+   "fiscal_year": "Q4FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_no_marker",
+   "in_freeze_v2": true,
+   "marker_pages": [],
+   "markers": [],
+   "reason": "no nature-of-report marker on any page"
+  },
+  {
+   "document_id": "fdf04fdc45ece67ecc84c3c6ea3673f97e15a3ef942862d5b91f5141f24621cc",
+   "company_id": "hindalco",
+   "fiscal_year": "Q1FY2027",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    7
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "407e6168c0ed53760830d09980d697c16d623259000370bb47c832c65ec25b48",
+   "company_id": "hindalco",
+   "fiscal_year": "Q2FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    8,
+    10,
+    11
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "59caeadf55110ab8b51afa88e328d76a340d5668083e8a23ba71788e8211f618",
+   "company_id": "hindalco",
+   "fiscal_year": "Q2FY2027",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    9,
+    11,
+    12
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "c33490e7d1a2372f214d606858730b417c1e33967f3680cc2d27612254aa2d1c",
+   "company_id": "hindalco",
+   "fiscal_year": "Q3FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    7
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "91155f39d65bb9d92560c3fb760fd8d399b493a5e74b93620130a2120b80ed71",
+   "company_id": "hindalco",
+   "fiscal_year": "Q4FY2025",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    8,
+    10,
+    11
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "7c9c3158729119d06aab59d998c3f54b96bc4cc96f76e88eb47320d5f14d37b6",
+   "company_id": "hindalco",
+   "fiscal_year": "Q4FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    9,
+    11,
+    12
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "0eb82364f852768157940337466b7078cc4a75ea22c85cb88e40d60752ae3010",
+   "company_id": "infosys",
+   "fiscal_year": "Q1FY2027",
+   "freeze_variant": null,
+   "basis": "ambiguous_no_marker",
+   "in_freeze_v2": true,
+   "marker_pages": [],
+   "markers": [],
+   "reason": "no nature-of-report marker on any page"
+  },
+  {
+   "document_id": "d47fe57f3907f8b99996b5000037aac3f2a42f11059a4a1d0e28b726f9f70ca3",
+   "company_id": "infosys",
+   "fiscal_year": "Q2FY2027",
+   "freeze_variant": null,
+   "basis": "ambiguous_no_marker",
+   "in_freeze_v2": true,
+   "marker_pages": [],
+   "markers": [],
+   "reason": "no nature-of-report marker on any page"
+  },
+  {
+   "document_id": "9eb3cedc8ba987491bf39e96ae2c6145c583a92658f0c34ac98d48a97922fb73",
+   "company_id": "infosys",
+   "fiscal_year": "Q4FY2025",
+   "freeze_variant": null,
+   "basis": "ambiguous_no_marker",
+   "in_freeze_v2": true,
+   "marker_pages": [],
+   "markers": [],
+   "reason": "no nature-of-report marker on any page"
+  },
+  {
+   "document_id": "335dbea73b04f46ec26be3a0494217288f87160016d82bec1c62124fd5106082",
+   "company_id": "infosys",
+   "fiscal_year": "Q4FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_no_marker",
+   "in_freeze_v2": true,
+   "marker_pages": [],
+   "markers": [],
+   "reason": "no nature-of-report marker on any page"
+  },
+  {
+   "document_id": "2c9ec3270ccc9199713e79c9f26a6c12bdb0066e89e901b42f1577fd2656fde4",
+   "company_id": "itc",
+   "fiscal_year": "Q1FY2025",
+   "freeze_variant": null,
+   "basis": "ambiguous_no_marker",
+   "in_freeze_v2": true,
+   "marker_pages": [],
+   "markers": [],
+   "reason": "no nature-of-report marker on any page"
+  },
+  {
+   "document_id": "bd913894992333f0499e731683b7cc0198d6812dbb7e4f039ae2a18515b1d594",
+   "company_id": "itc",
+   "fiscal_year": "Q1FY2025",
+   "freeze_variant": null,
+   "basis": "ambiguous_no_marker",
+   "in_freeze_v2": true,
+   "marker_pages": [],
+   "markers": [],
+   "reason": "no nature-of-report marker on any page"
+  },
+  {
+   "document_id": "372d8c2e12219fb31fe5ad2c29f342e704f0be913125742a0c8c3bc54a19a05f",
+   "company_id": "itc",
+   "fiscal_year": "Q1FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_no_marker",
+   "in_freeze_v2": true,
+   "marker_pages": [],
+   "markers": [],
+   "reason": "no nature-of-report marker on any page"
+  },
+  {
+   "document_id": "956f1dee1375aaff0cfa78d1cc983f324e702e7cd504bf52e5530096cb46682b",
+   "company_id": "itc",
+   "fiscal_year": "Q1FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_no_marker",
+   "in_freeze_v2": true,
+   "marker_pages": [],
+   "markers": [],
+   "reason": "no nature-of-report marker on any page"
+  },
+  {
+   "document_id": "012dd4036b08936f45dedbfaf0c2a11691ff78c71ade71d026b1d99972d428bd",
+   "company_id": "itc",
+   "fiscal_year": "Q1FY2027",
+   "freeze_variant": null,
+   "basis": "ambiguous_no_marker",
+   "in_freeze_v2": true,
+   "marker_pages": [],
+   "markers": [],
+   "reason": "no nature-of-report marker on any page"
+  },
+  {
+   "document_id": "af6f5d42cdabf3f0c5118489871abf3c626b519cd204a5bc2b306059bbb1a719",
+   "company_id": "itc",
+   "fiscal_year": "Q1FY2027",
+   "freeze_variant": null,
+   "basis": "ambiguous_no_marker",
+   "in_freeze_v2": true,
+   "marker_pages": [],
+   "markers": [],
+   "reason": "no nature-of-report marker on any page"
+  },
+  {
+   "document_id": "062e39fb06f1ead6171ef4781558c691a9e0e26dc52ebd79e8035e059695d3aa",
+   "company_id": "itc",
+   "fiscal_year": "Q2FY2025",
+   "freeze_variant": null,
+   "basis": "ambiguous_no_marker",
+   "in_freeze_v2": true,
+   "marker_pages": [],
+   "markers": [],
+   "reason": "no nature-of-report marker on any page"
+  },
+  {
+   "document_id": "84d2584cf5ad231fdfbe5e8dda0d44537068be398108b0c3a986d910c6c85be1",
+   "company_id": "itc",
+   "fiscal_year": "Q2FY2025",
+   "freeze_variant": null,
+   "basis": "ambiguous_no_marker",
+   "in_freeze_v2": true,
+   "marker_pages": [],
+   "markers": [],
+   "reason": "no nature-of-report marker on any page"
+  },
+  {
+   "document_id": "49a01cd447bba1a5c3c19b966e18510c9433cdd5af5c3938557f161acff994aa",
+   "company_id": "itc",
+   "fiscal_year": "Q2FY2027",
+   "freeze_variant": null,
+   "basis": "ambiguous_no_marker",
+   "in_freeze_v2": true,
+   "marker_pages": [],
+   "markers": [],
+   "reason": "no nature-of-report marker on any page"
+  },
+  {
+   "document_id": "ac9e6d59166ffa174976ee5a0ee26eb8a0268f766836af8d87f627186fb65d59",
+   "company_id": "itc",
+   "fiscal_year": "Q2FY2027",
+   "freeze_variant": null,
+   "basis": "ambiguous_no_marker",
+   "in_freeze_v2": true,
+   "marker_pages": [],
+   "markers": [],
+   "reason": "no nature-of-report marker on any page"
+  },
+  {
+   "document_id": "534a06388071a955d88be4c73d7752e0e636ec1a48900ae945e2f2210bd113a9",
+   "company_id": "itc",
+   "fiscal_year": "Q4FY2025",
+   "freeze_variant": null,
+   "basis": "ambiguous_no_marker",
+   "in_freeze_v2": true,
+   "marker_pages": [],
+   "markers": [],
+   "reason": "no nature-of-report marker on any page"
+  },
+  {
+   "document_id": "56f5eac32baa7dde9bc306892b47990acd8cbf7067ec4b493e17667ed96f5584",
+   "company_id": "itc",
+   "fiscal_year": "Q4FY2025",
+   "freeze_variant": null,
+   "basis": "ambiguous_no_marker",
+   "in_freeze_v2": true,
+   "marker_pages": [],
+   "markers": [],
+   "reason": "no nature-of-report marker on any page"
+  },
+  {
+   "document_id": "16f0f69b1d0c60b20cb6f6f51b6299014b62b5966f1813ff483681cebed18305",
+   "company_id": "itc",
+   "fiscal_year": "Q4FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_no_marker",
+   "in_freeze_v2": true,
+   "marker_pages": [],
+   "markers": [],
+   "reason": "no nature-of-report marker on any page"
+  },
+  {
+   "document_id": "a12b778119a6ce454be74b00eedb10864af95e1ea532691e25a55706f7b6ca1d",
+   "company_id": "itc",
+   "fiscal_year": "Q4FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_no_marker",
+   "in_freeze_v2": true,
+   "marker_pages": [],
+   "markers": [],
+   "reason": "no nature-of-report marker on any page"
+  },
+  {
+   "document_id": "dc059eaa53b113ad3905dccada46d89fd536f6293a3d37720e42a1ec3ed7aa19",
+   "company_id": "jk_cement",
+   "fiscal_year": "Q1FY2027",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    7
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "a74af121e34fed122f2e045c52ea769305a9e83cadd0f69175431b805aee0db9",
+   "company_id": "jk_cement",
+   "fiscal_year": "Q2FY2025",
+   "freeze_variant": "combined",
+   "basis": "ambiguous_no_marker",
+   "in_freeze_v2": true,
+   "marker_pages": [],
+   "markers": [],
+   "reason": "no nature-of-report marker on any page"
+  },
+  {
+   "document_id": "cc51cd06856b8097ecb8465435375b0fd03e83c93ba4485f3b41190d3175ace1",
+   "company_id": "jk_cement",
+   "fiscal_year": "Q2FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    8,
+    10
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "b7e38cffd6d27c0e830d0659bbda0b1aa9aad3f0c64b73936347d3a5f97b2fa0",
+   "company_id": "jk_cement",
+   "fiscal_year": "Q2FY2027",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    9,
+    10,
+    11
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "d488d208d5df4a8a48d9cfe705f87833f7c118773325852994244848d3365f78",
+   "company_id": "jk_cement",
+   "fiscal_year": "Q3FY2024",
+   "freeze_variant": "combined",
+   "basis": "ambiguous_no_marker",
+   "in_freeze_v2": true,
+   "marker_pages": [],
+   "markers": [],
+   "reason": "no nature-of-report marker on any page"
+  },
+  {
+   "document_id": "642c956db433d069ae83c8655e73baa948581374b6302616991f00b22c60f2af",
+   "company_id": "jk_cement",
+   "fiscal_year": "Q3FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    7
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "88d7b3123e37741dd7b9177f387903f5ccbd78b0e7ad2e5e75de2e5a26013f22",
+   "company_id": "jk_cement",
+   "fiscal_year": "Q4FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    9,
+    10,
+    11
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "a43f528b759c6836864fc308df5ffa1381762e79a0003ae64aa8537c9ca98ae6",
+   "company_id": "kpi_tech",
+   "fiscal_year": "Q1FY2027",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    7
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "ffa089897147ce6970090104db476330d6463813f16d147f3cd3ca0f3e125d1a",
+   "company_id": "kpi_tech",
+   "fiscal_year": "Q2FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    8,
+    10,
+    11
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "5c2646dc9142dfa17f0770418462ccf5dfc678244ba5a83c7d4cda96efd57cec",
+   "company_id": "kpi_tech",
+   "fiscal_year": "Q2FY2027",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    9,
+    10,
+    11
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "2d522177ad386ebc214b0afdc86722875a48aa85a9b1954ee818cd53c861d7f2",
+   "company_id": "kpi_tech",
+   "fiscal_year": "Q3FY2024",
+   "freeze_variant": "consolidated",
+   "basis": "ambiguous_no_marker",
+   "in_freeze_v2": true,
+   "marker_pages": [],
+   "markers": [],
+   "reason": "no nature-of-report marker on any page"
+  },
+  {
+   "document_id": "7fe70a31279026a18b7404250dc72bba754f1f3de39f614eb53c5c963656c619",
+   "company_id": "kpi_tech",
+   "fiscal_year": "Q3FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    7
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "8abe5f927c807dc833e2f323d6f1ff83724a0ec2cdaa61dbd07d35ce1867d04e",
+   "company_id": "kpi_tech",
+   "fiscal_year": "Q4FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    9,
+    10,
+    11
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "7bba5e05a2202e0fd948651f6597b4390121907f2c37f5b11cb961fbb975c52c",
+   "company_id": "l_and_t",
+   "fiscal_year": "Q1FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    6,
+    10
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "6337e6da45e0c956903747a5af8a9e7bfae3c4ae13556f348a266b39cf08f54a",
+   "company_id": "l_and_t",
+   "fiscal_year": "Q1FY2027",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    6,
+    10
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "c2c6b804ece5b99fe86f2986ad2e748e9744c543b32a95cfaa2631bbec36a3d4",
+   "company_id": "l_and_t",
+   "fiscal_year": "Q2FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    6,
+    9,
+    13,
+    14
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "1b58d9cbd63f7b2c9adbf1e67eb82475d998273a27eba1698f7e90226c001903",
+   "company_id": "l_and_t",
+   "fiscal_year": "Q2FY2027",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    6,
+    10,
+    14,
+    15
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "dd9f06b475b96ebdf2042c88e59b81687cff732fc8ec694b7c70a97be9117730",
+   "company_id": "l_and_t",
+   "fiscal_year": "Q2FY2027",
+   "freeze_variant": null,
+   "basis": "ambiguous_no_marker",
+   "in_freeze_v2": true,
+   "marker_pages": [],
+   "markers": [],
+   "reason": "no nature-of-report marker on any page"
+  },
+  {
+   "document_id": "e685b1a1e39b21aff1c01b6b3cd952bf987117f3ee910605b978f50edd79f673",
+   "company_id": "l_and_t",
+   "fiscal_year": "Q3FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    7,
+    11
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "9fb584a56cf68d2e1870192310a0f274f566b4c9e189dfe0a90fa8b68757caa0",
+   "company_id": "l_and_t",
+   "fiscal_year": "Q4FY2025",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    9,
+    11,
+    12
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "a0fedad0ffa746bccdbfae4a3e3992016b573bdf1f7dc6be5de3cdf876b33ca7",
+   "company_id": "l_and_t",
+   "fiscal_year": "Q4FY2025",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    9,
+    12,
+    13
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "ceb46990b6fc5ada6ba5ac4699a666007a35efd69c70216f53de862ae4dd3979",
+   "company_id": "l_and_t",
+   "fiscal_year": "Q4FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    6,
+    10,
+    14,
+    15
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "80682fde4f0a6a201276482324ae9295b85abae0be5abdebdf1d9b9961d7177d",
+   "company_id": "lupin",
+   "fiscal_year": "Q1FY2025",
+   "freeze_variant": "combined",
+   "basis": "ambiguous_no_marker",
+   "in_freeze_v2": true,
+   "marker_pages": [],
+   "markers": [],
+   "reason": "no nature-of-report marker on any page"
+  },
+  {
+   "document_id": "87396ef98726f352d82de3d4571b3fac27e681e0d526df2318ffebb40468fe24",
+   "company_id": "lupin",
+   "fiscal_year": "Q1FY2027",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    7,
+    8
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "e274fba018fdd904450d00908a0478433562f4883f5fae5a55b1212ac1e97e32",
+   "company_id": "lupin",
+   "fiscal_year": "Q2FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    6,
+    10,
+    11,
+    12
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "ad6ed1ee1ba363124da47642f45927bfc9f00ea27b0026e5ea3bb631434da2dd",
+   "company_id": "lupin",
+   "fiscal_year": "Q2FY2027",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    7,
+    11,
+    12,
+    13
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "fac846b21f566d03ddfca7f96384be30f90ce834eca7e5c0bd21c2e5e4859d80",
+   "company_id": "lupin",
+   "fiscal_year": "Q3FY2025",
+   "freeze_variant": null,
+   "basis": "ambiguous_no_marker",
+   "in_freeze_v2": false,
+   "marker_pages": [],
+   "markers": [],
+   "reason": "no nature-of-report marker on any page"
+  },
+  {
+   "document_id": "3add8e0490dd2d9b5ac3a3312e6df94ce6e96e587a3ebdc9bfb57fd67e3937ed",
+   "company_id": "lupin",
+   "fiscal_year": "Q3FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    7,
+    8
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "6dfd053a6a15b0f190196fd7a73eeab8ee31c45339229a10234e96ad912c1342",
+   "company_id": "lupin",
+   "fiscal_year": "Q4FY2025",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    8,
+    12,
+    14
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "2e623254edfef9f31836922f2529a23257437cbf04741fcc8bdcd7b54e291c39",
+   "company_id": "lupin",
+   "fiscal_year": "Q4FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    7,
+    11,
+    12,
+    13
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "247ed806ecf7346d0a4128e72960ad933d1f6feb364b4da29122fb0a1a731477",
+   "company_id": "marico",
+   "fiscal_year": "Q1FY2027",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    7
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "3d740b6dc0229b0c4e350764bf846b3475f85111a63303f210fdc4a5e5f40f38",
+   "company_id": "marico",
+   "fiscal_year": "Q2FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    8,
+    10,
+    11
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "1cc18cb476c2b5374041ff0fc5da063d612ba7ca5e8a45a13581a18243cbe8be",
+   "company_id": "marico",
+   "fiscal_year": "Q2FY2027",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    9,
+    10,
+    11
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "93f8360c0189a5da4bec3777fcfe2726a69e19cccf915122cebe6ee8559863e8",
+   "company_id": "marico",
+   "fiscal_year": "Q3FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    7
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "67e326dc1c3532a6f5ecd2870106348264f8d41ae713631c783c777a039a0484",
+   "company_id": "marico",
+   "fiscal_year": "Q4FY2025",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    8,
+    10,
+    11
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "36d1b292522113762f87c883a3f4fcf96e2e4522b45b6937bd83b57e4796a9a9",
+   "company_id": "marico",
+   "fiscal_year": "Q4FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    9,
+    10,
+    11
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "5fe8bc26626c38123b52055697dd3d705e126baa51b2e884caeeea4ec5465460",
+   "company_id": "maruti_suzuki",
+   "fiscal_year": "Q1FY2025",
+   "freeze_variant": "consolidated",
+   "basis": "ambiguous_no_marker",
+   "in_freeze_v2": true,
+   "marker_pages": [],
+   "markers": [],
+   "reason": "no nature-of-report marker on any page"
+  },
+  {
+   "document_id": "8489a10a79f63db9a481132ba5c92a7bea5b65a891694f7bcc3f896cfefcc65b",
+   "company_id": "maruti_suzuki",
+   "fiscal_year": "Q1FY2027",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    3,
+    6,
+    7
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "f841ee1ef5c4539d7904d87eba2f3eb657c08ff1ae8104be101bb03912d73eba",
+   "company_id": "maruti_suzuki",
+   "fiscal_year": "Q2FY2025",
+   "freeze_variant": "standalone",
+   "basis": "ambiguous_no_marker",
+   "in_freeze_v2": true,
+   "marker_pages": [],
+   "markers": [],
+   "reason": "no nature-of-report marker on any page"
+  },
+  {
+   "document_id": "835673a6c985d42e7a95369288a3e834685c88ff0f483c2b1e7f471108c06134",
+   "company_id": "maruti_suzuki",
+   "fiscal_year": "Q2FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    3,
+    6,
+    9,
+    10,
+    11
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "fb901ca283728d2f0b3a24de7e6d68b80d15db83e70ceef0eb98f2e20a732bb2",
+   "company_id": "maruti_suzuki",
+   "fiscal_year": "Q2FY2027",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    3,
+    6,
+    10,
+    11,
+    12
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "a25f22144c8db622aa93a62f08e52d0c65fe95c156669064e1e3890cfdce99af",
+   "company_id": "maruti_suzuki",
+   "fiscal_year": "Q3FY2024",
+   "freeze_variant": "consolidated",
+   "basis": "ambiguous_no_marker",
+   "in_freeze_v2": true,
+   "marker_pages": [],
+   "markers": [],
+   "reason": "no nature-of-report marker on any page"
+  },
+  {
+   "document_id": "3c071719a04b21cb1fe81533f6b7c531a5c7b49403f32e38469ee80d1156299b",
+   "company_id": "maruti_suzuki",
+   "fiscal_year": "Q3FY2025",
+   "freeze_variant": "consolidated",
+   "basis": "ambiguous_no_marker",
+   "in_freeze_v2": true,
+   "marker_pages": [],
+   "markers": [],
+   "reason": "no nature-of-report marker on any page"
+  },
+  {
+   "document_id": "1ba24af69475c00e43e6653c5e6a7c25272faf6d16a06ee77c4d5a48028e6273",
+   "company_id": "maruti_suzuki",
+   "fiscal_year": "Q3FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    3,
+    6,
+    7
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "0dbc81b6010559f4bd46f181fc74112d697d602e1a9c26958df5d760e4a4f1a3",
+   "company_id": "maruti_suzuki",
+   "fiscal_year": "Q4FY2025",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    9,
+    10,
+    11
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "895ad2187cdec5be3e429eca8df82b36477e22a9bbb21768fed06e92e9c129f6",
+   "company_id": "maruti_suzuki",
+   "fiscal_year": "Q4FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    3,
+    6,
+    10,
+    11,
+    12
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "04f2aeb80ba7aa875e9c20b042e2f68c4e5d8949507f799c0067906edddf31be",
+   "company_id": "ntpc",
+   "fiscal_year": "Q1FY2025",
+   "freeze_variant": "consolidated",
+   "basis": "ambiguous_no_marker",
+   "in_freeze_v2": true,
+   "marker_pages": [],
+   "markers": [],
+   "reason": "no nature-of-report marker on any page"
+  },
+  {
+   "document_id": "2fbdfc535bedae1fa801327b6dcc453d56afd21e454e77f41c6ab3f8f112cc8e",
+   "company_id": "ntpc",
+   "fiscal_year": "Q1FY2027",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    7
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "b1c28631b6f7b6d31ac84e3e8a8c4f496eedb75f01de7e434c3b378a4daba642",
+   "company_id": "ntpc",
+   "fiscal_year": "Q2FY2025",
+   "freeze_variant": "consolidated",
+   "basis": "ambiguous_no_marker",
+   "in_freeze_v2": true,
+   "marker_pages": [],
+   "markers": [],
+   "reason": "no nature-of-report marker on any page"
+  },
+  {
+   "document_id": "2d6431969acebc368bcc4f9257711ab8ccfe15513c00549534f5ea89e74f5c39",
+   "company_id": "ntpc",
+   "fiscal_year": "Q2FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    8,
+    10,
+    11
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "f133eccdf983097d506eee8212063dff3167da5a6de355889391b33c2e4ed06b",
+   "company_id": "ntpc",
+   "fiscal_year": "Q2FY2027",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    9,
+    11,
+    12
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "a6deebde7866a4519a48dfb1b147e5f7db0dc380107d57b65249c4391e83240a",
+   "company_id": "ntpc",
+   "fiscal_year": "Q3FY2024",
+   "freeze_variant": "consolidated",
+   "basis": "ambiguous_no_marker",
+   "in_freeze_v2": true,
+   "marker_pages": [],
+   "markers": [],
+   "reason": "no nature-of-report marker on any page"
+  },
+  {
+   "document_id": "1d7b9851f8a619e7d87ff3c3b8db65020ff421838630f91373b370a1390a6bd0",
+   "company_id": "ntpc",
+   "fiscal_year": "Q3FY2025",
+   "freeze_variant": "consolidated",
+   "basis": "ambiguous_no_marker",
+   "in_freeze_v2": true,
+   "marker_pages": [],
+   "markers": [],
+   "reason": "no nature-of-report marker on any page"
+  },
+  {
+   "document_id": "19b2d60e20407329c4dbb958cef92e597062cbfa21b81253d35dc4829353d4f8",
+   "company_id": "ntpc",
+   "fiscal_year": "Q3FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    7
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "cc5f9eac3f72fdf1e07afdceb417777b79c373d7db2f6f1c8828c1400f0e90f8",
+   "company_id": "ntpc",
+   "fiscal_year": "Q4FY2025",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    8,
+    10,
+    11
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "529611352d17e76ef34043732bea730165a21f27e8e457608e9b52ea1e34969a",
+   "company_id": "ntpc",
+   "fiscal_year": "Q4FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    9,
+    11,
+    12
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "b5223751a31b0c6fa117d783adcceccc5c58df5da978686541bd018bb43d605f",
+   "company_id": "ongc",
+   "fiscal_year": "Q1FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    7
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "16405e925e8abc0bd0c88dd33d038fab35f0fcf1fd14e1fb31bc5e7d9eb822c5",
+   "company_id": "ongc",
+   "fiscal_year": "Q1FY2027",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    7
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "9f30e079a87b8729e57f0f508e8815685623d49897b85ae4ff53dd0750ee5d46",
+   "company_id": "ongc",
+   "fiscal_year": "Q2FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    8,
+    11,
+    12
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "bf16e9e3c37c6c9357538daeb82183211e8cdff75804bed5e1082b7671c4a1a0",
+   "company_id": "ongc",
+   "fiscal_year": "Q2FY2027",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    9,
+    11,
+    12
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "4bbe1f9f3248d5d61226005ae13dea8655106486418f19c42b500ab571b5a936",
+   "company_id": "ongc",
+   "fiscal_year": "Q3FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    7
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "7d72f065bc7ca1aa51237533c6e642495e08c41488830b0efdb8ccc192a365f2",
+   "company_id": "ongc",
+   "fiscal_year": "Q4FY2025",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    8,
+    11,
+    12
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "cf5057cf622e22964ddd6147713dd81a64329bd473e4846adbb252106743f237",
+   "company_id": "ongc",
+   "fiscal_year": "Q4FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    9,
+    11,
+    12
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "122f36b10d04d07609f03564e7477ba78c56dd98912a5d2c7e85e6b6c4940b58",
+   "company_id": "pidilite",
+   "fiscal_year": "Q1FY2025",
+   "freeze_variant": null,
+   "basis": "ambiguous_no_marker",
+   "in_freeze_v2": false,
+   "marker_pages": [],
+   "markers": [],
+   "reason": "no nature-of-report marker on any page"
+  },
+  {
+   "document_id": "8d37943447287e37e5cea09bdaf809bbbba0d412f171d642ae9477de474cf12e",
+   "company_id": "pidilite",
+   "fiscal_year": "Q1FY2027",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    7
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "9833b2d34df15ab5c5f5a4919593d2e3ffd91b7a68f8189d3c36e05fa1ef6fc6",
+   "company_id": "pidilite",
+   "fiscal_year": "Q2FY2025",
+   "freeze_variant": "consolidated",
+   "basis": "ambiguous_no_marker",
+   "in_freeze_v2": true,
+   "marker_pages": [],
+   "markers": [],
+   "reason": "no nature-of-report marker on any page"
+  },
+  {
+   "document_id": "bdb74b788617dee6561f9794c30db2848946e5c1743254929b84da50988c530b",
+   "company_id": "pidilite",
+   "fiscal_year": "Q2FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    8,
+    10,
+    11
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "211e04478571abfd4eb9f687eae732fc943e184a1591c0c9313616576f3acac3",
+   "company_id": "pidilite",
+   "fiscal_year": "Q2FY2027",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    9,
+    10,
+    11
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "3147e38b85c25efbcfbbb3f26fbdddb5d2e0f22d65c7132e1fc6115ccaec7ac2",
+   "company_id": "pidilite",
+   "fiscal_year": "Q3FY2024",
+   "freeze_variant": null,
+   "basis": "ambiguous_no_marker",
+   "in_freeze_v2": false,
+   "marker_pages": [],
+   "markers": [],
+   "reason": "no nature-of-report marker on any page"
+  },
+  {
+   "document_id": "e4c6bb23059c3739bb7f0e917ace03a78d4c8db4526276292f4bfd1d8abadfa6",
+   "company_id": "pidilite",
+   "fiscal_year": "Q3FY2025",
+   "freeze_variant": null,
+   "basis": "ambiguous_no_marker",
+   "in_freeze_v2": false,
+   "marker_pages": [],
+   "markers": [],
+   "reason": "no nature-of-report marker on any page"
+  },
+  {
+   "document_id": "18d4044d9de90be92ad1001880af2a9f5cd3bbead3b8d019af8ef69d189576db",
+   "company_id": "pidilite",
+   "fiscal_year": "Q3FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    7
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "1ec8483cbfe64212b28217a429aced11d04048c099a4f2ab87c390d507f52076",
+   "company_id": "pidilite",
+   "fiscal_year": "Q4FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    9,
+    10,
+    11
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "27a1f849e2393f6cfed20762a630b23ef0e93d208a8e877c5b34368c6e1a4dbe",
+   "company_id": "polycab",
+   "fiscal_year": "Q1FY2027",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    7
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "a2c8ffef0b51fa355788da8164ab342714e4e5d007332326cc9e174fffd72d56",
+   "company_id": "polycab",
+   "fiscal_year": "Q2FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    8,
+    10,
+    11
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "2c5ce4e5e7c17934b2402197dd6ab59a284df31c73cbbe9bf63ef2ea8c8de2d8",
+   "company_id": "polycab",
+   "fiscal_year": "Q2FY2027",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    9,
+    11,
+    12
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "d4354a9d7815cfbd2065cc486a69b602bbec6d661ce18688ad0d4e082baf0188",
+   "company_id": "polycab",
+   "fiscal_year": "Q3FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    7
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "0011db30a7354a522fc977032952aba30421d8a9b755026da862ddf93cd64020",
+   "company_id": "polycab",
+   "fiscal_year": "Q4FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    9,
+    11,
+    12
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "1d0c575f6efcf29a51773999c4171f71c593abbd6f714b7a997e5af78230f523",
+   "company_id": "power_grid",
+   "fiscal_year": "Q1FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    7
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "851d0963a2f7945150d0448a1c00c61c392130a96a6bab9400c2db1b301a5c60",
+   "company_id": "power_grid",
+   "fiscal_year": "Q1FY2027",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    7,
+    8
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "0b09adb56d9a0b7ce8cc28c6b71fabf2a82bbe99789a0e8c42ee761bb3b75dd2",
+   "company_id": "power_grid",
+   "fiscal_year": "Q2FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    9,
+    11,
+    12
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "1f80a0b93916089ca29e6079944a7d9e38e6d37f70579ca7a2306a97bb68f266",
+   "company_id": "power_grid",
+   "fiscal_year": "Q2FY2027",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    9,
+    11,
+    12
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "4ec0e6e31dc8c546bfdbe3e69a006d09251ce868245b9ea37bb02754a9e63da5",
+   "company_id": "power_grid",
+   "fiscal_year": "Q3FY2024",
+   "freeze_variant": "standalone",
+   "basis": "ambiguous_no_marker",
+   "in_freeze_v2": true,
+   "marker_pages": [],
+   "markers": [],
+   "reason": "no nature-of-report marker on any page"
+  },
+  {
+   "document_id": "90694b9bd8f95d2cb4c9a0a838294d3a6d05b7ffb9bb734fa5590254693a50f3",
+   "company_id": "power_grid",
+   "fiscal_year": "Q3FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    7
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "dbeb071503aa1f03efbd3017cd05bacf0d1e45fc526a875d703f2a8b19042457",
+   "company_id": "power_grid",
+   "fiscal_year": "Q4FY2025",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    9,
+    11
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "6c00bf1d1fc5c0a1f97ef989d20fcfa479c2d6f8b41da12348b8a6f48e7b7f1c",
+   "company_id": "power_grid",
+   "fiscal_year": "Q4FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    9,
+    11,
+    12
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "ca689acfa7b78e90562531dd0822605d49331889a385ff3dcc348300af1681eb",
+   "company_id": "sail",
+   "fiscal_year": "Q1FY2027",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    7
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "34a4c452db2b4fcd0d2b5d975f1cd766d92e119c83e53e4e0605b80fa08ad4c7",
+   "company_id": "sail",
+   "fiscal_year": "Q2FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    8,
+    11,
+    12
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "e563721773c2d7bb4f5bf9851ad476ba9996e5e196817acd3292f6853756202b",
+   "company_id": "sail",
+   "fiscal_year": "Q2FY2027",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    9,
+    11,
+    12
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "f3dd4f635506c9e1cb4d4e97ff33fa2cb6b48949ce256b13c73c044188eb0f84",
+   "company_id": "sail",
+   "fiscal_year": "Q3FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    8
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "5cb9a548f788a8771d1d3bf81e2dbcc147f1f2cdeecc75261cfcc9648f408f03",
+   "company_id": "sail",
+   "fiscal_year": "Q4FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    8,
+    11
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "cc0ce904966e904a9479f69884493e947464a23a769989d63abcaf329d3619c7",
+   "company_id": "samvardhana_motherson",
+   "fiscal_year": "Q1FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    6,
+    8
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "75e11a2850c77dda870e0e632bee7b4ba36c1a26b78c83a6baae3bb2b0030e92",
+   "company_id": "samvardhana_motherson",
+   "fiscal_year": "Q1FY2027",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    7
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "0dd0a28bc9c8ccf10f55c770fff6c4cc1765a081a2e45e03cda412b3e49f370f",
+   "company_id": "samvardhana_motherson",
+   "fiscal_year": "Q2FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    8,
+    10,
+    11
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "b48a42351dd7fe1908eaec6c0a8018041d67455d4af181c653f1673e08332d94",
+   "company_id": "samvardhana_motherson",
+   "fiscal_year": "Q2FY2027",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    9,
+    11,
+    12
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "a333abe3f303d7969aba697c9ceec559d433018ada91e45c6d0079c386ba3d42",
+   "company_id": "samvardhana_motherson",
+   "fiscal_year": "Q3FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    7
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "588057b8403e0592802255f1c2d55b5b9c4eed2ea4fe43cc821d89b094f8f589",
+   "company_id": "samvardhana_motherson",
+   "fiscal_year": "Q4FY2025",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    8,
+    10,
+    11
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "92794c8b4bc3e86c44770fccb92f3006941209467ebc7d0d386f8958e8fa8b04",
+   "company_id": "samvardhana_motherson",
+   "fiscal_year": "Q4FY2025",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    8,
+    10,
+    11
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "73b4bdc14723ae5790f91dcf4d72cda28542363f06a5499b791ed01e9649b127",
+   "company_id": "samvardhana_motherson",
+   "fiscal_year": "Q4FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    9,
+    11,
+    12
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "b52017dc13a1bbc3e7e93cca1ef7d74ab1babae39cb87145b7d234c8f05da65d",
+   "company_id": "samvardhana_motherson",
+   "fiscal_year": "Q4FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    9,
+    11,
+    12
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "a7f9edbce6ed4788b39fa92437c6e16577423f2fe5dcf61bd5240caba4732d15",
+   "company_id": "srf",
+   "fiscal_year": "Q1FY2025",
+   "freeze_variant": "consolidated",
+   "basis": "ambiguous_no_marker",
+   "in_freeze_v2": true,
+   "marker_pages": [],
+   "markers": [],
+   "reason": "no nature-of-report marker on any page"
+  },
+  {
+   "document_id": "374168d30f68dfb5afed80eb74d8ae4b999a9fd94687bf6f9c9b9af767a531a2",
+   "company_id": "srf",
+   "fiscal_year": "Q1FY2027",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    7
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "3fe9640e1658714fc7c23eef173e452b78e3ce120065c9761b36784bfa909dde",
+   "company_id": "srf",
+   "fiscal_year": "Q2FY2025",
+   "freeze_variant": "consolidated",
+   "basis": "ambiguous_no_marker",
+   "in_freeze_v2": true,
+   "marker_pages": [],
+   "markers": [],
+   "reason": "no nature-of-report marker on any page"
+  },
+  {
+   "document_id": "98c354fd9ea7c10924c590c9656ce48a0cb2e47b7bc52fa90116e1d5749d04ba",
+   "company_id": "srf",
+   "fiscal_year": "Q2FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    8,
+    10,
+    11
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "686f19751322b0b740075072e7c155b78c035b31c8dd5e946affdd25e68ab125",
+   "company_id": "srf",
+   "fiscal_year": "Q2FY2027",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    9,
+    11
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "e514b8d41a80c1f6abdc8ab8dd9fe3bc9d4961fd490746e4b29fd9cb4dbc6b18",
+   "company_id": "srf",
+   "fiscal_year": "Q3FY2025",
+   "freeze_variant": "consolidated",
+   "basis": "ambiguous_no_marker",
+   "in_freeze_v2": true,
+   "marker_pages": [],
+   "markers": [],
+   "reason": "no nature-of-report marker on any page"
+  },
+  {
+   "document_id": "5afa5cd9479d300e87a953dd77ab4d0116a7127d7353fa51154ca01d4ad83a56",
+   "company_id": "srf",
+   "fiscal_year": "Q3FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    7
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "7e649c876d710fa59b8f66123671866edc3e61fdbb2574745e9343642d8bb7e1",
+   "company_id": "srf",
+   "fiscal_year": "Q4FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    9,
+    11,
+    12
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "283d34a60d0ec9abd8dc27ae2ea18c752cd35594046d8986ed8c4b593791938e",
+   "company_id": "sun_pharma",
+   "fiscal_year": "Q1FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    7
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "72125c1abd19de4714e7b0a922fc99ec2e945d53ad63d457241e04a5e01282fb",
+   "company_id": "sun_pharma",
+   "fiscal_year": "Q1FY2027",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    7
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "2300a9a2ea05749500e7747ba8783898ca24d27a6265477b7d9d057705580b83",
+   "company_id": "sun_pharma",
+   "fiscal_year": "Q2FY2025",
+   "freeze_variant": "consolidated",
+   "basis": "ambiguous_no_marker",
+   "in_freeze_v2": true,
+   "marker_pages": [],
+   "markers": [],
+   "reason": "no nature-of-report marker on any page"
+  },
+  {
+   "document_id": "7f018db20d08cff68b7a23d04a1807cbfcbf606f2df3824461dd2c4f4b46264f",
+   "company_id": "sun_pharma",
+   "fiscal_year": "Q2FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    8,
+    10,
+    11
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "abde8b983e9d44469fbf8ab8afd2202444a368a4c37acbafda879d799c016fda",
+   "company_id": "sun_pharma",
+   "fiscal_year": "Q2FY2027",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    9,
+    10,
+    11
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "625a64864804f46a028df123e16530fc2a55491c2bce848af9c28e3422aa5082",
+   "company_id": "sun_pharma",
+   "fiscal_year": "Q3FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    7
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "664e10fc301d6c4371949978d6de5ff01931e3ba808f319c0b3d942380ed45f7",
+   "company_id": "sun_pharma",
+   "fiscal_year": "Q4FY2025",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    8,
+    9,
+    10
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "ba6aebfa5d7ce281afa07cd953e2fd01a2b607bc71c9e643a0cf7f249ffa6e2f",
+   "company_id": "sun_pharma",
+   "fiscal_year": "Q4FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    9,
+    10,
+    11
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "cf3fd77037c33170a25384a8a13d472b92a5a6d8bb839fe170cd39437a990182",
+   "company_id": "tata_chemicals",
+   "fiscal_year": "Q1FY2027",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    7
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "dea7cdfdfffac7f5fcc029760d4167acefff7aa55358b577c0623a6339770d7c",
+   "company_id": "tata_chemicals",
+   "fiscal_year": "Q2FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    8,
+    10,
+    11
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "96300344e3c3553cbefc0eb0fd7bd9718ed076714b120fb95963e3469b8c7498",
+   "company_id": "tata_chemicals",
+   "fiscal_year": "Q3FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    7
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "88dc72168694c26958c5093c3af74e53a4ae71582e429a660a92180bd93fbbc0",
+   "company_id": "tata_chemicals",
+   "fiscal_year": "Q4FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    9,
+    10,
+    11
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "f54c3c35b08e25d4f57c90c4171a4ad2f3f24601d6b6ebfd7ddd0ff406edca32",
+   "company_id": "tata_steel",
+   "fiscal_year": "Q1FY2027",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    7
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "8492a305659eb2fd43d50645473728b30fde243d4a6d4219de73ee2e08ca3bc1",
+   "company_id": "tata_steel",
+   "fiscal_year": "Q2FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    8,
+    11,
+    12
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "2facf948b9f593ced59c4307dfdf928588bd5aac78b3e8c0522ef0c993fc3759",
+   "company_id": "tata_steel",
+   "fiscal_year": "Q2FY2027",
+   "freeze_variant": "consolidated",
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": true,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    8,
+    10,
+    11
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "28219beec1a88951ee42a6ef2ba45fb76d97c94f3dd6bbc0a951e0e515a85aa9",
+   "company_id": "tata_steel",
+   "fiscal_year": "Q3FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    8
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "1877b810b442441e9b5f7e5e0d61f5b8009726787522d3cf28e2f2f0c326cfd1",
+   "company_id": "tata_steel",
+   "fiscal_year": "Q4FY2025",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    8,
+    10,
+    11
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "18dec76542b2797c9c2c0723394c7c1db5b03e86eccefbb3397cb393d3b9b423",
+   "company_id": "tata_steel",
+   "fiscal_year": "Q4FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    9,
+    11,
+    12
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "e31fc52a01a531d65a465ccbb81c97e804e499870aaaf159fad939e2641c479e",
+   "company_id": "tcs",
+   "fiscal_year": "Q1FY2027",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    7
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "fd59a27f69aa63e888325d45f1e68f6a0cd7a8820301edc3ba89d8128a58b018",
+   "company_id": "tcs",
+   "fiscal_year": "Q2FY2025",
+   "freeze_variant": "single",
+   "basis": "ambiguous_no_marker",
+   "in_freeze_v2": true,
+   "marker_pages": [],
+   "markers": [],
+   "reason": "no nature-of-report marker on any page"
+  },
+  {
+   "document_id": "560eac0ee26517da2fe81b51cbacea7b52e6658d8e97699c25f93a83a3d428d6",
+   "company_id": "tcs",
+   "fiscal_year": "Q2FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    8,
+    11,
+    12
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "a7a701fd6a1fe764365e914e9c9c8b3d9141151b7bb69d45fca1f95e73078427",
+   "company_id": "tcs",
+   "fiscal_year": "Q2FY2027",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    9,
+    11,
+    12
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "d986bb07e7b53abbd2222aba3ae5e1573e964f32662773291bd1604776184807",
+   "company_id": "tcs",
+   "fiscal_year": "Q3FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    7
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "d7df54ccf93568dd25c4d1ae44e618fbfb9e082c5938e08543465737d1a34a9e",
+   "company_id": "tcs",
+   "fiscal_year": "Q4FY2025",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    8,
+    10,
+    11
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "004adcb672dd4927b0c2617f704f57c11f5ce20d2ffdee13efb8e2215a21fe41",
+   "company_id": "tcs",
+   "fiscal_year": "Q4FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    9,
+    11,
+    12
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "60c598a9965c79cc4a44e6638d90156cd80d755ccf55765e79d88b431d766ab0",
+   "company_id": "tech_mahindra",
+   "fiscal_year": "Q1FY2027",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    7
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "b6af93d4edacebce6e232b503846361597cbe2a3630176d7c00982065e2352bd",
+   "company_id": "tech_mahindra",
+   "fiscal_year": "Q2FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    8,
+    10,
+    11
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "bfc536cf377637652250d296368c104bc9d25d1b99609d5e407dd1494d7eb48f",
+   "company_id": "tech_mahindra",
+   "fiscal_year": "Q2FY2027",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    9,
+    10,
+    11
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "a8a3ddf83adeecf5ea1ad557d00344d605ab1bfba1e776796afc4a020e983d1f",
+   "company_id": "tech_mahindra",
+   "fiscal_year": "Q3FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    7
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "c881afcde002a0661fc14d55dd499e56f328aca3b5596e52ebbdcbb4302c4322",
+   "company_id": "tech_mahindra",
+   "fiscal_year": "Q4FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    9,
+    10,
+    11
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "9eb8a50b969666487b9036c663393bc1bccb2e2044090c426b91a3bd032fb5c6",
+   "company_id": "thermax",
+   "fiscal_year": "Q1FY2027",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    7
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "2f2b2a2d5f0ad36cc230b73b5c7fe7f0346a3e4411098cda0272cd58a45e5cbf",
+   "company_id": "thermax",
+   "fiscal_year": "Q2FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    8,
+    10,
+    11
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "523765ff4237448e98be4deda61e15083665c8a66c0850b372f893a23fdce587",
+   "company_id": "thermax",
+   "fiscal_year": "Q2FY2027",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    9,
+    11,
+    12
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "b960e746256a2ed3c2a4b73293f806e3fb45de1075087b2339a279ca6a657b23",
+   "company_id": "thermax",
+   "fiscal_year": "Q3FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    7
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "1cc51d327d80135f28c032c9c6aa5177a06ad92ea4c5e436adb4521b45d0beb3",
+   "company_id": "thermax",
+   "fiscal_year": "Q4FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    9,
+    11,
+    12
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "a0a8d68a73fc024948d4371dc22f9cfdf86e6e76ebfdc6caa98ab51f42f9ecdc",
+   "company_id": "torrent_pharma",
+   "fiscal_year": "Q1FY2027",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    6
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "c7e7bf284b8d8618650c3b89218fb2f2abe7a806f4d057f59dc574c6c9f8b2b9",
+   "company_id": "torrent_pharma",
+   "fiscal_year": "Q2FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    8,
+    9,
+    10
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "0704ab9fa62bba0d6ee4894327163ebb796d43c161f5bc3cc61ca45fd28b41ec",
+   "company_id": "torrent_pharma",
+   "fiscal_year": "Q2FY2027",
+   "freeze_variant": null,
+   "basis": "ambiguous_no_marker",
+   "in_freeze_v2": true,
+   "marker_pages": [],
+   "markers": [],
+   "reason": "no nature-of-report marker on any page"
+  },
+  {
+   "document_id": "c2a46151731afb6c3fab7eb51eb70a62882af22b6c4ac99c05f1896ea3a06af8",
+   "company_id": "torrent_pharma",
+   "fiscal_year": "Q2FY2027",
+   "freeze_variant": null,
+   "basis": "ambiguous_no_marker",
+   "in_freeze_v2": true,
+   "marker_pages": [],
+   "markers": [],
+   "reason": "no nature-of-report marker on any page"
+  },
+  {
+   "document_id": "f1b5207367b7d64620015f41bcd142ef0ded97cc9d88e204c395ee692f61d1e7",
+   "company_id": "torrent_pharma",
+   "fiscal_year": "Q2FY2027",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    9,
+    10,
+    11
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "a462bc10e010e23c68ff4559edafee582fc2369028edab8f79d375125ab9a178",
+   "company_id": "torrent_pharma",
+   "fiscal_year": "Q3FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    6
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "dc5af3b4964d474376684c22718fcfdd31de068e6dcd9dc6fc16fd8825eb5abb",
+   "company_id": "torrent_pharma",
+   "fiscal_year": "Q4FY2025",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    7,
+    10,
+    12
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "9733b3ffcbe0920cb3e710c75828a4abaa1bcc72e6d18e0112c814a5d87bdc6a",
+   "company_id": "torrent_pharma",
+   "fiscal_year": "Q4FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    9,
+    10,
+    11
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "5dc7f1869ee42421aad02302206dd5c3e784732f8541ff32d08a71382f1d33ef",
+   "company_id": "tvs_motor",
+   "fiscal_year": "Q1FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    7
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "bbd42725fdf3d2369fb0da27b1211c6e2cfa9cec24291f7f989a09540f49937d",
+   "company_id": "tvs_motor",
+   "fiscal_year": "Q1FY2027",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    7
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "2b9c5849e77897dd09a7865b20f1c95ddd6fd824c0904334996031900617cec3",
+   "company_id": "tvs_motor",
+   "fiscal_year": "Q2FY2022",
+   "freeze_variant": "consolidated",
+   "basis": "ambiguous_no_marker",
+   "in_freeze_v2": true,
+   "marker_pages": [],
+   "markers": [],
+   "reason": "no nature-of-report marker on any page"
+  },
+  {
+   "document_id": "56700ce6752e790509dec6927c29a0d94a9dd779ea12919793d2926f08e01663",
+   "company_id": "tvs_motor",
+   "fiscal_year": "Q2FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    9,
+    10,
+    11
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "aa7ecb36ef17b8aa2c9242605c4db43ccbfb8061bf8e7fbf61913fd97aae0df4",
+   "company_id": "tvs_motor",
+   "fiscal_year": "Q2FY2027",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    9,
+    11
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "6c0fb33fd09f23c0c14306112e5d34b879610860f977a1a4a661d54bddf7dfe9",
+   "company_id": "tvs_motor",
+   "fiscal_year": "Q3FY2024",
+   "freeze_variant": "combined",
+   "basis": "ambiguous_no_marker",
+   "in_freeze_v2": true,
+   "marker_pages": [],
+   "markers": [],
+   "reason": "no nature-of-report marker on any page"
+  },
+  {
+   "document_id": "656e36cb019abedda0498efe88ee3f74412cc10718c364175fa8e0c833b2b492",
+   "company_id": "tvs_motor",
+   "fiscal_year": "Q3FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    6,
+    7
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "d4aa829d5dcc8c5108727b8ffd3c2ddfc35cad605415b69e163975be6a1319fe",
+   "company_id": "tvs_motor",
+   "fiscal_year": "Q4FY2025",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    8,
+    10,
+    11
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "0cfbddccfe18200470bc9eec5035a2f40c80ba6e39993b4996233f8606e35245",
+   "company_id": "tvs_motor",
+   "fiscal_year": "Q4FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    9,
+    10,
+    11
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "7154d29849e9e0ed14b9bd991682cf412d7fe9f2ca7f3ff1a99a904e5db8a189",
+   "company_id": "upl",
+   "fiscal_year": "Q1FY2025",
+   "freeze_variant": "consolidated",
+   "basis": "ambiguous_no_marker",
+   "in_freeze_v2": true,
+   "marker_pages": [],
+   "markers": [],
+   "reason": "no nature-of-report marker on any page"
+  },
+  {
+   "document_id": "341cb0b11fdbc3ac20a407b2d0c039f0a16eefac6e75a578df8a13dc4e644e28",
+   "company_id": "upl",
+   "fiscal_year": "Q1FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    7
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "8d7c89b966c5da6cd184512528bcd8fa3295bb0a01a7dcb74eadc620f3d502e8",
+   "company_id": "upl",
+   "fiscal_year": "Q1FY2027",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    7
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "6f6594f8c46f0bcaf4337891697a6121fe0aefa9270e2ce77b092738a104b9a6",
+   "company_id": "upl",
+   "fiscal_year": "Q2FY2025",
+   "freeze_variant": "combined",
+   "basis": "ambiguous_no_marker",
+   "in_freeze_v2": true,
+   "marker_pages": [],
+   "markers": [],
+   "reason": "no nature-of-report marker on any page"
+  },
+  {
+   "document_id": "b6c71f06904d1105639f1d0eef5b59ac502e346df0f7eb96d67f21302b80dcaf",
+   "company_id": "upl",
+   "fiscal_year": "Q2FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    9,
+    10,
+    11
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "17cc3b950fdd73e235482a11c5c2c2776c9bbed15fc52889e0b1f793572f49ae",
+   "company_id": "upl",
+   "fiscal_year": "Q2FY2027",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    9,
+    11,
+    12
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "6deeac95d8dbd5e9447e5ae03e595ed9c7ca663dbaf48bd0e43340cd57e45cbe",
+   "company_id": "upl",
+   "fiscal_year": "Q3FY2024",
+   "freeze_variant": "combined",
+   "basis": "ambiguous_no_marker",
+   "in_freeze_v2": true,
+   "marker_pages": [],
+   "markers": [],
+   "reason": "no nature-of-report marker on any page"
+  },
+  {
+   "document_id": "062c700e5430737a3a8682eaa17b3aadc8373d1854418010ba48d4adf884b4b2",
+   "company_id": "upl",
+   "fiscal_year": "Q3FY2025",
+   "freeze_variant": null,
+   "basis": "ambiguous_no_marker",
+   "in_freeze_v2": false,
+   "marker_pages": [],
+   "markers": [],
+   "reason": "no nature-of-report marker on any page"
+  },
+  {
+   "document_id": "ebd55a84879b79773afa3ab133f6fcbdbf9f149f34b9dc273dd2bf93fd6bbda6",
+   "company_id": "upl",
+   "fiscal_year": "Q3FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    7
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "35f7a036fddec803aafa9fe398457e46aa3a6e663bdbc799cd2048cfd8230820",
+   "company_id": "upl",
+   "fiscal_year": "Q4FY2024",
+   "freeze_variant": "combined",
+   "basis": "ambiguous_no_marker",
+   "in_freeze_v2": true,
+   "marker_pages": [],
+   "markers": [],
+   "reason": "no nature-of-report marker on any page"
+  },
+  {
+   "document_id": "2f0f69e497b57b13c241320ff60a466a580233c64adbdea0f28949a6af684307",
+   "company_id": "upl",
+   "fiscal_year": "Q4FY2025",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    8,
+    10,
+    11
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "87ef782b8d7d6265cbf2e5d9c924ded68cb706115711674c3e58aae650907e42",
+   "company_id": "upl",
+   "fiscal_year": "Q4FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    9,
+    11,
+    12
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "f021ae6fec8ca1ead48337b9fcbfafc5f83aefa845d713da9d81d9cd77540be7",
+   "company_id": "upl",
+   "fiscal_year": "Q4FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    9,
+    11,
+    12
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "f29084f6f136d1773b3cb04ba4a4a151d7b99a6e0d48c3d037a299062755a3e1",
+   "company_id": "wipro",
+   "fiscal_year": "Q1FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_no_marker",
+   "in_freeze_v2": true,
+   "marker_pages": [],
+   "markers": [],
+   "reason": "no nature-of-report marker on any page"
+  },
+  {
+   "document_id": "a721ece63a43912f703231683cb3eaf53c0e89efc436d98bb43d3aad52860212",
+   "company_id": "wipro",
+   "fiscal_year": "Q1FY2027",
+   "freeze_variant": null,
+   "basis": "ambiguous_no_marker",
+   "in_freeze_v2": true,
+   "marker_pages": [],
+   "markers": [],
+   "reason": "no nature-of-report marker on any page"
+  },
+  {
+   "document_id": "fbd030c17809cef911cf55e71af0e383d1bf56990a6b216c2c8cf122e52f6dde",
+   "company_id": "wipro",
+   "fiscal_year": "Q2FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_no_marker",
+   "in_freeze_v2": true,
+   "marker_pages": [],
+   "markers": [],
+   "reason": "no nature-of-report marker on any page"
+  },
+  {
+   "document_id": "dad7e4d2a62b2030015ed4fba38fb5c2889ebe79c50f70a307552ce090219cdd",
+   "company_id": "wipro",
+   "fiscal_year": "Q2FY2027",
+   "freeze_variant": null,
+   "basis": "ambiguous_no_marker",
+   "in_freeze_v2": true,
+   "marker_pages": [],
+   "markers": [],
+   "reason": "no nature-of-report marker on any page"
+  },
+  {
+   "document_id": "bdcbf5c8744dce22ac166a6fc842ee0f24818ebe37f83a6ca0d08abe3a9ece22",
+   "company_id": "wipro",
+   "fiscal_year": "Q3FY2025",
+   "freeze_variant": null,
+   "basis": "ambiguous_no_marker",
+   "in_freeze_v2": true,
+   "marker_pages": [],
+   "markers": [],
+   "reason": "no nature-of-report marker on any page"
+  },
+  {
+   "document_id": "c6a1dd87bd92a6ebf6076f1ba1051cbc656b748793a9e4ebe170752297ee5949",
+   "company_id": "wipro",
+   "fiscal_year": "Q3FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_no_marker",
+   "in_freeze_v2": true,
+   "marker_pages": [],
+   "markers": [],
+   "reason": "no nature-of-report marker on any page"
+  },
+  {
+   "document_id": "0f5f1f18c41721f310bedca67446e923a8821d78a4513f51c00e76c8d08396e9",
+   "company_id": "wipro",
+   "fiscal_year": "Q4FY2025",
+   "freeze_variant": null,
+   "basis": "ambiguous_no_marker",
+   "in_freeze_v2": true,
+   "marker_pages": [],
+   "markers": [],
+   "reason": "no nature-of-report marker on any page"
+  },
+  {
+   "document_id": "7f87a9ad6c5bae02cbf39c4d025a1a69b58aa2c762bc9d2655730a4d5ac87002",
+   "company_id": "wipro",
+   "fiscal_year": "Q4FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_no_marker",
+   "in_freeze_v2": true,
+   "marker_pages": [],
+   "markers": [],
+   "reason": "no nature-of-report marker on any page"
+  },
+  {
+   "document_id": "29010dfee0226c3a7e9fa8b89002d34dac0e7f29bd169dde23853c54049e4c1f",
+   "company_id": "zydus_lifesciences",
+   "fiscal_year": "Q1FY2027",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    7
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "9ae46730fab029d8382d4ebd89da04d8784e83db6b34c3eb562adea523c74d1d",
+   "company_id": "zydus_lifesciences",
+   "fiscal_year": "Q2FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    8,
+    10,
+    11
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "d4b6ed24c66e2d0c2155846edf3265bfd6189f14e4479c073adda933bf748aed",
+   "company_id": "zydus_lifesciences",
+   "fiscal_year": "Q2FY2027",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    9,
+    10,
+    11
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "f4dfe2a25d3186fdcb599e2eefb53a957ad63b929a84e8d591284b3c780c9e8c",
+   "company_id": "zydus_lifesciences",
+   "fiscal_year": "Q3FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    7
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  },
+  {
+   "document_id": "968c69f61b304e95e2e79c94e708b523ce0507ca6bcf96fa12f6c91f398a00c6",
+   "company_id": "zydus_lifesciences",
+   "fiscal_year": "Q4FY2026",
+   "freeze_variant": null,
+   "basis": "ambiguous_mixed",
+   "in_freeze_v2": false,
+   "marker_pages": [
+    1,
+    2,
+    5,
+    9,
+    10,
+    11
+   ],
+   "markers": [
+    "consolidated",
+    "standalone"
+   ],
+   "reason": "both consolidated and standalone markers present"
+  }
+ ]
+}
