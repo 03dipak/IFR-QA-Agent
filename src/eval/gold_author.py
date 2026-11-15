@@ -113,7 +113,7 @@ def cmd_supersede(rows: list[dict], args) -> int:
         return 1
     old_hash = row_hash(row)
     row["status"] = "superseded"
-    row["notes"] = (row.get("notes", "").rstrip()
+    row["notes"] = ((row.get("notes") or "").rstrip()
                     + f" [superseded {datetime.now(UTC).strftime('%Y-%m-%dT%H:%M:%SZ')}: {args.reason}]").strip()
     new_version = bump_set_version(rows, rows[0].get("gold_set_version", GOLD_SET_VERSION))
     persist(rows, GOLD)
