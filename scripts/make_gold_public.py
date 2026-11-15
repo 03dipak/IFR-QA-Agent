@@ -40,9 +40,10 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--input", default=GOLD)
     ap.add_argument("--out", default=PUBLIC)
+    ap.add_argument("--overlay", default=OVERLAY)
     args = ap.parse_args()
     overlay = {r["id"]: r["flow_bucket"]
-               for r in (json.loads(l) for l in open(OVERLAY, encoding="utf-8")
+               for r in (json.loads(l) for l in open(args.overlay, encoding="utf-8")
                          if l.strip())}
     rows = load_rows(args.input, active_only=True)
     missing = [r["id"] for r in rows if r["id"] not in overlay]
