@@ -17,6 +17,8 @@ try:
 except ImportError:  # pragma: no cover — dotenv is a runtime dep
     pass
 
+GOLD_PATH = os.environ.get("GOLD_PATH", "data/eval/datasets/gold_v2_eval_v8_public.jsonl")
+
 
 @dataclass(frozen=True)
 class LLMConfig:

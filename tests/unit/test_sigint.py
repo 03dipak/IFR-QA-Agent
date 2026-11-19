@@ -26,21 +26,22 @@ def _make_pdf(text: str) -> bytes:
     from pypdf.generic import DecodedStreamObject, DictionaryObject, NameObject
 
     writer = PdfWriter()
-    page = writer.add_blank_page(width=612, height=792)
     font = DictionaryObject({
         NameObject("/Type"): NameObject("/Font"),
         NameObject("/Subtype"): NameObject("/Type1"),
         NameObject("/BaseFont"): NameObject("/Helvetica"),
     })
     font_ref = writer._add_object(font)
-    page[NameObject("/Resources")] = DictionaryObject({
-        NameObject("/Font"): DictionaryObject({NameObject("/F1"): font_ref}),
-    })
     escaped = text.replace("\\", "\\\\").replace("(", "\\(").replace(")", "\\)")
-    stream = DecodedStreamObject()
-    stream.set_data(
-        f"BT /F1 12 Tf 72 720 Td ({escaped}) Tj ET".encode("latin-1"))
-    page[NameObject("/Contents")] = writer._add_object(stream)
+    for _ in range(3):
+        page = writer.add_blank_page(width=612, height=792)
+        page[NameObject("/Resources")] = DictionaryObject({
+            NameObject("/Font"): DictionaryObject({NameObject("/F1"): font_ref}),
+        })
+        stream = DecodedStreamObject()
+        stream.set_data(
+            f"BT /F1 12 Tf 72 720 Td ({escaped}) Tj ET".encode("latin-1"))
+        page[NameObject("/Contents")] = writer._add_object(stream)
     buf = BytesIO()
     writer.write(buf)
     return buf.getvalue()
@@ -89,9 +90,9 @@ class _SlowHandler(BaseHTTPRequestHandler):
 def slow_server():
     server = _SlowServer(("127.0.0.1", 0), _SlowHandler)
     server.fast_pdf = _make_pdf(
-        "Balance Sheet total assets 100 revenue 200 liabilities 50 cash flow 10")
+        "Balance Sheet total assets 100 revenue 200 liabilities 50 cash flow 10 profit 5")
     server.slow_pdf = _make_pdf(
-        "Profit and Loss statement revenue 300 total assets 400 cash flow 20")
+        "Statement of Profit and Loss revenue 300 total assets 400 cash flow 20 profit 5 tax 1 net 2")
     server.fast = False
     server.hits = {}
     server.lock = threading.Lock()

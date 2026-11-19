@@ -28,6 +28,7 @@ Thumbs.db
 # Data (not committed)
 data/raw/
 data/processed/
+data/_trash/
 *.jsonl
 *.csv
 
@@ -81,3 +82,12 @@ traces/
 
 # Local backups
 src/eval.bak/
+
+#doc
+docs/
+docs/*
+#vm04-ca.crt
+vm04-ca.crt
+
+#.temp/
+.temp/

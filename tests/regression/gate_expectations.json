@@ -1,0 +1,85 @@
+{
+  "entries": {
+    "012acee24d17d429fe5787db91df2c64f1cce88e1c0c3bcd70679712ece4c483": {
+      "expected_decision": "keep",
+      "expected_page_class_counts": {
+        "blank": 3,
+        "garbled": 0,
+        "image_dominant": 0,
+        "image_only": 4,
+        "low_text": 2,
+        "text": 659
+      },
+      "expected_rule": "none",
+      "filename": "012acee24d17d429fe5787db91df2c64f1cce88e1c0c3bcd70679712ece4c483.pdf",
+      "notes": "Seeded from Phase 0/1 measurements; image pages pending visual check.",
+      "reviewed_by": "pending visual check",
+      "reviewed_on": "2026-11-03"
+    },
+    "01f2a64e2b3040cf2349a0e4c474ca903a3e6de2bed4c4af0ae1185a65857cb6": {
+      "expected_decision": "keep",
+      "expected_page_class_counts": {
+        "blank": 0,
+        "garbled": 0,
+        "image_dominant": 2,
+        "image_only": 0,
+        "low_text": 1,
+        "text": 444
+      },
+      "expected_rule": "none",
+      "filename": "01f2a64e2b3040cf2349a0e4c474ca903a3e6de2bed4c4af0ae1185a65857cb6.pdf",
+      "notes": "Seeded from Phase 0/1 measurements; image pages pending visual check.",
+      "reviewed_by": "pending visual check",
+      "reviewed_on": "2026-11-03"
+    },
+    "b57b3e08787d5c0cadbe031288cfb2e67f59466cb8e4c06c776180b0c6fb36d4": {
+      "expected_decision": "keep",
+      "expected_page_class_counts": {
+        "blank": 0,
+        "garbled": 0,
+        "image_dominant": 0,
+        "image_only": 0,
+        "low_text": 0,
+        "text": 66
+      },
+      "expected_rule": "none",
+      "filename": "b57b3e08787d5c0cadbe031288cfb2e67f59466cb8e4c06c776180b0c6fb36d4.pdf",
+      "notes": "Seeded from Phase 0/1 measurements; image pages pending visual check.",
+      "reviewed_by": "pending visual check",
+      "reviewed_on": "2026-11-03"
+    },
+    "d8e3739d2e06f09b83a192e00cefda0113b5da778483e31018cb35429e72eafe": {
+      "expected_decision": "keep",
+      "expected_page_class_counts": {
+        "blank": 0,
+        "garbled": 0,
+        "image_dominant": 0,
+        "image_only": 0,
+        "low_text": 0,
+        "text": 159
+      },
+      "expected_rule": "none",
+      "filename": "d8e3739d2e06f09b83a192e00cefda0113b5da778483e31018cb35429e72eafe.pdf",
+      "notes": "Seeded from Phase 0/1 measurements; image pages pending visual check.",
+      "reviewed_by": "pending visual check",
+      "reviewed_on": "2026-11-03"
+    },
+    "db02424e0ed1620452e32df320a540f923bf837193e5896757d27e27d24efd48": {
+      "expected_decision": "keep",
+      "expected_page_class_counts": {
+        "blank": 0,
+        "garbled": 0,
+        "image_dominant": 0,
+        "image_only": 1,
+        "low_text": 0,
+        "text": 529
+      },
+      "expected_rule": "none",
+      "filename": "db02424e0ed1620452e32df320a540f923bf837193e5896757d27e27d24efd48.pdf",
+      "notes": "Seeded from Phase 0/1 measurements; image pages pending visual check.",
+      "reviewed_by": "pending visual check",
+      "reviewed_on": "2026-11-03"
+    }
+  },
+  "version": 1
+}

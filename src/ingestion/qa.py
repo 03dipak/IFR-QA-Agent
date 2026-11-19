@@ -143,6 +143,22 @@ def character_error_rate(extracted: str, reference: str) -> float:
     return _levenshtein(extracted, reference) / len(reference)
 
 
+def score_page(extracted: str, reference: str,
+               statement_digits: list[str] | None = None) -> dict[str, float]:
+    """Score one extracted page against a reference page (QA-kit contract).
+
+    Reuses the canonical metric functions; no new metrics are defined here.
+    """
+    return {
+        "word_fidelity": word_fidelity(extracted, reference),
+        "character_error_rate": character_error_rate(extracted, reference),
+        "statement_digit_accuracy": (
+            statement_digit_accuracy(extracted, statement_digits)
+            if statement_digits else 1.0
+        ),
+    }
+
+
 def digit_tokens(text: str) -> list[str]:
     return re.findall(r"\d[\d,\.]*", text)
 
@@ -402,3 +418,73 @@ def qa_report_from_result(result: QAResult, candidate_count: int) -> QAReport:
 
 def gate_passes(result: QAResult) -> bool:
     return bool(result.passed)
+
+
+# ---------------------------------------------------------------------------
+# QA-kit generation and scoring contract (kit is written, never scored here)
+# ---------------------------------------------------------------------------
+
+
+def qa_kit_stratum(page: PageExtract) -> str:
+    """Stratum key: document prefix | page class | statement-like flag."""
+    return (
+        f"{page.document_id[:12]}|{page.page_class.value}|"
+        f"stmt:{str(_is_statement_like(page.page_text)).lower()}"
+    )
+
+
+def _is_statement_like(text: str) -> bool:
+    from .extractor import is_statement_like
+
+    return is_statement_like(text)
+
+
+def build_qa_kit_rows(
+    pages: list[PageExtract],
+    companies: dict[str, str],
+    seed: int = 42,
+    rate: float = DEFAULT_SAMPLE_RATE,
+    min_per_stratum: int = DEFAULT_MIN_PER_STRATUM,
+) -> tuple[list[dict], list[Stratum]]:
+    """Sample pages with the existing stratified sampler and build kit rows."""
+    sampled, _seed, strata = stratified_sample(
+        pages, seed=seed, rate=rate, min_per_stratum=min_per_stratum,
+        stratum_fn=qa_kit_stratum)
+    rows: list[dict] = []
+    for page in sorted(sampled, key=lambda p: (p.document_id, p.pdf_page_index)):
+        rows.append({
+            "document_checksum": page.document_id,
+            "company": companies.get(page.document_id, ""),
+            "pdf_page_index": page.pdf_page_index,
+            "printed_page_label": page.printed_page_label or "",
+            "page_class": page.page_class.value,
+            "page_type": page.page_type.value,
+            "statement_like": str(_is_statement_like(page.page_text)),
+            "stratum": qa_kit_stratum(page),
+            "page_text": page.page_text,
+        })
+    return rows, strata
+
+
+def score_qa_kit_rows(
+    kit_rows: list[dict],
+    references: dict[tuple[str, int], str],
+    statement_digits: dict[tuple[str, int], list[str]] | None = None,
+) -> list[dict]:
+    """Score a filled QA kit against reviewer reference text.
+
+    ``references`` is keyed by (document_checksum, pdf_page_index). The kit is
+    not scored by this module's CLI; this is the deterministic scorer only.
+    """
+    scored: list[dict] = []
+    for row in kit_rows:
+        key = (row["document_checksum"], int(row["pdf_page_index"]))
+        reference = references.get(key)
+        if reference is None:
+            scored.append({**row, "scored": False})
+            continue
+        metrics = score_page(
+            row.get("page_text", ""), reference,
+            (statement_digits or {}).get(key))
+        scored.append({**row, **metrics, "scored": True})
+    return scored

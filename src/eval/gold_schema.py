@@ -26,7 +26,8 @@ ALLOCATION = {"cross_company_comparison": 0.20, "unanswerable_abstain": 0.15,
 MIN_REVIEWED = 60
 HOLDOUT_FRAC = 0.25
 ABSTAIN_SUBTYPES = ("not_in_corpus", "company_not_in_corpus",
-                     "near_miss_absent", "out_of_scope")
+                     "near_miss_absent", "out_of_scope",
+                     "metric_not_applicable")
 SPLITTER_VERSION = "gold_freeze.v1"
 GOLD_SET_VERSION = "gold_v1"
 GOLD_SCHEMA_VERSION = "2.0"
@@ -105,7 +106,8 @@ def validate_row(row: dict) -> list[str]:
             if not (row.get("category") == "unanswerable_abstain"
                     and row.get("abstention_subtype") in ("not_in_corpus",
                                                           "company_not_in_corpus",
-                                                          "near_miss_absent")):
+                                                          "near_miss_absent",
+                                                          "metric_not_applicable")):
                 problems.append("evidence empty")
         for i, e in enumerate(ev):
             if not isinstance(e, dict):
