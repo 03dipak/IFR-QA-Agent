@@ -28,6 +28,7 @@ Thumbs.db
 # Data (not committed)
 data/raw/
 data/processed/
+data/_trash/
 *.jsonl
 *.csv
 
@@ -50,3 +51,43 @@ AGENTS.md
 
 # Locally downloaded annual-report corpus
 /data/corpus/raw/*.pdf
+
+# Secrets
+*.key
+secrets/
+.env.*
+
+# Tool caches
+.mypy_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+
+# Vector stores / local models
+chroma/
+faiss_index/
+*.faiss
+*.sqlite
+models/
+*.gguf
+*.safetensors
+*.bin
+
+# Experiment tracking
+wandb/
+mlruns/
+
+# Outputs / traces
+outputs/
+traces/
+
+# Local backups
+src/eval.bak/
+
+#doc
+docs/
+docs/*
+#vm04-ca.crt
+vm04-ca.crt
+
+#.temp/
+.temp/

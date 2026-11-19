@@ -17,9 +17,16 @@ from dataclasses import dataclass
 from datetime import UTC, datetime
 from pathlib import Path
 
+from ..tables.extractor import extract_tables
 from .checksummer import sha256_bytes
 from .dedupe import classify_mirror
-from .extractor import extract_pages, has_scanned_statement_page
+from .extractor import (
+    extract_images,
+    extract_pages,
+    has_scanned_statement_page,
+    scanned_document_rules,
+    scanned_document_triggers,
+)
 from .fetcher import Fetcher, FetchError
 from .ledger import DEFAULT_LEDGER_PATH, Ledger, LedgerError
 from .models import (
@@ -32,7 +39,12 @@ from .models import (
     ExclusionRecord,
     ExtractionStatus,
 )
-from .storage import LocalRawStorage, RawStorage
+from .storage import (
+    LocalPageExtractStore,
+    LocalRawStorage,
+    LocalTableRecordStore,
+    RawStorage,
+)
 
 
 def _fetch_failure_reason(code: str) -> ExclusionReason:
@@ -63,7 +75,10 @@ def process_candidate(candidate: Candidate, fetcher: Fetcher,
                       ledger: Ledger, storage: RawStorage,
                       storage_key_prefix: str = "",
                       extractor_version: str = "pymupdf-0.1",
-                      extraction_config_hash: str = "cfg-0") -> str:
+                      extraction_config_hash: str = "cfg-0",
+                      page_store=None,
+                      table_store=None,
+                      image_store=None) -> str:
     """Process one candidate end-to-end. Returns the resulting state name.
 
     Mutates candidate.state. Writes to ledger on acceptance.
@@ -92,6 +107,7 @@ def process_candidate(candidate: Candidate, fetcher: Fetcher,
 
     # Checksum
     checksum = sha256_bytes(data)
+    attempt.checksum = checksum
     # Mirror classification against existing ledger rows
     existing_rows = list(ledger.rows.values())
     match = classify_mirror(data, None, existing_rows)
@@ -124,14 +140,43 @@ def process_candidate(candidate: Candidate, fetcher: Fetcher,
             candidate_id=candidate.candidate_id, reason=reason, measurement=str(exc)))
         return candidate.state.value
 
-    # Scanned statement page -> exclude whole document
-    if has_scanned_statement_page(pages):
+    # Document-level native-PDF gate (LLD-45): exclude only when the
+    # financial statements are not recoverable as text or the document is
+    # image-dominated. Triggering pages/classes are recorded for audit.
+    if has_scanned_statement_page(pages, candidate.doc_type):
+        rules = scanned_document_rules(pages, candidate.doc_type)
+        triggers = scanned_document_triggers(pages, candidate.doc_type)
+        parts = list(rules) + [f"p.{idx}:{cls}" for idx, cls in triggers]
+        measurement = "; ".join(parts)
         candidate.state = CandidateState.EXCLUDED
         ledger.set_candidate_state(candidate.candidate_id, CandidateState.EXCLUDED,
                                   exclusion_reason=ExclusionReason.SCANNED_PDF)
         ledger.add_exclusion(ExclusionRecord(
-            candidate_id=candidate.candidate_id, reason=ExclusionReason.SCANNED_PDF))
+            candidate_id=candidate.candidate_id, reason=ExclusionReason.SCANNED_PDF,
+            measurement=measurement))
         return candidate.state.value
+
+    # Persist page-level extraction and structured tables (traceability).
+    if page_store is None and isinstance(storage, LocalRawStorage):
+        page_store = LocalPageExtractStore(storage.root.parent / "extract" / "page_extracts")
+    if table_store is None and isinstance(storage, LocalRawStorage):
+        table_store = LocalTableRecordStore(storage.root.parent / "extract" / "table_records")
+    tables = extract_tables(
+        pages, document_id, run_id, extraction_config_hash
+    )
+    if page_store is not None:
+        page_store.put(document_id, pages)
+    if table_store is not None:
+        table_store.put(document_id, tables)
+
+    images = extract_images(data)
+    if image_store is None and isinstance(storage, LocalRawStorage):
+        image_store = LocalRawStorage(storage.root.parent / "extract" / "images")
+    if image_store is not None:
+        for index, image in enumerate(images):
+            safe_name = str(image["name"]).replace("/", "_")
+            key = f"{document_id}/{image['page_index']}-{index}-{safe_name}"
+            image_store.put(key, image["data"])
 
     # Register document (idempotent)
     row = DocumentLedgerRow(

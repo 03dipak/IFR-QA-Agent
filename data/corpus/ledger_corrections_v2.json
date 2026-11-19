@@ -1,0 +1,40 @@
+{
+ "corrections_version": "v2.1",
+ "created_at": "2026-11-14T00:00:00Z",
+ "reason": "Deepak Nitrite Q1FY2026 quarterly: ledger labels both prints 'consolidated' and makes the standalone print supersede the consolidated one.",
+ "evidence": {
+  "2069af1494ab6b0f5dbc11c93922cf031bcfe286a59e3248795de647552e0684": {
+   "nature_markers_pages": "1,2,5,7 = Consolidated",
+   "revenue_from_operations": "18,898,800,000 (p2, p5)",
+   "total_profit_for_period": "1,122,500,000 (p3)",
+   "conclusion": "truly consolidated, current consolidated print"
+  },
+  "c5e489e694eb938beb58314324cf1d966f5bee43458c2bd63221d52a15b509e8": {
+   "nature_markers_pages": "1,3,6,7 = Standalone",
+   "revenue_from_operations": "6,122,800,000 (p3)",
+   "total_profit_for_period": "302,900,000 (p4)",
+   "conclusion": "truly standalone, mislabeled consolidated"
+  }
+ },
+ "variant_overrides": {
+  "2069af1494ab6b0f5dbc11c93922cf031bcfe286a59e3248795de647552e0684": "consolidated",
+  "c5e489e694eb938beb58314324cf1d966f5bee43458c2bd63221d52a15b509e8": "standalone"
+ },
+ "revoked_supersessions": [
+  "2069af1494ab6b0f5dbc11c93922cf031bcfe286a59e3248795de647552e0684"
+ ],
+ "entries": [
+  {
+   "kind": "variant_correction",
+   "document_id": "c5e489e694eb938beb58314324cf1d966f5bee43458c2bd63221d52a15b509e8",
+   "from": "consolidated",
+   "to": "standalone"
+  },
+  {
+   "kind": "supersession_revocation",
+   "from_document_id": "2069af1494ab6b0f5dbc11c93922cf031bcfe286a59e3248795de647552e0684",
+   "to_document_id": "c5e489e694eb938beb58314324cf1d966f5bee43458c2bd63221d52a15b509e8",
+   "reason": "Different basis (consolidated vs standalone) of the same quarter; neither supersedes the other."
+  }
+ ]
+}

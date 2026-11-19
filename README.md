@@ -58,6 +58,12 @@ uv run ruff check src tests
 
 # Typecheck
 uv run mypy --ignore-missing-imports src tests
+
+# Gold v2 (after gold_v2.jsonl is built & signed; --out avoids touching v1.4)
+# gold_check needs --input wired (defaults to gold_data.jsonl); freeze/export are path-configurable.
+# uv run python -m src.eval.gold_check --input data/eval/datasets/gold_v2.jsonl
+uv run python -m src.eval.gold_freeze --input data/eval/datasets/gold_v2.jsonl --out data/eval/datasets/gold_v2.split_manifest.json --seed 42 --splitter-version v2
+PYTHONPATH=. uv run python scripts/make_gold_public.py --input data/eval/datasets/gold_v2.jsonl --out data/eval/datasets/gold_v2_public.jsonl
 ```
 
 
@@ -69,3 +75,29 @@ uv run mypy --ignore-missing-imports src tests
 - Native-digital PDFs only (no OCR)
 - Exactly 3 tools: retriever, calculator, comparator
 - Hard 10-step cap on agent loop
+## Reflection loop (Track B skeleton)
+
+Minimal generate -> critic -> revise loop for an OpenAI-compatible <=8B endpoint.
+No RAG, tools, UI, or Docker involved. Config comes from `.env`
+(`REFLECTION_MAX_ITERATIONS`, `REFLECTION_MAX_TOTAL_TOKENS`, plus `LLM_BASE_URL`,
+`LLM_API_KEY`, `LLM_MODEL`); copy `.env.example` to `.env` first.
+
+Run one query with a trace:
+
+```
+uv run python scripts/run_reflection_demo.py --query "What was FY26 revenue?"
+```
+
+The critic must return strict JSON (`{"score": 1-5, "issues": [...], "verdict": "pass"|"revise"}`);
+malformed JSON is retried once, then the loop falls back to verdict `pass` and logs the failure.
+
+Test offline with a fake client (no network, no key needed):
+
+```
+uv run pytest tests/unit/test_reflection_loop.py -q
+uv run ruff check src/agents tests/unit/test_reflection_loop.py scripts/run_reflection_demo.py
+```
+
+Modules: `src/agents/reflection_loop.py` (orchestrator + trace), `src/agents/generator.py`,
+`src/agents/critic.py` (pydantic validation), `src/agents/reviser.py`,
+`src/agents/llm_client.py` (thin adapter over `src/llm/client.py`), `src/agents/prompts.py`.

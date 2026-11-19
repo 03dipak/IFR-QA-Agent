@@ -17,6 +17,8 @@ try:
 except ImportError:  # pragma: no cover — dotenv is a runtime dep
     pass
 
+GOLD_PATH = os.environ.get("GOLD_PATH", "data/eval/datasets/gold_v2_eval_v8_public.jsonl")
+
 
 @dataclass(frozen=True)
 class LLMConfig:
@@ -42,6 +44,21 @@ class CorpusConfig:
     freeze_version: str
     prompt_set_hash: str
     model_params_hash: str
+
+
+@dataclass(frozen=True)
+class ReflectionConfig:
+    """Reflection loop settings (Track B skeleton)."""
+    max_iterations: int
+    max_total_tokens: int
+
+
+def load_reflection_config() -> ReflectionConfig:
+    """Load reflection loop settings from environment variables with defaults."""
+    return ReflectionConfig(
+        max_iterations=int(os.environ.get("REFLECTION_MAX_ITERATIONS", "2")),
+        max_total_tokens=int(os.environ.get("REFLECTION_MAX_TOTAL_TOKENS", "4000")),
+    )
 
 
 @dataclass(frozen=True)
