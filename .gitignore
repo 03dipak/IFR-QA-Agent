@@ -31,6 +31,7 @@ Thumbs.db
 data/raw/
 data/processed/
 data/_trash/
+data/gold
 *.jsonl
 *.csv
 !data/eval/datasets/gold_data.jsonl
@@ -102,3 +103,6 @@ vm04-ca.crt
 
 #.temp/
 .temp/
+
+#results
+results/
