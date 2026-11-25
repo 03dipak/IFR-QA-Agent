@@ -1,0 +1,63 @@
+2026-11-23 14:12:16.884 | ERROR    | fastembed.common.model_management:retrieve_model_gcs:558 - Could not find the model tar.gz file at /tmp/fastembed_cache/ms-marco-MiniLM-L-6-v2 and local_files_only=True.
+2026-11-23 14:12:16.884 | ERROR    | fastembed.common.model_management:download_model:743 - Could not find model in cache_dir
+2026-11-23 14:12:17.108 | ERROR    | fastembed.common.model_management:retrieve_model_gcs:558 - Could not find the model tar.gz file at /tmp/fastembed_cache/ms-marco-MiniLM-L-6-v2 and local_files_only=True.
+2026-11-23 14:12:17.109 | ERROR    | fastembed.common.model_management:download_model:743 - Could not find model in cache_dir
+2026-11-23 14:12:28.219 | ERROR    | fastembed.common.model_management:retrieve_model_gcs:558 - Could not find the model tar.gz file at /tmp/fastembed_cache/ms-marco-MiniLM-L-6-v2 and local_files_only=True.
+2026-11-23 14:12:28.219 | ERROR    | fastembed.common.model_management:download_model:743 - Could not find model in cache_dir
+2026-11-23 14:12:28.448 | ERROR    | fastembed.common.model_management:retrieve_model_gcs:558 - Could not find the model tar.gz file at /tmp/fastembed_cache/ms-marco-MiniLM-L-6-v2 and local_files_only=True.
+2026-11-23 14:12:28.448 | ERROR    | fastembed.common.model_management:download_model:743 - Could not find model in cache_dir
+2026-11-23 14:12:34.784 | ERROR    | fastembed.common.model_management:retrieve_model_gcs:558 - Could not find the model tar.gz file at /tmp/fastembed_cache/ms-marco-MiniLM-L-6-v2 and local_files_only=True.
+2026-11-23 14:12:34.785 | ERROR    | fastembed.common.model_management:download_model:743 - Could not find model in cache_dir
+2026-11-23 14:12:34.997 | ERROR    | fastembed.common.model_management:retrieve_model_gcs:558 - Could not find the model tar.gz file at /tmp/fastembed_cache/ms-marco-MiniLM-L-6-v2 and local_files_only=True.
+2026-11-23 14:12:34.997 | ERROR    | fastembed.common.model_management:download_model:743 - Could not find model in cache_dir
+2026-11-23 14:12:42.152 | ERROR    | fastembed.common.model_management:retrieve_model_gcs:558 - Could not find the model tar.gz file at /tmp/fastembed_cache/ms-marco-MiniLM-L-6-v2 and local_files_only=True.
+2026-11-23 14:12:42.152 | ERROR    | fastembed.common.model_management:download_model:743 - Could not find model in cache_dir
+2026-11-23 14:12:42.364 | ERROR    | fastembed.common.model_management:retrieve_model_gcs:558 - Could not find the model tar.gz file at /tmp/fastembed_cache/ms-marco-MiniLM-L-6-v2 and local_files_only=True.
+2026-11-23 14:12:42.365 | ERROR    | fastembed.common.model_management:download_model:743 - Could not find model in cache_dir
+2026-11-23 14:12:49.017 | ERROR    | fastembed.common.model_management:retrieve_model_gcs:558 - Could not find the model tar.gz file at /tmp/fastembed_cache/ms-marco-MiniLM-L-6-v2 and local_files_only=True.
+2026-11-23 14:12:49.018 | ERROR    | fastembed.common.model_management:download_model:743 - Could not find model in cache_dir
+2026-11-23 14:12:56.400 | ERROR    | fastembed.common.model_management:retrieve_model_gcs:558 - Could not find the model tar.gz file at /tmp/fastembed_cache/ms-marco-MiniLM-L-6-v2 and local_files_only=True.
+2026-11-23 14:12:56.400 | ERROR    | fastembed.common.model_management:download_model:743 - Could not find model in cache_dir
+2026-11-23 14:13:04.567 | ERROR    | fastembed.common.model_management:retrieve_model_gcs:558 - Could not find the model tar.gz file at /tmp/fastembed_cache/ms-marco-MiniLM-L-6-v2 and local_files_only=True.
+2026-11-23 14:13:04.567 | ERROR    | fastembed.common.model_management:download_model:743 - Could not find model in cache_dir
+2026-11-23 14:13:10.579 | ERROR    | fastembed.common.model_management:retrieve_model_gcs:558 - Could not find the model tar.gz file at /tmp/fastembed_cache/ms-marco-MiniLM-L-6-v2 and local_files_only=True.
+2026-11-23 14:13:10.580 | ERROR    | fastembed.common.model_management:download_model:743 - Could not find model in cache_dir
+2026-11-23 14:13:18.212 | ERROR    | fastembed.common.model_management:retrieve_model_gcs:558 - Could not find the model tar.gz file at /tmp/fastembed_cache/ms-marco-MiniLM-L-6-v2 and local_files_only=True.
+2026-11-23 14:13:18.213 | ERROR    | fastembed.common.model_management:download_model:743 - Could not find model in cache_dir
+2026-11-23 14:13:23.428 | ERROR    | fastembed.common.model_management:retrieve_model_gcs:558 - Could not find the model tar.gz file at /tmp/fastembed_cache/ms-marco-MiniLM-L-6-v2 and local_files_only=True.
+2026-11-23 14:13:23.428 | ERROR    | fastembed.common.model_management:download_model:743 - Could not find model in cache_dir
+{
+  "run_id": "day5_page_live_n10_page",
+  "metrics": {
+    "n": 10,
+    "n_answer": 10,
+    "n_abstain": 0,
+    "answer_accuracy": 0.0,
+    "citation_correctness": 0.0,
+    "refusal_correctness": null,
+    "task_completion_rate": 0.3,
+    "failure_counts": {
+      "incorrect_answer": 10,
+      "citation_issue": 10,
+      "tool_failure": 0,
+      "token_exhaustion": 0,
+      "loop": 0,
+      "timeout": 0,
+      "incomplete_task": 0,
+      "false_refusal": 0,
+      "missed_refusal": 0
+    },
+    "mean_tool_calls": 1.4,
+    "mean_agent_steps": 1.4,
+    "mean_tokens": 2182.0,
+    "mean_latency_ms": 8419.8,
+    "mean_cost_proxy_usd": 0.0,
+    "total_tokens": 21820
+  },
+  "validation": {
+    "ok": true,
+    "errors": [],
+    "n_rows": 10
+  },
+  "report": "docs/WEEK34_DAY5_PAGE_LIVE_EVAL.md"
+}

@@ -1,0 +1,14 @@
+{
+  "b": 0.75,
+  "build_seconds": 474.2590239048004,
+  "files": {
+    "chunks_meta.jsonl": "3675caf421a5c18b7c47043bf5f676d483c46c4ad722a0e3c72af10eb9c0170e",
+    "index.npz": "05c223df99067932bc00b3e8c5b1004b08a8c3b2c50d1af041a371618b29172c",
+    "vocab.json": "89cca06cc63c21bb2f00ada329cda0c453b397767674fe4cc38715ab5342a4e1"
+  },
+  "index_version": "03b715dc3665db754d6922be354d6dc40166aeadfeff1d898bab4bb6f68dc1b0",
+  "k1": 1.5,
+  "manifest_checksum": "c98d4af5f4e53934e3eb1419f3978e26d3e17f763726e1aa48d3f4a1df777a61",
+  "n_chunks": 466379,
+  "tokenizer_version": "tokenizer.v1"
+}

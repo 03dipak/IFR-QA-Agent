@@ -1,0 +1,4311 @@
+[
+  {
+    "row_id": "G-001",
+    "call_index": 0,
+    "query": "What is the total assets figure for Deepak Nitrite for the year ended 31 March 2025 consolidated results, as printed on their statement?",
+    "tokens": [
+      "what",
+      "total",
+      "assets",
+      "figure",
+      "deepak",
+      "nitrite",
+      "year",
+      "ended",
+      "31",
+      "march",
+      "2025",
+      "consolidated",
+      "results",
+      "printed",
+      "statement"
+    ],
+    "bm25_top": [
+      {
+        "rank": 1,
+        "chunk_index": 48959,
+        "score": 30.638364791870117,
+        "doc_id": "fa7dac2401f1",
+        "page": 168,
+        "chunk_id": "fa7dac2401f10d824c6e6b3e5dd482a0e0ab09b50e6164eeebc289ec952fff31::C2::p168::w0"
+      },
+      {
+        "rank": 2,
+        "chunk_index": 49910,
+        "score": 29.94538688659668,
+        "doc_id": "fa7dac2401f1",
+        "page": 356,
+        "chunk_id": "fa7dac2401f10d824c6e6b3e5dd482a0e0ab09b50e6164eeebc289ec952fff31::C2::p356::w0"
+      },
+      {
+        "rank": 3,
+        "chunk_index": 50131,
+        "score": 28.02117156982422,
+        "doc_id": "fa7dac2401f1",
+        "page": 403,
+        "chunk_id": "fa7dac2401f10d824c6e6b3e5dd482a0e0ab09b50e6164eeebc289ec952fff31::C2::p403::w0"
+      },
+      {
+        "rank": 4,
+        "chunk_index": 10022,
+        "score": 27.19732666015625,
+        "doc_id": "0ea899ba19c2",
+        "page": 362,
+        "chunk_id": "0ea899ba19c2727c06fc6926b1a4180c8edbecdde684e15a48fb49267c7ffc81::C2::p362::w6"
+      },
+      {
+        "rank": 5,
+        "chunk_index": 49627,
+        "score": 27.19569969177246,
+        "doc_id": "fa7dac2401f1",
+        "page": 293,
+        "chunk_id": "fa7dac2401f10d824c6e6b3e5dd482a0e0ab09b50e6164eeebc289ec952fff31::C2::p293::w0"
+      },
+      {
+        "rank": 6,
+        "chunk_index": 10021,
+        "score": 27.077383041381836,
+        "doc_id": "0ea899ba19c2",
+        "page": 362,
+        "chunk_id": "0ea899ba19c2727c06fc6926b1a4180c8edbecdde684e15a48fb49267c7ffc81::C2::p362::w5"
+      },
+      {
+        "rank": 7,
+        "chunk_index": 50139,
+        "score": 26.72439193725586,
+        "doc_id": "fa7dac2401f1",
+        "page": 405,
+        "chunk_id": "fa7dac2401f10d824c6e6b3e5dd482a0e0ab09b50e6164eeebc289ec952fff31::C2::p405::w0"
+      },
+      {
+        "rank": 8,
+        "chunk_index": 50186,
+        "score": 26.37187385559082,
+        "doc_id": "fa7dac2401f1",
+        "page": 418,
+        "chunk_id": "fa7dac2401f10d824c6e6b3e5dd482a0e0ab09b50e6164eeebc289ec952fff31::C2::p418::w0"
+      },
+      {
+        "rank": 9,
+        "chunk_index": 50078,
+        "score": 25.93770408630371,
+        "doc_id": "fa7dac2401f1",
+        "page": 387,
+        "chunk_id": "fa7dac2401f10d824c6e6b3e5dd482a0e0ab09b50e6164eeebc289ec952fff31::C2::p387::w0"
+      },
+      {
+        "rank": 10,
+        "chunk_index": 49968,
+        "score": 25.829988479614258,
+        "doc_id": "fa7dac2401f1",
+        "page": 365,
+        "chunk_id": "fa7dac2401f10d824c6e6b3e5dd482a0e0ab09b50e6164eeebc289ec952fff31::C2::p365::w0"
+      }
+    ],
+    "dense_top": [
+      {
+        "rank": 1,
+        "chunk_index": 50131,
+        "score": 0.8461687564849854,
+        "doc_id": "fa7dac2401f1",
+        "page": 403,
+        "chunk_id": "fa7dac2401f10d824c6e6b3e5dd482a0e0ab09b50e6164eeebc289ec952fff31::C2::p403::w0"
+      },
+      {
+        "rank": 2,
+        "chunk_index": 50155,
+        "score": 0.8456897139549255,
+        "doc_id": "fa7dac2401f1",
+        "page": 409,
+        "chunk_id": "fa7dac2401f10d824c6e6b3e5dd482a0e0ab09b50e6164eeebc289ec952fff31::C2::p409::w0"
+      },
+      {
+        "rank": 3,
+        "chunk_index": 49968,
+        "score": 0.8380880355834961,
+        "doc_id": "fa7dac2401f1",
+        "page": 365,
+        "chunk_id": "fa7dac2401f10d824c6e6b3e5dd482a0e0ab09b50e6164eeebc289ec952fff31::C2::p365::w0"
+      },
+      {
+        "rank": 4,
+        "chunk_index": 50084,
+        "score": 0.8377481698989868,
+        "doc_id": "fa7dac2401f1",
+        "page": 389,
+        "chunk_id": "fa7dac2401f10d824c6e6b3e5dd482a0e0ab09b50e6164eeebc289ec952fff31::C2::p389::w0"
+      },
+      {
+        "rank": 5,
+        "chunk_index": 50104,
+        "score": 0.8349069356918335,
+        "doc_id": "fa7dac2401f1",
+        "page": 395,
+        "chunk_id": "fa7dac2401f10d824c6e6b3e5dd482a0e0ab09b50e6164eeebc289ec952fff31::C2::p395::w0"
+      },
+      {
+        "rank": 6,
+        "chunk_index": 49959,
+        "score": 0.8344737887382507,
+        "doc_id": "fa7dac2401f1",
+        "page": 363,
+        "chunk_id": "fa7dac2401f10d824c6e6b3e5dd482a0e0ab09b50e6164eeebc289ec952fff31::C2::p363::w0"
+      },
+      {
+        "rank": 7,
+        "chunk_index": 49808,
+        "score": 0.8325272798538208,
+        "doc_id": "fa7dac2401f1",
+        "page": 329,
+        "chunk_id": "fa7dac2401f10d824c6e6b3e5dd482a0e0ab09b50e6164eeebc289ec952fff31::C2::p329::w0"
+      },
+      {
+        "rank": 8,
+        "chunk_index": 50078,
+        "score": 0.8320304155349731,
+        "doc_id": "fa7dac2401f1",
+        "page": 387,
+        "chunk_id": "fa7dac2401f10d824c6e6b3e5dd482a0e0ab09b50e6164eeebc289ec952fff31::C2::p387::w0"
+      },
+      {
+        "rank": 9,
+        "chunk_index": 49897,
+        "score": 0.8302980065345764,
+        "doc_id": "fa7dac2401f1",
+        "page": 353,
+        "chunk_id": "fa7dac2401f10d824c6e6b3e5dd482a0e0ab09b50e6164eeebc289ec952fff31::C2::p353::w0"
+      },
+      {
+        "rank": 10,
+        "chunk_index": 49688,
+        "score": 0.8242775797843933,
+        "doc_id": "fa7dac2401f1",
+        "page": 303,
+        "chunk_id": "fa7dac2401f10d824c6e6b3e5dd482a0e0ab09b50e6164eeebc289ec952fff31::C2::p303::w0"
+      }
+    ],
+    "rrf_top": [
+      {
+        "rank": 1,
+        "chunk_index": 50131,
+        "score": 0.03226646035909653,
+        "doc_id": "fa7dac2401f1",
+        "page": 403,
+        "chunk_id": "fa7dac2401f10d824c6e6b3e5dd482a0e0ab09b50e6164eeebc289ec952fff31::C2::p403::w0"
+      },
+      {
+        "rank": 2,
+        "chunk_index": 49968,
+        "score": 0.03015873208642006,
+        "doc_id": "fa7dac2401f1",
+        "page": 365,
+        "chunk_id": "fa7dac2401f10d824c6e6b3e5dd482a0e0ab09b50e6164eeebc289ec952fff31::C2::p365::w0"
+      },
+      {
+        "rank": 3,
+        "chunk_index": 48959,
+        "score": 0.03009207174181938,
+        "doc_id": "fa7dac2401f1",
+        "page": 168,
+        "chunk_id": "fa7dac2401f10d824c6e6b3e5dd482a0e0ab09b50e6164eeebc289ec952fff31::C2::p168::w0"
+      },
+      {
+        "rank": 4,
+        "chunk_index": 50084,
+        "score": 0.029323630034923553,
+        "doc_id": "fa7dac2401f1",
+        "page": 389,
+        "chunk_id": "fa7dac2401f10d824c6e6b3e5dd482a0e0ab09b50e6164eeebc289ec952fff31::C2::p389::w0"
+      },
+      {
+        "rank": 5,
+        "chunk_index": 50104,
+        "score": 0.0292735043913126,
+        "doc_id": "fa7dac2401f1",
+        "page": 395,
+        "chunk_id": "fa7dac2401f10d824c6e6b3e5dd482a0e0ab09b50e6164eeebc289ec952fff31::C2::p395::w0"
+      },
+      {
+        "rank": 6,
+        "chunk_index": 50078,
+        "score": 0.02919863536953926,
+        "doc_id": "fa7dac2401f1",
+        "page": 387,
+        "chunk_id": "fa7dac2401f10d824c6e6b3e5dd482a0e0ab09b50e6164eeebc289ec952fff31::C2::p387::w0"
+      },
+      {
+        "rank": 7,
+        "chunk_index": 49910,
+        "score": 0.027893736958503723,
+        "doc_id": "fa7dac2401f1",
+        "page": 356,
+        "chunk_id": "fa7dac2401f10d824c6e6b3e5dd482a0e0ab09b50e6164eeebc289ec952fff31::C2::p356::w0"
+      },
+      {
+        "rank": 8,
+        "chunk_index": 49627,
+        "score": 0.02788461558520794,
+        "doc_id": "fa7dac2401f1",
+        "page": 293,
+        "chunk_id": "fa7dac2401f10d824c6e6b3e5dd482a0e0ab09b50e6164eeebc289ec952fff31::C2::p293::w0"
+      },
+      {
+        "rank": 9,
+        "chunk_index": 50186,
+        "score": 0.0269010029733181,
+        "doc_id": "fa7dac2401f1",
+        "page": 418,
+        "chunk_id": "fa7dac2401f10d824c6e6b3e5dd482a0e0ab09b50e6164eeebc289ec952fff31::C2::p418::w0"
+      },
+      {
+        "rank": 10,
+        "chunk_index": 49696,
+        "score": 0.02654711715877056,
+        "doc_id": "fa7dac2401f1",
+        "page": 305,
+        "chunk_id": "fa7dac2401f10d824c6e6b3e5dd482a0e0ab09b50e6164eeebc289ec952fff31::C2::p305::w0"
+      }
+    ],
+    "final_top": [
+      {
+        "rank": 1,
+        "chunk_index": 50078,
+        "score": 7.6889729499816895,
+        "doc_id": "fa7dac2401f1",
+        "page": 387,
+        "chunk_id": "fa7dac2401f10d824c6e6b3e5dd482a0e0ab09b50e6164eeebc289ec952fff31::C2::p387::w0"
+      },
+      {
+        "rank": 2,
+        "chunk_index": 50131,
+        "score": 7.6405720710754395,
+        "doc_id": "fa7dac2401f1",
+        "page": 403,
+        "chunk_id": "fa7dac2401f10d824c6e6b3e5dd482a0e0ab09b50e6164eeebc289ec952fff31::C2::p403::w0"
+      },
+      {
+        "rank": 3,
+        "chunk_index": 50147,
+        "score": 7.545409202575684,
+        "doc_id": "fa7dac2401f1",
+        "page": 407,
+        "chunk_id": "fa7dac2401f10d824c6e6b3e5dd482a0e0ab09b50e6164eeebc289ec952fff31::C2::p407::w0"
+      },
+      {
+        "rank": 4,
+        "chunk_index": 50084,
+        "score": 7.5417938232421875,
+        "doc_id": "fa7dac2401f1",
+        "page": 389,
+        "chunk_id": "fa7dac2401f10d824c6e6b3e5dd482a0e0ab09b50e6164eeebc289ec952fff31::C2::p389::w0"
+      },
+      {
+        "rank": 5,
+        "chunk_index": 50155,
+        "score": 7.472011566162109,
+        "doc_id": "fa7dac2401f1",
+        "page": 409,
+        "chunk_id": "fa7dac2401f10d824c6e6b3e5dd482a0e0ab09b50e6164eeebc289ec952fff31::C2::p409::w0"
+      }
+    ]
+  },
+  {
+    "row_id": "G-001",
+    "call_index": 1,
+    "query": "What is the total assets figure for Srf for the year ended 31 March 2025 consolidated results, as printed on their statement?",
+    "tokens": [
+      "what",
+      "total",
+      "assets",
+      "figure",
+      "srf",
+      "year",
+      "ended",
+      "31",
+      "march",
+      "2025",
+      "consolidated",
+      "results",
+      "printed",
+      "statement"
+    ],
+    "bm25_top": [
+      {
+        "rank": 1,
+        "chunk_index": 10022,
+        "score": 27.19732666015625,
+        "doc_id": "0ea899ba19c2",
+        "page": 362,
+        "chunk_id": "0ea899ba19c2727c06fc6926b1a4180c8edbecdde684e15a48fb49267c7ffc81::C2::p362::w6"
+      },
+      {
+        "rank": 2,
+        "chunk_index": 10021,
+        "score": 27.077383041381836,
+        "doc_id": "0ea899ba19c2",
+        "page": 362,
+        "chunk_id": "0ea899ba19c2727c06fc6926b1a4180c8edbecdde684e15a48fb49267c7ffc81::C2::p362::w5"
+      },
+      {
+        "rank": 3,
+        "chunk_index": 17099,
+        "score": 23.727787017822266,
+        "doc_id": "15fee0c19d13",
+        "page": 458,
+        "chunk_id": "15fee0c19d130a5e77fbeca1ea1eca288f9d45eff4f3de02397c8dec7a02b67b::C2::p458::w0"
+      },
+      {
+        "rank": 4,
+        "chunk_index": 29301,
+        "score": 22.46786117553711,
+        "doc_id": "8e4e186331c2",
+        "page": 222,
+        "chunk_id": "8e4e186331c2ece16878e3f3a29e1c92cd24c2fa1192e634a37e29593f706862::C2::p222::w0"
+      },
+      {
+        "rank": 5,
+        "chunk_index": 1134,
+        "score": 22.409255981445312,
+        "doc_id": "011253c0a105",
+        "page": 142,
+        "chunk_id": "011253c0a105f9bd11d484e305c7f78fd6689890209b9159a3df452703366359::C2::p142::w7"
+      },
+      {
+        "rank": 6,
+        "chunk_index": 48169,
+        "score": 22.303869247436523,
+        "doc_id": "e97121aee575",
+        "page": 234,
+        "chunk_id": "e97121aee57558adf2dc27d6770bec497df8a9cb4deeb37d67186abef5484ed2::C2::p234::w5"
+      },
+      {
+        "rank": 7,
+        "chunk_index": 25733,
+        "score": 22.027854919433594,
+        "doc_id": "5dc0e70e9dec",
+        "page": 169,
+        "chunk_id": "5dc0e70e9dec60ac73319768cc77a58498e7f9b5db01182ffeca451f88a54ffe::C2::p169::w1"
+      },
+      {
+        "rank": 8,
+        "chunk_index": 35546,
+        "score": 21.913921356201172,
+        "doc_id": "9e092bb4d317",
+        "page": 215,
+        "chunk_id": "9e092bb4d317944f9b65229c7d6cd2efe8032505deb88b934aa3a34f810884e6::C2::p215::w1"
+      },
+      {
+        "rank": 9,
+        "chunk_index": 48235,
+        "score": 21.8374080657959,
+        "doc_id": "e97121aee575",
+        "page": 243,
+        "chunk_id": "e97121aee57558adf2dc27d6770bec497df8a9cb4deeb37d67186abef5484ed2::C2::p243::w0"
+      },
+      {
+        "rank": 10,
+        "chunk_index": 48245,
+        "score": 21.8374080657959,
+        "doc_id": "e97121aee575",
+        "page": 244,
+        "chunk_id": "e97121aee57558adf2dc27d6770bec497df8a9cb4deeb37d67186abef5484ed2::C2::p244::w0"
+      }
+    ],
+    "dense_top": [
+      {
+        "rank": 1,
+        "chunk_index": 29301,
+        "score": 0.8127974271774292,
+        "doc_id": "8e4e186331c2",
+        "page": 222,
+        "chunk_id": "8e4e186331c2ece16878e3f3a29e1c92cd24c2fa1192e634a37e29593f706862::C2::p222::w0"
+      },
+      {
+        "rank": 2,
+        "chunk_index": 9821,
+        "score": 0.8127762079238892,
+        "doc_id": "0ea899ba19c2",
+        "page": 341,
+        "chunk_id": "0ea899ba19c2727c06fc6926b1a4180c8edbecdde684e15a48fb49267c7ffc81::C2::p341::w0"
+      },
+      {
+        "rank": 3,
+        "chunk_index": 29328,
+        "score": 0.811627209186554,
+        "doc_id": "8e4e186331c2",
+        "page": 226,
+        "chunk_id": "8e4e186331c2ece16878e3f3a29e1c92cd24c2fa1192e634a37e29593f706862::C2::p226::w1"
+      },
+      {
+        "rank": 4,
+        "chunk_index": 30645,
+        "score": 0.7960113883018494,
+        "doc_id": "8fcda929069a",
+        "page": 176,
+        "chunk_id": "8fcda929069ae77825ceb19a78d3a802dba1c674820fbc65fa97aba368de04aa::C2::p176::w0"
+      },
+      {
+        "rank": 5,
+        "chunk_index": 35658,
+        "score": 0.7952568531036377,
+        "doc_id": "9e092bb4d317",
+        "page": 229,
+        "chunk_id": "9e092bb4d317944f9b65229c7d6cd2efe8032505deb88b934aa3a34f810884e6::C2::p229::w0"
+      },
+      {
+        "rank": 6,
+        "chunk_index": 9829,
+        "score": 0.7949762344360352,
+        "doc_id": "0ea899ba19c2",
+        "page": 342,
+        "chunk_id": "0ea899ba19c2727c06fc6926b1a4180c8edbecdde684e15a48fb49267c7ffc81::C2::p342::w0"
+      },
+      {
+        "rank": 7,
+        "chunk_index": 28807,
+        "score": 0.7944969534873962,
+        "doc_id": "8e4e186331c2",
+        "page": 155,
+        "chunk_id": "8e4e186331c2ece16878e3f3a29e1c92cd24c2fa1192e634a37e29593f706862::C2::p155::w0"
+      },
+      {
+        "rank": 8,
+        "chunk_index": 39221,
+        "score": 0.7943071722984314,
+        "doc_id": "bdd1b13a7b77",
+        "page": 232,
+        "chunk_id": "bdd1b13a7b77a338641ee7aa03f94f105d1bd0f1f853ea6ea0986047a918a63c::C2::p232::w1"
+      },
+      {
+        "rank": 9,
+        "chunk_index": 31165,
+        "score": 0.7942792773246765,
+        "doc_id": "8fcda929069a",
+        "page": 235,
+        "chunk_id": "8fcda929069ae77825ceb19a78d3a802dba1c674820fbc65fa97aba368de04aa::C2::p235::w0"
+      },
+      {
+        "rank": 10,
+        "chunk_index": 30991,
+        "score": 0.7938268780708313,
+        "doc_id": "8fcda929069a",
+        "page": 216,
+        "chunk_id": "8fcda929069ae77825ceb19a78d3a802dba1c674820fbc65fa97aba368de04aa::C2::p216::w0"
+      }
+    ],
+    "rrf_top": [
+      {
+        "rank": 1,
+        "chunk_index": 29301,
+        "score": 0.03201844170689583,
+        "doc_id": "8e4e186331c2",
+        "page": 222,
+        "chunk_id": "8e4e186331c2ece16878e3f3a29e1c92cd24c2fa1192e634a37e29593f706862::C2::p222::w0"
+      },
+      {
+        "rank": 2,
+        "chunk_index": 17099,
+        "score": 0.028068138286471367,
+        "doc_id": "15fee0c19d13",
+        "page": 458,
+        "chunk_id": "15fee0c19d130a5e77fbeca1ea1eca288f9d45eff4f3de02397c8dec7a02b67b::C2::p458::w0"
+      },
+      {
+        "rank": 3,
+        "chunk_index": 9714,
+        "score": 0.026856524869799614,
+        "doc_id": "0ea899ba19c2",
+        "page": 328,
+        "chunk_id": "0ea899ba19c2727c06fc6926b1a4180c8edbecdde684e15a48fb49267c7ffc81::C2::p328::w0"
+      },
+      {
+        "rank": 4,
+        "chunk_index": 28802,
+        "score": 0.025578759610652924,
+        "doc_id": "8e4e186331c2",
+        "page": 154,
+        "chunk_id": "8e4e186331c2ece16878e3f3a29e1c92cd24c2fa1192e634a37e29593f706862::C2::p154::w0"
+      },
+      {
+        "rank": 5,
+        "chunk_index": 9697,
+        "score": 0.025238096714019775,
+        "doc_id": "0ea899ba19c2",
+        "page": 326,
+        "chunk_id": "0ea899ba19c2727c06fc6926b1a4180c8edbecdde684e15a48fb49267c7ffc81::C2::p326::w0"
+      },
+      {
+        "rank": 6,
+        "chunk_index": 10022,
+        "score": 0.016393441706895828,
+        "doc_id": "0ea899ba19c2",
+        "page": 362,
+        "chunk_id": "0ea899ba19c2727c06fc6926b1a4180c8edbecdde684e15a48fb49267c7ffc81::C2::p362::w6"
+      },
+      {
+        "rank": 7,
+        "chunk_index": 9821,
+        "score": 0.016129031777381897,
+        "doc_id": "0ea899ba19c2",
+        "page": 341,
+        "chunk_id": "0ea899ba19c2727c06fc6926b1a4180c8edbecdde684e15a48fb49267c7ffc81::C2::p341::w0"
+      },
+      {
+        "rank": 8,
+        "chunk_index": 10021,
+        "score": 0.016129031777381897,
+        "doc_id": "0ea899ba19c2",
+        "page": 362,
+        "chunk_id": "0ea899ba19c2727c06fc6926b1a4180c8edbecdde684e15a48fb49267c7ffc81::C2::p362::w5"
+      },
+      {
+        "rank": 9,
+        "chunk_index": 29328,
+        "score": 0.01587301678955555,
+        "doc_id": "8e4e186331c2",
+        "page": 226,
+        "chunk_id": "8e4e186331c2ece16878e3f3a29e1c92cd24c2fa1192e634a37e29593f706862::C2::p226::w1"
+      },
+      {
+        "rank": 10,
+        "chunk_index": 30645,
+        "score": 0.015625,
+        "doc_id": "8fcda929069a",
+        "page": 176,
+        "chunk_id": "8fcda929069ae77825ceb19a78d3a802dba1c674820fbc65fa97aba368de04aa::C2::p176::w0"
+      }
+    ],
+    "final_top": [
+      {
+        "rank": 1,
+        "chunk_index": 48235,
+        "score": 5.927959442138672,
+        "doc_id": "e97121aee575",
+        "page": 243,
+        "chunk_id": "e97121aee57558adf2dc27d6770bec497df8a9cb4deeb37d67186abef5484ed2::C2::p243::w0"
+      },
+      {
+        "rank": 2,
+        "chunk_index": 48254,
+        "score": 5.900928020477295,
+        "doc_id": "e97121aee575",
+        "page": 245,
+        "chunk_id": "e97121aee57558adf2dc27d6770bec497df8a9cb4deeb37d67186abef5484ed2::C2::p245::w0"
+      },
+      {
+        "rank": 3,
+        "chunk_index": 48245,
+        "score": 5.8970794677734375,
+        "doc_id": "e97121aee575",
+        "page": 244,
+        "chunk_id": "e97121aee57558adf2dc27d6770bec497df8a9cb4deeb37d67186abef5484ed2::C2::p244::w0"
+      },
+      {
+        "rank": 4,
+        "chunk_index": 45624,
+        "score": 5.830958366394043,
+        "doc_id": "e57b7fc675de",
+        "page": 369,
+        "chunk_id": "e57b7fc675de5a90df876e355e2b4c92b0d6928e6e8a67020496f9fc6700cb53::C2::p369::w0"
+      },
+      {
+        "rank": 5,
+        "chunk_index": 1134,
+        "score": 5.792465686798096,
+        "doc_id": "011253c0a105",
+        "page": 142,
+        "chunk_id": "011253c0a105f9bd11d484e305c7f78fd6689890209b9159a3df452703366359::C2::p142::w7"
+      }
+    ]
+  },
+  {
+    "row_id": "G-003",
+    "call_index": 0,
+    "query": "For the year ended 31 March 2025, what is the total liabilities for Deepak Nitrite as printed in Rs. crore?",
+    "tokens": [
+      "year",
+      "ended",
+      "31",
+      "march",
+      "2025",
+      "what",
+      "total",
+      "liabilities",
+      "deepak",
+      "nitrite",
+      "printed",
+      "rs",
+      "crore"
+    ],
+    "bm25_top": [
+      {
+        "rank": 1,
+        "chunk_index": 10017,
+        "score": 24.644893646240234,
+        "doc_id": "0ea899ba19c2",
+        "page": 362,
+        "chunk_id": "0ea899ba19c2727c06fc6926b1a4180c8edbecdde684e15a48fb49267c7ffc81::C2::p362::w1"
+      },
+      {
+        "rank": 2,
+        "chunk_index": 10019,
+        "score": 24.630752563476562,
+        "doc_id": "0ea899ba19c2",
+        "page": 362,
+        "chunk_id": "0ea899ba19c2727c06fc6926b1a4180c8edbecdde684e15a48fb49267c7ffc81::C2::p362::w3"
+      },
+      {
+        "rank": 3,
+        "chunk_index": 50175,
+        "score": 24.1754207611084,
+        "doc_id": "fa7dac2401f1",
+        "page": 415,
+        "chunk_id": "fa7dac2401f10d824c6e6b3e5dd482a0e0ab09b50e6164eeebc289ec952fff31::C2::p415::w0"
+      },
+      {
+        "rank": 4,
+        "chunk_index": 49795,
+        "score": 23.288890838623047,
+        "doc_id": "fa7dac2401f1",
+        "page": 325,
+        "chunk_id": "fa7dac2401f10d824c6e6b3e5dd482a0e0ab09b50e6164eeebc289ec952fff31::C2::p325::w0"
+      },
+      {
+        "rank": 5,
+        "chunk_index": 49851,
+        "score": 23.234703063964844,
+        "doc_id": "fa7dac2401f1",
+        "page": 341,
+        "chunk_id": "fa7dac2401f10d824c6e6b3e5dd482a0e0ab09b50e6164eeebc289ec952fff31::C2::p341::w0"
+      },
+      {
+        "rank": 6,
+        "chunk_index": 49843,
+        "score": 23.10708999633789,
+        "doc_id": "fa7dac2401f1",
+        "page": 339,
+        "chunk_id": "fa7dac2401f10d824c6e6b3e5dd482a0e0ab09b50e6164eeebc289ec952fff31::C2::p339::w0"
+      },
+      {
+        "rank": 7,
+        "chunk_index": 49610,
+        "score": 22.902843475341797,
+        "doc_id": "fa7dac2401f1",
+        "page": 289,
+        "chunk_id": "fa7dac2401f10d824c6e6b3e5dd482a0e0ab09b50e6164eeebc289ec952fff31::C2::p289::w0"
+      },
+      {
+        "rank": 8,
+        "chunk_index": 49627,
+        "score": 22.810850143432617,
+        "doc_id": "fa7dac2401f1",
+        "page": 293,
+        "chunk_id": "fa7dac2401f10d824c6e6b3e5dd482a0e0ab09b50e6164eeebc289ec952fff31::C2::p293::w0"
+      },
+      {
+        "rank": 9,
+        "chunk_index": 50104,
+        "score": 22.795915603637695,
+        "doc_id": "fa7dac2401f1",
+        "page": 395,
+        "chunk_id": "fa7dac2401f10d824c6e6b3e5dd482a0e0ab09b50e6164eeebc289ec952fff31::C2::p395::w0"
+      },
+      {
+        "rank": 10,
+        "chunk_index": 49796,
+        "score": 22.7570858001709,
+        "doc_id": "fa7dac2401f1",
+        "page": 325,
+        "chunk_id": "fa7dac2401f10d824c6e6b3e5dd482a0e0ab09b50e6164eeebc289ec952fff31::C2::p325::w1"
+      }
+    ],
+    "dense_top": [
+      {
+        "rank": 1,
+        "chunk_index": 50104,
+        "score": 0.8392017483711243,
+        "doc_id": "fa7dac2401f1",
+        "page": 395,
+        "chunk_id": "fa7dac2401f10d824c6e6b3e5dd482a0e0ab09b50e6164eeebc289ec952fff31::C2::p395::w0"
+      },
+      {
+        "rank": 2,
+        "chunk_index": 50131,
+        "score": 0.8351696133613586,
+        "doc_id": "fa7dac2401f1",
+        "page": 403,
+        "chunk_id": "fa7dac2401f10d824c6e6b3e5dd482a0e0ab09b50e6164eeebc289ec952fff31::C2::p403::w0"
+      },
+      {
+        "rank": 3,
+        "chunk_index": 50168,
+        "score": 0.8307156562805176,
+        "doc_id": "fa7dac2401f1",
+        "page": 413,
+        "chunk_id": "fa7dac2401f10d824c6e6b3e5dd482a0e0ab09b50e6164eeebc289ec952fff31::C2::p413::w0"
+      },
+      {
+        "rank": 4,
+        "chunk_index": 50175,
+        "score": 0.8285893201828003,
+        "doc_id": "fa7dac2401f1",
+        "page": 415,
+        "chunk_id": "fa7dac2401f10d824c6e6b3e5dd482a0e0ab09b50e6164eeebc289ec952fff31::C2::p415::w0"
+      },
+      {
+        "rank": 5,
+        "chunk_index": 49889,
+        "score": 0.8279991149902344,
+        "doc_id": "fa7dac2401f1",
+        "page": 351,
+        "chunk_id": "fa7dac2401f10d824c6e6b3e5dd482a0e0ab09b50e6164eeebc289ec952fff31::C2::p351::w0"
+      },
+      {
+        "rank": 6,
+        "chunk_index": 49897,
+        "score": 0.8258323669433594,
+        "doc_id": "fa7dac2401f1",
+        "page": 353,
+        "chunk_id": "fa7dac2401f10d824c6e6b3e5dd482a0e0ab09b50e6164eeebc289ec952fff31::C2::p353::w0"
+      },
+      {
+        "rank": 7,
+        "chunk_index": 50124,
+        "score": 0.82243812084198,
+        "doc_id": "fa7dac2401f1",
+        "page": 401,
+        "chunk_id": "fa7dac2401f10d824c6e6b3e5dd482a0e0ab09b50e6164eeebc289ec952fff31::C2::p401::w0"
+      },
+      {
+        "rank": 8,
+        "chunk_index": 50084,
+        "score": 0.8166777491569519,
+        "doc_id": "fa7dac2401f1",
+        "page": 389,
+        "chunk_id": "fa7dac2401f10d824c6e6b3e5dd482a0e0ab09b50e6164eeebc289ec952fff31::C2::p389::w0"
+      },
+      {
+        "rank": 9,
+        "chunk_index": 49808,
+        "score": 0.8155834674835205,
+        "doc_id": "fa7dac2401f1",
+        "page": 329,
+        "chunk_id": "fa7dac2401f10d824c6e6b3e5dd482a0e0ab09b50e6164eeebc289ec952fff31::C2::p329::w0"
+      },
+      {
+        "rank": 10,
+        "chunk_index": 50155,
+        "score": 0.8125874400138855,
+        "doc_id": "fa7dac2401f1",
+        "page": 409,
+        "chunk_id": "fa7dac2401f10d824c6e6b3e5dd482a0e0ab09b50e6164eeebc289ec952fff31::C2::p409::w0"
+      }
+    ],
+    "rrf_top": [
+      {
+        "rank": 1,
+        "chunk_index": 50175,
+        "score": 0.0314980149269104,
+        "doc_id": "fa7dac2401f1",
+        "page": 415,
+        "chunk_id": "fa7dac2401f10d824c6e6b3e5dd482a0e0ab09b50e6164eeebc289ec952fff31::C2::p415::w0"
+      },
+      {
+        "rank": 2,
+        "chunk_index": 50104,
+        "score": 0.030886195600032806,
+        "doc_id": "fa7dac2401f1",
+        "page": 395,
+        "chunk_id": "fa7dac2401f10d824c6e6b3e5dd482a0e0ab09b50e6164eeebc289ec952fff31::C2::p395::w0"
+      },
+      {
+        "rank": 3,
+        "chunk_index": 50131,
+        "score": 0.028949543833732605,
+        "doc_id": "fa7dac2401f1",
+        "page": 403,
+        "chunk_id": "fa7dac2401f10d824c6e6b3e5dd482a0e0ab09b50e6164eeebc289ec952fff31::C2::p403::w0"
+      },
+      {
+        "rank": 4,
+        "chunk_index": 49851,
+        "score": 0.02804284356534481,
+        "doc_id": "fa7dac2401f1",
+        "page": 341,
+        "chunk_id": "fa7dac2401f10d824c6e6b3e5dd482a0e0ab09b50e6164eeebc289ec952fff31::C2::p341::w0"
+      },
+      {
+        "rank": 5,
+        "chunk_index": 49821,
+        "score": 0.027598019689321518,
+        "doc_id": "fa7dac2401f1",
+        "page": 333,
+        "chunk_id": "fa7dac2401f10d824c6e6b3e5dd482a0e0ab09b50e6164eeebc289ec952fff31::C2::p333::w0"
+      },
+      {
+        "rank": 6,
+        "chunk_index": 50124,
+        "score": 0.026690078899264336,
+        "doc_id": "fa7dac2401f1",
+        "page": 401,
+        "chunk_id": "fa7dac2401f10d824c6e6b3e5dd482a0e0ab09b50e6164eeebc289ec952fff31::C2::p401::w0"
+      },
+      {
+        "rank": 7,
+        "chunk_index": 49889,
+        "score": 0.026620570570230484,
+        "doc_id": "fa7dac2401f1",
+        "page": 351,
+        "chunk_id": "fa7dac2401f10d824c6e6b3e5dd482a0e0ab09b50e6164eeebc289ec952fff31::C2::p351::w0"
+      },
+      {
+        "rank": 8,
+        "chunk_index": 50147,
+        "score": 0.02500000037252903,
+        "doc_id": "fa7dac2401f1",
+        "page": 407,
+        "chunk_id": "fa7dac2401f10d824c6e6b3e5dd482a0e0ab09b50e6164eeebc289ec952fff31::C2::p407::w0"
+      },
+      {
+        "rank": 9,
+        "chunk_index": 10017,
+        "score": 0.016393441706895828,
+        "doc_id": "0ea899ba19c2",
+        "page": 362,
+        "chunk_id": "0ea899ba19c2727c06fc6926b1a4180c8edbecdde684e15a48fb49267c7ffc81::C2::p362::w1"
+      },
+      {
+        "rank": 10,
+        "chunk_index": 10019,
+        "score": 0.016129031777381897,
+        "doc_id": "0ea899ba19c2",
+        "page": 362,
+        "chunk_id": "0ea899ba19c2727c06fc6926b1a4180c8edbecdde684e15a48fb49267c7ffc81::C2::p362::w3"
+      }
+    ],
+    "final_top": [
+      {
+        "rank": 1,
+        "chunk_index": 50155,
+        "score": 7.977558612823486,
+        "doc_id": "fa7dac2401f1",
+        "page": 409,
+        "chunk_id": "fa7dac2401f10d824c6e6b3e5dd482a0e0ab09b50e6164eeebc289ec952fff31::C2::p409::w0"
+      },
+      {
+        "rank": 2,
+        "chunk_index": 50131,
+        "score": 7.764336585998535,
+        "doc_id": "fa7dac2401f1",
+        "page": 403,
+        "chunk_id": "fa7dac2401f10d824c6e6b3e5dd482a0e0ab09b50e6164eeebc289ec952fff31::C2::p403::w0"
+      },
+      {
+        "rank": 3,
+        "chunk_index": 50175,
+        "score": 7.671037197113037,
+        "doc_id": "fa7dac2401f1",
+        "page": 415,
+        "chunk_id": "fa7dac2401f10d824c6e6b3e5dd482a0e0ab09b50e6164eeebc289ec952fff31::C2::p415::w0"
+      },
+      {
+        "rank": 4,
+        "chunk_index": 50147,
+        "score": 7.313529968261719,
+        "doc_id": "fa7dac2401f1",
+        "page": 407,
+        "chunk_id": "fa7dac2401f10d824c6e6b3e5dd482a0e0ab09b50e6164eeebc289ec952fff31::C2::p407::w0"
+      },
+      {
+        "rank": 5,
+        "chunk_index": 50084,
+        "score": 7.1929168701171875,
+        "doc_id": "fa7dac2401f1",
+        "page": 389,
+        "chunk_id": "fa7dac2401f10d824c6e6b3e5dd482a0e0ab09b50e6164eeebc289ec952fff31::C2::p389::w0"
+      }
+    ]
+  },
+  {
+    "row_id": "G-003",
+    "call_index": 1,
+    "query": "For the year ended 31 March 2025, what is the total liabilities for Srf as printed in Rs. crore?",
+    "tokens": [
+      "year",
+      "ended",
+      "31",
+      "march",
+      "2025",
+      "what",
+      "total",
+      "liabilities",
+      "srf",
+      "printed",
+      "rs",
+      "crore"
+    ],
+    "bm25_top": [
+      {
+        "rank": 1,
+        "chunk_index": 10017,
+        "score": 24.644893646240234,
+        "doc_id": "0ea899ba19c2",
+        "page": 362,
+        "chunk_id": "0ea899ba19c2727c06fc6926b1a4180c8edbecdde684e15a48fb49267c7ffc81::C2::p362::w1"
+      },
+      {
+        "rank": 2,
+        "chunk_index": 10019,
+        "score": 24.630752563476562,
+        "doc_id": "0ea899ba19c2",
+        "page": 362,
+        "chunk_id": "0ea899ba19c2727c06fc6926b1a4180c8edbecdde684e15a48fb49267c7ffc81::C2::p362::w3"
+      },
+      {
+        "rank": 3,
+        "chunk_index": 1730,
+        "score": 22.145139694213867,
+        "doc_id": "011253c0a105",
+        "page": 211,
+        "chunk_id": "011253c0a105f9bd11d484e305c7f78fd6689890209b9159a3df452703366359::C2::p211::w6"
+      },
+      {
+        "rank": 4,
+        "chunk_index": 10018,
+        "score": 21.950693130493164,
+        "doc_id": "0ea899ba19c2",
+        "page": 362,
+        "chunk_id": "0ea899ba19c2727c06fc6926b1a4180c8edbecdde684e15a48fb49267c7ffc81::C2::p362::w2"
+      },
+      {
+        "rank": 5,
+        "chunk_index": 1387,
+        "score": 21.950422286987305,
+        "doc_id": "011253c0a105",
+        "page": 173,
+        "chunk_id": "011253c0a105f9bd11d484e305c7f78fd6689890209b9159a3df452703366359::C2::p173::w2"
+      },
+      {
+        "rank": 6,
+        "chunk_index": 1858,
+        "score": 21.89157485961914,
+        "doc_id": "011253c0a105",
+        "page": 227,
+        "chunk_id": "011253c0a105f9bd11d484e305c7f78fd6689890209b9159a3df452703366359::C2::p227::w1"
+      },
+      {
+        "rank": 7,
+        "chunk_index": 1265,
+        "score": 21.860315322875977,
+        "doc_id": "011253c0a105",
+        "page": 158,
+        "chunk_id": "011253c0a105f9bd11d484e305c7f78fd6689890209b9159a3df452703366359::C2::p158::w7"
+      },
+      {
+        "rank": 8,
+        "chunk_index": 1663,
+        "score": 21.73313331604004,
+        "doc_id": "011253c0a105",
+        "page": 202,
+        "chunk_id": "011253c0a105f9bd11d484e305c7f78fd6689890209b9159a3df452703366359::C2::p202::w7"
+      },
+      {
+        "rank": 9,
+        "chunk_index": 1298,
+        "score": 21.71780014038086,
+        "doc_id": "011253c0a105",
+        "page": 162,
+        "chunk_id": "011253c0a105f9bd11d484e305c7f78fd6689890209b9159a3df452703366359::C2::p162::w3"
+      },
+      {
+        "rank": 10,
+        "chunk_index": 10020,
+        "score": 21.614717483520508,
+        "doc_id": "0ea899ba19c2",
+        "page": 362,
+        "chunk_id": "0ea899ba19c2727c06fc6926b1a4180c8edbecdde684e15a48fb49267c7ffc81::C2::p362::w4"
+      }
+    ],
+    "dense_top": [
+      {
+        "rank": 1,
+        "chunk_index": 28793,
+        "score": 0.815216064453125,
+        "doc_id": "8e4e186331c2",
+        "page": 152,
+        "chunk_id": "8e4e186331c2ece16878e3f3a29e1c92cd24c2fa1192e634a37e29593f706862::C2::p152::w1"
+      },
+      {
+        "rank": 2,
+        "chunk_index": 7153,
+        "score": 0.8105651140213013,
+        "doc_id": "0ca3172627a0",
+        "page": 172,
+        "chunk_id": "0ca3172627a011902024f5261cc1c1073c3532bf0249528e1f05f093205d4399::C2::p172::w0"
+      },
+      {
+        "rank": 3,
+        "chunk_index": 50101,
+        "score": 0.8092142343521118,
+        "doc_id": "fa7dac2401f1",
+        "page": 394,
+        "chunk_id": "fa7dac2401f10d824c6e6b3e5dd482a0e0ab09b50e6164eeebc289ec952fff31::C2::p394::w0"
+      },
+      {
+        "rank": 4,
+        "chunk_index": 42460,
+        "score": 0.8080964684486389,
+        "doc_id": "deed15eaf8d7",
+        "page": 207,
+        "chunk_id": "deed15eaf8d7b9e0fa2aa386b85a01f35511fc8b4813fe92aa4212682089473d::C2::p207::w0"
+      },
+      {
+        "rank": 5,
+        "chunk_index": 49888,
+        "score": 0.8018232583999634,
+        "doc_id": "fa7dac2401f1",
+        "page": 350,
+        "chunk_id": "fa7dac2401f10d824c6e6b3e5dd482a0e0ab09b50e6164eeebc289ec952fff31::C2::p350::w2"
+      },
+      {
+        "rank": 6,
+        "chunk_index": 29306,
+        "score": 0.8017516732215881,
+        "doc_id": "8e4e186331c2",
+        "page": 222,
+        "chunk_id": "8e4e186331c2ece16878e3f3a29e1c92cd24c2fa1192e634a37e29593f706862::C2::p222::w5"
+      },
+      {
+        "rank": 7,
+        "chunk_index": 48125,
+        "score": 0.8012426495552063,
+        "doc_id": "e97121aee575",
+        "page": 229,
+        "chunk_id": "e97121aee57558adf2dc27d6770bec497df8a9cb4deeb37d67186abef5484ed2::C2::p229::w0"
+      },
+      {
+        "rank": 8,
+        "chunk_index": 1780,
+        "score": 0.8006444573402405,
+        "doc_id": "011253c0a105",
+        "page": 217,
+        "chunk_id": "011253c0a105f9bd11d484e305c7f78fd6689890209b9159a3df452703366359::C2::p217::w7"
+      },
+      {
+        "rank": 9,
+        "chunk_index": 49893,
+        "score": 0.7996050119400024,
+        "doc_id": "fa7dac2401f1",
+        "page": 351,
+        "chunk_id": "fa7dac2401f10d824c6e6b3e5dd482a0e0ab09b50e6164eeebc289ec952fff31::C2::p351::w4"
+      },
+      {
+        "rank": 10,
+        "chunk_index": 9566,
+        "score": 0.7972400188446045,
+        "doc_id": "0ea899ba19c2",
+        "page": 310,
+        "chunk_id": "0ea899ba19c2727c06fc6926b1a4180c8edbecdde684e15a48fb49267c7ffc81::C2::p310::w1"
+      }
+    ],
+    "rrf_top": [
+      {
+        "rank": 1,
+        "chunk_index": 29301,
+        "score": 0.02361111156642437,
+        "doc_id": "8e4e186331c2",
+        "page": 222,
+        "chunk_id": "8e4e186331c2ece16878e3f3a29e1c92cd24c2fa1192e634a37e29593f706862::C2::p222::w0"
+      },
+      {
+        "rank": 2,
+        "chunk_index": 10017,
+        "score": 0.016393441706895828,
+        "doc_id": "0ea899ba19c2",
+        "page": 362,
+        "chunk_id": "0ea899ba19c2727c06fc6926b1a4180c8edbecdde684e15a48fb49267c7ffc81::C2::p362::w1"
+      },
+      {
+        "rank": 3,
+        "chunk_index": 28793,
+        "score": 0.016393441706895828,
+        "doc_id": "8e4e186331c2",
+        "page": 152,
+        "chunk_id": "8e4e186331c2ece16878e3f3a29e1c92cd24c2fa1192e634a37e29593f706862::C2::p152::w1"
+      },
+      {
+        "rank": 4,
+        "chunk_index": 7153,
+        "score": 0.016129031777381897,
+        "doc_id": "0ca3172627a0",
+        "page": 172,
+        "chunk_id": "0ca3172627a011902024f5261cc1c1073c3532bf0249528e1f05f093205d4399::C2::p172::w0"
+      },
+      {
+        "rank": 5,
+        "chunk_index": 10019,
+        "score": 0.016129031777381897,
+        "doc_id": "0ea899ba19c2",
+        "page": 362,
+        "chunk_id": "0ea899ba19c2727c06fc6926b1a4180c8edbecdde684e15a48fb49267c7ffc81::C2::p362::w3"
+      },
+      {
+        "rank": 6,
+        "chunk_index": 1730,
+        "score": 0.01587301678955555,
+        "doc_id": "011253c0a105",
+        "page": 211,
+        "chunk_id": "011253c0a105f9bd11d484e305c7f78fd6689890209b9159a3df452703366359::C2::p211::w6"
+      },
+      {
+        "rank": 7,
+        "chunk_index": 50101,
+        "score": 0.01587301678955555,
+        "doc_id": "fa7dac2401f1",
+        "page": 394,
+        "chunk_id": "fa7dac2401f10d824c6e6b3e5dd482a0e0ab09b50e6164eeebc289ec952fff31::C2::p394::w0"
+      },
+      {
+        "rank": 8,
+        "chunk_index": 10018,
+        "score": 0.015625,
+        "doc_id": "0ea899ba19c2",
+        "page": 362,
+        "chunk_id": "0ea899ba19c2727c06fc6926b1a4180c8edbecdde684e15a48fb49267c7ffc81::C2::p362::w2"
+      },
+      {
+        "rank": 9,
+        "chunk_index": 42460,
+        "score": 0.015625,
+        "doc_id": "deed15eaf8d7",
+        "page": 207,
+        "chunk_id": "deed15eaf8d7b9e0fa2aa386b85a01f35511fc8b4813fe92aa4212682089473d::C2::p207::w0"
+      },
+      {
+        "rank": 10,
+        "chunk_index": 1387,
+        "score": 0.015384615398943424,
+        "doc_id": "011253c0a105",
+        "page": 173,
+        "chunk_id": "011253c0a105f9bd11d484e305c7f78fd6689890209b9159a3df452703366359::C2::p173::w2"
+      }
+    ],
+    "final_top": [
+      {
+        "rank": 1,
+        "chunk_index": 50101,
+        "score": 6.728209495544434,
+        "doc_id": "fa7dac2401f1",
+        "page": 394,
+        "chunk_id": "fa7dac2401f10d824c6e6b3e5dd482a0e0ab09b50e6164eeebc289ec952fff31::C2::p394::w0"
+      },
+      {
+        "rank": 2,
+        "chunk_index": 49888,
+        "score": 5.857010364532471,
+        "doc_id": "fa7dac2401f1",
+        "page": 350,
+        "chunk_id": "fa7dac2401f10d824c6e6b3e5dd482a0e0ab09b50e6164eeebc289ec952fff31::C2::p350::w2"
+      },
+      {
+        "rank": 3,
+        "chunk_index": 7153,
+        "score": 5.5796284675598145,
+        "doc_id": "0ca3172627a0",
+        "page": 172,
+        "chunk_id": "0ca3172627a011902024f5261cc1c1073c3532bf0249528e1f05f093205d4399::C2::p172::w0"
+      },
+      {
+        "rank": 4,
+        "chunk_index": 42460,
+        "score": 5.319755554199219,
+        "doc_id": "deed15eaf8d7",
+        "page": 207,
+        "chunk_id": "deed15eaf8d7b9e0fa2aa386b85a01f35511fc8b4813fe92aa4212682089473d::C2::p207::w0"
+      },
+      {
+        "rank": 5,
+        "chunk_index": 1387,
+        "score": 5.215114116668701,
+        "doc_id": "011253c0a105",
+        "page": 173,
+        "chunk_id": "011253c0a105f9bd11d484e305c7f78fd6689890209b9159a3df452703366359::C2::p173::w2"
+      }
+    ]
+  },
+  {
+    "row_id": "G-004",
+    "call_index": 0,
+    "query": "What is the total assets of Maruti Suzuki for the year ended 31 March 2025 consolidated results?",
+    "tokens": [
+      "what",
+      "total",
+      "assets",
+      "maruti",
+      "suzuki",
+      "year",
+      "ended",
+      "31",
+      "march",
+      "2025",
+      "consolidated",
+      "results"
+    ],
+    "bm25_top": [
+      {
+        "rank": 1,
+        "chunk_index": 30821,
+        "score": 27.55643653869629,
+        "doc_id": "8fcda929069a",
+        "page": 196,
+        "chunk_id": "8fcda929069ae77825ceb19a78d3a802dba1c674820fbc65fa97aba368de04aa::C2::p196::w7"
+      },
+      {
+        "rank": 2,
+        "chunk_index": 30999,
+        "score": 25.981945037841797,
+        "doc_id": "8fcda929069a",
+        "page": 216,
+        "chunk_id": "8fcda929069ae77825ceb19a78d3a802dba1c674820fbc65fa97aba368de04aa::C2::p216::w8"
+      },
+      {
+        "rank": 3,
+        "chunk_index": 30979,
+        "score": 25.79876136779785,
+        "doc_id": "8fcda929069a",
+        "page": 215,
+        "chunk_id": "8fcda929069ae77825ceb19a78d3a802dba1c674820fbc65fa97aba368de04aa::C2::p215::w0"
+      },
+      {
+        "rank": 4,
+        "chunk_index": 31246,
+        "score": 25.617218017578125,
+        "doc_id": "8fcda929069a",
+        "page": 246,
+        "chunk_id": "8fcda929069ae77825ceb19a78d3a802dba1c674820fbc65fa97aba368de04aa::C2::p246::w0"
+      },
+      {
+        "rank": 5,
+        "chunk_index": 30206,
+        "score": 25.57711410522461,
+        "doc_id": "8fcda929069a",
+        "page": 127,
+        "chunk_id": "8fcda929069ae77825ceb19a78d3a802dba1c674820fbc65fa97aba368de04aa::C2::p127::w0"
+      },
+      {
+        "rank": 6,
+        "chunk_index": 30883,
+        "score": 25.38679313659668,
+        "doc_id": "8fcda929069a",
+        "page": 205,
+        "chunk_id": "8fcda929069ae77825ceb19a78d3a802dba1c674820fbc65fa97aba368de04aa::C2::p205::w3"
+      },
+      {
+        "rank": 7,
+        "chunk_index": 31230,
+        "score": 25.236328125,
+        "doc_id": "8fcda929069a",
+        "page": 243,
+        "chunk_id": "8fcda929069ae77825ceb19a78d3a802dba1c674820fbc65fa97aba368de04aa::C2::p243::w7"
+      },
+      {
+        "rank": 8,
+        "chunk_index": 31177,
+        "score": 25.121517181396484,
+        "doc_id": "8fcda929069a",
+        "page": 236,
+        "chunk_id": "8fcda929069ae77825ceb19a78d3a802dba1c674820fbc65fa97aba368de04aa::C2::p236::w7"
+      },
+      {
+        "rank": 9,
+        "chunk_index": 31243,
+        "score": 24.500696182250977,
+        "doc_id": "8fcda929069a",
+        "page": 245,
+        "chunk_id": "8fcda929069ae77825ceb19a78d3a802dba1c674820fbc65fa97aba368de04aa::C2::p245::w3"
+      },
+      {
+        "rank": 10,
+        "chunk_index": 30932,
+        "score": 24.44305992126465,
+        "doc_id": "8fcda929069a",
+        "page": 212,
+        "chunk_id": "8fcda929069ae77825ceb19a78d3a802dba1c674820fbc65fa97aba368de04aa::C2::p212::w0"
+      }
+    ],
+    "dense_top": [
+      {
+        "rank": 1,
+        "chunk_index": 31251,
+        "score": 0.8350098133087158,
+        "doc_id": "8fcda929069a",
+        "page": 247,
+        "chunk_id": "8fcda929069ae77825ceb19a78d3a802dba1c674820fbc65fa97aba368de04aa::C2::p247::w0"
+      },
+      {
+        "rank": 2,
+        "chunk_index": 31246,
+        "score": 0.8240489959716797,
+        "doc_id": "8fcda929069a",
+        "page": 246,
+        "chunk_id": "8fcda929069ae77825ceb19a78d3a802dba1c674820fbc65fa97aba368de04aa::C2::p246::w0"
+      },
+      {
+        "rank": 3,
+        "chunk_index": 31111,
+        "score": 0.8226355910301208,
+        "doc_id": "8fcda929069a",
+        "page": 226,
+        "chunk_id": "8fcda929069ae77825ceb19a78d3a802dba1c674820fbc65fa97aba368de04aa::C2::p226::w5"
+      },
+      {
+        "rank": 4,
+        "chunk_index": 31150,
+        "score": 0.8083480000495911,
+        "doc_id": "8fcda929069a",
+        "page": 232,
+        "chunk_id": "8fcda929069ae77825ceb19a78d3a802dba1c674820fbc65fa97aba368de04aa::C2::p232::w6"
+      },
+      {
+        "rank": 5,
+        "chunk_index": 30774,
+        "score": 0.8078138828277588,
+        "doc_id": "8fcda929069a",
+        "page": 189,
+        "chunk_id": "8fcda929069ae77825ceb19a78d3a802dba1c674820fbc65fa97aba368de04aa::C2::p189::w4"
+      },
+      {
+        "rank": 6,
+        "chunk_index": 31164,
+        "score": 0.802887499332428,
+        "doc_id": "8fcda929069a",
+        "page": 234,
+        "chunk_id": "8fcda929069ae77825ceb19a78d3a802dba1c674820fbc65fa97aba368de04aa::C2::p234::w5"
+      },
+      {
+        "rank": 7,
+        "chunk_index": 30781,
+        "score": 0.8017206192016602,
+        "doc_id": "8fcda929069a",
+        "page": 190,
+        "chunk_id": "8fcda929069ae77825ceb19a78d3a802dba1c674820fbc65fa97aba368de04aa::C2::p190::w6"
+      },
+      {
+        "rank": 8,
+        "chunk_index": 31118,
+        "score": 0.8005285263061523,
+        "doc_id": "8fcda929069a",
+        "page": 228,
+        "chunk_id": "8fcda929069ae77825ceb19a78d3a802dba1c674820fbc65fa97aba368de04aa::C2::p228::w0"
+      },
+      {
+        "rank": 9,
+        "chunk_index": 29956,
+        "score": 0.7996039986610413,
+        "doc_id": "8fcda929069a",
+        "page": 105,
+        "chunk_id": "8fcda929069ae77825ceb19a78d3a802dba1c674820fbc65fa97aba368de04aa::C2::p105::w0"
+      },
+      {
+        "rank": 10,
+        "chunk_index": 30842,
+        "score": 0.7977311611175537,
+        "doc_id": "8fcda929069a",
+        "page": 199,
+        "chunk_id": "8fcda929069ae77825ceb19a78d3a802dba1c674820fbc65fa97aba368de04aa::C2::p199::w7"
+      }
+    ],
+    "rrf_top": [
+      {
+        "rank": 1,
+        "chunk_index": 31246,
+        "score": 0.0317540317773819,
+        "doc_id": "8fcda929069a",
+        "page": 246,
+        "chunk_id": "8fcda929069ae77825ceb19a78d3a802dba1c674820fbc65fa97aba368de04aa::C2::p246::w0"
+      },
+      {
+        "rank": 2,
+        "chunk_index": 31251,
+        "score": 0.029906954616308212,
+        "doc_id": "8fcda929069a",
+        "page": 247,
+        "chunk_id": "8fcda929069ae77825ceb19a78d3a802dba1c674820fbc65fa97aba368de04aa::C2::p247::w0"
+      },
+      {
+        "rank": 3,
+        "chunk_index": 31150,
+        "score": 0.029709506779909134,
+        "doc_id": "8fcda929069a",
+        "page": 232,
+        "chunk_id": "8fcda929069ae77825ceb19a78d3a802dba1c674820fbc65fa97aba368de04aa::C2::p232::w6"
+      },
+      {
+        "rank": 4,
+        "chunk_index": 30781,
+        "score": 0.028624001890420914,
+        "doc_id": "8fcda929069a",
+        "page": 190,
+        "chunk_id": "8fcda929069ae77825ceb19a78d3a802dba1c674820fbc65fa97aba368de04aa::C2::p190::w6"
+      },
+      {
+        "rank": 5,
+        "chunk_index": 29956,
+        "score": 0.02838164195418358,
+        "doc_id": "8fcda929069a",
+        "page": 105,
+        "chunk_id": "8fcda929069ae77825ceb19a78d3a802dba1c674820fbc65fa97aba368de04aa::C2::p105::w0"
+      },
+      {
+        "rank": 6,
+        "chunk_index": 30206,
+        "score": 0.028371628373861313,
+        "doc_id": "8fcda929069a",
+        "page": 127,
+        "chunk_id": "8fcda929069ae77825ceb19a78d3a802dba1c674820fbc65fa97aba368de04aa::C2::p127::w0"
+      },
+      {
+        "rank": 7,
+        "chunk_index": 30932,
+        "score": 0.027106227353215218,
+        "doc_id": "8fcda929069a",
+        "page": 212,
+        "chunk_id": "8fcda929069ae77825ceb19a78d3a802dba1c674820fbc65fa97aba368de04aa::C2::p212::w0"
+      },
+      {
+        "rank": 8,
+        "chunk_index": 30644,
+        "score": 0.026491228491067886,
+        "doc_id": "8fcda929069a",
+        "page": 175,
+        "chunk_id": "8fcda929069ae77825ceb19a78d3a802dba1c674820fbc65fa97aba368de04aa::C2::p175::w7"
+      },
+      {
+        "rank": 9,
+        "chunk_index": 30170,
+        "score": 0.025487013161182404,
+        "doc_id": "8fcda929069a",
+        "page": 123,
+        "chunk_id": "8fcda929069ae77825ceb19a78d3a802dba1c674820fbc65fa97aba368de04aa::C2::p123::w0"
+      },
+      {
+        "rank": 10,
+        "chunk_index": 31235,
+        "score": 0.024725275114178658,
+        "doc_id": "8fcda929069a",
+        "page": 244,
+        "chunk_id": "8fcda929069ae77825ceb19a78d3a802dba1c674820fbc65fa97aba368de04aa::C2::p244::w3"
+      }
+    ],
+    "final_top": [
+      {
+        "rank": 1,
+        "chunk_index": 31246,
+        "score": 6.75980281829834,
+        "doc_id": "8fcda929069a",
+        "page": 246,
+        "chunk_id": "8fcda929069ae77825ceb19a78d3a802dba1c674820fbc65fa97aba368de04aa::C2::p246::w0"
+      },
+      {
+        "rank": 2,
+        "chunk_index": 31243,
+        "score": 6.758907318115234,
+        "doc_id": "8fcda929069a",
+        "page": 245,
+        "chunk_id": "8fcda929069ae77825ceb19a78d3a802dba1c674820fbc65fa97aba368de04aa::C2::p245::w3"
+      },
+      {
+        "rank": 3,
+        "chunk_index": 30821,
+        "score": 6.472931861877441,
+        "doc_id": "8fcda929069a",
+        "page": 196,
+        "chunk_id": "8fcda929069ae77825ceb19a78d3a802dba1c674820fbc65fa97aba368de04aa::C2::p196::w7"
+      },
+      {
+        "rank": 4,
+        "chunk_index": 31118,
+        "score": 6.447504043579102,
+        "doc_id": "8fcda929069a",
+        "page": 228,
+        "chunk_id": "8fcda929069ae77825ceb19a78d3a802dba1c674820fbc65fa97aba368de04aa::C2::p228::w0"
+      },
+      {
+        "rank": 5,
+        "chunk_index": 31230,
+        "score": 6.372322082519531,
+        "doc_id": "8fcda929069a",
+        "page": 243,
+        "chunk_id": "8fcda929069ae77825ceb19a78d3a802dba1c674820fbc65fa97aba368de04aa::C2::p243::w7"
+      }
+    ]
+  },
+  {
+    "row_id": "G-004",
+    "call_index": 1,
+    "query": "What is the total assets of Bosch for the year ended 31 March 2025 consolidated results?",
+    "tokens": [
+      "what",
+      "total",
+      "assets",
+      "bosch",
+      "year",
+      "ended",
+      "31",
+      "march",
+      "2025",
+      "consolidated",
+      "results"
+    ],
+    "bm25_top": [
+      {
+        "rank": 1,
+        "chunk_index": 24214,
+        "score": 23.22826385498047,
+        "doc_id": "36c2942b23f1",
+        "page": 477,
+        "chunk_id": "36c2942b23f18d425a65781f30532d107bf96feffedc3251ea9035db56b06abd::C2::p477::w0"
+      },
+      {
+        "rank": 2,
+        "chunk_index": 48235,
+        "score": 21.8374080657959,
+        "doc_id": "e97121aee575",
+        "page": 243,
+        "chunk_id": "e97121aee57558adf2dc27d6770bec497df8a9cb4deeb37d67186abef5484ed2::C2::p243::w0"
+      },
+      {
+        "rank": 3,
+        "chunk_index": 48245,
+        "score": 21.8374080657959,
+        "doc_id": "e97121aee575",
+        "page": 244,
+        "chunk_id": "e97121aee57558adf2dc27d6770bec497df8a9cb4deeb37d67186abef5484ed2::C2::p244::w0"
+      },
+      {
+        "rank": 4,
+        "chunk_index": 48254,
+        "score": 21.8374080657959,
+        "doc_id": "e97121aee575",
+        "page": 245,
+        "chunk_id": "e97121aee57558adf2dc27d6770bec497df8a9cb4deeb37d67186abef5484ed2::C2::p245::w0"
+      },
+      {
+        "rank": 5,
+        "chunk_index": 24197,
+        "score": 21.755834579467773,
+        "doc_id": "36c2942b23f1",
+        "page": 471,
+        "chunk_id": "36c2942b23f18d425a65781f30532d107bf96feffedc3251ea9035db56b06abd::C2::p471::w2"
+      },
+      {
+        "rank": 6,
+        "chunk_index": 9697,
+        "score": 21.526845932006836,
+        "doc_id": "0ea899ba19c2",
+        "page": 326,
+        "chunk_id": "0ea899ba19c2727c06fc6926b1a4180c8edbecdde684e15a48fb49267c7ffc81::C2::p326::w0"
+      },
+      {
+        "rank": 7,
+        "chunk_index": 9705,
+        "score": 21.526845932006836,
+        "doc_id": "0ea899ba19c2",
+        "page": 327,
+        "chunk_id": "0ea899ba19c2727c06fc6926b1a4180c8edbecdde684e15a48fb49267c7ffc81::C2::p327::w0"
+      },
+      {
+        "rank": 8,
+        "chunk_index": 9714,
+        "score": 21.526845932006836,
+        "doc_id": "0ea899ba19c2",
+        "page": 328,
+        "chunk_id": "0ea899ba19c2727c06fc6926b1a4180c8edbecdde684e15a48fb49267c7ffc81::C2::p328::w0"
+      },
+      {
+        "rank": 9,
+        "chunk_index": 17099,
+        "score": 21.355989456176758,
+        "doc_id": "15fee0c19d13",
+        "page": 458,
+        "chunk_id": "15fee0c19d130a5e77fbeca1ea1eca288f9d45eff4f3de02397c8dec7a02b67b::C2::p458::w0"
+      },
+      {
+        "rank": 10,
+        "chunk_index": 48250,
+        "score": 20.97051429748535,
+        "doc_id": "e97121aee575",
+        "page": 244,
+        "chunk_id": "e97121aee57558adf2dc27d6770bec497df8a9cb4deeb37d67186abef5484ed2::C2::p244::w5"
+      }
+    ],
+    "dense_top": [
+      {
+        "rank": 1,
+        "chunk_index": 24214,
+        "score": 0.790099024772644,
+        "doc_id": "36c2942b23f1",
+        "page": 477,
+        "chunk_id": "36c2942b23f18d425a65781f30532d107bf96feffedc3251ea9035db56b06abd::C2::p477::w0"
+      },
+      {
+        "rank": 2,
+        "chunk_index": 24197,
+        "score": 0.7806609869003296,
+        "doc_id": "36c2942b23f1",
+        "page": 471,
+        "chunk_id": "36c2942b23f18d425a65781f30532d107bf96feffedc3251ea9035db56b06abd::C2::p471::w2"
+      },
+      {
+        "rank": 3,
+        "chunk_index": 23806,
+        "score": 0.7727115154266357,
+        "doc_id": "36c2942b23f1",
+        "page": 388,
+        "chunk_id": "36c2942b23f18d425a65781f30532d107bf96feffedc3251ea9035db56b06abd::C2::p388::w0"
+      },
+      {
+        "rank": 4,
+        "chunk_index": 23843,
+        "score": 0.7719793319702148,
+        "doc_id": "36c2942b23f1",
+        "page": 397,
+        "chunk_id": "36c2942b23f18d425a65781f30532d107bf96feffedc3251ea9035db56b06abd::C2::p397::w0"
+      },
+      {
+        "rank": 5,
+        "chunk_index": 23439,
+        "score": 0.7714616656303406,
+        "doc_id": "36c2942b23f1",
+        "page": 310,
+        "chunk_id": "36c2942b23f18d425a65781f30532d107bf96feffedc3251ea9035db56b06abd::C2::p310::w0"
+      },
+      {
+        "rank": 6,
+        "chunk_index": 23352,
+        "score": 0.7570297122001648,
+        "doc_id": "36c2942b23f1",
+        "page": 288,
+        "chunk_id": "36c2942b23f18d425a65781f30532d107bf96feffedc3251ea9035db56b06abd::C2::p288::w0"
+      },
+      {
+        "rank": 7,
+        "chunk_index": 24227,
+        "score": 0.7538109421730042,
+        "doc_id": "36c2942b23f1",
+        "page": 480,
+        "chunk_id": "36c2942b23f18d425a65781f30532d107bf96feffedc3251ea9035db56b06abd::C2::p480::w0"
+      },
+      {
+        "rank": 8,
+        "chunk_index": 22712,
+        "score": 0.7538071870803833,
+        "doc_id": "36c2942b23f1",
+        "page": 162,
+        "chunk_id": "36c2942b23f18d425a65781f30532d107bf96feffedc3251ea9035db56b06abd::C2::p162::w2"
+      },
+      {
+        "rank": 9,
+        "chunk_index": 17017,
+        "score": 0.753419041633606,
+        "doc_id": "15fee0c19d13",
+        "page": 435,
+        "chunk_id": "15fee0c19d130a5e77fbeca1ea1eca288f9d45eff4f3de02397c8dec7a02b67b::C2::p435::w1"
+      },
+      {
+        "rank": 10,
+        "chunk_index": 1394,
+        "score": 0.7528839707374573,
+        "doc_id": "011253c0a105",
+        "page": 174,
+        "chunk_id": "011253c0a105f9bd11d484e305c7f78fd6689890209b9159a3df452703366359::C2::p174::w2"
+      }
+    ],
+    "rrf_top": [
+      {
+        "rank": 1,
+        "chunk_index": 24214,
+        "score": 0.032786883413791656,
+        "doc_id": "36c2942b23f1",
+        "page": 477,
+        "chunk_id": "36c2942b23f18d425a65781f30532d107bf96feffedc3251ea9035db56b06abd::C2::p477::w0"
+      },
+      {
+        "rank": 2,
+        "chunk_index": 24197,
+        "score": 0.03151364624500275,
+        "doc_id": "36c2942b23f1",
+        "page": 471,
+        "chunk_id": "36c2942b23f18d425a65781f30532d107bf96feffedc3251ea9035db56b06abd::C2::p471::w2"
+      },
+      {
+        "rank": 3,
+        "chunk_index": 24227,
+        "score": 0.02808326855301857,
+        "doc_id": "36c2942b23f1",
+        "page": 480,
+        "chunk_id": "36c2942b23f18d425a65781f30532d107bf96feffedc3251ea9035db56b06abd::C2::p480::w0"
+      },
+      {
+        "rank": 4,
+        "chunk_index": 9714,
+        "score": 0.027745885774493217,
+        "doc_id": "0ea899ba19c2",
+        "page": 328,
+        "chunk_id": "0ea899ba19c2727c06fc6926b1a4180c8edbecdde684e15a48fb49267c7ffc81::C2::p328::w0"
+      },
+      {
+        "rank": 5,
+        "chunk_index": 9697,
+        "score": 0.02705627679824829,
+        "doc_id": "0ea899ba19c2",
+        "page": 326,
+        "chunk_id": "0ea899ba19c2727c06fc6926b1a4180c8edbecdde684e15a48fb49267c7ffc81::C2::p326::w0"
+      },
+      {
+        "rank": 6,
+        "chunk_index": 9705,
+        "score": 0.026200134307146072,
+        "doc_id": "0ea899ba19c2",
+        "page": 327,
+        "chunk_id": "0ea899ba19c2727c06fc6926b1a4180c8edbecdde684e15a48fb49267c7ffc81::C2::p327::w0"
+      },
+      {
+        "rank": 7,
+        "chunk_index": 24206,
+        "score": 0.025124844163656235,
+        "doc_id": "36c2942b23f1",
+        "page": 474,
+        "chunk_id": "36c2942b23f18d425a65781f30532d107bf96feffedc3251ea9035db56b06abd::C2::p474::w2"
+      },
+      {
+        "rank": 8,
+        "chunk_index": 23816,
+        "score": 0.023959826678037643,
+        "doc_id": "36c2942b23f1",
+        "page": 391,
+        "chunk_id": "36c2942b23f18d425a65781f30532d107bf96feffedc3251ea9035db56b06abd::C2::p391::w1"
+      },
+      {
+        "rank": 9,
+        "chunk_index": 48235,
+        "score": 0.016129031777381897,
+        "doc_id": "e97121aee575",
+        "page": 243,
+        "chunk_id": "e97121aee57558adf2dc27d6770bec497df8a9cb4deeb37d67186abef5484ed2::C2::p243::w0"
+      },
+      {
+        "rank": 10,
+        "chunk_index": 23806,
+        "score": 0.01587301678955555,
+        "doc_id": "36c2942b23f1",
+        "page": 388,
+        "chunk_id": "36c2942b23f18d425a65781f30532d107bf96feffedc3251ea9035db56b06abd::C2::p388::w0"
+      }
+    ],
+    "final_top": [
+      {
+        "rank": 1,
+        "chunk_index": 24214,
+        "score": 6.283043384552002,
+        "doc_id": "36c2942b23f1",
+        "page": 477,
+        "chunk_id": "36c2942b23f18d425a65781f30532d107bf96feffedc3251ea9035db56b06abd::C2::p477::w0"
+      },
+      {
+        "rank": 2,
+        "chunk_index": 24217,
+        "score": 6.002933502197266,
+        "doc_id": "36c2942b23f1",
+        "page": 478,
+        "chunk_id": "36c2942b23f18d425a65781f30532d107bf96feffedc3251ea9035db56b06abd::C2::p478::w0"
+      },
+      {
+        "rank": 3,
+        "chunk_index": 24206,
+        "score": 5.900139331817627,
+        "doc_id": "36c2942b23f1",
+        "page": 474,
+        "chunk_id": "36c2942b23f18d425a65781f30532d107bf96feffedc3251ea9035db56b06abd::C2::p474::w2"
+      },
+      {
+        "rank": 4,
+        "chunk_index": 23816,
+        "score": 5.3720598220825195,
+        "doc_id": "36c2942b23f1",
+        "page": 391,
+        "chunk_id": "36c2942b23f18d425a65781f30532d107bf96feffedc3251ea9035db56b06abd::C2::p391::w1"
+      },
+      {
+        "rank": 5,
+        "chunk_index": 24204,
+        "score": 5.181657791137695,
+        "doc_id": "36c2942b23f1",
+        "page": 474,
+        "chunk_id": "36c2942b23f18d425a65781f30532d107bf96feffedc3251ea9035db56b06abd::C2::p474::w0"
+      }
+    ]
+  },
+  {
+    "row_id": "G-010",
+    "call_index": 0,
+    "query": "What is the total assets of Aurobindo Pharma for the year ended 31 March 2025 consolidated results?",
+    "tokens": [
+      "what",
+      "total",
+      "assets",
+      "aurobindo",
+      "pharma",
+      "year",
+      "ended",
+      "31",
+      "march",
+      "2025",
+      "consolidated",
+      "results"
+    ],
+    "bm25_top": [
+      {
+        "rank": 1,
+        "chunk_index": 48239,
+        "score": 27.04775619506836,
+        "doc_id": "e97121aee575",
+        "page": 243,
+        "chunk_id": "e97121aee57558adf2dc27d6770bec497df8a9cb4deeb37d67186abef5484ed2::C2::p243::w4"
+      },
+      {
+        "rank": 2,
+        "chunk_index": 47895,
+        "score": 24.705888748168945,
+        "doc_id": "e97121aee575",
+        "page": 207,
+        "chunk_id": "e97121aee57558adf2dc27d6770bec497df8a9cb4deeb37d67186abef5484ed2::C2::p207::w3"
+      },
+      {
+        "rank": 3,
+        "chunk_index": 47701,
+        "score": 24.057626724243164,
+        "doc_id": "e97121aee575",
+        "page": 186,
+        "chunk_id": "e97121aee57558adf2dc27d6770bec497df8a9cb4deeb37d67186abef5484ed2::C2::p186::w0"
+      },
+      {
+        "rank": 4,
+        "chunk_index": 35627,
+        "score": 22.866342544555664,
+        "doc_id": "9e092bb4d317",
+        "page": 225,
+        "chunk_id": "9e092bb4d317944f9b65229c7d6cd2efe8032505deb88b934aa3a34f810884e6::C2::p225::w0"
+      },
+      {
+        "rank": 5,
+        "chunk_index": 35615,
+        "score": 22.729263305664062,
+        "doc_id": "9e092bb4d317",
+        "page": 224,
+        "chunk_id": "9e092bb4d317944f9b65229c7d6cd2efe8032505deb88b934aa3a34f810884e6::C2::p224::w0"
+      },
+      {
+        "rank": 6,
+        "chunk_index": 47351,
+        "score": 22.712711334228516,
+        "doc_id": "e97121aee575",
+        "page": 147,
+        "chunk_id": "e97121aee57558adf2dc27d6770bec497df8a9cb4deeb37d67186abef5484ed2::C2::p147::w7"
+      },
+      {
+        "rank": 7,
+        "chunk_index": 47809,
+        "score": 22.632469177246094,
+        "doc_id": "e97121aee575",
+        "page": 200,
+        "chunk_id": "e97121aee57558adf2dc27d6770bec497df8a9cb4deeb37d67186abef5484ed2::C2::p200::w0"
+      },
+      {
+        "rank": 8,
+        "chunk_index": 47244,
+        "score": 22.468795776367188,
+        "doc_id": "e97121aee575",
+        "page": 137,
+        "chunk_id": "e97121aee57558adf2dc27d6770bec497df8a9cb4deeb37d67186abef5484ed2::C2::p137::w0"
+      },
+      {
+        "rank": 9,
+        "chunk_index": 35042,
+        "score": 22.210126876831055,
+        "doc_id": "9e092bb4d317",
+        "page": 161,
+        "chunk_id": "9e092bb4d317944f9b65229c7d6cd2efe8032505deb88b934aa3a34f810884e6::C2::p161::w0"
+      },
+      {
+        "rank": 10,
+        "chunk_index": 34704,
+        "score": 21.988801956176758,
+        "doc_id": "9e092bb4d317",
+        "page": 125,
+        "chunk_id": "9e092bb4d317944f9b65229c7d6cd2efe8032505deb88b934aa3a34f810884e6::C2::p125::w0"
+      }
+    ],
+    "dense_top": [
+      {
+        "rank": 1,
+        "chunk_index": 34999,
+        "score": 0.8478611707687378,
+        "doc_id": "9e092bb4d317",
+        "page": 154,
+        "chunk_id": "9e092bb4d317944f9b65229c7d6cd2efe8032505deb88b934aa3a34f810884e6::C2::p154::w5"
+      },
+      {
+        "rank": 2,
+        "chunk_index": 47809,
+        "score": 0.8324826955795288,
+        "doc_id": "e97121aee575",
+        "page": 200,
+        "chunk_id": "e97121aee57558adf2dc27d6770bec497df8a9cb4deeb37d67186abef5484ed2::C2::p200::w0"
+      },
+      {
+        "rank": 3,
+        "chunk_index": 48239,
+        "score": 0.8304622769355774,
+        "doc_id": "e97121aee575",
+        "page": 243,
+        "chunk_id": "e97121aee57558adf2dc27d6770bec497df8a9cb4deeb37d67186abef5484ed2::C2::p243::w4"
+      },
+      {
+        "rank": 4,
+        "chunk_index": 35537,
+        "score": 0.8257473111152649,
+        "doc_id": "9e092bb4d317",
+        "page": 213,
+        "chunk_id": "9e092bb4d317944f9b65229c7d6cd2efe8032505deb88b934aa3a34f810884e6::C2::p213::w8"
+      },
+      {
+        "rank": 5,
+        "chunk_index": 35559,
+        "score": 0.8240609169006348,
+        "doc_id": "9e092bb4d317",
+        "page": 217,
+        "chunk_id": "9e092bb4d317944f9b65229c7d6cd2efe8032505deb88b934aa3a34f810884e6::C2::p217::w0"
+      },
+      {
+        "rank": 6,
+        "chunk_index": 35511,
+        "score": 0.8190144300460815,
+        "doc_id": "9e092bb4d317",
+        "page": 210,
+        "chunk_id": "9e092bb4d317944f9b65229c7d6cd2efe8032505deb88b934aa3a34f810884e6::C2::p210::w5"
+      },
+      {
+        "rank": 7,
+        "chunk_index": 47595,
+        "score": 0.8184894323348999,
+        "doc_id": "e97121aee575",
+        "page": 170,
+        "chunk_id": "e97121aee57558adf2dc27d6770bec497df8a9cb4deeb37d67186abef5484ed2::C2::p170::w5"
+      },
+      {
+        "rank": 8,
+        "chunk_index": 46349,
+        "score": 0.8094852566719055,
+        "doc_id": "e97121aee575",
+        "page": 14,
+        "chunk_id": "e97121aee57558adf2dc27d6770bec497df8a9cb4deeb37d67186abef5484ed2::C2::p14::w0"
+      },
+      {
+        "rank": 9,
+        "chunk_index": 47396,
+        "score": 0.8084293603897095,
+        "doc_id": "e97121aee575",
+        "page": 153,
+        "chunk_id": "e97121aee57558adf2dc27d6770bec497df8a9cb4deeb37d67186abef5484ed2::C2::p153::w0"
+      },
+      {
+        "rank": 10,
+        "chunk_index": 47701,
+        "score": 0.8052914142608643,
+        "doc_id": "e97121aee575",
+        "page": 186,
+        "chunk_id": "e97121aee57558adf2dc27d6770bec497df8a9cb4deeb37d67186abef5484ed2::C2::p186::w0"
+      }
+    ],
+    "rrf_top": [
+      {
+        "rank": 1,
+        "chunk_index": 48239,
+        "score": 0.03226646035909653,
+        "doc_id": "e97121aee575",
+        "page": 243,
+        "chunk_id": "e97121aee57558adf2dc27d6770bec497df8a9cb4deeb37d67186abef5484ed2::C2::p243::w4"
+      },
+      {
+        "rank": 2,
+        "chunk_index": 47809,
+        "score": 0.031054403632879257,
+        "doc_id": "e97121aee575",
+        "page": 200,
+        "chunk_id": "e97121aee57558adf2dc27d6770bec497df8a9cb4deeb37d67186abef5484ed2::C2::p200::w0"
+      },
+      {
+        "rank": 3,
+        "chunk_index": 47701,
+        "score": 0.03015873208642006,
+        "doc_id": "e97121aee575",
+        "page": 186,
+        "chunk_id": "e97121aee57558adf2dc27d6770bec497df8a9cb4deeb37d67186abef5484ed2::C2::p186::w0"
+      },
+      {
+        "rank": 4,
+        "chunk_index": 47895,
+        "score": 0.030017919838428497,
+        "doc_id": "e97121aee575",
+        "page": 207,
+        "chunk_id": "e97121aee57558adf2dc27d6770bec497df8a9cb4deeb37d67186abef5484ed2::C2::p207::w3"
+      },
+      {
+        "rank": 5,
+        "chunk_index": 35559,
+        "score": 0.028205128386616707,
+        "doc_id": "9e092bb4d317",
+        "page": 217,
+        "chunk_id": "9e092bb4d317944f9b65229c7d6cd2efe8032505deb88b934aa3a34f810884e6::C2::p217::w0"
+      },
+      {
+        "rank": 6,
+        "chunk_index": 35042,
+        "score": 0.027826087549328804,
+        "doc_id": "9e092bb4d317",
+        "page": 161,
+        "chunk_id": "9e092bb4d317944f9b65229c7d6cd2efe8032505deb88b934aa3a34f810884e6::C2::p161::w0"
+      },
+      {
+        "rank": 7,
+        "chunk_index": 47721,
+        "score": 0.024891775101423264,
+        "doc_id": "e97121aee575",
+        "page": 189,
+        "chunk_id": "e97121aee57558adf2dc27d6770bec497df8a9cb4deeb37d67186abef5484ed2::C2::p189::w0"
+      },
+      {
+        "rank": 8,
+        "chunk_index": 46930,
+        "score": 0.024785801768302917,
+        "doc_id": "e97121aee575",
+        "page": 102,
+        "chunk_id": "e97121aee57558adf2dc27d6770bec497df8a9cb4deeb37d67186abef5484ed2::C2::p102::w6"
+      },
+      {
+        "rank": 9,
+        "chunk_index": 48288,
+        "score": 0.02454819157719612,
+        "doc_id": "e97121aee575",
+        "page": 249,
+        "chunk_id": "e97121aee57558adf2dc27d6770bec497df8a9cb4deeb37d67186abef5484ed2::C2::p249::w3"
+      },
+      {
+        "rank": 10,
+        "chunk_index": 35180,
+        "score": 0.024099882692098618,
+        "doc_id": "9e092bb4d317",
+        "page": 180,
+        "chunk_id": "9e092bb4d317944f9b65229c7d6cd2efe8032505deb88b934aa3a34f810884e6::C2::p180::w0"
+      }
+    ],
+    "final_top": [
+      {
+        "rank": 1,
+        "chunk_index": 48239,
+        "score": 7.222408294677734,
+        "doc_id": "e97121aee575",
+        "page": 243,
+        "chunk_id": "e97121aee57558adf2dc27d6770bec497df8a9cb4deeb37d67186abef5484ed2::C2::p243::w4"
+      },
+      {
+        "rank": 2,
+        "chunk_index": 35559,
+        "score": 6.859781265258789,
+        "doc_id": "9e092bb4d317",
+        "page": 217,
+        "chunk_id": "9e092bb4d317944f9b65229c7d6cd2efe8032505deb88b934aa3a34f810884e6::C2::p217::w0"
+      },
+      {
+        "rank": 3,
+        "chunk_index": 35627,
+        "score": 6.391715049743652,
+        "doc_id": "9e092bb4d317",
+        "page": 225,
+        "chunk_id": "9e092bb4d317944f9b65229c7d6cd2efe8032505deb88b934aa3a34f810884e6::C2::p225::w0"
+      },
+      {
+        "rank": 4,
+        "chunk_index": 48288,
+        "score": 6.2692060470581055,
+        "doc_id": "e97121aee575",
+        "page": 249,
+        "chunk_id": "e97121aee57558adf2dc27d6770bec497df8a9cb4deeb37d67186abef5484ed2::C2::p249::w3"
+      },
+      {
+        "rank": 5,
+        "chunk_index": 47940,
+        "score": 6.26179313659668,
+        "doc_id": "e97121aee575",
+        "page": 211,
+        "chunk_id": "e97121aee57558adf2dc27d6770bec497df8a9cb4deeb37d67186abef5484ed2::C2::p211::w0"
+      }
+    ]
+  },
+  {
+    "row_id": "G-010",
+    "call_index": 1,
+    "query": "What is the total assets of Dr Reddys for the year ended 31 March 2025 consolidated results?",
+    "tokens": [
+      "what",
+      "total",
+      "assets",
+      "dr",
+      "reddys",
+      "year",
+      "ended",
+      "31",
+      "march",
+      "2025",
+      "consolidated",
+      "results"
+    ],
+    "bm25_top": [
+      {
+        "rank": 1,
+        "chunk_index": 38478,
+        "score": 22.85623550415039,
+        "doc_id": "bdd1b13a7b77",
+        "page": 153,
+        "chunk_id": "bdd1b13a7b77a338641ee7aa03f94f105d1bd0f1f853ea6ea0986047a918a63c::C2::p153::w3"
+      },
+      {
+        "rank": 2,
+        "chunk_index": 48235,
+        "score": 21.8374080657959,
+        "doc_id": "e97121aee575",
+        "page": 243,
+        "chunk_id": "e97121aee57558adf2dc27d6770bec497df8a9cb4deeb37d67186abef5484ed2::C2::p243::w0"
+      },
+      {
+        "rank": 3,
+        "chunk_index": 48245,
+        "score": 21.8374080657959,
+        "doc_id": "e97121aee575",
+        "page": 244,
+        "chunk_id": "e97121aee57558adf2dc27d6770bec497df8a9cb4deeb37d67186abef5484ed2::C2::p244::w0"
+      },
+      {
+        "rank": 4,
+        "chunk_index": 48254,
+        "score": 21.8374080657959,
+        "doc_id": "e97121aee575",
+        "page": 245,
+        "chunk_id": "e97121aee57558adf2dc27d6770bec497df8a9cb4deeb37d67186abef5484ed2::C2::p245::w0"
+      },
+      {
+        "rank": 5,
+        "chunk_index": 38479,
+        "score": 21.782451629638672,
+        "doc_id": "bdd1b13a7b77",
+        "page": 153,
+        "chunk_id": "bdd1b13a7b77a338641ee7aa03f94f105d1bd0f1f853ea6ea0986047a918a63c::C2::p153::w4"
+      },
+      {
+        "rank": 6,
+        "chunk_index": 38999,
+        "score": 21.58217430114746,
+        "doc_id": "bdd1b13a7b77",
+        "page": 210,
+        "chunk_id": "bdd1b13a7b77a338641ee7aa03f94f105d1bd0f1f853ea6ea0986047a918a63c::C2::p210::w0"
+      },
+      {
+        "rank": 7,
+        "chunk_index": 9697,
+        "score": 21.526845932006836,
+        "doc_id": "0ea899ba19c2",
+        "page": 326,
+        "chunk_id": "0ea899ba19c2727c06fc6926b1a4180c8edbecdde684e15a48fb49267c7ffc81::C2::p326::w0"
+      },
+      {
+        "rank": 8,
+        "chunk_index": 9705,
+        "score": 21.526845932006836,
+        "doc_id": "0ea899ba19c2",
+        "page": 327,
+        "chunk_id": "0ea899ba19c2727c06fc6926b1a4180c8edbecdde684e15a48fb49267c7ffc81::C2::p327::w0"
+      },
+      {
+        "rank": 9,
+        "chunk_index": 9714,
+        "score": 21.526845932006836,
+        "doc_id": "0ea899ba19c2",
+        "page": 328,
+        "chunk_id": "0ea899ba19c2727c06fc6926b1a4180c8edbecdde684e15a48fb49267c7ffc81::C2::p328::w0"
+      },
+      {
+        "rank": 10,
+        "chunk_index": 17099,
+        "score": 21.355989456176758,
+        "doc_id": "15fee0c19d13",
+        "page": 458,
+        "chunk_id": "15fee0c19d130a5e77fbeca1ea1eca288f9d45eff4f3de02397c8dec7a02b67b::C2::p458::w0"
+      }
+    ],
+    "dense_top": [
+      {
+        "rank": 1,
+        "chunk_index": 38470,
+        "score": 0.7964556217193604,
+        "doc_id": "bdd1b13a7b77",
+        "page": 152,
+        "chunk_id": "bdd1b13a7b77a338641ee7aa03f94f105d1bd0f1f853ea6ea0986047a918a63c::C2::p152::w0"
+      },
+      {
+        "rank": 2,
+        "chunk_index": 38631,
+        "score": 0.7724077701568604,
+        "doc_id": "bdd1b13a7b77",
+        "page": 170,
+        "chunk_id": "bdd1b13a7b77a338641ee7aa03f94f105d1bd0f1f853ea6ea0986047a918a63c::C2::p170::w4"
+      },
+      {
+        "rank": 3,
+        "chunk_index": 37608,
+        "score": 0.772102952003479,
+        "doc_id": "bdd1b13a7b77",
+        "page": 55,
+        "chunk_id": "bdd1b13a7b77a338641ee7aa03f94f105d1bd0f1f853ea6ea0986047a918a63c::C2::p55::w8"
+      },
+      {
+        "rank": 4,
+        "chunk_index": 38999,
+        "score": 0.768885612487793,
+        "doc_id": "bdd1b13a7b77",
+        "page": 210,
+        "chunk_id": "bdd1b13a7b77a338641ee7aa03f94f105d1bd0f1f853ea6ea0986047a918a63c::C2::p210::w0"
+      },
+      {
+        "rank": 5,
+        "chunk_index": 50172,
+        "score": 0.7628964185714722,
+        "doc_id": "fa7dac2401f1",
+        "page": 414,
+        "chunk_id": "fa7dac2401f10d824c6e6b3e5dd482a0e0ab09b50e6164eeebc289ec952fff31::C2::p414::w0"
+      },
+      {
+        "rank": 6,
+        "chunk_index": 15242,
+        "score": 0.7610296607017517,
+        "doc_id": "1490168ab799",
+        "page": 447,
+        "chunk_id": "1490168ab7996c0dc37e465333a801877a58cd6d83ae8c3e3b13fafaf0ea2ad0::C2::p447::w0"
+      },
+      {
+        "rank": 7,
+        "chunk_index": 3003,
+        "score": 0.7591567039489746,
+        "doc_id": "01d9d5b6d41c",
+        "page": 213,
+        "chunk_id": "01d9d5b6d41c8326e10f3b36dff5cbae645af4aaae46fd754689a7b7bb957595::C2::p213::w0"
+      },
+      {
+        "rank": 8,
+        "chunk_index": 17017,
+        "score": 0.7583974599838257,
+        "doc_id": "15fee0c19d13",
+        "page": 435,
+        "chunk_id": "15fee0c19d130a5e77fbeca1ea1eca288f9d45eff4f3de02397c8dec7a02b67b::C2::p435::w1"
+      },
+      {
+        "rank": 9,
+        "chunk_index": 40497,
+        "score": 0.7583606839179993,
+        "doc_id": "d8e3739d2e06",
+        "page": 111,
+        "chunk_id": "d8e3739d2e06f09b83a192e00cefda0113b5da778483e31018cb35429e72eafe::C2::p111::w0"
+      },
+      {
+        "rank": 10,
+        "chunk_index": 38394,
+        "score": 0.7581571936607361,
+        "doc_id": "bdd1b13a7b77",
+        "page": 141,
+        "chunk_id": "bdd1b13a7b77a338641ee7aa03f94f105d1bd0f1f853ea6ea0986047a918a63c::C2::p141::w0"
+      }
+    ],
+    "rrf_top": [
+      {
+        "rank": 1,
+        "chunk_index": 38999,
+        "score": 0.03077651560306549,
+        "doc_id": "bdd1b13a7b77",
+        "page": 210,
+        "chunk_id": "bdd1b13a7b77a338641ee7aa03f94f105d1bd0f1f853ea6ea0986047a918a63c::C2::p210::w0"
+      },
+      {
+        "rank": 2,
+        "chunk_index": 38470,
+        "score": 0.016393441706895828,
+        "doc_id": "bdd1b13a7b77",
+        "page": 152,
+        "chunk_id": "bdd1b13a7b77a338641ee7aa03f94f105d1bd0f1f853ea6ea0986047a918a63c::C2::p152::w0"
+      },
+      {
+        "rank": 3,
+        "chunk_index": 38478,
+        "score": 0.016393441706895828,
+        "doc_id": "bdd1b13a7b77",
+        "page": 153,
+        "chunk_id": "bdd1b13a7b77a338641ee7aa03f94f105d1bd0f1f853ea6ea0986047a918a63c::C2::p153::w3"
+      },
+      {
+        "rank": 4,
+        "chunk_index": 38631,
+        "score": 0.016129031777381897,
+        "doc_id": "bdd1b13a7b77",
+        "page": 170,
+        "chunk_id": "bdd1b13a7b77a338641ee7aa03f94f105d1bd0f1f853ea6ea0986047a918a63c::C2::p170::w4"
+      },
+      {
+        "rank": 5,
+        "chunk_index": 48235,
+        "score": 0.016129031777381897,
+        "doc_id": "e97121aee575",
+        "page": 243,
+        "chunk_id": "e97121aee57558adf2dc27d6770bec497df8a9cb4deeb37d67186abef5484ed2::C2::p243::w0"
+      },
+      {
+        "rank": 6,
+        "chunk_index": 37608,
+        "score": 0.01587301678955555,
+        "doc_id": "bdd1b13a7b77",
+        "page": 55,
+        "chunk_id": "bdd1b13a7b77a338641ee7aa03f94f105d1bd0f1f853ea6ea0986047a918a63c::C2::p55::w8"
+      },
+      {
+        "rank": 7,
+        "chunk_index": 48254,
+        "score": 0.01587301678955555,
+        "doc_id": "e97121aee575",
+        "page": 245,
+        "chunk_id": "e97121aee57558adf2dc27d6770bec497df8a9cb4deeb37d67186abef5484ed2::C2::p245::w0"
+      },
+      {
+        "rank": 8,
+        "chunk_index": 48245,
+        "score": 0.015625,
+        "doc_id": "e97121aee575",
+        "page": 244,
+        "chunk_id": "e97121aee57558adf2dc27d6770bec497df8a9cb4deeb37d67186abef5484ed2::C2::p244::w0"
+      },
+      {
+        "rank": 9,
+        "chunk_index": 38479,
+        "score": 0.015384615398943424,
+        "doc_id": "bdd1b13a7b77",
+        "page": 153,
+        "chunk_id": "bdd1b13a7b77a338641ee7aa03f94f105d1bd0f1f853ea6ea0986047a918a63c::C2::p153::w4"
+      },
+      {
+        "rank": 10,
+        "chunk_index": 50172,
+        "score": 0.015384615398943424,
+        "doc_id": "fa7dac2401f1",
+        "page": 414,
+        "chunk_id": "fa7dac2401f10d824c6e6b3e5dd482a0e0ab09b50e6164eeebc289ec952fff31::C2::p414::w0"
+      }
+    ],
+    "final_top": [
+      {
+        "rank": 1,
+        "chunk_index": 38999,
+        "score": 6.615788459777832,
+        "doc_id": "bdd1b13a7b77",
+        "page": 210,
+        "chunk_id": "bdd1b13a7b77a338641ee7aa03f94f105d1bd0f1f853ea6ea0986047a918a63c::C2::p210::w0"
+      },
+      {
+        "rank": 2,
+        "chunk_index": 39002,
+        "score": 5.427931308746338,
+        "doc_id": "bdd1b13a7b77",
+        "page": 210,
+        "chunk_id": "bdd1b13a7b77a338641ee7aa03f94f105d1bd0f1f853ea6ea0986047a918a63c::C2::p210::w3"
+      },
+      {
+        "rank": 3,
+        "chunk_index": 50172,
+        "score": 5.371845722198486,
+        "doc_id": "fa7dac2401f1",
+        "page": 414,
+        "chunk_id": "fa7dac2401f10d824c6e6b3e5dd482a0e0ab09b50e6164eeebc289ec952fff31::C2::p414::w0"
+      },
+      {
+        "rank": 4,
+        "chunk_index": 38470,
+        "score": 5.145842552185059,
+        "doc_id": "bdd1b13a7b77",
+        "page": 152,
+        "chunk_id": "bdd1b13a7b77a338641ee7aa03f94f105d1bd0f1f853ea6ea0986047a918a63c::C2::p152::w0"
+      },
+      {
+        "rank": 5,
+        "chunk_index": 38969,
+        "score": 4.9669508934021,
+        "doc_id": "bdd1b13a7b77",
+        "page": 205,
+        "chunk_id": "bdd1b13a7b77a338641ee7aa03f94f105d1bd0f1f853ea6ea0986047a918a63c::C2::p205::w3"
+      }
+    ]
+  },
+  {
+    "row_id": "G-036",
+    "call_index": 0,
+    "query": "Reliance year ended 31 March 2024 consolidated results total assets in Rs. crore",
+    "tokens": [
+      "reliance",
+      "year",
+      "ended",
+      "31",
+      "march",
+      "2024",
+      "consolidated",
+      "results",
+      "total",
+      "assets",
+      "rs",
+      "crore"
+    ],
+    "bm25_top": [
+      {
+        "rank": 1,
+        "chunk_index": 10019,
+        "score": 33.4181022644043,
+        "doc_id": "0ea899ba19c2",
+        "page": 362,
+        "chunk_id": "0ea899ba19c2727c06fc6926b1a4180c8edbecdde684e15a48fb49267c7ffc81::C2::p362::w3"
+      },
+      {
+        "rank": 2,
+        "chunk_index": 10017,
+        "score": 33.35446548461914,
+        "doc_id": "0ea899ba19c2",
+        "page": 362,
+        "chunk_id": "0ea899ba19c2727c06fc6926b1a4180c8edbecdde684e15a48fb49267c7ffc81::C2::p362::w1"
+      },
+      {
+        "rank": 3,
+        "chunk_index": 10018,
+        "score": 30.346324920654297,
+        "doc_id": "0ea899ba19c2",
+        "page": 362,
+        "chunk_id": "0ea899ba19c2727c06fc6926b1a4180c8edbecdde684e15a48fb49267c7ffc81::C2::p362::w2"
+      },
+      {
+        "rank": 4,
+        "chunk_index": 10020,
+        "score": 29.976856231689453,
+        "doc_id": "0ea899ba19c2",
+        "page": 362,
+        "chunk_id": "0ea899ba19c2727c06fc6926b1a4180c8edbecdde684e15a48fb49267c7ffc81::C2::p362::w4"
+      },
+      {
+        "rank": 5,
+        "chunk_index": 19169,
+        "score": 25.207307815551758,
+        "doc_id": "2c629f58769a",
+        "page": 7,
+        "chunk_id": "2c629f58769a1e710b8ef0cd70779f9056b27d0b069069ed3e641728667d86df::C2::p7::w13"
+      },
+      {
+        "rank": 6,
+        "chunk_index": 19163,
+        "score": 24.862857818603516,
+        "doc_id": "2c629f58769a",
+        "page": 7,
+        "chunk_id": "2c629f58769a1e710b8ef0cd70779f9056b27d0b069069ed3e641728667d86df::C2::p7::w7"
+      },
+      {
+        "rank": 7,
+        "chunk_index": 24393,
+        "score": 24.694229125976562,
+        "doc_id": "5d003d73d805",
+        "page": 5,
+        "chunk_id": "5d003d73d805ab187524fd793493db1ac1696c72a2d66f1c7eabcb89bc618788::C2::p5::w2"
+      },
+      {
+        "rank": 8,
+        "chunk_index": 19145,
+        "score": 24.618410110473633,
+        "doc_id": "2c629f58769a",
+        "page": 4,
+        "chunk_id": "2c629f58769a1e710b8ef0cd70779f9056b27d0b069069ed3e641728667d86df::C2::p4::w10"
+      },
+      {
+        "rank": 9,
+        "chunk_index": 1134,
+        "score": 24.253101348876953,
+        "doc_id": "011253c0a105",
+        "page": 142,
+        "chunk_id": "011253c0a105f9bd11d484e305c7f78fd6689890209b9159a3df452703366359::C2::p142::w7"
+      },
+      {
+        "rank": 10,
+        "chunk_index": 1265,
+        "score": 23.841623306274414,
+        "doc_id": "011253c0a105",
+        "page": 158,
+        "chunk_id": "011253c0a105f9bd11d484e305c7f78fd6689890209b9159a3df452703366359::C2::p158::w7"
+      }
+    ],
+    "dense_top": [
+      {
+        "rank": 1,
+        "chunk_index": 40282,
+        "score": 0.8552010655403137,
+        "doc_id": "d8e3739d2e06",
+        "page": 84,
+        "chunk_id": "d8e3739d2e06f09b83a192e00cefda0113b5da778483e31018cb35429e72eafe::C2::p84::w5"
+      },
+      {
+        "rank": 2,
+        "chunk_index": 40662,
+        "score": 0.8527820110321045,
+        "doc_id": "d8e3739d2e06",
+        "page": 131,
+        "chunk_id": "d8e3739d2e06f09b83a192e00cefda0113b5da778483e31018cb35429e72eafe::C2::p131::w6"
+      },
+      {
+        "rank": 3,
+        "chunk_index": 35658,
+        "score": 0.8415672779083252,
+        "doc_id": "9e092bb4d317",
+        "page": 229,
+        "chunk_id": "9e092bb4d317944f9b65229c7d6cd2efe8032505deb88b934aa3a34f810884e6::C2::p229::w0"
+      },
+      {
+        "rank": 4,
+        "chunk_index": 40827,
+        "score": 0.8395728468894958,
+        "doc_id": "d8e3739d2e06",
+        "page": 149,
+        "chunk_id": "d8e3739d2e06f09b83a192e00cefda0113b5da778483e31018cb35429e72eafe::C2::p149::w11"
+      },
+      {
+        "rank": 5,
+        "chunk_index": 1723,
+        "score": 0.8351984620094299,
+        "doc_id": "011253c0a105",
+        "page": 210,
+        "chunk_id": "011253c0a105f9bd11d484e305c7f78fd6689890209b9159a3df452703366359::C2::p210::w7"
+      },
+      {
+        "rank": 6,
+        "chunk_index": 40719,
+        "score": 0.8345180749893188,
+        "doc_id": "d8e3739d2e06",
+        "page": 139,
+        "chunk_id": "d8e3739d2e06f09b83a192e00cefda0113b5da778483e31018cb35429e72eafe::C2::p139::w6"
+      },
+      {
+        "rank": 7,
+        "chunk_index": 35545,
+        "score": 0.8341966867446899,
+        "doc_id": "9e092bb4d317",
+        "page": 215,
+        "chunk_id": "9e092bb4d317944f9b65229c7d6cd2efe8032505deb88b934aa3a34f810884e6::C2::p215::w0"
+      },
+      {
+        "rank": 8,
+        "chunk_index": 40265,
+        "score": 0.8341602683067322,
+        "doc_id": "d8e3739d2e06",
+        "page": 81,
+        "chunk_id": "d8e3739d2e06f09b83a192e00cefda0113b5da778483e31018cb35429e72eafe::C2::p81::w7"
+      },
+      {
+        "rank": 9,
+        "chunk_index": 40815,
+        "score": 0.8335932493209839,
+        "doc_id": "d8e3739d2e06",
+        "page": 148,
+        "chunk_id": "d8e3739d2e06f09b83a192e00cefda0113b5da778483e31018cb35429e72eafe::C2::p148::w12"
+      },
+      {
+        "rank": 10,
+        "chunk_index": 11926,
+        "score": 0.8326579332351685,
+        "doc_id": "128706186e05",
+        "page": 317,
+        "chunk_id": "128706186e05b5fe07e6e9184252e423340634e22fbc2edb5e9423db4cffd232::C2::p317::w0"
+      }
+    ],
+    "rrf_top": [
+      {
+        "rank": 1,
+        "chunk_index": 40282,
+        "score": 0.02750455215573311,
+        "doc_id": "d8e3739d2e06",
+        "page": 84,
+        "chunk_id": "d8e3739d2e06f09b83a192e00cefda0113b5da778483e31018cb35429e72eafe::C2::p84::w5"
+      },
+      {
+        "rank": 2,
+        "chunk_index": 40742,
+        "score": 0.025015633553266525,
+        "doc_id": "d8e3739d2e06",
+        "page": 142,
+        "chunk_id": "d8e3739d2e06f09b83a192e00cefda0113b5da778483e31018cb35429e72eafe::C2::p142::w6"
+      },
+      {
+        "rank": 3,
+        "chunk_index": 10019,
+        "score": 0.016393441706895828,
+        "doc_id": "0ea899ba19c2",
+        "page": 362,
+        "chunk_id": "0ea899ba19c2727c06fc6926b1a4180c8edbecdde684e15a48fb49267c7ffc81::C2::p362::w3"
+      },
+      {
+        "rank": 4,
+        "chunk_index": 10017,
+        "score": 0.016129031777381897,
+        "doc_id": "0ea899ba19c2",
+        "page": 362,
+        "chunk_id": "0ea899ba19c2727c06fc6926b1a4180c8edbecdde684e15a48fb49267c7ffc81::C2::p362::w1"
+      },
+      {
+        "rank": 5,
+        "chunk_index": 40662,
+        "score": 0.016129031777381897,
+        "doc_id": "d8e3739d2e06",
+        "page": 131,
+        "chunk_id": "d8e3739d2e06f09b83a192e00cefda0113b5da778483e31018cb35429e72eafe::C2::p131::w6"
+      },
+      {
+        "rank": 6,
+        "chunk_index": 10018,
+        "score": 0.01587301678955555,
+        "doc_id": "0ea899ba19c2",
+        "page": 362,
+        "chunk_id": "0ea899ba19c2727c06fc6926b1a4180c8edbecdde684e15a48fb49267c7ffc81::C2::p362::w2"
+      },
+      {
+        "rank": 7,
+        "chunk_index": 35658,
+        "score": 0.01587301678955555,
+        "doc_id": "9e092bb4d317",
+        "page": 229,
+        "chunk_id": "9e092bb4d317944f9b65229c7d6cd2efe8032505deb88b934aa3a34f810884e6::C2::p229::w0"
+      },
+      {
+        "rank": 8,
+        "chunk_index": 10020,
+        "score": 0.015625,
+        "doc_id": "0ea899ba19c2",
+        "page": 362,
+        "chunk_id": "0ea899ba19c2727c06fc6926b1a4180c8edbecdde684e15a48fb49267c7ffc81::C2::p362::w4"
+      },
+      {
+        "rank": 9,
+        "chunk_index": 40827,
+        "score": 0.015625,
+        "doc_id": "d8e3739d2e06",
+        "page": 149,
+        "chunk_id": "d8e3739d2e06f09b83a192e00cefda0113b5da778483e31018cb35429e72eafe::C2::p149::w11"
+      },
+      {
+        "rank": 10,
+        "chunk_index": 1723,
+        "score": 0.015384615398943424,
+        "doc_id": "011253c0a105",
+        "page": 210,
+        "chunk_id": "011253c0a105f9bd11d484e305c7f78fd6689890209b9159a3df452703366359::C2::p210::w7"
+      }
+    ],
+    "final_top": [
+      {
+        "rank": 1,
+        "chunk_index": 10018,
+        "score": 7.556372165679932,
+        "doc_id": "0ea899ba19c2",
+        "page": 362,
+        "chunk_id": "0ea899ba19c2727c06fc6926b1a4180c8edbecdde684e15a48fb49267c7ffc81::C2::p362::w2"
+      },
+      {
+        "rank": 2,
+        "chunk_index": 10020,
+        "score": 7.532864570617676,
+        "doc_id": "0ea899ba19c2",
+        "page": 362,
+        "chunk_id": "0ea899ba19c2727c06fc6926b1a4180c8edbecdde684e15a48fb49267c7ffc81::C2::p362::w4"
+      },
+      {
+        "rank": 3,
+        "chunk_index": 10019,
+        "score": 7.39152717590332,
+        "doc_id": "0ea899ba19c2",
+        "page": 362,
+        "chunk_id": "0ea899ba19c2727c06fc6926b1a4180c8edbecdde684e15a48fb49267c7ffc81::C2::p362::w3"
+      },
+      {
+        "rank": 4,
+        "chunk_index": 10017,
+        "score": 7.164138317108154,
+        "doc_id": "0ea899ba19c2",
+        "page": 362,
+        "chunk_id": "0ea899ba19c2727c06fc6926b1a4180c8edbecdde684e15a48fb49267c7ffc81::C2::p362::w1"
+      },
+      {
+        "rank": 5,
+        "chunk_index": 43423,
+        "score": 7.029808521270752,
+        "doc_id": "deed15eaf8d7",
+        "page": 317,
+        "chunk_id": "deed15eaf8d7b9e0fa2aa386b85a01f35511fc8b4813fe92aa4212682089473d::C2::p317::w0"
+      }
+    ]
+  },
+  {
+    "row_id": "G-037",
+    "call_index": 0,
+    "query": "What is the total equity of Reliance as stated in the standalone results for the year ended 31 March 2024, in Rs. in crore?",
+    "tokens": [
+      "what",
+      "total",
+      "equity",
+      "reliance",
+      "stated",
+      "standalone",
+      "results",
+      "year",
+      "ended",
+      "31",
+      "march",
+      "2024",
+      "rs",
+      "crore"
+    ],
+    "bm25_top": [
+      {
+        "rank": 1,
+        "chunk_index": 10019,
+        "score": 32.61866760253906,
+        "doc_id": "0ea899ba19c2",
+        "page": 362,
+        "chunk_id": "0ea899ba19c2727c06fc6926b1a4180c8edbecdde684e15a48fb49267c7ffc81::C2::p362::w3"
+      },
+      {
+        "rank": 2,
+        "chunk_index": 1738,
+        "score": 30.30287742614746,
+        "doc_id": "011253c0a105",
+        "page": 212,
+        "chunk_id": "011253c0a105f9bd11d484e305c7f78fd6689890209b9159a3df452703366359::C2::p212::w6"
+      },
+      {
+        "rank": 3,
+        "chunk_index": 10017,
+        "score": 29.700225830078125,
+        "doc_id": "0ea899ba19c2",
+        "page": 362,
+        "chunk_id": "0ea899ba19c2727c06fc6926b1a4180c8edbecdde684e15a48fb49267c7ffc81::C2::p362::w1"
+      },
+      {
+        "rank": 4,
+        "chunk_index": 23520,
+        "score": 28.686134338378906,
+        "doc_id": "36c2942b23f1",
+        "page": 325,
+        "chunk_id": "36c2942b23f18d425a65781f30532d107bf96feffedc3251ea9035db56b06abd::C2::p325::w0"
+      },
+      {
+        "rank": 5,
+        "chunk_index": 1663,
+        "score": 27.810461044311523,
+        "doc_id": "011253c0a105",
+        "page": 202,
+        "chunk_id": "011253c0a105f9bd11d484e305c7f78fd6689890209b9159a3df452703366359::C2::p202::w7"
+      },
+      {
+        "rank": 6,
+        "chunk_index": 1699,
+        "score": 27.271255493164062,
+        "doc_id": "011253c0a105",
+        "page": 207,
+        "chunk_id": "011253c0a105f9bd11d484e305c7f78fd6689890209b9159a3df452703366359::C2::p207::w6"
+      },
+      {
+        "rank": 7,
+        "chunk_index": 10018,
+        "score": 27.228759765625,
+        "doc_id": "0ea899ba19c2",
+        "page": 362,
+        "chunk_id": "0ea899ba19c2727c06fc6926b1a4180c8edbecdde684e15a48fb49267c7ffc81::C2::p362::w2"
+      },
+      {
+        "rank": 8,
+        "chunk_index": 1730,
+        "score": 27.0162296295166,
+        "doc_id": "011253c0a105",
+        "page": 211,
+        "chunk_id": "011253c0a105f9bd11d484e305c7f78fd6689890209b9159a3df452703366359::C2::p211::w6"
+      },
+      {
+        "rank": 9,
+        "chunk_index": 1972,
+        "score": 26.963571548461914,
+        "doc_id": "011253c0a105",
+        "page": 242,
+        "chunk_id": "011253c0a105f9bd11d484e305c7f78fd6689890209b9159a3df452703366359::C2::p242::w7"
+      },
+      {
+        "rank": 10,
+        "chunk_index": 10020,
+        "score": 26.871726989746094,
+        "doc_id": "0ea899ba19c2",
+        "page": 362,
+        "chunk_id": "0ea899ba19c2727c06fc6926b1a4180c8edbecdde684e15a48fb49267c7ffc81::C2::p362::w4"
+      }
+    ],
+    "dense_top": [
+      {
+        "rank": 1,
+        "chunk_index": 40282,
+        "score": 0.8106920123100281,
+        "doc_id": "d8e3739d2e06",
+        "page": 84,
+        "chunk_id": "d8e3739d2e06f09b83a192e00cefda0113b5da778483e31018cb35429e72eafe::C2::p84::w5"
+      },
+      {
+        "rank": 2,
+        "chunk_index": 1995,
+        "score": 0.8067197203636169,
+        "doc_id": "011253c0a105",
+        "page": 245,
+        "chunk_id": "011253c0a105f9bd11d484e305c7f78fd6689890209b9159a3df452703366359::C2::p245::w9"
+      },
+      {
+        "rank": 3,
+        "chunk_index": 32000,
+        "score": 0.8062440156936646,
+        "doc_id": "9a1375324a65",
+        "page": 79,
+        "chunk_id": "9a1375324a65d21104e91597c2a8c974f29da03c6e275c47456eb9ee3f317858::C2::p79::w0"
+      },
+      {
+        "rank": 4,
+        "chunk_index": 16717,
+        "score": 0.7992275953292847,
+        "doc_id": "15fee0c19d13",
+        "page": 378,
+        "chunk_id": "15fee0c19d130a5e77fbeca1ea1eca288f9d45eff4f3de02397c8dec7a02b67b::C2::p378::w0"
+      },
+      {
+        "rank": 5,
+        "chunk_index": 40265,
+        "score": 0.7979981899261475,
+        "doc_id": "d8e3739d2e06",
+        "page": 81,
+        "chunk_id": "d8e3739d2e06f09b83a192e00cefda0113b5da778483e31018cb35429e72eafe::C2::p81::w7"
+      },
+      {
+        "rank": 6,
+        "chunk_index": 49808,
+        "score": 0.7967278957366943,
+        "doc_id": "fa7dac2401f1",
+        "page": 329,
+        "chunk_id": "fa7dac2401f10d824c6e6b3e5dd482a0e0ab09b50e6164eeebc289ec952fff31::C2::p329::w0"
+      },
+      {
+        "rank": 7,
+        "chunk_index": 40351,
+        "score": 0.7941684126853943,
+        "doc_id": "d8e3739d2e06",
+        "page": 94,
+        "chunk_id": "d8e3739d2e06f09b83a192e00cefda0113b5da778483e31018cb35429e72eafe::C2::p94::w5"
+      },
+      {
+        "rank": 8,
+        "chunk_index": 1731,
+        "score": 0.791973352432251,
+        "doc_id": "011253c0a105",
+        "page": 211,
+        "chunk_id": "011253c0a105f9bd11d484e305c7f78fd6689890209b9159a3df452703366359::C2::p211::w7"
+      },
+      {
+        "rank": 9,
+        "chunk_index": 16442,
+        "score": 0.7914812564849854,
+        "doc_id": "15fee0c19d13",
+        "page": 318,
+        "chunk_id": "15fee0c19d130a5e77fbeca1ea1eca288f9d45eff4f3de02397c8dec7a02b67b::C2::p318::w0"
+      },
+      {
+        "rank": 10,
+        "chunk_index": 42466,
+        "score": 0.7897368669509888,
+        "doc_id": "deed15eaf8d7",
+        "page": 208,
+        "chunk_id": "deed15eaf8d7b9e0fa2aa386b85a01f35511fc8b4813fe92aa4212682089473d::C2::p208::w0"
+      }
+    ],
+    "rrf_top": [
+      {
+        "rank": 1,
+        "chunk_index": 1738,
+        "score": 0.02736498787999153,
+        "doc_id": "011253c0a105",
+        "page": 212,
+        "chunk_id": "011253c0a105f9bd11d484e305c7f78fd6689890209b9159a3df452703366359::C2::p212::w6"
+      },
+      {
+        "rank": 2,
+        "chunk_index": 10019,
+        "score": 0.016393441706895828,
+        "doc_id": "0ea899ba19c2",
+        "page": 362,
+        "chunk_id": "0ea899ba19c2727c06fc6926b1a4180c8edbecdde684e15a48fb49267c7ffc81::C2::p362::w3"
+      },
+      {
+        "rank": 3,
+        "chunk_index": 40282,
+        "score": 0.016393441706895828,
+        "doc_id": "d8e3739d2e06",
+        "page": 84,
+        "chunk_id": "d8e3739d2e06f09b83a192e00cefda0113b5da778483e31018cb35429e72eafe::C2::p84::w5"
+      },
+      {
+        "rank": 4,
+        "chunk_index": 1995,
+        "score": 0.016129031777381897,
+        "doc_id": "011253c0a105",
+        "page": 245,
+        "chunk_id": "011253c0a105f9bd11d484e305c7f78fd6689890209b9159a3df452703366359::C2::p245::w9"
+      },
+      {
+        "rank": 5,
+        "chunk_index": 10017,
+        "score": 0.01587301678955555,
+        "doc_id": "0ea899ba19c2",
+        "page": 362,
+        "chunk_id": "0ea899ba19c2727c06fc6926b1a4180c8edbecdde684e15a48fb49267c7ffc81::C2::p362::w1"
+      },
+      {
+        "rank": 6,
+        "chunk_index": 32000,
+        "score": 0.01587301678955555,
+        "doc_id": "9a1375324a65",
+        "page": 79,
+        "chunk_id": "9a1375324a65d21104e91597c2a8c974f29da03c6e275c47456eb9ee3f317858::C2::p79::w0"
+      },
+      {
+        "rank": 7,
+        "chunk_index": 16717,
+        "score": 0.015625,
+        "doc_id": "15fee0c19d13",
+        "page": 378,
+        "chunk_id": "15fee0c19d130a5e77fbeca1ea1eca288f9d45eff4f3de02397c8dec7a02b67b::C2::p378::w0"
+      },
+      {
+        "rank": 8,
+        "chunk_index": 23520,
+        "score": 0.015625,
+        "doc_id": "36c2942b23f1",
+        "page": 325,
+        "chunk_id": "36c2942b23f18d425a65781f30532d107bf96feffedc3251ea9035db56b06abd::C2::p325::w0"
+      },
+      {
+        "rank": 9,
+        "chunk_index": 1663,
+        "score": 0.015384615398943424,
+        "doc_id": "011253c0a105",
+        "page": 202,
+        "chunk_id": "011253c0a105f9bd11d484e305c7f78fd6689890209b9159a3df452703366359::C2::p202::w7"
+      },
+      {
+        "rank": 10,
+        "chunk_index": 40265,
+        "score": 0.015384615398943424,
+        "doc_id": "d8e3739d2e06",
+        "page": 81,
+        "chunk_id": "d8e3739d2e06f09b83a192e00cefda0113b5da778483e31018cb35429e72eafe::C2::p81::w7"
+      }
+    ],
+    "final_top": [
+      {
+        "rank": 1,
+        "chunk_index": 49804,
+        "score": 6.221367835998535,
+        "doc_id": "fa7dac2401f1",
+        "page": 328,
+        "chunk_id": "fa7dac2401f10d824c6e6b3e5dd482a0e0ab09b50e6164eeebc289ec952fff31::C2::p328::w0"
+      },
+      {
+        "rank": 2,
+        "chunk_index": 16717,
+        "score": 6.095963954925537,
+        "doc_id": "15fee0c19d13",
+        "page": 378,
+        "chunk_id": "15fee0c19d130a5e77fbeca1ea1eca288f9d45eff4f3de02397c8dec7a02b67b::C2::p378::w0"
+      },
+      {
+        "rank": 3,
+        "chunk_index": 49808,
+        "score": 5.844424724578857,
+        "doc_id": "fa7dac2401f1",
+        "page": 329,
+        "chunk_id": "fa7dac2401f10d824c6e6b3e5dd482a0e0ab09b50e6164eeebc289ec952fff31::C2::p329::w0"
+      },
+      {
+        "rank": 4,
+        "chunk_index": 14757,
+        "score": 5.80606746673584,
+        "doc_id": "1490168ab799",
+        "page": 323,
+        "chunk_id": "1490168ab7996c0dc37e465333a801877a58cd6d83ae8c3e3b13fafaf0ea2ad0::C2::p323::w0"
+      },
+      {
+        "rank": 5,
+        "chunk_index": 1738,
+        "score": 5.634968280792236,
+        "doc_id": "011253c0a105",
+        "page": 212,
+        "chunk_id": "011253c0a105f9bd11d484e305c7f78fd6689890209b9159a3df452703366359::C2::p212::w6"
+      }
+    ]
+  },
+  {
+    "row_id": "G-039",
+    "call_index": 0,
+    "query": "What is the total assets of Adani Green as stated in their standalone results for the year ended 31 March 2026?",
+    "tokens": [
+      "what",
+      "total",
+      "assets",
+      "adani",
+      "green",
+      "stated",
+      "standalone",
+      "results",
+      "year",
+      "ended",
+      "31",
+      "march",
+      "2026"
+    ],
+    "bm25_top": [
+      {
+        "rank": 1,
+        "chunk_index": 42743,
+        "score": 33.39726257324219,
+        "doc_id": "deed15eaf8d7",
+        "page": 239,
+        "chunk_id": "deed15eaf8d7b9e0fa2aa386b85a01f35511fc8b4813fe92aa4212682089473d::C2::p239::w0"
+      },
+      {
+        "rank": 2,
+        "chunk_index": 42763,
+        "score": 29.635494232177734,
+        "doc_id": "deed15eaf8d7",
+        "page": 242,
+        "chunk_id": "deed15eaf8d7b9e0fa2aa386b85a01f35511fc8b4813fe92aa4212682089473d::C2::p242::w0"
+      },
+      {
+        "rank": 3,
+        "chunk_index": 42662,
+        "score": 29.387052536010742,
+        "doc_id": "deed15eaf8d7",
+        "page": 228,
+        "chunk_id": "deed15eaf8d7b9e0fa2aa386b85a01f35511fc8b4813fe92aa4212682089473d::C2::p228::w0"
+      },
+      {
+        "rank": 4,
+        "chunk_index": 43402,
+        "score": 29.27772331237793,
+        "doc_id": "deed15eaf8d7",
+        "page": 314,
+        "chunk_id": "deed15eaf8d7b9e0fa2aa386b85a01f35511fc8b4813fe92aa4212682089473d::C2::p314::w0"
+      },
+      {
+        "rank": 5,
+        "chunk_index": 42362,
+        "score": 28.246417999267578,
+        "doc_id": "deed15eaf8d7",
+        "page": 194,
+        "chunk_id": "deed15eaf8d7b9e0fa2aa386b85a01f35511fc8b4813fe92aa4212682089473d::C2::p194::w0"
+      },
+      {
+        "rank": 6,
+        "chunk_index": 42561,
+        "score": 28.130117416381836,
+        "doc_id": "deed15eaf8d7",
+        "page": 217,
+        "chunk_id": "deed15eaf8d7b9e0fa2aa386b85a01f35511fc8b4813fe92aa4212682089473d::C2::p217::w0"
+      },
+      {
+        "rank": 7,
+        "chunk_index": 42749,
+        "score": 27.64741325378418,
+        "doc_id": "deed15eaf8d7",
+        "page": 240,
+        "chunk_id": "deed15eaf8d7b9e0fa2aa386b85a01f35511fc8b4813fe92aa4212682089473d::C2::p240::w0"
+      },
+      {
+        "rank": 8,
+        "chunk_index": 42586,
+        "score": 27.3338623046875,
+        "doc_id": "deed15eaf8d7",
+        "page": 219,
+        "chunk_id": "deed15eaf8d7b9e0fa2aa386b85a01f35511fc8b4813fe92aa4212682089473d::C2::p219::w0"
+      },
+      {
+        "rank": 9,
+        "chunk_index": 42654,
+        "score": 27.31624984741211,
+        "doc_id": "deed15eaf8d7",
+        "page": 227,
+        "chunk_id": "deed15eaf8d7b9e0fa2aa386b85a01f35511fc8b4813fe92aa4212682089473d::C2::p227::w0"
+      },
+      {
+        "rank": 10,
+        "chunk_index": 43409,
+        "score": 27.088802337646484,
+        "doc_id": "deed15eaf8d7",
+        "page": 315,
+        "chunk_id": "deed15eaf8d7b9e0fa2aa386b85a01f35511fc8b4813fe92aa4212682089473d::C2::p315::w0"
+      }
+    ],
+    "dense_top": [
+      {
+        "rank": 1,
+        "chunk_index": 41667,
+        "score": 0.8111938238143921,
+        "doc_id": "deed15eaf8d7",
+        "page": 117,
+        "chunk_id": "deed15eaf8d7b9e0fa2aa386b85a01f35511fc8b4813fe92aa4212682089473d::C2::p117::w11"
+      },
+      {
+        "rank": 2,
+        "chunk_index": 41026,
+        "score": 0.7988746762275696,
+        "doc_id": "deed15eaf8d7",
+        "page": 3,
+        "chunk_id": "deed15eaf8d7b9e0fa2aa386b85a01f35511fc8b4813fe92aa4212682089473d::C2::p3::w0"
+      },
+      {
+        "rank": 3,
+        "chunk_index": 41080,
+        "score": 0.7987591028213501,
+        "doc_id": "deed15eaf8d7",
+        "page": 17,
+        "chunk_id": "deed15eaf8d7b9e0fa2aa386b85a01f35511fc8b4813fe92aa4212682089473d::C2::p17::w3"
+      },
+      {
+        "rank": 4,
+        "chunk_index": 42361,
+        "score": 0.7940685153007507,
+        "doc_id": "deed15eaf8d7",
+        "page": 193,
+        "chunk_id": "deed15eaf8d7b9e0fa2aa386b85a01f35511fc8b4813fe92aa4212682089473d::C2::p193::w6"
+      },
+      {
+        "rank": 5,
+        "chunk_index": 41540,
+        "score": 0.7938681840896606,
+        "doc_id": "deed15eaf8d7",
+        "page": 106,
+        "chunk_id": "deed15eaf8d7b9e0fa2aa386b85a01f35511fc8b4813fe92aa4212682089473d::C2::p106::w3"
+      },
+      {
+        "rank": 6,
+        "chunk_index": 42362,
+        "score": 0.7931677103042603,
+        "doc_id": "deed15eaf8d7",
+        "page": 194,
+        "chunk_id": "deed15eaf8d7b9e0fa2aa386b85a01f35511fc8b4813fe92aa4212682089473d::C2::p194::w0"
+      },
+      {
+        "rank": 7,
+        "chunk_index": 41681,
+        "score": 0.7921538352966309,
+        "doc_id": "deed15eaf8d7",
+        "page": 119,
+        "chunk_id": "deed15eaf8d7b9e0fa2aa386b85a01f35511fc8b4813fe92aa4212682089473d::C2::p119::w3"
+      },
+      {
+        "rank": 8,
+        "chunk_index": 42355,
+        "score": 0.7902915477752686,
+        "doc_id": "deed15eaf8d7",
+        "page": 193,
+        "chunk_id": "deed15eaf8d7b9e0fa2aa386b85a01f35511fc8b4813fe92aa4212682089473d::C2::p193::w0"
+      },
+      {
+        "rank": 9,
+        "chunk_index": 42925,
+        "score": 0.7855764031410217,
+        "doc_id": "deed15eaf8d7",
+        "page": 257,
+        "chunk_id": "deed15eaf8d7b9e0fa2aa386b85a01f35511fc8b4813fe92aa4212682089473d::C2::p257::w11"
+      },
+      {
+        "rank": 10,
+        "chunk_index": 41091,
+        "score": 0.784792423248291,
+        "doc_id": "deed15eaf8d7",
+        "page": 20,
+        "chunk_id": "deed15eaf8d7b9e0fa2aa386b85a01f35511fc8b4813fe92aa4212682089473d::C2::p20::w1"
+      }
+    ],
+    "rrf_top": [
+      {
+        "rank": 1,
+        "chunk_index": 42362,
+        "score": 0.03053613007068634,
+        "doc_id": "deed15eaf8d7",
+        "page": 194,
+        "chunk_id": "deed15eaf8d7b9e0fa2aa386b85a01f35511fc8b4813fe92aa4212682089473d::C2::p194::w0"
+      },
+      {
+        "rank": 2,
+        "chunk_index": 42743,
+        "score": 0.02889344096183777,
+        "doc_id": "deed15eaf8d7",
+        "page": 239,
+        "chunk_id": "deed15eaf8d7b9e0fa2aa386b85a01f35511fc8b4813fe92aa4212682089473d::C2::p239::w0"
+      },
+      {
+        "rank": 3,
+        "chunk_index": 42384,
+        "score": 0.027212142944335938,
+        "doc_id": "deed15eaf8d7",
+        "page": 197,
+        "chunk_id": "deed15eaf8d7b9e0fa2aa386b85a01f35511fc8b4813fe92aa4212682089473d::C2::p197::w0"
+      },
+      {
+        "rank": 4,
+        "chunk_index": 43485,
+        "score": 0.025561705231666565,
+        "doc_id": "deed15eaf8d7",
+        "page": 324,
+        "chunk_id": "deed15eaf8d7b9e0fa2aa386b85a01f35511fc8b4813fe92aa4212682089473d::C2::p324::w4"
+      },
+      {
+        "rank": 5,
+        "chunk_index": 43191,
+        "score": 0.023122159764170647,
+        "doc_id": "deed15eaf8d7",
+        "page": 288,
+        "chunk_id": "deed15eaf8d7b9e0fa2aa386b85a01f35511fc8b4813fe92aa4212682089473d::C2::p288::w3"
+      },
+      {
+        "rank": 6,
+        "chunk_index": 41667,
+        "score": 0.016393441706895828,
+        "doc_id": "deed15eaf8d7",
+        "page": 117,
+        "chunk_id": "deed15eaf8d7b9e0fa2aa386b85a01f35511fc8b4813fe92aa4212682089473d::C2::p117::w11"
+      },
+      {
+        "rank": 7,
+        "chunk_index": 41026,
+        "score": 0.016129031777381897,
+        "doc_id": "deed15eaf8d7",
+        "page": 3,
+        "chunk_id": "deed15eaf8d7b9e0fa2aa386b85a01f35511fc8b4813fe92aa4212682089473d::C2::p3::w0"
+      },
+      {
+        "rank": 8,
+        "chunk_index": 42763,
+        "score": 0.016129031777381897,
+        "doc_id": "deed15eaf8d7",
+        "page": 242,
+        "chunk_id": "deed15eaf8d7b9e0fa2aa386b85a01f35511fc8b4813fe92aa4212682089473d::C2::p242::w0"
+      },
+      {
+        "rank": 9,
+        "chunk_index": 41080,
+        "score": 0.01587301678955555,
+        "doc_id": "deed15eaf8d7",
+        "page": 17,
+        "chunk_id": "deed15eaf8d7b9e0fa2aa386b85a01f35511fc8b4813fe92aa4212682089473d::C2::p17::w3"
+      },
+      {
+        "rank": 10,
+        "chunk_index": 42662,
+        "score": 0.01587301678955555,
+        "doc_id": "deed15eaf8d7",
+        "page": 228,
+        "chunk_id": "deed15eaf8d7b9e0fa2aa386b85a01f35511fc8b4813fe92aa4212682089473d::C2::p228::w0"
+      }
+    ],
+    "final_top": [
+      {
+        "rank": 1,
+        "chunk_index": 42743,
+        "score": 6.720223426818848,
+        "doc_id": "deed15eaf8d7",
+        "page": 239,
+        "chunk_id": "deed15eaf8d7b9e0fa2aa386b85a01f35511fc8b4813fe92aa4212682089473d::C2::p239::w0"
+      },
+      {
+        "rank": 2,
+        "chunk_index": 42561,
+        "score": 6.691682815551758,
+        "doc_id": "deed15eaf8d7",
+        "page": 217,
+        "chunk_id": "deed15eaf8d7b9e0fa2aa386b85a01f35511fc8b4813fe92aa4212682089473d::C2::p217::w0"
+      },
+      {
+        "rank": 3,
+        "chunk_index": 42586,
+        "score": 6.473230361938477,
+        "doc_id": "deed15eaf8d7",
+        "page": 219,
+        "chunk_id": "deed15eaf8d7b9e0fa2aa386b85a01f35511fc8b4813fe92aa4212682089473d::C2::p219::w0"
+      },
+      {
+        "rank": 4,
+        "chunk_index": 43402,
+        "score": 6.436027526855469,
+        "doc_id": "deed15eaf8d7",
+        "page": 314,
+        "chunk_id": "deed15eaf8d7b9e0fa2aa386b85a01f35511fc8b4813fe92aa4212682089473d::C2::p314::w0"
+      },
+      {
+        "rank": 5,
+        "chunk_index": 42763,
+        "score": 6.430261135101318,
+        "doc_id": "deed15eaf8d7",
+        "page": 242,
+        "chunk_id": "deed15eaf8d7b9e0fa2aa386b85a01f35511fc8b4813fe92aa4212682089473d::C2::p242::w0"
+      }
+    ]
+  },
+  {
+    "row_id": "G-040",
+    "call_index": 0,
+    "query": "Adani Green standalone results year ended 31 March 2026 total equity in Rs. crore",
+    "tokens": [
+      "adani",
+      "green",
+      "standalone",
+      "results",
+      "year",
+      "ended",
+      "31",
+      "march",
+      "2026",
+      "total",
+      "equity",
+      "rs",
+      "crore"
+    ],
+    "bm25_top": [
+      {
+        "rank": 1,
+        "chunk_index": 10019,
+        "score": 33.489501953125,
+        "doc_id": "0ea899ba19c2",
+        "page": 362,
+        "chunk_id": "0ea899ba19c2727c06fc6926b1a4180c8edbecdde684e15a48fb49267c7ffc81::C2::p362::w3"
+      },
+      {
+        "rank": 2,
+        "chunk_index": 10017,
+        "score": 33.441768646240234,
+        "doc_id": "0ea899ba19c2",
+        "page": 362,
+        "chunk_id": "0ea899ba19c2727c06fc6926b1a4180c8edbecdde684e15a48fb49267c7ffc81::C2::p362::w1"
+      },
+      {
+        "rank": 3,
+        "chunk_index": 42743,
+        "score": 32.54248046875,
+        "doc_id": "deed15eaf8d7",
+        "page": 239,
+        "chunk_id": "deed15eaf8d7b9e0fa2aa386b85a01f35511fc8b4813fe92aa4212682089473d::C2::p239::w0"
+      },
+      {
+        "rank": 4,
+        "chunk_index": 42362,
+        "score": 31.529428482055664,
+        "doc_id": "deed15eaf8d7",
+        "page": 194,
+        "chunk_id": "deed15eaf8d7b9e0fa2aa386b85a01f35511fc8b4813fe92aa4212682089473d::C2::p194::w0"
+      },
+      {
+        "rank": 5,
+        "chunk_index": 10018,
+        "score": 30.529918670654297,
+        "doc_id": "0ea899ba19c2",
+        "page": 362,
+        "chunk_id": "0ea899ba19c2727c06fc6926b1a4180c8edbecdde684e15a48fb49267c7ffc81::C2::p362::w2"
+      },
+      {
+        "rank": 6,
+        "chunk_index": 10020,
+        "score": 30.159717559814453,
+        "doc_id": "0ea899ba19c2",
+        "page": 362,
+        "chunk_id": "0ea899ba19c2727c06fc6926b1a4180c8edbecdde684e15a48fb49267c7ffc81::C2::p362::w4"
+      },
+      {
+        "rank": 7,
+        "chunk_index": 1738,
+        "score": 29.061124801635742,
+        "doc_id": "011253c0a105",
+        "page": 212,
+        "chunk_id": "011253c0a105f9bd11d484e305c7f78fd6689890209b9159a3df452703366359::C2::p212::w6"
+      },
+      {
+        "rank": 8,
+        "chunk_index": 42763,
+        "score": 28.79338836669922,
+        "doc_id": "deed15eaf8d7",
+        "page": 242,
+        "chunk_id": "deed15eaf8d7b9e0fa2aa386b85a01f35511fc8b4813fe92aa4212682089473d::C2::p242::w0"
+      },
+      {
+        "rank": 9,
+        "chunk_index": 42662,
+        "score": 28.519203186035156,
+        "doc_id": "deed15eaf8d7",
+        "page": 228,
+        "chunk_id": "deed15eaf8d7b9e0fa2aa386b85a01f35511fc8b4813fe92aa4212682089473d::C2::p228::w0"
+      },
+      {
+        "rank": 10,
+        "chunk_index": 1730,
+        "score": 27.894590377807617,
+        "doc_id": "011253c0a105",
+        "page": 211,
+        "chunk_id": "011253c0a105f9bd11d484e305c7f78fd6689890209b9159a3df452703366359::C2::p211::w6"
+      }
+    ],
+    "dense_top": [
+      {
+        "rank": 1,
+        "chunk_index": 42362,
+        "score": 0.8562247157096863,
+        "doc_id": "deed15eaf8d7",
+        "page": 194,
+        "chunk_id": "deed15eaf8d7b9e0fa2aa386b85a01f35511fc8b4813fe92aa4212682089473d::C2::p194::w0"
+      },
+      {
+        "rank": 2,
+        "chunk_index": 42743,
+        "score": 0.8469371795654297,
+        "doc_id": "deed15eaf8d7",
+        "page": 239,
+        "chunk_id": "deed15eaf8d7b9e0fa2aa386b85a01f35511fc8b4813fe92aa4212682089473d::C2::p239::w0"
+      },
+      {
+        "rank": 3,
+        "chunk_index": 42384,
+        "score": 0.8467725515365601,
+        "doc_id": "deed15eaf8d7",
+        "page": 197,
+        "chunk_id": "deed15eaf8d7b9e0fa2aa386b85a01f35511fc8b4813fe92aa4212682089473d::C2::p197::w0"
+      },
+      {
+        "rank": 4,
+        "chunk_index": 43203,
+        "score": 0.8404313325881958,
+        "doc_id": "deed15eaf8d7",
+        "page": 289,
+        "chunk_id": "deed15eaf8d7b9e0fa2aa386b85a01f35511fc8b4813fe92aa4212682089473d::C2::p289::w9"
+      },
+      {
+        "rank": 5,
+        "chunk_index": 42586,
+        "score": 0.8346781730651855,
+        "doc_id": "deed15eaf8d7",
+        "page": 219,
+        "chunk_id": "deed15eaf8d7b9e0fa2aa386b85a01f35511fc8b4813fe92aa4212682089473d::C2::p219::w0"
+      },
+      {
+        "rank": 6,
+        "chunk_index": 42355,
+        "score": 0.8345869183540344,
+        "doc_id": "deed15eaf8d7",
+        "page": 193,
+        "chunk_id": "deed15eaf8d7b9e0fa2aa386b85a01f35511fc8b4813fe92aa4212682089473d::C2::p193::w0"
+      },
+      {
+        "rank": 7,
+        "chunk_index": 41540,
+        "score": 0.834090530872345,
+        "doc_id": "deed15eaf8d7",
+        "page": 106,
+        "chunk_id": "deed15eaf8d7b9e0fa2aa386b85a01f35511fc8b4813fe92aa4212682089473d::C2::p106::w3"
+      },
+      {
+        "rank": 8,
+        "chunk_index": 41667,
+        "score": 0.8312199115753174,
+        "doc_id": "deed15eaf8d7",
+        "page": 117,
+        "chunk_id": "deed15eaf8d7b9e0fa2aa386b85a01f35511fc8b4813fe92aa4212682089473d::C2::p117::w11"
+      },
+      {
+        "rank": 9,
+        "chunk_index": 42377,
+        "score": 0.8305836915969849,
+        "doc_id": "deed15eaf8d7",
+        "page": 196,
+        "chunk_id": "deed15eaf8d7b9e0fa2aa386b85a01f35511fc8b4813fe92aa4212682089473d::C2::p196::w0"
+      },
+      {
+        "rank": 10,
+        "chunk_index": 43462,
+        "score": 0.8303914070129395,
+        "doc_id": "deed15eaf8d7",
+        "page": 321,
+        "chunk_id": "deed15eaf8d7b9e0fa2aa386b85a01f35511fc8b4813fe92aa4212682089473d::C2::p321::w4"
+      }
+    ],
+    "rrf_top": [
+      {
+        "rank": 1,
+        "chunk_index": 42362,
+        "score": 0.03201844170689583,
+        "doc_id": "deed15eaf8d7",
+        "page": 194,
+        "chunk_id": "deed15eaf8d7b9e0fa2aa386b85a01f35511fc8b4813fe92aa4212682089473d::C2::p194::w0"
+      },
+      {
+        "rank": 2,
+        "chunk_index": 42743,
+        "score": 0.0320020467042923,
+        "doc_id": "deed15eaf8d7",
+        "page": 239,
+        "chunk_id": "deed15eaf8d7b9e0fa2aa386b85a01f35511fc8b4813fe92aa4212682089473d::C2::p239::w0"
+      },
+      {
+        "rank": 3,
+        "chunk_index": 42586,
+        "score": 0.028717949986457825,
+        "doc_id": "deed15eaf8d7",
+        "page": 219,
+        "chunk_id": "deed15eaf8d7b9e0fa2aa386b85a01f35511fc8b4813fe92aa4212682089473d::C2::p219::w0"
+      },
+      {
+        "rank": 4,
+        "chunk_index": 42763,
+        "score": 0.027692895382642746,
+        "doc_id": "deed15eaf8d7",
+        "page": 242,
+        "chunk_id": "deed15eaf8d7b9e0fa2aa386b85a01f35511fc8b4813fe92aa4212682089473d::C2::p242::w0"
+      },
+      {
+        "rank": 5,
+        "chunk_index": 42561,
+        "score": 0.027242401614785194,
+        "doc_id": "deed15eaf8d7",
+        "page": 217,
+        "chunk_id": "deed15eaf8d7b9e0fa2aa386b85a01f35511fc8b4813fe92aa4212682089473d::C2::p217::w0"
+      },
+      {
+        "rank": 6,
+        "chunk_index": 42384,
+        "score": 0.02698412910103798,
+        "doc_id": "deed15eaf8d7",
+        "page": 197,
+        "chunk_id": "deed15eaf8d7b9e0fa2aa386b85a01f35511fc8b4813fe92aa4212682089473d::C2::p197::w0"
+      },
+      {
+        "rank": 7,
+        "chunk_index": 43454,
+        "score": 0.026584506034851074,
+        "doc_id": "deed15eaf8d7",
+        "page": 320,
+        "chunk_id": "deed15eaf8d7b9e0fa2aa386b85a01f35511fc8b4813fe92aa4212682089473d::C2::p320::w4"
+      },
+      {
+        "rank": 8,
+        "chunk_index": 43462,
+        "score": 0.026050420477986336,
+        "doc_id": "deed15eaf8d7",
+        "page": 321,
+        "chunk_id": "deed15eaf8d7b9e0fa2aa386b85a01f35511fc8b4813fe92aa4212682089473d::C2::p321::w4"
+      },
+      {
+        "rank": 9,
+        "chunk_index": 43402,
+        "score": 0.024922601878643036,
+        "doc_id": "deed15eaf8d7",
+        "page": 314,
+        "chunk_id": "deed15eaf8d7b9e0fa2aa386b85a01f35511fc8b4813fe92aa4212682089473d::C2::p314::w0"
+      },
+      {
+        "rank": 10,
+        "chunk_index": 43484,
+        "score": 0.02485334873199463,
+        "doc_id": "deed15eaf8d7",
+        "page": 324,
+        "chunk_id": "deed15eaf8d7b9e0fa2aa386b85a01f35511fc8b4813fe92aa4212682089473d::C2::p324::w3"
+      }
+    ],
+    "final_top": [
+      {
+        "rank": 1,
+        "chunk_index": 42743,
+        "score": 7.150742053985596,
+        "doc_id": "deed15eaf8d7",
+        "page": 239,
+        "chunk_id": "deed15eaf8d7b9e0fa2aa386b85a01f35511fc8b4813fe92aa4212682089473d::C2::p239::w0"
+      },
+      {
+        "rank": 2,
+        "chunk_index": 42561,
+        "score": 7.059221267700195,
+        "doc_id": "deed15eaf8d7",
+        "page": 217,
+        "chunk_id": "deed15eaf8d7b9e0fa2aa386b85a01f35511fc8b4813fe92aa4212682089473d::C2::p217::w0"
+      },
+      {
+        "rank": 3,
+        "chunk_index": 42586,
+        "score": 7.018400192260742,
+        "doc_id": "deed15eaf8d7",
+        "page": 219,
+        "chunk_id": "deed15eaf8d7b9e0fa2aa386b85a01f35511fc8b4813fe92aa4212682089473d::C2::p219::w0"
+      },
+      {
+        "rank": 4,
+        "chunk_index": 42362,
+        "score": 6.9026923179626465,
+        "doc_id": "deed15eaf8d7",
+        "page": 194,
+        "chunk_id": "deed15eaf8d7b9e0fa2aa386b85a01f35511fc8b4813fe92aa4212682089473d::C2::p194::w0"
+      },
+      {
+        "rank": 5,
+        "chunk_index": 42509,
+        "score": 6.829892158508301,
+        "doc_id": "deed15eaf8d7",
+        "page": 213,
+        "chunk_id": "deed15eaf8d7b9e0fa2aa386b85a01f35511fc8b4813fe92aa4212682089473d::C2::p213::w0"
+      }
+    ]
+  },
+  {
+    "row_id": "G-041",
+    "call_index": 0,
+    "query": "total liabilities Adani Green standalone results year ended 31 March 2026 Rs crore",
+    "tokens": [
+      "total",
+      "liabilities",
+      "adani",
+      "green",
+      "standalone",
+      "results",
+      "year",
+      "ended",
+      "31",
+      "march",
+      "2026",
+      "rs",
+      "crore"
+    ],
+    "bm25_top": [
+      {
+        "rank": 1,
+        "chunk_index": 10019,
+        "score": 33.489501953125,
+        "doc_id": "0ea899ba19c2",
+        "page": 362,
+        "chunk_id": "0ea899ba19c2727c06fc6926b1a4180c8edbecdde684e15a48fb49267c7ffc81::C2::p362::w3"
+      },
+      {
+        "rank": 2,
+        "chunk_index": 10017,
+        "score": 33.441768646240234,
+        "doc_id": "0ea899ba19c2",
+        "page": 362,
+        "chunk_id": "0ea899ba19c2727c06fc6926b1a4180c8edbecdde684e15a48fb49267c7ffc81::C2::p362::w1"
+      },
+      {
+        "rank": 3,
+        "chunk_index": 42743,
+        "score": 32.54248046875,
+        "doc_id": "deed15eaf8d7",
+        "page": 239,
+        "chunk_id": "deed15eaf8d7b9e0fa2aa386b85a01f35511fc8b4813fe92aa4212682089473d::C2::p239::w0"
+      },
+      {
+        "rank": 4,
+        "chunk_index": 10018,
+        "score": 30.529918670654297,
+        "doc_id": "0ea899ba19c2",
+        "page": 362,
+        "chunk_id": "0ea899ba19c2727c06fc6926b1a4180c8edbecdde684e15a48fb49267c7ffc81::C2::p362::w2"
+      },
+      {
+        "rank": 5,
+        "chunk_index": 10020,
+        "score": 30.159717559814453,
+        "doc_id": "0ea899ba19c2",
+        "page": 362,
+        "chunk_id": "0ea899ba19c2727c06fc6926b1a4180c8edbecdde684e15a48fb49267c7ffc81::C2::p362::w4"
+      },
+      {
+        "rank": 6,
+        "chunk_index": 43402,
+        "score": 29.324369430541992,
+        "doc_id": "deed15eaf8d7",
+        "page": 314,
+        "chunk_id": "deed15eaf8d7b9e0fa2aa386b85a01f35511fc8b4813fe92aa4212682089473d::C2::p314::w0"
+      },
+      {
+        "rank": 7,
+        "chunk_index": 42763,
+        "score": 28.79338836669922,
+        "doc_id": "deed15eaf8d7",
+        "page": 242,
+        "chunk_id": "deed15eaf8d7b9e0fa2aa386b85a01f35511fc8b4813fe92aa4212682089473d::C2::p242::w0"
+      },
+      {
+        "rank": 8,
+        "chunk_index": 42662,
+        "score": 28.519203186035156,
+        "doc_id": "deed15eaf8d7",
+        "page": 228,
+        "chunk_id": "deed15eaf8d7b9e0fa2aa386b85a01f35511fc8b4813fe92aa4212682089473d::C2::p228::w0"
+      },
+      {
+        "rank": 9,
+        "chunk_index": 1730,
+        "score": 27.894590377807617,
+        "doc_id": "011253c0a105",
+        "page": 211,
+        "chunk_id": "011253c0a105f9bd11d484e305c7f78fd6689890209b9159a3df452703366359::C2::p211::w6"
+      },
+      {
+        "rank": 10,
+        "chunk_index": 42561,
+        "score": 27.837509155273438,
+        "doc_id": "deed15eaf8d7",
+        "page": 217,
+        "chunk_id": "deed15eaf8d7b9e0fa2aa386b85a01f35511fc8b4813fe92aa4212682089473d::C2::p217::w0"
+      }
+    ],
+    "dense_top": [
+      {
+        "rank": 1,
+        "chunk_index": 42743,
+        "score": 0.858135461807251,
+        "doc_id": "deed15eaf8d7",
+        "page": 239,
+        "chunk_id": "deed15eaf8d7b9e0fa2aa386b85a01f35511fc8b4813fe92aa4212682089473d::C2::p239::w0"
+      },
+      {
+        "rank": 2,
+        "chunk_index": 43203,
+        "score": 0.8556922078132629,
+        "doc_id": "deed15eaf8d7",
+        "page": 289,
+        "chunk_id": "deed15eaf8d7b9e0fa2aa386b85a01f35511fc8b4813fe92aa4212682089473d::C2::p289::w9"
+      },
+      {
+        "rank": 3,
+        "chunk_index": 42362,
+        "score": 0.8484096527099609,
+        "doc_id": "deed15eaf8d7",
+        "page": 194,
+        "chunk_id": "deed15eaf8d7b9e0fa2aa386b85a01f35511fc8b4813fe92aa4212682089473d::C2::p194::w0"
+      },
+      {
+        "rank": 4,
+        "chunk_index": 42384,
+        "score": 0.8454906344413757,
+        "doc_id": "deed15eaf8d7",
+        "page": 197,
+        "chunk_id": "deed15eaf8d7b9e0fa2aa386b85a01f35511fc8b4813fe92aa4212682089473d::C2::p197::w0"
+      },
+      {
+        "rank": 5,
+        "chunk_index": 42586,
+        "score": 0.8408905267715454,
+        "doc_id": "deed15eaf8d7",
+        "page": 219,
+        "chunk_id": "deed15eaf8d7b9e0fa2aa386b85a01f35511fc8b4813fe92aa4212682089473d::C2::p219::w0"
+      },
+      {
+        "rank": 6,
+        "chunk_index": 43194,
+        "score": 0.8403342962265015,
+        "doc_id": "deed15eaf8d7",
+        "page": 289,
+        "chunk_id": "deed15eaf8d7b9e0fa2aa386b85a01f35511fc8b4813fe92aa4212682089473d::C2::p289::w0"
+      },
+      {
+        "rank": 7,
+        "chunk_index": 42509,
+        "score": 0.8339088559150696,
+        "doc_id": "deed15eaf8d7",
+        "page": 213,
+        "chunk_id": "deed15eaf8d7b9e0fa2aa386b85a01f35511fc8b4813fe92aa4212682089473d::C2::p213::w0"
+      },
+      {
+        "rank": 8,
+        "chunk_index": 42561,
+        "score": 0.8338745832443237,
+        "doc_id": "deed15eaf8d7",
+        "page": 217,
+        "chunk_id": "deed15eaf8d7b9e0fa2aa386b85a01f35511fc8b4813fe92aa4212682089473d::C2::p217::w0"
+      },
+      {
+        "rank": 9,
+        "chunk_index": 42763,
+        "score": 0.8316483497619629,
+        "doc_id": "deed15eaf8d7",
+        "page": 242,
+        "chunk_id": "deed15eaf8d7b9e0fa2aa386b85a01f35511fc8b4813fe92aa4212682089473d::C2::p242::w0"
+      },
+      {
+        "rank": 10,
+        "chunk_index": 41026,
+        "score": 0.8311610221862793,
+        "doc_id": "deed15eaf8d7",
+        "page": 3,
+        "chunk_id": "deed15eaf8d7b9e0fa2aa386b85a01f35511fc8b4813fe92aa4212682089473d::C2::p3::w0"
+      }
+    ],
+    "rrf_top": [
+      {
+        "rank": 1,
+        "chunk_index": 42743,
+        "score": 0.03226646035909653,
+        "doc_id": "deed15eaf8d7",
+        "page": 239,
+        "chunk_id": "deed15eaf8d7b9e0fa2aa386b85a01f35511fc8b4813fe92aa4212682089473d::C2::p239::w0"
+      },
+      {
+        "rank": 2,
+        "chunk_index": 42362,
+        "score": 0.0297619067132473,
+        "doc_id": "deed15eaf8d7",
+        "page": 194,
+        "chunk_id": "deed15eaf8d7b9e0fa2aa386b85a01f35511fc8b4813fe92aa4212682089473d::C2::p194::w0"
+      },
+      {
+        "rank": 3,
+        "chunk_index": 42763,
+        "score": 0.02941812574863434,
+        "doc_id": "deed15eaf8d7",
+        "page": 242,
+        "chunk_id": "deed15eaf8d7b9e0fa2aa386b85a01f35511fc8b4813fe92aa4212682089473d::C2::p242::w0"
+      },
+      {
+        "rank": 4,
+        "chunk_index": 42561,
+        "score": 0.028991596773266792,
+        "doc_id": "deed15eaf8d7",
+        "page": 217,
+        "chunk_id": "deed15eaf8d7b9e0fa2aa386b85a01f35511fc8b4813fe92aa4212682089473d::C2::p217::w0"
+      },
+      {
+        "rank": 5,
+        "chunk_index": 42586,
+        "score": 0.028717949986457825,
+        "doc_id": "deed15eaf8d7",
+        "page": 219,
+        "chunk_id": "deed15eaf8d7b9e0fa2aa386b85a01f35511fc8b4813fe92aa4212682089473d::C2::p219::w0"
+      },
+      {
+        "rank": 6,
+        "chunk_index": 43402,
+        "score": 0.0279720276594162,
+        "doc_id": "deed15eaf8d7",
+        "page": 314,
+        "chunk_id": "deed15eaf8d7b9e0fa2aa386b85a01f35511fc8b4813fe92aa4212682089473d::C2::p314::w0"
+      },
+      {
+        "rank": 7,
+        "chunk_index": 42509,
+        "score": 0.026553280651569366,
+        "doc_id": "deed15eaf8d7",
+        "page": 213,
+        "chunk_id": "deed15eaf8d7b9e0fa2aa386b85a01f35511fc8b4813fe92aa4212682089473d::C2::p213::w0"
+      },
+      {
+        "rank": 8,
+        "chunk_index": 42749,
+        "score": 0.02654711715877056,
+        "doc_id": "deed15eaf8d7",
+        "page": 240,
+        "chunk_id": "deed15eaf8d7b9e0fa2aa386b85a01f35511fc8b4813fe92aa4212682089473d::C2::p240::w0"
+      },
+      {
+        "rank": 9,
+        "chunk_index": 43416,
+        "score": 0.02631578966975212,
+        "doc_id": "deed15eaf8d7",
+        "page": 316,
+        "chunk_id": "deed15eaf8d7b9e0fa2aa386b85a01f35511fc8b4813fe92aa4212682089473d::C2::p316::w0"
+      },
+      {
+        "rank": 10,
+        "chunk_index": 43409,
+        "score": 0.0257086344063282,
+        "doc_id": "deed15eaf8d7",
+        "page": 315,
+        "chunk_id": "deed15eaf8d7b9e0fa2aa386b85a01f35511fc8b4813fe92aa4212682089473d::C2::p315::w0"
+      }
+    ],
+    "final_top": [
+      {
+        "rank": 1,
+        "chunk_index": 42743,
+        "score": 6.767594337463379,
+        "doc_id": "deed15eaf8d7",
+        "page": 239,
+        "chunk_id": "deed15eaf8d7b9e0fa2aa386b85a01f35511fc8b4813fe92aa4212682089473d::C2::p239::w0"
+      },
+      {
+        "rank": 2,
+        "chunk_index": 42561,
+        "score": 6.759655952453613,
+        "doc_id": "deed15eaf8d7",
+        "page": 217,
+        "chunk_id": "deed15eaf8d7b9e0fa2aa386b85a01f35511fc8b4813fe92aa4212682089473d::C2::p217::w0"
+      },
+      {
+        "rank": 3,
+        "chunk_index": 42586,
+        "score": 6.721014022827148,
+        "doc_id": "deed15eaf8d7",
+        "page": 219,
+        "chunk_id": "deed15eaf8d7b9e0fa2aa386b85a01f35511fc8b4813fe92aa4212682089473d::C2::p219::w0"
+      },
+      {
+        "rank": 4,
+        "chunk_index": 42509,
+        "score": 6.650757312774658,
+        "doc_id": "deed15eaf8d7",
+        "page": 213,
+        "chunk_id": "deed15eaf8d7b9e0fa2aa386b85a01f35511fc8b4813fe92aa4212682089473d::C2::p213::w0"
+      },
+      {
+        "rank": 5,
+        "chunk_index": 43402,
+        "score": 6.637694358825684,
+        "doc_id": "deed15eaf8d7",
+        "page": 314,
+        "chunk_id": "deed15eaf8d7b9e0fa2aa386b85a01f35511fc8b4813fe92aa4212682089473d::C2::p314::w0"
+      }
+    ]
+  },
+  {
+    "row_id": "G-042",
+    "call_index": 0,
+    "query": "Ashok Leyland consolidated results year ended 31 March 2024 total equity in Rs. crore",
+    "tokens": [
+      "ashok",
+      "leyland",
+      "consolidated",
+      "results",
+      "year",
+      "ended",
+      "31",
+      "march",
+      "2024",
+      "total",
+      "equity",
+      "rs",
+      "crore"
+    ],
+    "bm25_top": [
+      {
+        "rank": 1,
+        "chunk_index": 10019,
+        "score": 31.785259246826172,
+        "doc_id": "0ea899ba19c2",
+        "page": 362,
+        "chunk_id": "0ea899ba19c2727c06fc6926b1a4180c8edbecdde684e15a48fb49267c7ffc81::C2::p362::w3"
+      },
+      {
+        "rank": 2,
+        "chunk_index": 10017,
+        "score": 31.73872947692871,
+        "doc_id": "0ea899ba19c2",
+        "page": 362,
+        "chunk_id": "0ea899ba19c2727c06fc6926b1a4180c8edbecdde684e15a48fb49267c7ffc81::C2::p362::w1"
+      },
+      {
+        "rank": 3,
+        "chunk_index": 10018,
+        "score": 30.346324920654297,
+        "doc_id": "0ea899ba19c2",
+        "page": 362,
+        "chunk_id": "0ea899ba19c2727c06fc6926b1a4180c8edbecdde684e15a48fb49267c7ffc81::C2::p362::w2"
+      },
+      {
+        "rank": 4,
+        "chunk_index": 10020,
+        "score": 29.976856231689453,
+        "doc_id": "0ea899ba19c2",
+        "page": 362,
+        "chunk_id": "0ea899ba19c2727c06fc6926b1a4180c8edbecdde684e15a48fb49267c7ffc81::C2::p362::w4"
+      },
+      {
+        "rank": 5,
+        "chunk_index": 23918,
+        "score": 28.154958724975586,
+        "doc_id": "36c2942b23f1",
+        "page": 411,
+        "chunk_id": "36c2942b23f18d425a65781f30532d107bf96feffedc3251ea9035db56b06abd::C2::p411::w0"
+      },
+      {
+        "rank": 6,
+        "chunk_index": 27143,
+        "score": 27.974184036254883,
+        "doc_id": "728937384f00",
+        "page": 197,
+        "chunk_id": "728937384f00e28e42537dfbd9c4acebe23d3592a4a8db407e735198a720f16c::C2::p197::w0"
+      },
+      {
+        "rank": 7,
+        "chunk_index": 27228,
+        "score": 27.940370559692383,
+        "doc_id": "728937384f00",
+        "page": 208,
+        "chunk_id": "728937384f00e28e42537dfbd9c4acebe23d3592a4a8db407e735198a720f16c::C2::p208::w0"
+      },
+      {
+        "rank": 8,
+        "chunk_index": 19169,
+        "score": 27.34414291381836,
+        "doc_id": "2c629f58769a",
+        "page": 7,
+        "chunk_id": "2c629f58769a1e710b8ef0cd70779f9056b27d0b069069ed3e641728667d86df::C2::p7::w13"
+      },
+      {
+        "rank": 9,
+        "chunk_index": 26230,
+        "score": 27.16997528076172,
+        "doc_id": "728937384f00",
+        "page": 31,
+        "chunk_id": "728937384f00e28e42537dfbd9c4acebe23d3592a4a8db407e735198a720f16c::C2::p31::w0"
+      },
+      {
+        "rank": 10,
+        "chunk_index": 19145,
+        "score": 26.72113037109375,
+        "doc_id": "2c629f58769a",
+        "page": 4,
+        "chunk_id": "2c629f58769a1e710b8ef0cd70779f9056b27d0b069069ed3e641728667d86df::C2::p4::w10"
+      }
+    ],
+    "dense_top": [
+      {
+        "rank": 1,
+        "chunk_index": 27258,
+        "score": 0.8953548669815063,
+        "doc_id": "728937384f00",
+        "page": 213,
+        "chunk_id": "728937384f00e28e42537dfbd9c4acebe23d3592a4a8db407e735198a720f16c::C2::p213::w0"
+      },
+      {
+        "rank": 2,
+        "chunk_index": 27558,
+        "score": 0.8876382112503052,
+        "doc_id": "728937384f00",
+        "page": 277,
+        "chunk_id": "728937384f00e28e42537dfbd9c4acebe23d3592a4a8db407e735198a720f16c::C2::p277::w0"
+      },
+      {
+        "rank": 3,
+        "chunk_index": 27711,
+        "score": 0.8861162066459656,
+        "doc_id": "728937384f00",
+        "page": 311,
+        "chunk_id": "728937384f00e28e42537dfbd9c4acebe23d3592a4a8db407e735198a720f16c::C2::p311::w0"
+      },
+      {
+        "rank": 4,
+        "chunk_index": 27240,
+        "score": 0.8835294842720032,
+        "doc_id": "728937384f00",
+        "page": 209,
+        "chunk_id": "728937384f00e28e42537dfbd9c4acebe23d3592a4a8db407e735198a720f16c::C2::p209::w0"
+      },
+      {
+        "rank": 5,
+        "chunk_index": 27491,
+        "score": 0.8827154636383057,
+        "doc_id": "728937384f00",
+        "page": 261,
+        "chunk_id": "728937384f00e28e42537dfbd9c4acebe23d3592a4a8db407e735198a720f16c::C2::p261::w0"
+      },
+      {
+        "rank": 6,
+        "chunk_index": 27250,
+        "score": 0.8790328502655029,
+        "doc_id": "728937384f00",
+        "page": 211,
+        "chunk_id": "728937384f00e28e42537dfbd9c4acebe23d3592a4a8db407e735198a720f16c::C2::p211::w0"
+      },
+      {
+        "rank": 7,
+        "chunk_index": 26794,
+        "score": 0.8738701939582825,
+        "doc_id": "728937384f00",
+        "page": 121,
+        "chunk_id": "728937384f00e28e42537dfbd9c4acebe23d3592a4a8db407e735198a720f16c::C2::p121::w0"
+      },
+      {
+        "rank": 8,
+        "chunk_index": 26993,
+        "score": 0.8728712201118469,
+        "doc_id": "728937384f00",
+        "page": 163,
+        "chunk_id": "728937384f00e28e42537dfbd9c4acebe23d3592a4a8db407e735198a720f16c::C2::p163::w0"
+      },
+      {
+        "rank": 9,
+        "chunk_index": 27495,
+        "score": 0.871714174747467,
+        "doc_id": "728937384f00",
+        "page": 263,
+        "chunk_id": "728937384f00e28e42537dfbd9c4acebe23d3592a4a8db407e735198a720f16c::C2::p263::w0"
+      },
+      {
+        "rank": 10,
+        "chunk_index": 26802,
+        "score": 0.8706902265548706,
+        "doc_id": "728937384f00",
+        "page": 123,
+        "chunk_id": "728937384f00e28e42537dfbd9c4acebe23d3592a4a8db407e735198a720f16c::C2::p123::w0"
+      }
+    ],
+    "rrf_top": [
+      {
+        "rank": 1,
+        "chunk_index": 27258,
+        "score": 0.030477948486804962,
+        "doc_id": "728937384f00",
+        "page": 213,
+        "chunk_id": "728937384f00e28e42537dfbd9c4acebe23d3592a4a8db407e735198a720f16c::C2::p213::w0"
+      },
+      {
+        "rank": 2,
+        "chunk_index": 27558,
+        "score": 0.029462365433573723,
+        "doc_id": "728937384f00",
+        "page": 277,
+        "chunk_id": "728937384f00e28e42537dfbd9c4acebe23d3592a4a8db407e735198a720f16c::C2::p277::w0"
+      },
+      {
+        "rank": 3,
+        "chunk_index": 26230,
+        "score": 0.02819138392806053,
+        "doc_id": "728937384f00",
+        "page": 31,
+        "chunk_id": "728937384f00e28e42537dfbd9c4acebe23d3592a4a8db407e735198a720f16c::C2::p31::w0"
+      },
+      {
+        "rank": 4,
+        "chunk_index": 27143,
+        "score": 0.0279720276594162,
+        "doc_id": "728937384f00",
+        "page": 197,
+        "chunk_id": "728937384f00e28e42537dfbd9c4acebe23d3592a4a8db407e735198a720f16c::C2::p197::w0"
+      },
+      {
+        "rank": 5,
+        "chunk_index": 27228,
+        "score": 0.02742537297308445,
+        "doc_id": "728937384f00",
+        "page": 208,
+        "chunk_id": "728937384f00e28e42537dfbd9c4acebe23d3592a4a8db407e735198a720f16c::C2::p208::w0"
+      },
+      {
+        "rank": 6,
+        "chunk_index": 27711,
+        "score": 0.02698412910103798,
+        "doc_id": "728937384f00",
+        "page": 311,
+        "chunk_id": "728937384f00e28e42537dfbd9c4acebe23d3592a4a8db407e735198a720f16c::C2::p311::w0"
+      },
+      {
+        "rank": 7,
+        "chunk_index": 27033,
+        "score": 0.026875901967287064,
+        "doc_id": "728937384f00",
+        "page": 173,
+        "chunk_id": "728937384f00e28e42537dfbd9c4acebe23d3592a4a8db407e735198a720f16c::C2::p173::w0"
+      },
+      {
+        "rank": 8,
+        "chunk_index": 26802,
+        "score": 0.02678571455180645,
+        "doc_id": "728937384f00",
+        "page": 123,
+        "chunk_id": "728937384f00e28e42537dfbd9c4acebe23d3592a4a8db407e735198a720f16c::C2::p123::w0"
+      },
+      {
+        "rank": 9,
+        "chunk_index": 10019,
+        "score": 0.016393441706895828,
+        "doc_id": "0ea899ba19c2",
+        "page": 362,
+        "chunk_id": "0ea899ba19c2727c06fc6926b1a4180c8edbecdde684e15a48fb49267c7ffc81::C2::p362::w3"
+      },
+      {
+        "rank": 10,
+        "chunk_index": 10017,
+        "score": 0.016129031777381897,
+        "doc_id": "0ea899ba19c2",
+        "page": 362,
+        "chunk_id": "0ea899ba19c2727c06fc6926b1a4180c8edbecdde684e15a48fb49267c7ffc81::C2::p362::w1"
+      }
+    ],
+    "final_top": [
+      {
+        "rank": 1,
+        "chunk_index": 27258,
+        "score": 8.693129539489746,
+        "doc_id": "728937384f00",
+        "page": 213,
+        "chunk_id": "728937384f00e28e42537dfbd9c4acebe23d3592a4a8db407e735198a720f16c::C2::p213::w0"
+      },
+      {
+        "rank": 2,
+        "chunk_index": 26802,
+        "score": 8.579941749572754,
+        "doc_id": "728937384f00",
+        "page": 123,
+        "chunk_id": "728937384f00e28e42537dfbd9c4acebe23d3592a4a8db407e735198a720f16c::C2::p123::w0"
+      },
+      {
+        "rank": 3,
+        "chunk_index": 27711,
+        "score": 8.23532485961914,
+        "doc_id": "728937384f00",
+        "page": 311,
+        "chunk_id": "728937384f00e28e42537dfbd9c4acebe23d3592a4a8db407e735198a720f16c::C2::p311::w0"
+      },
+      {
+        "rank": 4,
+        "chunk_index": 27033,
+        "score": 8.135507583618164,
+        "doc_id": "728937384f00",
+        "page": 173,
+        "chunk_id": "728937384f00e28e42537dfbd9c4acebe23d3592a4a8db407e735198a720f16c::C2::p173::w0"
+      },
+      {
+        "rank": 5,
+        "chunk_index": 27558,
+        "score": 8.064010620117188,
+        "doc_id": "728937384f00",
+        "page": 277,
+        "chunk_id": "728937384f00e28e42537dfbd9c4acebe23d3592a4a8db407e735198a720f16c::C2::p277::w0"
+      }
+    ]
+  }
+]

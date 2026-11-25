@@ -1,0 +1,127 @@
+{
+  "n_rows": 10,
+  "probe_rows": 10,
+  "all_gold_pairs": 14,
+  "citation_refs_extracted": 11,
+  "correct_refs": 0,
+  "metrics": [
+    {
+      "metric": "document_retrieval_coverage_rows",
+      "value": 0.8,
+      "numerator": 8,
+      "denominator": 10,
+      "definition": "Rows where >=1 expected document appears in replayed top-k; denominator is complete-probe rows."
+    },
+    {
+      "metric": "expected_document_retrieval_coverage",
+      "value": 0.7143,
+      "numerator": 10,
+      "denominator": 14,
+      "definition": "Expected documents found in replayed top-k / all expected documents."
+    },
+    {
+      "metric": "page_retrieval_coverage_rows_any",
+      "value": 0.0,
+      "numerator": 0,
+      "denominator": 10,
+      "definition": "Rows where >=1 expected (document,page) pair appears in replayed top-k."
+    },
+    {
+      "metric": "expected_page_retrieval_coverage",
+      "value": 0.0,
+      "numerator": 0,
+      "denominator": 14,
+      "definition": "Expected (document,page) pairs found in replayed top-k / all expected pairs."
+    },
+    {
+      "metric": "page_retrieval_coverage_rows_all",
+      "value": 0.0,
+      "numerator": 0,
+      "denominator": 10,
+      "definition": "Rows where every expected (document,page) pair appears in replayed top-k."
+    },
+    {
+      "metric": "citation_precision",
+      "value": 0.0,
+      "numerator": 0,
+      "denominator": 11,
+      "definition": "Diagnostic citation refs matching a gold pair / all extracted citation refs."
+    },
+    {
+      "metric": "citation_recall",
+      "value": 0.0,
+      "numerator": 0,
+      "denominator": 14,
+      "definition": "Gold (row,document,page) pairs correctly cited / all gold pairs."
+    },
+    {
+      "metric": "citation_correctness_rows",
+      "value": 0.0,
+      "numerator": 0,
+      "denominator": 10,
+      "definition": "Per-query harness citation correctness / answer rows."
+    },
+    {
+      "metric": "citation_unresolved_count",
+      "value": 5,
+      "numerator": null,
+      "denominator": null,
+      "definition": "Rows whose agent stopped with citation_unresolved."
+    },
+    {
+      "metric": "wrong_document_count",
+      "value": 4,
+      "numerator": null,
+      "denominator": null,
+      "definition": "Rows with >=1 expected document missing from replayed top-k."
+    },
+    {
+      "metric": "wrong_page_count",
+      "value": 8,
+      "numerator": null,
+      "denominator": null,
+      "definition": "Rows with a retrieved expected document but no expected page in replayed top-k."
+    },
+    {
+      "metric": "answer_accuracy",
+      "value": 0.0,
+      "numerator": 0,
+      "denominator": 10,
+      "definition": "Correct answers / rows with expected_behaviour=answer."
+    },
+    {
+      "metric": "abstention_performance",
+      "value": null,
+      "numerator": 0,
+      "denominator": 0,
+      "definition": "Not measurable: no abstain rows in this 10-row sample."
+    },
+    {
+      "metric": "gold_index_coverage",
+      "value": 1.0,
+      "numerator": 14,
+      "denominator": 14,
+      "definition": "Gold (document,page) pairs present in the frozen C2 chunk index."
+    }
+  ],
+  "failure_counts": {
+    "wrong_document_retrieved": 4,
+    "correct_document_wrong_page": 8,
+    "relevant_evidence_not_retrieved": 0,
+    "citation_unresolved": 5,
+    "citation_parsing_failure": 1,
+    "unsupported_answer": 4,
+    "incorrect_answer_despite_correct_evidence": 0,
+    "other_insufficient_evidence": 0
+  },
+  "failure_labels": {
+    "wrong_document_retrieved": "Wrong document retrieved",
+    "correct_document_wrong_page": "Correct document, wrong page",
+    "relevant_evidence_not_retrieved": "Relevant evidence not retrieved",
+    "citation_unresolved": "Citation unresolved",
+    "citation_parsing_failure": "Citation parsing failure",
+    "unsupported_answer": "Unsupported answer",
+    "incorrect_answer_despite_correct_evidence": "Incorrect answer despite correct evidence",
+    "other_insufficient_evidence": "Other / insufficient evidence"
+  }
+}

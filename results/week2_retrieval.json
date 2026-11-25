@@ -1,0 +1,244 @@
+{
+  "source": {
+    "notebook": "notebooks/04_retrieval_recall.ipynb",
+    "cache_root": "results/week2_retrieval_cache",
+    "generated": "2026-11-23T09:03:24",
+    "note": "Read-only from caches; no re-embedding and no reranking were performed here."
+  },
+  "corpus": {
+    "chunker": "C2",
+    "n_indexed_docs": 37,
+    "n_chunks": 50221,
+    "embedding_model": "bge-small-en-v1.5",
+    "embedding_dim": 384
+  },
+  "eval": {
+    "n_rows": 45,
+    "n_single_evidence": 35,
+    "n_multi_evidence": 10,
+    "multi_evidence_indices": [
+      0,
+      1,
+      2,
+      3,
+      34,
+      36,
+      37,
+      40,
+      42,
+      44
+    ]
+  },
+  "matching_rule": "Chunk-level doc/page match (not full-excerpt containment): for a query, gold relevant G is the set of (document_id, pdf_page) from its gold evidence records. A retrieved chunk is a hit if chunk.document_id equals a gold document_id and the gold pdf_page lies within [chunk.page_start, chunk.page_end] (inclusive). recall@k = fraction of eval rows with >=1 hit in top-k; MRR = mean(1/rank of first hit) over rows (0 if none). Hybrid = Reciprocal Rank Fusion over BM25 and dense rankings with k=60: score(d)=sum 1/(60+rank).",
+  "assumption": "The C2 index for this report holds only the documents referenced by dev eval evidence (37 docs), not the full freeze corpus; recall is measured against that dev slice.",
+  "c2_hybrid": {
+    "description": "RRF(cleaned BM25, dense bge-small-en-v1.5), candidate pool top-100, page-level",
+    "rrf_k": 60,
+    "pool_k": 100,
+    "bm25": "cleaned tokenizer: lowercase, strip punctuation, drop simple stopwords and 1-char tokens",
+    "report_ks": [
+      1,
+      3,
+      5,
+      10,
+      20,
+      50,
+      100
+    ],
+    "splits": {
+      "all": {
+        "n": 45,
+        "recall@1": 0.0,
+        "recall@3": 0.044444444444444446,
+        "recall@5": 0.06666666666666667,
+        "recall@10": 0.1111111111111111,
+        "recall@20": 0.24444444444444444,
+        "recall@50": 0.37777777777777777,
+        "recall@100": 0.6444444444444445,
+        "hits@1": 0,
+        "hits@3": 2,
+        "hits@5": 3,
+        "hits@10": 5,
+        "hits@20": 11,
+        "hits@50": 17,
+        "hits@100": 29,
+        "mrr": 0.04735049541284693
+      },
+      "single_evidence": {
+        "n": 35,
+        "recall@1": 0.0,
+        "recall@3": 0.05714285714285714,
+        "recall@5": 0.05714285714285714,
+        "recall@10": 0.11428571428571428,
+        "recall@20": 0.22857142857142856,
+        "recall@50": 0.3142857142857143,
+        "recall@100": 0.5714285714285714,
+        "hits@1": 0,
+        "hits@3": 2,
+        "hits@5": 2,
+        "hits@10": 4,
+        "hits@20": 8,
+        "hits@50": 11,
+        "hits@100": 20,
+        "mrr": 0.04579223064790709
+      },
+      "multi_evidence": {
+        "n": 10,
+        "recall@1": 0.0,
+        "recall@3": 0.0,
+        "recall@5": 0.1,
+        "recall@10": 0.1,
+        "recall@20": 0.3,
+        "recall@50": 0.6,
+        "recall@100": 0.9,
+        "hits@1": 0,
+        "hits@3": 0,
+        "hits@5": 1,
+        "hits@10": 1,
+        "hits@20": 3,
+        "hits@50": 6,
+        "hits@100": 9,
+        "mrr": 0.05280442209013638
+      }
+    }
+  },
+  "bge_reranker_base": {
+    "description": "Cross-encoder rerank of the top-100 hybrid pool, page-level (cached scores)",
+    "model": "BAAI/bge-reranker-base",
+    "rerank_pool_k": 100,
+    "report_ks": [
+      1,
+      3,
+      5,
+      10
+    ],
+    "splits": {
+      "all": {
+        "n": 45,
+        "recall@1": 0.044444444444444446,
+        "recall@3": 0.1111111111111111,
+        "recall@5": 0.2,
+        "recall@10": 0.2222222222222222,
+        "hits@1": 2,
+        "hits@3": 5,
+        "hits@5": 9,
+        "hits@10": 10,
+        "mrr": 0.10878796412113406
+      },
+      "single_evidence": {
+        "n": 35,
+        "recall@1": 0.05714285714285714,
+        "recall@3": 0.11428571428571428,
+        "recall@5": 0.22857142857142856,
+        "recall@10": 0.2571428571428571,
+        "hits@1": 2,
+        "hits@3": 4,
+        "hits@5": 8,
+        "hits@10": 9,
+        "mrr": 0.11553157233622606
+      },
+      "multi_evidence": {
+        "n": 10,
+        "recall@1": 0.0,
+        "recall@3": 0.1,
+        "recall@5": 0.1,
+        "recall@10": 0.1,
+        "hits@1": 0,
+        "hits@3": 1,
+        "hits@5": 1,
+        "hits@10": 1,
+        "mrr": 0.08518533536831216
+      }
+    },
+    "mean_latency_per_query_sec": 90.81454953473329
+  },
+  "decomposition_coverage_at_10": {
+    "description": "Multi-evidence rows: LLM decomposition into one sub-question per gold evidence record, per-subquery retrieval over the cached hybrid pool with per-subquery rerank, merge, then evidence-level fraction of gold doc-pages present in merged top-10.",
+    "status": "complete",
+    "completed": 10,
+    "total": 10,
+    "avg_pair_fraction_hit_at_10": 0.05,
+    "per_row": [
+      {
+        "row_index": 0,
+        "n_gold": 2,
+        "n_parts": 2,
+        "has_sub_queries": true,
+        "status": "completed",
+        "coverage_at_10": 0.0
+      },
+      {
+        "row_index": 1,
+        "n_gold": 2,
+        "n_parts": 2,
+        "has_sub_queries": true,
+        "status": "completed",
+        "coverage_at_10": 0.0
+      },
+      {
+        "row_index": 2,
+        "n_gold": 2,
+        "n_parts": 2,
+        "has_sub_queries": true,
+        "status": "completed",
+        "coverage_at_10": 0.0
+      },
+      {
+        "row_index": 3,
+        "n_gold": 2,
+        "n_parts": 2,
+        "has_sub_queries": true,
+        "status": "completed",
+        "coverage_at_10": 0.0
+      },
+      {
+        "row_index": 34,
+        "n_gold": 2,
+        "n_parts": 2,
+        "has_sub_queries": true,
+        "status": "completed",
+        "coverage_at_10": 0.0
+      },
+      {
+        "row_index": 36,
+        "n_gold": 2,
+        "n_parts": 2,
+        "has_sub_queries": true,
+        "status": "completed",
+        "coverage_at_10": 0.0
+      },
+      {
+        "row_index": 37,
+        "n_gold": 2,
+        "n_parts": 2,
+        "has_sub_queries": true,
+        "status": "completed",
+        "coverage_at_10": 0.0
+      },
+      {
+        "row_index": 40,
+        "n_gold": 2,
+        "n_parts": 2,
+        "has_sub_queries": true,
+        "status": "completed",
+        "coverage_at_10": 0.0
+      },
+      {
+        "row_index": 42,
+        "n_gold": 2,
+        "n_parts": 2,
+        "has_sub_queries": true,
+        "status": "completed",
+        "coverage_at_10": 0.5
+      },
+      {
+        "row_index": 44,
+        "n_gold": 2,
+        "n_parts": 2,
+        "has_sub_queries": true,
+        "status": "completed",
+        "coverage_at_10": 0.0
+      }
+    ]
+  }
+}

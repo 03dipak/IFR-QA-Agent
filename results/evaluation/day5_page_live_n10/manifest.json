@@ -1,0 +1,28 @@
+{
+  "run_id": "day5_page_live_n10",
+  "live": true,
+  "split": "dev",
+  "limit": null,
+  "row_ids": [
+    "G-001",
+    "G-003",
+    "G-004",
+    "G-010",
+    "G-036",
+    "G-037",
+    "G-039",
+    "G-040",
+    "G-041",
+    "G-042"
+  ],
+  "missing_row_ids": [],
+  "source": "live",
+  "n_rows": 10,
+  "gold_hash": "828b6704037297cd2e86da4c514edd9665b1945ee9c062ae7e5a15e417f0b09c",
+  "model": "Qwen/Qwen3-8B",
+  "cost_price_source": "college endpoint: no published price; cost proxy is tokens only",
+  "index_version": "C2-cached-50221",
+  "prompt_version": "trackb-mvp-v1",
+  "orchestrator": "hand_rolled (src.agents.graph); no LangGraph runtime",
+  "created_at": "2026-11-23T14:10:18"
+}

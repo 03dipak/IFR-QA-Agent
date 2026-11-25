@@ -1,0 +1,33 @@
+services:
+  api:
+    build: .
+    command: ["uvicorn", "src.api:app", "--host", "0.0.0.0", "--port", "8000"]
+    environment:
+      AGENT_INDEX_PATH: /app/results/full_index_v1/page_hash384
+      AGENT_STATE_DB: /app/results/agent_state.sqlite
+      LLM_CHAT_URL: ${LLM_CHAT_URL:?set LLM_CHAT_URL in .env}
+      LLM_MODEL: ${LLM_MODEL:?set LLM_MODEL in .env}
+      LLM_API_KEY: ${LLM_API_KEY:?set LLM_API_KEY in .env}
+      LLM_CA_CERT: ${LLM_CA_CERT:-}
+      BACKEND_URL: http://api:8000
+    volumes:
+      - ./results/full_index_v1/page_hash384:/app/results/full_index_v1/page_hash384:ro
+    ports:
+      - "8000:8000"
+
+  ui:
+    build: .
+    command: [
+      "streamlit", "run", "src/ui/app.py",
+      "--server.address", "0.0.0.0",
+      "--server.port", "8501",
+      "--server.headless", "true",
+      "--browser.gatherUsageStats", "false"
+    ]
+    environment:
+      BACKEND_URL: http://api:8000
+      BACKEND_TIMEOUT_SECONDS: ${BACKEND_TIMEOUT_SECONDS:-300}
+    ports:
+      - "8501:8501"
+    depends_on:
+      - api

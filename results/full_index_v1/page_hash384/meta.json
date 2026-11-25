@@ -1,0 +1,50 @@
+{
+  "artifacts": [
+    "chunks.jsonl",
+    "chunk_ids.json",
+    "embeddings.npy",
+    "index.faiss",
+    "chunk_offsets.json",
+    "embedding_progress.json"
+  ],
+  "checkpoint_batches": 10,
+  "chunk_build_seconds": 0.0,
+  "chunk_completion": {
+    "docs_appended": 536,
+    "docs_failed": 0,
+    "docs_missing": 536,
+    "docs_present_after": 1022,
+    "docs_present_before": 486,
+    "docs_total": 1022,
+    "expected_present": 1022,
+    "failed_docs_file": "results/full_index_v1/failed_docs.txt"
+  },
+  "chunk_coverage": {
+    "distinct_doc_ids": 1022,
+    "expected_doc_ids": 1022,
+    "failed_docs": 0,
+    "freeze_docs": 1022,
+    "ok": true
+  },
+  "chunk_ids_sha256": "a6269e8820fe5c8d13bc93acfd664cad72631a5a8cc63dd762f98c239ae75bfd",
+  "chunks": 466799,
+  "chunks_reused": true,
+  "dim": 384,
+  "document_ids_sha256": "56300faf0943a8ad6ced61c05736c7f1f06e130936d19c96021f0ce2795425b8",
+  "documents_indexed": 1022,
+  "documents_skipped": 0,
+  "documents_total": 1022,
+  "elapsed_seconds": 312.92,
+  "embedding_batches": 1824,
+  "embedding_kind": "offline deterministic token feature hashing",
+  "embedding_seconds": 301.91,
+  "embeddings_sha256": "23950bbfca34d36fcbc09f53a2598488ebcac6b11d96404b6f9f49bf923cb658",
+  "freeze_manifest_sha256": "899ac206a760af531e102e01daf99e4ff61d36cb6fc1e2e7a28cf01b094b5edd",
+  "index_version": "e9cc96eb8795d2de",
+  "model": "local:hash384-v1",
+  "resumed_from_chunk": 0,
+  "scope": "freeze_v1_all_documents",
+  "skipped_document_ids": [],
+  "tokenizer": "tokenizer.v1",
+  "variant": "page"
+}

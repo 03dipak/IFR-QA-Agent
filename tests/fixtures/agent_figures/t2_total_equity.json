@@ -1,0 +1,47 @@
+{
+  "query": "For FY2025 consolidated, compare total equity for Aurobindo Pharma and Dr Reddy's.",
+  "requested": [
+    {
+      "company_id": "aurobindo_pharma",
+      "label": "Total equity"
+    },
+    {
+      "company_id": "dr_reddys",
+      "label": "Total equity"
+    }
+  ],
+  "chunks": [
+    {
+      "chunk_id": "e97121aee57558adf2dc27d6770bec497df8a9cb4deeb37d67186abef5484ed2:t473",
+      "id": "e97121aee57558adf2dc27d6770bec497df8a9cb4deeb37d67186abef5484ed2:t473",
+      "text": "statement_kind: balance_sheet\nunit: \ncaption: \nreporting_basis: consolidated\n(b) Other equity 17 325,952.4 297,842.1: (b) | Other | equity | 17 | 325,952.4 | 297,842.1\nEquity attributable to owners of the Parent Company 326,533.2 298,428.0: Equity | attributable | to | owners | of | the | Parent\n(c) Non-controlling interest (63.9) 80.0: (c) | Non-controlling | interest | (63.9) | 80.0\nTotal equity 326,469.3 298,508.0: Total | equity | 326,469.3 | 298,508.0",
+      "meta": {
+        "chunk_type": "table",
+        "company_id": "aurobindo_pharma",
+        "doc_type": "annual",
+        "document_id": "e97121aee57558adf2dc27d6770bec497df8a9cb4deeb37d67186abef5484ed2",
+        "page": 205,
+        "period": "FY2025",
+        "reporting_basis": "consolidated",
+        "statement_kind": "balance_sheet",
+        "variant": "consolidated"
+      }
+    },
+    {
+      "chunk_id": "bdd1b13a7b77a338641ee7aa03f94f105d1bd0f1f853ea6ea0986047a918a63c:t436",
+      "id": "bdd1b13a7b77a338641ee7aa03f94f105d1bd0f1f853ea6ea0986047a918a63c:t436",
+      "text": "statement_kind: balance_sheet\nunit: \ncaption: \nreporting_basis: consolidated\nOther equity 3,34,662 2,81,714: Other | equity | 3,34,662 | 2,81,714\nEquity attributable to equity shareholders of parent company 335,496 282,548: Equity | attributable | to | equity | shareholders | of\nNon-Controlling Interests (NCI) 2.40 A 3,778 -: Non-Controlling | Interests | (NCI) | 2.40 | A | 3,778\nTotal Equity 339,274 282,548: Total | Equity | 339,274 | 282,548",
+      "meta": {
+        "chunk_type": "table",
+        "company_id": "dr_reddys",
+        "doc_type": "annual",
+        "document_id": "bdd1b13a7b77a338641ee7aa03f94f105d1bd0f1f853ea6ea0986047a918a63c",
+        "page": 176,
+        "period": "FY2025",
+        "reporting_basis": "consolidated",
+        "statement_kind": "balance_sheet",
+        "variant": "consolidated"
+      }
+    }
+  ]
+}

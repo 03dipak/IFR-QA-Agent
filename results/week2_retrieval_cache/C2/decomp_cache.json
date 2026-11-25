@@ -1,0 +1,1636 @@
+{
+  "0554ae61e3fb4b0fbd73dc7a43d25f72d50624906cd214cef7bcfb5b1cb92c8b": {
+    "decomp_rerank_pool_size": 20,
+    "merged_ranked": [
+      [
+        43589,
+        -0.8991875052452087
+      ],
+      [
+        43600,
+        -1.4257034063339233
+      ],
+      [
+        33232,
+        -1.6219091415405273
+      ],
+      [
+        33018,
+        -1.6570264101028442
+      ],
+      [
+        33146,
+        -1.812708854675293
+      ],
+      [
+        24239,
+        -1.9744722843170166
+      ],
+      [
+        24356,
+        -2.7861580848693848
+      ],
+      [
+        26017,
+        -3.2872605323791504
+      ],
+      [
+        33125,
+        -3.3597540855407715
+      ],
+      [
+        33663,
+        -3.399427890777588
+      ],
+      [
+        31304,
+        -3.681507110595703
+      ],
+      [
+        32952,
+        -3.8122200965881348
+      ],
+      [
+        19122,
+        -4.055221080780029
+      ],
+      [
+        33471,
+        -4.070784091949463
+      ],
+      [
+        46232,
+        -4.09098482131958
+      ],
+      [
+        50189,
+        -4.1309003829956055
+      ],
+      [
+        40931,
+        -4.140772819519043
+      ],
+      [
+        32115,
+        -4.4493231773376465
+      ],
+      [
+        33665,
+        -4.648557662963867
+      ],
+      [
+        31320,
+        -4.681559085845947
+      ],
+      [
+        32848,
+        -4.761745452880859
+      ],
+      [
+        33640,
+        -4.797737121582031
+      ],
+      [
+        32796,
+        -4.927811622619629
+      ],
+      [
+        33608,
+        -5.552732467651367
+      ],
+      [
+        33248,
+        -5.599042892456055
+      ],
+      [
+        33657,
+        -5.815531253814697
+      ],
+      [
+        33633,
+        -5.858692169189453
+      ],
+      [
+        32770,
+        -5.972805023193359
+      ],
+      [
+        32832,
+        -6.116755485534668
+      ]
+    ],
+    "n_parts": 2,
+    "per_sub": [
+      {
+        "dense": "embed",
+        "pool_n": 100,
+        "rerank": "rerank",
+        "rerank_n": 20,
+        "subq": "What was the standalone revenue from operations of Asian Paints Limited in Q1 FY2026 (three months ended 30 June 2025) as reported in its quarterly results filing in INR?"
+      },
+      {
+        "dense": "embed",
+        "pool_n": 100,
+        "rerank": "rerank",
+        "rerank_n": 20,
+        "subq": "What was the standalone revenue from operations of Asian Paints Limited in Q2 FY2026 (three months ended 30 September 2025) as reported in its quarterly results filing in INR, and which quarter had a higher revenue along with the difference in INR?"
+      }
+    ],
+    "question": "Asian Paints Limited reported standalone revenue from operations twice in FY2026. Taking the figures exactly as printed in its quarterly results filings - Q1 FY2026 (three months ended 30 June 2025) and Q2 FY2026 (three months ended 30 September 2025) - state each amount in INR on one scale (the June filing prints rupees, the September filing prints Rs. in lakh), say which quarter booked more, and quantify the gap in INR.",
+    "sub_queries": [
+      "What was the standalone revenue from operations of Asian Paints Limited in Q1 FY2026 (three months ended 30 June 2025) as reported in its quarterly results filing in INR?",
+      "What was the standalone revenue from operations of Asian Paints Limited in Q2 FY2026 (three months ended 30 September 2025) as reported in its quarterly results filing in INR, and which quarter had a higher revenue along with the difference in INR?"
+    ]
+  },
+  "1bd9182d430e5ce41481f2f4e6093e97e925a32b546487321ff8f3debca472d7": {
+    "decomp_rerank_pool_size": 20,
+    "merged_ranked": [
+      [
+        50155,
+        6.551582336425781
+      ],
+      [
+        50175,
+        6.451793193817139
+      ],
+      [
+        49889,
+        6.336395263671875
+      ],
+      [
+        49851,
+        5.8698625564575195
+      ],
+      [
+        50168,
+        5.350314617156982
+      ],
+      [
+        49821,
+        5.21616268157959
+      ],
+      [
+        50147,
+        5.172418594360352
+      ],
+      [
+        49968,
+        4.668134689331055
+      ],
+      [
+        50104,
+        4.628790855407715
+      ],
+      [
+        50131,
+        4.566656112670898
+      ],
+      [
+        50124,
+        4.237941741943359
+      ],
+      [
+        50101,
+        4.071350574493408
+      ],
+      [
+        49808,
+        3.637209415435791
+      ],
+      [
+        50107,
+        3.27048659324646
+      ],
+      [
+        1409,
+        3.13376522064209
+      ],
+      [
+        49802,
+        3.0798821449279785
+      ],
+      [
+        50084,
+        2.8890318870544434
+      ],
+      [
+        49796,
+        2.687063694000244
+      ],
+      [
+        1858,
+        2.567817211151123
+      ],
+      [
+        48125,
+        2.426609992980957
+      ],
+      [
+        50078,
+        2.313020706176758
+      ],
+      [
+        1265,
+        2.151829481124878
+      ],
+      [
+        29306,
+        2.0864181518554688
+      ],
+      [
+        49835,
+        1.9577856063842773
+      ],
+      [
+        49893,
+        1.8287696838378906
+      ],
+      [
+        28802,
+        1.691260814666748
+      ],
+      [
+        48959,
+        1.3843213319778442
+      ],
+      [
+        49897,
+        1.3138148784637451
+      ],
+      [
+        7153,
+        1.157052755355835
+      ],
+      [
+        28793,
+        1.0911972522735596
+      ],
+      [
+        29301,
+        0.9009675979614258
+      ],
+      [
+        1730,
+        0.8596997261047363
+      ],
+      [
+        1663,
+        0.5787150263786316
+      ],
+      [
+        49627,
+        0.14215795695781708
+      ],
+      [
+        42460,
+        -0.4080662727355957
+      ],
+      [
+        24106,
+        -1.4220507144927979
+      ],
+      [
+        10017,
+        -6.091001987457275
+      ],
+      [
+        10018,
+        -6.657803535461426
+      ],
+      [
+        10019,
+        -6.998389720916748
+      ],
+      [
+        10020,
+        -7.797643184661865
+      ]
+    ],
+    "n_parts": 2,
+    "per_sub": [
+      {
+        "dense": "cache",
+        "pool_n": 100,
+        "rerank": "cache",
+        "rerank_n": 20,
+        "subq": "For the year ended 31 March 2025, what is the total liabilities figure for Deepak Nitrite in Rs. crore as printed?"
+      },
+      {
+        "dense": "cache",
+        "pool_n": 100,
+        "rerank": "rerank",
+        "rerank_n": 20,
+        "subq": "For the year ended 31 March 2025, what is the total liabilities figure for Srf in Rs. crore as printed?"
+      }
+    ],
+    "question": "For the year ended 31 March 2025, consolidated (both companies): is total liabilities larger for Deepak Nitrite or for Srf, and what are the two figures in Rs. in crore as printed?",
+    "sub_queries": [
+      "For the year ended 31 March 2025, what is the total liabilities figure for Deepak Nitrite in Rs. crore as printed?",
+      "For the year ended 31 March 2025, what is the total liabilities figure for Srf in Rs. crore as printed?"
+    ]
+  },
+  "241e76d3b08479158dbd0a131a825f166e69083198c08b0bc7620ce6cd679b7c": {
+    "decomp_rerank_pool_size": 20,
+    "merged_ranked": [
+      [
+        22210,
+        5.792296886444092
+      ],
+      [
+        13691,
+        0.5393679738044739
+      ],
+      [
+        22182,
+        0.2595229148864746
+      ],
+      [
+        22705,
+        -0.26954182982444763
+      ],
+      [
+        24237,
+        -2.158320903778076
+      ],
+      [
+        24118,
+        -2.316836357116699
+      ],
+      [
+        21391,
+        -2.364781141281128
+      ],
+      [
+        3699,
+        -2.61306095123291
+      ],
+      [
+        40935,
+        -3.110043525695801
+      ],
+      [
+        35683,
+        -3.2210493087768555
+      ],
+      [
+        23728,
+        -3.3863508701324463
+      ],
+      [
+        43486,
+        -3.546095848083496
+      ],
+      [
+        40931,
+        -3.5474653244018555
+      ],
+      [
+        23916,
+        -3.547657012939453
+      ],
+      [
+        23770,
+        -3.6955859661102295
+      ],
+      [
+        27202,
+        -3.7565407752990723
+      ],
+      [
+        23518,
+        -4.280877113342285
+      ],
+      [
+        21707,
+        -4.294477462768555
+      ],
+      [
+        31320,
+        -4.6329755783081055
+      ],
+      [
+        46232,
+        -4.643959045410156
+      ],
+      [
+        24072,
+        -4.681021690368652
+      ],
+      [
+        23705,
+        -4.964941501617432
+      ],
+      [
+        24037,
+        -5.032877445220947
+      ],
+      [
+        23805,
+        -5.0931620597839355
+      ],
+      [
+        22874,
+        -5.954469680786133
+      ],
+      [
+        19143,
+        -6.955583572387695
+      ],
+      [
+        19167,
+        -7.364162445068359
+      ],
+      [
+        23806,
+        -7.805788516998291
+      ],
+      [
+        12707,
+        -8.133993148803711
+      ]
+    ],
+    "n_parts": 2,
+    "per_sub": [
+      {
+        "dense": "embed",
+        "pool_n": 100,
+        "rerank": "rerank",
+        "rerank_n": 20,
+        "subq": "What is the revenue from operations for Bosch Limited's quarterly filing for the three months ended 30 June 2025 (Q1 FY2026) in INR?"
+      },
+      {
+        "dense": "embed",
+        "pool_n": 100,
+        "rerank": "rerank",
+        "rerank_n": 20,
+        "subq": "What is the revenue from operations for Bosch Limited's quarterly filing for the three months ended 30 September 2025 (Q2 FY2026) in INR (Rs. in lakh), and which quarter had higher revenue along with the difference in INR?"
+      }
+    ],
+    "question": "Bosch Limited's standalone quarterly filings show revenue from operations for the three months ended 30 June 2025 (Q1 FY2026) and the three months ended 30 September 2025 (Q2 FY2026). Give both printed amounts in INR on the same scale (June filing in rupees, September filing in Rs. in lakh), say which quarter was higher, and report the difference in INR.",
+    "sub_queries": [
+      "What is the revenue from operations for Bosch Limited's quarterly filing for the three months ended 30 June 2025 (Q1 FY2026) in INR?",
+      "What is the revenue from operations for Bosch Limited's quarterly filing for the three months ended 30 September 2025 (Q2 FY2026) in INR (Rs. in lakh), and which quarter had higher revenue along with the difference in INR?"
+    ]
+  },
+  "5ce0a627e99e6f9fdf956df9413f1529f2ab080186332468ecddd5efc5c311f1": {
+    "decomp_rerank_pool_size": 20,
+    "merged_ranked": [
+      [
+        36560,
+        2.16361665725708
+      ],
+      [
+        36559,
+        0.9510948061943054
+      ],
+      [
+        38121,
+        -1.2203305959701538
+      ],
+      [
+        36663,
+        -1.602232575416565
+      ],
+      [
+        41264,
+        -1.774154782295227
+      ],
+      [
+        19166,
+        -1.8016027212142944
+      ],
+      [
+        19142,
+        -2.063722848892212
+      ],
+      [
+        50189,
+        -2.194305181503296
+      ],
+      [
+        36748,
+        -2.4636292457580566
+      ],
+      [
+        50219,
+        -2.8338143825531006
+      ],
+      [
+        23032,
+        -3.0142242908477783
+      ],
+      [
+        48125,
+        -3.304880380630493
+      ],
+      [
+        26017,
+        -3.407362461090088
+      ],
+      [
+        36997,
+        -3.53151273727417
+      ],
+      [
+        36990,
+        -3.768561363220215
+      ],
+      [
+        19171,
+        -3.7750015258789062
+      ],
+      [
+        19147,
+        -4.410496711730957
+      ],
+      [
+        643,
+        -4.541796684265137
+      ],
+      [
+        36654,
+        -4.749311447143555
+      ],
+      [
+        36946,
+        -4.762825012207031
+      ],
+      [
+        49893,
+        -4.951355934143066
+      ],
+      [
+        19143,
+        -5.838420867919922
+      ],
+      [
+        36758,
+        -5.907861709594727
+      ],
+      [
+        19162,
+        -6.128788948059082
+      ],
+      [
+        25256,
+        -6.155307292938232
+      ],
+      [
+        19167,
+        -6.531782627105713
+      ],
+      [
+        24542,
+        -6.860493183135986
+      ],
+      [
+        36751,
+        -7.001804351806641
+      ],
+      [
+        1889,
+        -7.07480525970459
+      ],
+      [
+        9493,
+        -8.142257690429688
+      ],
+      [
+        1888,
+        -9.54342269897461
+      ]
+    ],
+    "n_parts": 2,
+    "per_sub": [
+      {
+        "dense": "embed",
+        "pool_n": 100,
+        "rerank": "rerank",
+        "rerank_n": 20,
+        "subq": "What was the revenue from operations of Bharat Electronics Limited in its FY2026 first quarter (ended 30 June 2025) in rupees?"
+      },
+      {
+        "dense": "embed",
+        "pool_n": 100,
+        "rerank": "rerank",
+        "rerank_n": 20,
+        "subq": "What was the revenue from operations of Bharat Electronics Limited in its FY2026 second quarter (ended 30 September 2025) in rupees (Rs. in lakh) and what is the difference in INR compared to the first quarter?"
+      }
+    ],
+    "question": "Bharat Electronics Limited, standalone: between its FY2026 first quarter (ended 30 June 2025) and second quarter (ended 30 September 2025) results filings, which quarter shows the higher revenue from operations? Report both printed figures in INR on the same scale (June: rupees, September: Rs. in lakh) plus the difference in INR.",
+    "sub_queries": [
+      "What was the revenue from operations of Bharat Electronics Limited in its FY2026 first quarter (ended 30 June 2025) in rupees?",
+      "What was the revenue from operations of Bharat Electronics Limited in its FY2026 second quarter (ended 30 September 2025) in rupees (Rs. in lakh) and what is the difference in INR compared to the first quarter?"
+    ]
+  },
+  "7fd850370f9685579ee36bb29a1a4affde8cba69561b50f6642911ca16a9b1f7": {
+    "decomp_rerank_pool_size": 20,
+    "merged_ranked": [
+      [
+        50155,
+        5.467421531677246
+      ],
+      [
+        48959,
+        4.534046173095703
+      ],
+      [
+        50098,
+        4.288294792175293
+      ],
+      [
+        50131,
+        4.283390998840332
+      ],
+      [
+        50147,
+        4.142553329467773
+      ],
+      [
+        50078,
+        3.9568004608154297
+      ],
+      [
+        50186,
+        3.9396657943725586
+      ],
+      [
+        50072,
+        3.782802104949951
+      ],
+      [
+        50084,
+        3.7445144653320312
+      ],
+      [
+        49968,
+        2.9223437309265137
+      ],
+      [
+        1699,
+        2.6251325607299805
+      ],
+      [
+        6852,
+        2.0108509063720703
+      ],
+      [
+        50101,
+        1.9217146635055542
+      ],
+      [
+        1134,
+        1.753775954246521
+      ],
+      [
+        50104,
+        1.7156925201416016
+      ],
+      [
+        49821,
+        1.5007269382476807
+      ],
+      [
+        49696,
+        1.4788004159927368
+      ],
+      [
+        50091,
+        1.4389429092407227
+      ],
+      [
+        50124,
+        1.0910272598266602
+      ],
+      [
+        29301,
+        0.5251866579055786
+      ],
+      [
+        49851,
+        0.4613395929336548
+      ],
+      [
+        49799,
+        0.1651017963886261
+      ],
+      [
+        6837,
+        -0.06373023986816406
+      ],
+      [
+        42876,
+        -0.3718438148498535
+      ],
+      [
+        39221,
+        -0.6868524551391602
+      ],
+      [
+        17099,
+        -0.7089952826499939
+      ],
+      [
+        10022,
+        -0.8556379079818726
+      ],
+      [
+        49627,
+        -0.871329128742218
+      ],
+      [
+        49843,
+        -1.069696068763733
+      ],
+      [
+        9821,
+        -1.4456171989440918
+      ],
+      [
+        49835,
+        -2.0119030475616455
+      ],
+      [
+        10017,
+        -3.250934600830078
+      ],
+      [
+        10019,
+        -3.3603692054748535
+      ],
+      [
+        43423,
+        -3.855241298675537
+      ],
+      [
+        43409,
+        -3.986762523651123
+      ],
+      [
+        43416,
+        -4.058434009552002
+      ],
+      [
+        43402,
+        -4.136370658874512
+      ],
+      [
+        10018,
+        -5.075760841369629
+      ],
+      [
+        10020,
+        -5.807711124420166
+      ]
+    ],
+    "n_parts": 2,
+    "per_sub": [
+      {
+        "dense": "cache",
+        "pool_n": 100,
+        "rerank": "rerank",
+        "rerank_n": 20,
+        "subq": "What is the total assets figure for Deepak Nitrite for the year ended 31 March 2025 consolidated results, in Rs. in crore as printed on their statement?"
+      },
+      {
+        "dense": "cache",
+        "pool_n": 100,
+        "rerank": "rerank",
+        "rerank_n": 20,
+        "subq": "What is the total assets figure for Srf for the year ended 31 March 2025 consolidated results, in Rs. in crore as printed on their statement?"
+      }
+    ],
+    "question": "Between Deepak Nitrite and Srf, on total assets for the year ended 31 March 2025 consolidated results, which prints the larger figure, and what are the two figures (in Rs. in crore, as printed on each statement)?",
+    "sub_queries": [
+      "What is the total assets figure for Deepak Nitrite for the year ended 31 March 2025 consolidated results, in Rs. in crore as printed on their statement?",
+      "What is the total assets figure for Srf for the year ended 31 March 2025 consolidated results, in Rs. in crore as printed on their statement?"
+    ]
+  },
+  "bc03fbe32974b929176514e40c380563c647dc6b6e5c6ae4da8db9ea3ae6b83b": {
+    "decomp_rerank_pool_size": 20,
+    "merged_ranked": [
+      [
+        19166,
+        -0.2589815557003021
+      ],
+      [
+        19142,
+        -0.8299006223678589
+      ],
+      [
+        31350,
+        -1.2948052883148193
+      ],
+      [
+        31370,
+        -1.4189499616622925
+      ],
+      [
+        34999,
+        -1.4573485851287842
+      ],
+      [
+        46929,
+        -1.465679407119751
+      ],
+      [
+        23032,
+        -1.6041216850280762
+      ],
+      [
+        47895,
+        -2.7660555839538574
+      ],
+      [
+        47686,
+        -3.1281511783599854
+      ],
+      [
+        46349,
+        -3.1484615802764893
+      ],
+      [
+        43486,
+        -3.193492889404297
+      ],
+      [
+        46933,
+        -3.442283868789673
+      ],
+      [
+        47595,
+        -3.592029094696045
+      ],
+      [
+        35040,
+        -3.68927264213562
+      ],
+      [
+        27747,
+        -3.842874526977539
+      ],
+      [
+        47721,
+        -3.931551933288574
+      ],
+      [
+        35511,
+        -4.188173294067383
+      ],
+      [
+        47809,
+        -4.472551345825195
+      ],
+      [
+        47244,
+        -4.539937973022461
+      ],
+      [
+        35058,
+        -4.873705863952637
+      ],
+      [
+        47701,
+        -4.882524490356445
+      ],
+      [
+        31304,
+        -4.942660331726074
+      ],
+      [
+        34490,
+        -5.058006286621094
+      ],
+      [
+        35042,
+        -5.193394184112549
+      ],
+      [
+        24060,
+        -5.302290439605713
+      ],
+      [
+        642,
+        -5.623747825622559
+      ],
+      [
+        35505,
+        -5.651984214782715
+      ],
+      [
+        35665,
+        -5.703294277191162
+      ],
+      [
+        35559,
+        -5.853046894073486
+      ],
+      [
+        19171,
+        -6.575109481811523
+      ],
+      [
+        23657,
+        -7.5424933433532715
+      ]
+    ],
+    "n_parts": 2,
+    "per_sub": [
+      {
+        "dense": "embed",
+        "pool_n": 100,
+        "rerank": "rerank",
+        "rerank_n": 20,
+        "subq": "What was Aurobindo Pharma Limited's revenue-from-operations for the three months ended 30 June 2025 in INR?"
+      },
+      {
+        "dense": "embed",
+        "pool_n": 100,
+        "rerank": "rerank",
+        "rerank_n": 20,
+        "subq": "What was Aurobindo Pharma Limited's revenue-from-operations for the three months ended 30 September 2025 in INR, and what is the INR difference compared to the quarter ended 30 June 2025?"
+      }
+    ],
+    "question": "For Aurobindo Pharma Limited's standalone quarterly filings, compare the revenue-from-operations line for the three months ended 30 June 2025 with the same line for the three months ended 30 September 2025. Give both numbers in INR on one basis (the June filing prints rupees, the September filing prints Rs. in lakh), identify the higher quarter, and give the INR difference.",
+    "sub_queries": [
+      "What was Aurobindo Pharma Limited's revenue-from-operations for the three months ended 30 June 2025 in INR?",
+      "What was Aurobindo Pharma Limited's revenue-from-operations for the three months ended 30 September 2025 in INR, and what is the INR difference compared to the quarter ended 30 June 2025?"
+    ]
+  },
+  "cd5a29875e40e4415a690d27d4caa9b71e875c0495c70b14f919136530758b39": {
+    "decomp_rerank_pool_size": 20,
+    "merged_ranked": [
+      [
+        48266,
+        5.66465950012207
+      ],
+      [
+        48288,
+        5.035334587097168
+      ],
+      [
+        48263,
+        4.871769905090332
+      ],
+      [
+        48239,
+        4.231889724731445
+      ],
+      [
+        24395,
+        3.1587653160095215
+      ],
+      [
+        47721,
+        2.6076252460479736
+      ],
+      [
+        38999,
+        2.5719242095947266
+      ],
+      [
+        38470,
+        1.8106755018234253
+      ],
+      [
+        37608,
+        1.6247930526733398
+      ],
+      [
+        24393,
+        1.5420031547546387
+      ],
+      [
+        47895,
+        1.4518532752990723
+      ],
+      [
+        50107,
+        1.3651437759399414
+      ],
+      [
+        46930,
+        0.8073524236679077
+      ],
+      [
+        47701,
+        0.5979170203208923
+      ],
+      [
+        48249,
+        0.3602913022041321
+      ],
+      [
+        50172,
+        0.1847565472126007
+      ],
+      [
+        47940,
+        0.14738324284553528
+      ],
+      [
+        47809,
+        -0.23816533386707306
+      ],
+      [
+        50101,
+        -0.4641827642917633
+      ],
+      [
+        19163,
+        -0.5566025376319885
+      ],
+      [
+        35625,
+        -0.6937749981880188
+      ],
+      [
+        19139,
+        -1.0813263654708862
+      ],
+      [
+        49799,
+        -1.3366724252700806
+      ],
+      [
+        38394,
+        -1.4303241968154907
+      ],
+      [
+        45236,
+        -1.5657622814178467
+      ],
+      [
+        19146,
+        -1.6744728088378906
+      ],
+      [
+        19169,
+        -2.3728652000427246
+      ],
+      [
+        19172,
+        -2.8548197746276855
+      ],
+      [
+        35180,
+        -2.9844894409179688
+      ],
+      [
+        35559,
+        -3.028395414352417
+      ],
+      [
+        3003,
+        -3.058234214782715
+      ],
+      [
+        17099,
+        -3.561966896057129
+      ],
+      [
+        34999,
+        -3.5675244331359863
+      ],
+      [
+        19171,
+        -3.7113516330718994
+      ],
+      [
+        35042,
+        -4.444868087768555
+      ],
+      [
+        19145,
+        -5.5493950843811035
+      ],
+      [
+        40497,
+        -5.691472053527832
+      ]
+    ],
+    "n_parts": 2,
+    "per_sub": [
+      {
+        "dense": "embed",
+        "pool_n": 100,
+        "rerank": "rerank",
+        "rerank_n": 20,
+        "subq": "What is the total assets of Aurobindo Pharma for the year ended 31 March 2025 consolidated results, reported in Rs. in million as printed?"
+      },
+      {
+        "dense": "embed",
+        "pool_n": 100,
+        "rerank": "rerank",
+        "rerank_n": 20,
+        "subq": "What is the total assets of Dr Reddys for the year ended 31 March 2025 consolidated results, reported in Rs. in million as printed?"
+      }
+    ],
+    "question": "Compare Aurobindo Pharma and Dr Reddys on total assets for the year ended 31 March 2025 consolidated results (both Aurobindo Pharma and Dr Reddys at the same basis): who reports more, and by how much, in Rs. in million as printed?",
+    "sub_queries": [
+      "What is the total assets of Aurobindo Pharma for the year ended 31 March 2025 consolidated results, reported in Rs. in million as printed?",
+      "What is the total assets of Dr Reddys for the year ended 31 March 2025 consolidated results, reported in Rs. in million as printed?"
+    ]
+  },
+  "cd80149fd4ffd2b8f09f9b0c1775fca67fccbc43bb24a825b5aed07772102563": {
+    "decomp_rerank_pool_size": 20,
+    "merged_ranked": [
+      [
+        45477,
+        2.3874874114990234
+      ],
+      [
+        19131,
+        2.053257465362549
+      ],
+      [
+        24381,
+        0.796779453754425
+      ],
+      [
+        43866,
+        0.6975023746490479
+      ],
+      [
+        19147,
+        0.0845685824751854
+      ],
+      [
+        24385,
+        0.005646750330924988
+      ],
+      [
+        45271,
+        -0.36169329285621643
+      ],
+      [
+        19156,
+        -0.5210891962051392
+      ],
+      [
+        19171,
+        -0.5503630042076111
+      ],
+      [
+        24396,
+        -1.0445107221603394
+      ],
+      [
+        19135,
+        -1.234426736831665
+      ],
+      [
+        24395,
+        -1.6477688550949097
+      ],
+      [
+        43668,
+        -1.7935519218444824
+      ],
+      [
+        44303,
+        -2.0468716621398926
+      ],
+      [
+        45479,
+        -2.1095194816589355
+      ],
+      [
+        45483,
+        -2.356696844100952
+      ],
+      [
+        38121,
+        -2.401203155517578
+      ],
+      [
+        45070,
+        -2.533846855163574
+      ],
+      [
+        24372,
+        -2.6091272830963135
+      ],
+      [
+        19122,
+        -3.546431303024292
+      ],
+      [
+        44265,
+        -3.69398832321167
+      ],
+      [
+        46195,
+        -3.7448363304138184
+      ],
+      [
+        23032,
+        -3.773141384124756
+      ],
+      [
+        31314,
+        -3.9174888134002686
+      ],
+      [
+        45074,
+        -4.0721611976623535
+      ],
+      [
+        46232,
+        -5.467721462249756
+      ],
+      [
+        45545,
+        -5.57988977432251
+      ],
+      [
+        19167,
+        -5.636706829071045
+      ],
+      [
+        44838,
+        -5.811591148376465
+      ]
+    ],
+    "n_parts": 2,
+    "per_sub": [
+      {
+        "dense": "embed",
+        "pool_n": 100,
+        "rerank": "rerank",
+        "rerank_n": 20,
+        "subq": "What was Biocon Limited's revenue from operations for the quarter ended 30 September 2025 (Q2 FY2026) in INR?"
+      },
+      {
+        "dense": "embed",
+        "pool_n": 100,
+        "rerank": "rerank",
+        "rerank_n": 20,
+        "subq": "What was Biocon Limited's revenue from operations for the quarter ended 30 June 2025 (Q1 FY2026) in INR, and which quarter had higher revenue along with the difference in INR?"
+      }
+    ],
+    "question": "For Biocon Limited's standalone results, what was revenue from operations for the quarter ended 30 September 2025 (Q2 FY2026) compared with the quarter ended 30 June 2025 (Q1 FY2026)? State the two printed figures in INR on one basis (the June filing prints rupees, the September filing prints Rs. in lakh), which quarter was higher, and the difference in INR.",
+    "sub_queries": [
+      "What was Biocon Limited's revenue from operations for the quarter ended 30 September 2025 (Q2 FY2026) in INR?",
+      "What was Biocon Limited's revenue from operations for the quarter ended 30 June 2025 (Q1 FY2026) in INR, and which quarter had higher revenue along with the difference in INR?"
+    ]
+  },
+  "ebb13d051d868bd84466d9493decd1a34dff9831ffba0c8deb7dd5e0435cfc4f": {
+    "decomp_rerank_pool_size": 20,
+    "merged_ranked": [
+      [
+        24356,
+        -1.7872314453125
+      ],
+      [
+        46232,
+        -2.0985660552978516
+      ],
+      [
+        46279,
+        -2.106194496154785
+      ],
+      [
+        21394,
+        -2.123098611831665
+      ],
+      [
+        46271,
+        -2.50583553314209
+      ],
+      [
+        46280,
+        -2.667323112487793
+      ],
+      [
+        46285,
+        -2.762540340423584
+      ],
+      [
+        46284,
+        -3.061091184616089
+      ],
+      [
+        46272,
+        -3.1105024814605713
+      ],
+      [
+        46270,
+        -3.183227300643921
+      ],
+      [
+        27747,
+        -3.2198424339294434
+      ],
+      [
+        24372,
+        -3.315169095993042
+      ],
+      [
+        19122,
+        -3.362250566482544
+      ],
+      [
+        31304,
+        -3.3668973445892334
+      ],
+      [
+        46292,
+        -3.3701062202453613
+      ],
+      [
+        46264,
+        -3.373781681060791
+      ],
+      [
+        40931,
+        -3.4255635738372803
+      ],
+      [
+        43473,
+        -3.4772157669067383
+      ],
+      [
+        46286,
+        -3.5233218669891357
+      ],
+      [
+        26017,
+        -3.5406737327575684
+      ],
+      [
+        46281,
+        -3.600783348083496
+      ],
+      [
+        24239,
+        -3.7503931522369385
+      ],
+      [
+        46268,
+        -3.805102586746216
+      ],
+      [
+        46265,
+        -3.89924693107605
+      ],
+      [
+        46277,
+        -3.9336230754852295
+      ],
+      [
+        50189,
+        -4.235234260559082
+      ],
+      [
+        46276,
+        -4.29517936706543
+      ],
+      [
+        11680,
+        -4.480604648590088
+      ],
+      [
+        46298,
+        -4.586769104003906
+      ],
+      [
+        24177,
+        -5.0815629959106445
+      ],
+      [
+        23777,
+        -5.194020748138428
+      ],
+      [
+        46303,
+        -5.307168960571289
+      ],
+      [
+        46287,
+        -5.503225326538086
+      ],
+      [
+        20635,
+        -5.562184810638428
+      ],
+      [
+        1508,
+        -6.6240105628967285
+      ],
+      [
+        34485,
+        -7.081388473510742
+      ]
+    ],
+    "n_parts": 2,
+    "per_sub": [
+      {
+        "dense": "embed",
+        "pool_n": 100,
+        "rerank": "rerank",
+        "rerank_n": 20,
+        "subq": "What is the revenue from operations for Britannia Industries Limited for the quarter ended 30 June 2025 (Q1 FY2026) as reported in the quarterly results filing, expressed in INR?"
+      },
+      {
+        "dense": "embed",
+        "pool_n": 100,
+        "rerank": "rerank",
+        "rerank_n": 20,
+        "subq": "What is the revenue from operations for Britannia Industries Limited for the quarter ended 30 September 2025 (Q2 FY2026) as reported in the quarterly results filing, expressed in INR (Rs. in lakh), and which quarter has the higher revenue along with the INR difference between the two quarters?"
+      }
+    ],
+    "question": "Britannia Industries Limited, standalone: for the quarter ended 30 June 2025 (Q1 FY2026) and the quarter ended 30 September 2025 (Q2 FY2026), take revenue from operations from the quarterly results filings as printed, express both in INR on a single basis (Q1 filing in rupees, Q2 filing in Rs. in lakh), identify the higher quarter and state the INR difference.",
+    "sub_queries": [
+      "What is the revenue from operations for Britannia Industries Limited for the quarter ended 30 June 2025 (Q1 FY2026) as reported in the quarterly results filing, expressed in INR?",
+      "What is the revenue from operations for Britannia Industries Limited for the quarter ended 30 September 2025 (Q2 FY2026) as reported in the quarterly results filing, expressed in INR (Rs. in lakh), and which quarter has the higher revenue along with the INR difference between the two quarters?"
+    ]
+  },
+  "ed0876029edf64c98a036da254cccc83d3d03f6df71f6fcdd3b60492d79e3973": {
+    "decomp_rerank_pool_size": 20,
+    "merged_ranked": [
+      [
+        31150,
+        5.567766189575195
+      ],
+      [
+        24395,
+        4.586063385009766
+      ],
+      [
+        24227,
+        4.426535129547119
+      ],
+      [
+        23518,
+        4.0808234214782715
+      ],
+      [
+        24394,
+        3.869527816772461
+      ],
+      [
+        2189,
+        3.8359498977661133
+      ],
+      [
+        30821,
+        3.4284474849700928
+      ],
+      [
+        31246,
+        3.3713736534118652
+      ],
+      [
+        31118,
+        3.362083911895752
+      ],
+      [
+        30781,
+        3.2328310012817383
+      ],
+      [
+        31230,
+        3.1298701763153076
+      ],
+      [
+        2927,
+        2.6116998195648193
+      ],
+      [
+        23728,
+        2.160126209259033
+      ],
+      [
+        29956,
+        1.727644920349121
+      ],
+      [
+        24393,
+        1.4523141384124756
+      ],
+      [
+        31235,
+        1.3762425184249878
+      ],
+      [
+        30802,
+        1.355576515197754
+      ],
+      [
+        22712,
+        0.7029354572296143
+      ],
+      [
+        31143,
+        0.6923389434814453
+      ],
+      [
+        24214,
+        0.6805636882781982
+      ],
+      [
+        30170,
+        0.6397784948348999
+      ],
+      [
+        24037,
+        0.5404757261276245
+      ],
+      [
+        19146,
+        0.35048121213912964
+      ],
+      [
+        31243,
+        0.15382516384124756
+      ],
+      [
+        31251,
+        0.10918266326189041
+      ],
+      [
+        30932,
+        -0.03284608945250511
+      ],
+      [
+        30999,
+        -0.30351439118385315
+      ],
+      [
+        30979,
+        -0.7455217838287354
+      ],
+      [
+        1287,
+        -0.7975747585296631
+      ],
+      [
+        30206,
+        -1.0998625755310059
+      ],
+      [
+        19172,
+        -1.42313551902771
+      ],
+      [
+        23433,
+        -1.6681958436965942
+      ],
+      [
+        24204,
+        -1.6762163639068604
+      ],
+      [
+        23806,
+        -1.807378888130188
+      ],
+      [
+        30644,
+        -1.9515857696533203
+      ],
+      [
+        19169,
+        -1.999872088432312
+      ],
+      [
+        19163,
+        -2.634035587310791
+      ],
+      [
+        31169,
+        -2.6737208366394043
+      ],
+      [
+        31164,
+        -3.182210922241211
+      ],
+      [
+        24197,
+        -3.802183151245117
+      ]
+    ],
+    "n_parts": 2,
+    "per_sub": [
+      {
+        "dense": "embed",
+        "pool_n": 100,
+        "rerank": "rerank",
+        "rerank_n": 20,
+        "subq": "What is the total assets value of Maruti Suzuki as reported in its consolidated results for the year ended 31 March 2025, in Rs. in million?"
+      },
+      {
+        "dense": "embed",
+        "pool_n": 100,
+        "rerank": "rerank",
+        "rerank_n": 20,
+        "subq": "What is the total assets value of Bosch as reported in its consolidated results for the year ended 31 March 2025, in Rs. in million?"
+      }
+    ],
+    "question": "Compare Maruti Suzuki and Bosch on total assets for the year ended 31 March 2025 consolidated results (both Maruti Suzuki and Bosch at the same basis): who reports more, and by how much, in Rs. in million as printed?",
+    "sub_queries": [
+      "What is the total assets value of Maruti Suzuki as reported in its consolidated results for the year ended 31 March 2025, in Rs. in million?",
+      "What is the total assets value of Bosch as reported in its consolidated results for the year ended 31 March 2025, in Rs. in million?"
+    ]
+  }
+}

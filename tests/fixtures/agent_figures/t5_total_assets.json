@@ -1,0 +1,47 @@
+{
+  "query": "Compare total assets of Maruti Suzuki and Bosch for FY2025 consolidated and give the difference.",
+  "requested": [
+    {
+      "company_id": "maruti_suzuki",
+      "label": "Total assets"
+    },
+    {
+      "company_id": "bosch",
+      "label": "Total assets"
+    }
+  ],
+  "chunks": [
+    {
+      "chunk_id": "8fcda929069ae77825ceb19a78d3a802dba1c674820fbc65fa97aba368de04aa:t502",
+      "id": "8fcda929069ae77825ceb19a78d3a802dba1c674820fbc65fa97aba368de04aa:t502",
+      "text": "statement_kind: balance_sheet\nunit: \ncaption: \nreporting_basis: consolidated\nTrade receivables 8 420-421 65,397 45,968: Trade | receivables | 8 | 420-421 | 65,397\nCash and cash equivalents 11.1 422 1,845 26,595: Cash | and | cash | equivalents | 11.1\nOther bank balances 11.2 422 3,684 1,679: Other | bank | balances | 11.2 | 422\nLoans 7 420 432 327: Loans | 7 | 420 | 432 | 327\nOther financial assets 9 421 33,489 34,186: Other | financial | assets | 9 | 421\nOther current assets 12 423 37,684 25,077: Other | current | assets | 12 | 423\nAssets classified as held for sale 12.1 423 203 203: Assets | classified | as | held | for\nTotal current assets 295,242 226,338: Total | current | assets | 295,242 | 226,338\nTotal assets 1,319,718 1,153,508: Total | assets | 1,319,718 | 1,153,508",
+      "meta": {
+        "chunk_type": "table",
+        "company_id": "maruti_suzuki",
+        "doc_type": "annual",
+        "document_id": "8fcda929069ae77825ceb19a78d3a802dba1c674820fbc65fa97aba368de04aa",
+        "page": 216,
+        "period": "FY2025",
+        "reporting_basis": "consolidated",
+        "statement_kind": "balance_sheet",
+        "variant": "consolidated"
+      }
+    },
+    {
+      "chunk_id": "36c2942b23f18d425a65781f30532d107bf96feffedc3251ea9035db56b06abd:t487",
+      "id": "36c2942b23f18d425a65781f30532d107bf96feffedc3251ea9035db56b06abd:t487",
+      "text": "statement_kind: balance_sheet\nunit: [Rs. in Millions (Mio INR)]\ncaption: \nreporting_basis: consolidated\n(ii) Trade receivables 7(b) 23,650 21,818: (ii) | Trade | receivables | 7(b) | 23,650\n(iii) Cash and cash equivalents 7(d) 3,529 4,634: (iii) | Cash | and | cash | equivalents\n(iv) Bank balances other than (iii) above 7(e) 1,550 1,445: (iv) | Bank | balances | other | than\n(v) Loans 7(c) 13,775 14,839: (v) | Loans | 7(c) | 13,775 | 14,839\n(vi) Other financial assets 7(f) 34,273 23,281: (vi) | Other | financial | assets | 7(f)\nOther current assets 11 4,456 6,287: Other | current | assets | 11 | 4,456\nTotal current assets 109,356 99,207: Total | current | assets | 109,356 | 99,207\n3. Assets held for sale 12 1,202 -: 3. | Assets | held | for | sale\nTotal assets (1+2+3) 202,411 173,485: Total | assets | (1+2+3) | 202,411 | 173,485",
+      "meta": {
+        "chunk_type": "table",
+        "company_id": "bosch",
+        "doc_type": "annual",
+        "document_id": "36c2942b23f18d425a65781f30532d107bf96feffedc3251ea9035db56b06abd",
+        "page": 407,
+        "period": "FY2025",
+        "reporting_basis": "consolidated",
+        "statement_kind": "balance_sheet",
+        "variant": "consolidated"
+      }
+    }
+  ]
+}

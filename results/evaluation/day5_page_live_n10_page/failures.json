@@ -1,0 +1,95 @@
+{
+  "failure_rules": {
+    "tool_failure": "a tool raised or returned an error observation",
+    "token_exhaustion": "stopped_reason indicates token_budget",
+    "loop": "stopped_reason indicates loop detection or no progress",
+    "timeout": "stopped_reason indicates timeout",
+    "incomplete_task": "run did not complete a plan or returned no answer",
+    "false_refusal": "refused a gold answer row",
+    "missed_refusal": "answered a gold abstain/refusal row",
+    "citation_issue": "answer citation missing or not matching gold doc/page",
+    "incorrect_answer": "answer figure/text does not match gold"
+  },
+  "rows": [
+    {
+      "row_id": "G-001",
+      "failures": [
+        "incorrect_answer",
+        "citation_issue"
+      ],
+      "stopped_reason": "citation_unresolved"
+    },
+    {
+      "row_id": "G-003",
+      "failures": [
+        "incorrect_answer",
+        "citation_issue"
+      ],
+      "stopped_reason": "critic_pass"
+    },
+    {
+      "row_id": "G-004",
+      "failures": [
+        "incorrect_answer",
+        "citation_issue"
+      ],
+      "stopped_reason": "citation_unresolved"
+    },
+    {
+      "row_id": "G-010",
+      "failures": [
+        "incorrect_answer",
+        "citation_issue"
+      ],
+      "stopped_reason": "citation_unresolved"
+    },
+    {
+      "row_id": "G-036",
+      "failures": [
+        "incorrect_answer",
+        "citation_issue"
+      ],
+      "stopped_reason": "citation_unresolved"
+    },
+    {
+      "row_id": "G-037",
+      "failures": [
+        "incorrect_answer",
+        "citation_issue"
+      ],
+      "stopped_reason": "critic_pass"
+    },
+    {
+      "row_id": "G-039",
+      "failures": [
+        "incorrect_answer",
+        "citation_issue"
+      ],
+      "stopped_reason": "critic_pass"
+    },
+    {
+      "row_id": "G-040",
+      "failures": [
+        "incorrect_answer",
+        "citation_issue"
+      ],
+      "stopped_reason": "citation_unresolved"
+    },
+    {
+      "row_id": "G-041",
+      "failures": [
+        "incorrect_answer",
+        "citation_issue"
+      ],
+      "stopped_reason": "citation_unresolved"
+    },
+    {
+      "row_id": "G-042",
+      "failures": [
+        "incorrect_answer",
+        "citation_issue"
+      ],
+      "stopped_reason": "citation_unresolved"
+    }
+  ]
+}

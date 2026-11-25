@@ -1,0 +1,43 @@
+{
+  "query": "What is the profit for the year as printed for Adani Green for FY2025 standalone?",
+  "requested": [
+    {
+      "company_id": "adani_green",
+      "label": "Profit for the year"
+    }
+  ],
+  "chunks": [
+    {
+      "chunk_id": "deed15eaf8d7b9e0fa2aa386b85a01f35511fc8b4813fe92aa4212682089473d:t466",
+      "id": "deed15eaf8d7b9e0fa2aa386b85a01f35511fc8b4813fe92aa4212682089473d:t466",
+      "text": "statement_kind: income_statement\nunit: Profit after tax as per Statement of Profit and Loss (` in crore) 604 654\ncaption: \nreporting_basis: standalone\non departure at 15 days salary (last drawn salary) for each completed year of service. The scheme is funded less: on | departure | at | 15 | days | salary | (last | drawn | salary) | for | each | completed | year | of | service. | The | scheme | is | funded | less\nthan 1% of amounting ` 0 crore, the amount deposited with Life Insurance Corporation of India (LIC) in earlier: than | 1% | of | amounting | ` | 0 | crore, | the | amount | deposited | with | Life | Insurance | Corporation | of | India | (LIC) | in | earlier",
+      "meta": {
+        "chunk_type": "table",
+        "company_id": "adani_green",
+        "doc_type": "annual",
+        "document_id": "deed15eaf8d7b9e0fa2aa386b85a01f35511fc8b4813fe92aa4212682089473d",
+        "page": 221,
+        "period": "FY2026",
+        "reporting_basis": "standalone",
+        "statement_kind": "income_statement",
+        "variant": "single"
+      }
+    },
+    {
+      "chunk_id": "deed15eaf8d7b9e0fa2aa386b85a01f35511fc8b4813fe92aa4212682089473d:t263",
+      "id": "deed15eaf8d7b9e0fa2aa386b85a01f35511fc8b4813fe92aa4212682089473d:t263",
+      "text": "statement_kind: income_statement\nunit: \ncaption: \nreporting_basis: standalone\nProfit for the year - - - - - 654 - - 654 654: Profit | for | the | year | - | - | - | - | - | 654 | - | - | 654 | 654\nOther Comprehensive Income (net of tax) - - - - - (2) - 62 60 60: Other | Comprehensive | Income | (net | of | tax) | - | - | - | - | - | (2) | - | 62 | 60 | 60\nTotal Comprehensive Income for the year - - - - - 652 - 62 714 714: Total | Comprehensive | Income | for | the | year | - | - | - | - | - | 652 | - | 62 | 714 | 714\nBalance as at 31st March, 2025 1,58,40,32,478 1,584 749 (3) 3,830 (286) 2,338 - 5,879 8,212: Balance | as | at | 31st | March, | 2025 | 1,58,40,32,478 | 1,584 | 749 | (3) | 3,830 | (286) | 2,338 | - | 5,879 | 8,212\nProfit for the year - - - - - 604 - - 604 604: Profit | for | the | year | - | - | - | - | - | 604 | - | - | 604 | 604\nOther Comprehensive Income (net of tax) - - - - - 0 - - 0 0: Other | Comprehensive | Income | (net | of | tax) | - | - | - | - | - | 0 | - | - | 0 | 0\nTotal Comprehensive Income for the year - - - - - 604 - - 604 604: Total | Comprehensive | Income | for | the | year | - | - | - | - | - | 604 | - | - | 604 | 604",
+      "meta": {
+        "chunk_type": "table",
+        "company_id": "adani_green",
+        "doc_type": "annual",
+        "document_id": "deed15eaf8d7b9e0fa2aa386b85a01f35511fc8b4813fe92aa4212682089473d",
+        "page": 180,
+        "period": "FY2026",
+        "reporting_basis": "standalone",
+        "statement_kind": "income_statement",
+        "variant": "single"
+      }
+    }
+  ]
+}

@@ -1,0 +1,147 @@
+{
+  "smoke": true,
+  "n_queries": 5,
+  "multi_document_row": "G-001",
+  "elapsed_seconds": 132.3,
+  "results": [
+    {
+      "row_id": "G-001",
+      "question": "Between Deepak Nitrite and Srf, on total assets for the year ended 31 March 2025 consolidated results, which prints the larger figure, and what are the two figures (in Rs. in crore, as printed on each statement)?",
+      "answer": "The total assets for Deepak Nitrite for the year ended 31 March 2025 are not directly provided in the retrieved data. However, based on the information provided, the total assets can be inferred by summing up relevant asset categories. For instance, the total of \"Other Current Assets\" is \u20b9162.13 crore, and \"Other Non-Current Financial Assets\" total \u20b915.52 crore. Additional non-current assets such as \"Deferred Tax Assets\" and \"Present Value of Defined Benefit Obligation\" are also mentioned, but without a comprehensive total, an exact figure cannot be determined [doc_id fa7dac2401f10d824c6e6b3e5dd482a0e0ab09b50e6164eeebc289ec952fff31 p.386, p.403].\n\nFor SRF, the total assets are also not directly provided, but the \"Net Assets, i.e., total assets minus total liabilities\" are mentioned as \u20b91,22,222 crore for the year ended 31 March 2025 [doc_id e97121aee57558adf2dc27d6770bec497df8a9cb4deeb37d67186abef5484ed2 p.243]. This figure represents net assets, not total assets. Without the total liabilities, the exact total assets cannot be determined for SRF. Therefore, based on the available information, it is not possible to definitively state which company has the larger total assets.",
+      "citations": [],
+      "steps": [
+        {
+          "step": 1,
+          "tool": "retrieve",
+          "args": {
+            "query": "What is the total assets figure for Deepak Nitrite for the year ended 31 March 2025 consolidated results, as printed on their statement?"
+          },
+          "latency_ms": 41375,
+          "error": false,
+          "observation": "[RetrievedChunk(doc_id='fa7dac2401f10d824c6e6b3e5dd482a0e0ab09b50e6164eeebc289ec952fff31', page=387, text='Notes\\nforming part of the Consolidated Financial Statements as at and for the year ended March 31, 2025\\nDEEPAK NITRITE LIMITED54th Annual Integrated Report 2024-25\\n384\\n6. OTHER NON-CURRENT "
+        },
+        {
+          "step": 2,
+          "tool": "retrieve",
+          "args": {
+            "query": "What is the total assets figure for Srf for the year ended 31 March 2025 consolidated results, as printed on their statement?"
+          },
+          "latency_ms": 9044,
+          "error": false,
+          "observation": "[RetrievedChunk(doc_id='e97121aee57558adf2dc27d6770bec497df8a9cb4deeb37d67186abef5484ed2', page=243, text='Notes to Consolidated Financial Statements\\nfor the year ended March 31, 2025\\n(All amounts are in Indian Rupees in millions, except for share data and where otherwise stated)\\nIntegrated Annua"
+        }
+      ],
+      "tokens": 4844,
+      "latency_ms": 72795,
+      "stopped_reason": "token_budget",
+      "refusal": null,
+      "session_id": "smoke_G-001"
+    },
+    {
+      "row_id": "G-036",
+      "question": "From Reliance's the year ended 31 March 2024 consolidated results, report total assets (as printed in the statement, in Rs. in crore).",
+      "answer": "The total assets value as reported in Reliance's year ended 31 March 2024 consolidated results is Rs. 78,892.53 crore [doc_id:0ea899ba19c2727c06fc6926b1a4180c8edbecdde684e15a48fb49267c7ffc81 p.362].",
+      "citations": [
+        "[0ea899ba19c2 p.362]"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "tool": "retrieve",
+          "args": {
+            "query": "Reliance year ended 31 March 2024 consolidated results total assets in Rs. crore"
+          },
+          "latency_ms": 8865,
+          "error": false,
+          "observation": "[RetrievedChunk(doc_id='0ea899ba19c2727c06fc6926b1a4180c8edbecdde684e15a48fb49267c7ffc81', page=362, text='y \\nand Group\u2019s share of net cash inflow of Rs. 186.63 crore for the year ended March 31, 2026 and\\nb) 1 joint venture whose financial statements reflect Group\u2019s share of net profit/(loss) afte"
+        }
+      ],
+      "tokens": 2135,
+      "latency_ms": 14109,
+      "stopped_reason": "done",
+      "refusal": null,
+      "session_id": "smoke_G-036"
+    },
+    {
+      "row_id": "G-057",
+      "question": "Give me profit for the year from Reliance's the year ended 31 March 2024 consolidated statement page, as printed, in Rs. in crore.",
+      "answer": "The profit for the year from Reliance's consolidated statement of profit and loss for the year ended 31 March 2024 is 1,304.90 crore rupees [doc_id '15fee0c19d130a5e77fbeca1ea1eca288f9d45eff4f3de02397c8dec7a02b67b' p.408].",
+      "citations": [],
+      "steps": [
+        {
+          "step": 1,
+          "tool": "retrieve",
+          "args": {
+            "query": "Profit for the year from Reliance's consolidated statement of profit and loss for the year ended 31 March 2024, as printed, in Rs. in crore"
+          },
+          "latency_ms": 5868,
+          "error": false,
+          "observation": "[RetrievedChunk(doc_id='128706186e05b5fe07e6e9184252e423340634e22fbc2edb5e9423db4cffd232', page=433, text='CONSOLIDATED STATEMENT OF PROFIT AND LOSS\\nfor the year ended March 31, 2024\\n(H crore)\\nNote Page Year ended March 31, 2024 Year ended March 31, 2023\\nI Revenue from operations 28 F218 2,29,17"
+        }
+      ],
+      "tokens": 2820,
+      "latency_ms": 14081,
+      "stopped_reason": "citation_unresolved",
+      "refusal": null,
+      "session_id": "smoke_G-057"
+    },
+    {
+      "row_id": "QT-002",
+      "question": "Asian Paints Limited reported standalone revenue from operations twice in FY2026. Taking the first quarter and the second quarter figures as printed, state each amount in INR on one scale and quantify the gap in INR.",
+      "answer": "The standalone revenue from operations for Asian Paints Limited in the first quarter of FY2026 is not provided in the retrieved data, as the information pertains to FY2023-24 [doc_id p.N]. Similarly, the standalone revenue from operations for the second quarter of FY2026 is also not available in the retrieved data. Therefore, it is not possible to quantify the gap.",
+      "citations": [],
+      "steps": [
+        {
+          "step": 1,
+          "tool": "retrieve",
+          "args": {
+            "query": "What is the standalone revenue from operations for Asian Paints Limited in the first quarter of FY2026?"
+          },
+          "latency_ms": 7282,
+          "error": false,
+          "observation": "[RetrievedChunk(doc_id='9a1375324a65d21104e91597c2a8c974f29da03c6e275c47456eb9ee3f317858', page=185, text='Notes to the Standalone Financial Statements (Contd.)\\n364 Asian Paints Limited Integrated Annual Report 2023-24 365\\nNOTE 22A : REVENUE FROM OPERATIONS\\n(\u20b9 in Crores)\\nYear \\n2023-24\\nYear \\n2"
+        },
+        {
+          "step": 2,
+          "tool": "retrieve",
+          "args": {
+            "query": "What is the standalone revenue from operations for Asian Paints Limited in the second quarter of FY2026?"
+          },
+          "latency_ms": 5114,
+          "error": false,
+          "observation": "[RetrievedChunk(doc_id='9a1375324a65d21104e91597c2a8c974f29da03c6e275c47456eb9ee3f317858', page=185, text='Notes to the Standalone Financial Statements (Contd.)\\n364 Asian Paints Limited Integrated Annual Report 2023-24 365\\nNOTE 22A : REVENUE FROM OPERATIONS\\n(\u20b9 in Crores)\\nYear \\n2023-24\\nYear \\n2"
+        }
+      ],
+      "tokens": 4830,
+      "latency_ms": 21550,
+      "stopped_reason": "token_budget",
+      "refusal": null,
+      "session_id": "smoke_QT-002"
+    },
+    {
+      "row_id": "G-132",
+      "question": "For Indian Oil Corporation for FY2024 consolidated: what were their audit fees, exactly as printed in Rs. lakh?",
+      "answer": "The audit fees for Indian Oil Corporation for FY2024 consolidated, as printed in Rs. lakh, were 118.3 [bdd1b13a7b77a338641ee7aa03f94f105d1bd0f1f853ea6ea0986047a918a63c p.107].",
+      "citations": [
+        "[bdd1b13a7b77 p.107]"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "tool": "retrieve",
+          "args": {
+            "query": "Indian Oil Corporation FY2024 consolidated audit fees in Rs. lakh"
+          },
+          "latency_ms": 4492,
+          "error": false,
+          "observation": "[RetrievedChunk(doc_id='bdd1b13a7b77a338641ee7aa03f94f105d1bd0f1f853ea6ea0986047a918a63c', page=107, text=' and its subsidiaries, on a \\nconsolidated basis paid the fees mentioned in Table 13 \\nto M/s. S.R. Batliboi & Associates LLP, chartered \\naccountants, the statutory auditors; and to M/s. Ernst"
+        }
+      ],
+      "tokens": 2242,
+      "latency_ms": 9725,
+      "stopped_reason": "done",
+      "refusal": null,
+      "session_id": "smoke_G-132"
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "n": 4,
+  "n_answer": 4,
+  "n_abstain": 0,
+  "answer_accuracy": 0.0,
+  "citation_correctness": 0.0,
+  "refusal_correctness": null,
+  "task_completion_rate": 0.25,
+  "failure_counts": {
+    "incorrect_answer": 4,
+    "citation_issue": 4,
+    "tool_failure": 0,
+    "token_exhaustion": 2,
+    "loop": 0,
+    "timeout": 0,
+    "incomplete_task": 0,
+    "false_refusal": 0,
+    "missed_refusal": 0
+  },
+  "mean_tool_calls": 1.5,
+  "mean_agent_steps": 1.5,
+  "mean_tokens": 3657.25,
+  "mean_latency_ms": 30633.75,
+  "mean_cost_proxy_usd": 0.0,
+  "total_tokens": 14629
+}

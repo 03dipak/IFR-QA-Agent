@@ -1,0 +1,71 @@
+{
+  "exp_a_within_doc": {
+    "bm25": {
+      "n": 22,
+      "found": 22,
+      "top1": 0,
+      "top3": 1,
+      "top5": 1,
+      "mrr": 0.0437
+    },
+    "dense": {
+      "n": 22,
+      "found": 22,
+      "top1": 2,
+      "top3": 2,
+      "top5": 5,
+      "mrr": 0.1655
+    },
+    "hybrid": {
+      "n": 22,
+      "found": 22,
+      "top1": 0,
+      "top3": 1,
+      "top5": 1,
+      "mrr": 0.0597
+    }
+  },
+  "exp_c_rrf_reranker": {
+    "baseline": {
+      "n": 22,
+      "found": 0,
+      "top1": 0,
+      "top3": 0,
+      "top5": 0,
+      "mrr": 0.0
+    },
+    "no_rerank_rrf": {
+      "n": 22,
+      "found": 0,
+      "top1": 0,
+      "top3": 0,
+      "top5": 0,
+      "mrr": 0.0
+    },
+    "pool30_top10": {
+      "n": 22,
+      "found": 0,
+      "top1": 0,
+      "top3": 0,
+      "top5": 0,
+      "mrr": 0.0
+    },
+    "pool60_top10": {
+      "n": 22,
+      "found": 0,
+      "top1": 0,
+      "top3": 0,
+      "top5": 0,
+      "mrr": 0.0
+    },
+    "pool60_top5": {
+      "n": 22,
+      "found": 0,
+      "top1": 0,
+      "top3": 0,
+      "top5": 0,
+      "mrr": 0.0
+    }
+  },
+  "n_rows": 22
+}

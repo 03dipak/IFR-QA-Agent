@@ -1,0 +1,19 @@
+src/rag_ingestion/tokenizer.py:45: error: Incompatible types in assignment (expression has type "Match[str] | None", variable has type "Match[str]")  [assignment]
+src/resolver/query_resolver.py:235: error: Incompatible types in assignment (expression has type "int | None", variable has type "int")  [assignment]
+src/llm/client.py:167: error: Returning Any from function declared to return "dict[Any, Any] | None"  [no-any-return]
+src/tools/calculator.py:25: error: Returning Any from function declared to return "Decimal"  [no-any-return]
+src/rag_ingestion/index.py:95: error: Incompatible types in assignment (expression has type "ndarray[tuple[Any, ...], dtype[float64]]", variable has type "ndarray[tuple[Any, ...], dtype[floating[_32Bit]]]")  [assignment]
+src/rag_ingestion/index.py:120: error: Incompatible types in assignment (expression has type "TextEmbedding", variable has type "None")  [assignment]
+src/rag_ingestion/index.py:121: error: "None" has no attribute "embed"  [attr-defined]
+src/tools/retrieve.py:48: error: Returning Any from function declared to return "dict[str, Any]"  [no-any-return]
+src/tools/retrieve.py:115: error: Argument 1 to "setdefault" of "MutableMapping" has incompatible type "str | Any"; expected "tuple[str, int]"  [arg-type]
+src/tools/retrieve.py:129: error: Incompatible types in assignment (expression has type "dict[int, Any | str]", target has type "str")  [assignment]
+src/tools/retrieve.py:130: error: Returning Any from function declared to return "str"  [no-any-return]
+src/tools/retrieve.py:130: error: Item "str" of "str | dict[Never, Never]" has no attribute "get"  [union-attr]
+src/tools/retrieve.py:130: error: No overload variant of "get" of "dict" matches argument types "int", "str"  [call-overload]
+src/tools/retrieve.py:130: note: Possible overload variants:
+src/tools/retrieve.py:130: note:     def get(self, Never, None = ..., /) -> None
+src/tools/retrieve.py:130: note:     def get(self, Never, Never, /) -> Never
+src/tools/retrieve.py:130: note:     def [_T] get(self, Never, _T, /) -> _T
+src/tools/retrieve.py:137: error: Incompatible types in assignment (expression has type "TextCrossEncoder", variable has type "None")  [assignment]
+Found 14 errors in 6 files (checked 1 source file)

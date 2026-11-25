@@ -1,0 +1,31 @@
+{
+  "query": "Compare total assets",
+  "requested": [
+    {
+      "company_id": "acme",
+      "label": "Total assets"
+    }
+  ],
+  "chunks": [
+    {
+      "chunk_id": "acme-a",
+      "text": "unit: \u20b9 in Crores\nTOTAL ASSETS 100 90",
+      "meta": {
+        "reporting_basis": "consolidated",
+        "statement_kind": "balance_sheet",
+        "company_id": "acme",
+        "page": 10
+      }
+    },
+    {
+      "chunk_id": "acme-b",
+      "text": "unit: \u20b9 in Crores\nTOTAL ASSETS 200 190",
+      "meta": {
+        "reporting_basis": "consolidated",
+        "statement_kind": "balance_sheet",
+        "company_id": "acme",
+        "page": 10
+      }
+    }
+  ]
+}

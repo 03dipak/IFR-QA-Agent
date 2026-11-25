@@ -1,0 +1,110 @@
+/home/dipak/agentic/IFR-QA-Agent/.venv/lib/python3.14/site-packages/pytest_asyncio/plugin.py:300: PytestDeprecationWarning: The configuration option "asyncio_default_fixture_loop_scope" is unset.
+The event loop scope for asynchronous fixtures will default to the "fixture" caching scope. Future versions of pytest-asyncio will default the loop scope for asynchronous fixtures to "function" scope. Set the default fixture loop scope explicitly in order to avoid unexpected behavior in the future. Valid fixture loop scopes are: "function", "class", "module", "package", "session"
+
+  warnings.warn(PytestDeprecationWarning(_DEFAULT_FIXTURE_LOOP_SCOPE_UNSET))
+FFFFF                                                                    [100%]Running teardown with pytest sessionfinish...
+
+=================================== FAILURES ===================================
+________________________ test_evidence_text_is_bounded _________________________
+
+    def test_evidence_text_is_bounded() -> None:
+        observations = [Observation(
+            step=1, sub_question="q", tool="retrieve", args={},
+            text="ignored", latency_ms=0,
+            chunks=[Chunk(DOC, 3, "x" * 5000), Chunk("b" * 12, 4, "y" * 5000)],
+        )]
+>       text = graph._build_evidence_text(observations)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'src.agents.graph' has no attribute '_build_evidence_text'
+
+tests/unit/test_day2_regressions.py:33: AttributeError
+______________ test_citation_refs_accept_quoted_ids_and_multipage ______________
+
+    def test_citation_refs_accept_quoted_ids_and_multipage() -> None:
+        answer = f"value [doc_id '{DOC}' p.7] and [bbbbbbbbbbbb p.213, p.217]"
+>       assert graph._citation_refs(answer) == [
+               ^^^^^^^^^^^^^^^^^^^^
+            (DOC[:12], 7), ("bbbbbbbbbbbb", 213), ("bbbbbbbbbbbb", 217),
+        ]
+E       AttributeError: module 'src.agents.graph' has no attribute '_citation_refs'. Did you mean: '_citation_check'?
+
+tests/unit/test_day2_regressions.py:40: AttributeError
+___________ test_eval_citation_refs_accept_quoted_ids_and_multipage ____________
+
+    def test_eval_citation_refs_accept_quoted_ids_and_multipage() -> None:
+        answer = f"value [doc_id '{DOC}' p.7] and [bbbbbbbbbbbb p.213, p.217]"
+>       assert ae._citation_refs(answer) == [
+               ^^^^^^^^^^^^^^^^^
+            (DOC[:12], 7), ("bbbbbbbbbbbb", 213), ("bbbbbbbbbbbb", 217),
+        ]
+E       AttributeError: module 'src.eval.agent_eval' has no attribute '_citation_refs'
+
+tests/unit/test_day2_regressions.py:47: AttributeError
+____________________ test_run_agent_counts_critique_tokens _____________________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x76f84404ed70>
+tmp_path = PosixPath('/tmp/pytest-of-dipak/pytest-0/test_run_agent_counts_critique0')
+
+    def test_run_agent_counts_critique_tokens(monkeypatch, tmp_path: Path) -> None:
+        from src.agents.executor import Executor
+    
+        monkeypatch.setattr(graph, "resolve_query", lambda q: type(
+            "R", (), {"as_dict": lambda self: {}})())
+        client = FakeClient([
+            PLAN_JSON, f"Total assets are 1,234 [{DOC[:12]} p.3].", CRITIC_PASS,
+        ])
+        result = run_agent(
+            "What were total assets?", client=client,
+            executor=Executor(tools={"retrieve": lambda **_: [
+                RetrievedChunk(DOC, 3, "Total assets 1,234", 1.0),
+            ]}),
+            tracer=Tracer("tokens", root=tmp_path / "traces"),
+        )
+>       assert result.stopped_reason == "critic_pass"
+E       AssertionError: assert 'done' == 'critic_pass'
+E         
+E         - critic_pass
+E         + done
+
+tests/unit/test_day2_regressions.py:83: AssertionError
+____________________ test_citation_check_accepts_quoted_id _____________________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x76f84404f950>
+tmp_path = PosixPath('/tmp/pytest-of-dipak/pytest-0/test_citation_check_accepts_qu0')
+
+    def test_citation_check_accepts_quoted_id(monkeypatch, tmp_path: Path) -> None:
+        from src.citations.verification import direct_verify
+    
+        monkeypatch.setattr(graph, "direct_verify", lambda *args: __import__(
+            "src.citations.models", fromlist=["VerificationOutcome"]
+        ).VerificationOutcome.VERIFIED)
+        observations = [Observation(
+            step=1, sub_question="q", tool="retrieve", args={},
+            text="", latency_ms=0, chunks=[Chunk(DOC, 7, "Total assets 1,234")],
+        )]
+        answer = f"Total assets are 1,234 [doc_id '{DOC}' p.7]."
+        citations, issues = graph._citation_check(answer, observations)
+>       assert citations == [f"[{DOC[:12]} p.7]"]
+E       AssertionError: assert [] == ['[aaaaaaaaaaaa p.7]']
+E         
+E         Right contains one more item: '[aaaaaaaaaaaa p.7]'
+E         Use -v to get more diff
+
+tests/unit/test_day2_regressions.py:99: AssertionError
+=============================== warnings summary ===============================
+../../.venv/lib/python3.14/site-packages/langsmith/_internal/_beta_decorator.py:92: 13 warnings
+  /home/dipak/agentic/IFR-QA-Agent/.venv/lib/python3.14/site-packages/langsmith/_internal/_beta_decorator.py:92: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    if asyncio.iscoroutinefunction(func):
+
+../../.venv/lib/python3.14/site-packages/deepeval/tracing/tracing.py:1258: 604 warnings
+  /home/dipak/agentic/IFR-QA-Agent/.venv/lib/python3.14/site-packages/deepeval/tracing/tracing.py:1258: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    if asyncio.iscoroutinefunction(func):
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tests/unit/test_day2_regressions.py::test_evidence_text_is_bounded - A...
+FAILED tests/unit/test_day2_regressions.py::test_citation_refs_accept_quoted_ids_and_multipage
+FAILED tests/unit/test_day2_regressions.py::test_eval_citation_refs_accept_quoted_ids_and_multipage
+FAILED tests/unit/test_day2_regressions.py::test_run_agent_counts_critique_tokens
+FAILED tests/unit/test_day2_regressions.py::test_citation_check_accepts_quoted_id
+5 failed, 617 warnings in 0.70s

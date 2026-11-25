@@ -1,0 +1,790 @@
+probe 1/10 G-001
+probe 2/10 G-003
+probe 3/10 G-004
+probe 4/10 G-010
+probe 5/10 G-036
+probe 6/10 G-037
+probe 7/10 G-039
+probe 8/10 G-040
+probe 9/10 G-041
+probe 10/10 G-042
+{
+  "manifest": {
+    "run_id": "day2_fix_v1",
+    "run_dir": "results/evaluation/day2_fix_v1",
+    "out_dir": "results/day3_evidence_v1",
+    "train_split": "dev",
+    "n_rows": 10,
+    "row_ids": [
+      "G-001",
+      "G-003",
+      "G-004",
+      "G-010",
+      "G-036",
+      "G-037",
+      "G-039",
+      "G-040",
+      "G-041",
+      "G-042"
+    ],
+    "gold_path": "data/eval/datasets/gold_v2_eval_v8_public.jsonl",
+    "gold_hash": "828b6704037297cd2e86da4c514edd9665b1945ee9c062ae7e5a15e417f0b09c",
+    "run_manifest_gold_hash": "828b6704037297cd2e86da4c514edd9665b1945ee9c062ae7e5a15e417f0b09c",
+    "gold_hash_matches_run": true,
+    "index_version": "C2-cached-50221",
+    "chunk_ids_sha256": "ee4c06282a344d804038b80055120a2a513baa88925278a8c75de15313f72e40",
+    "chunk_ids_meta": {
+      "chunk_ids_sha256": "ffe0b479b6d919fb7525c4e23d8ce2879da9a8407b562c3703d79cb8e80ada07",
+      "chunker": "C2",
+      "model": "bge-small-en-v1.5",
+      "n": 50221
+    },
+    "retrieval_config_sha256": "a42b69530b16c97353a3ee399ff04fbe41ae94e08a630fcb6c730558a583463c",
+    "retrieval_config_path": "configs/retrieval.yaml",
+    "probe": {
+      "n_queries": 14,
+      "n_rows": 10,
+      "elapsed_ms": 207,
+      "anchor_matches": 14,
+      "path": "results/day3_evidence_v1/retrieval_probe.jsonl",
+      "row_ids": [
+        "G-001",
+        "G-003",
+        "G-004",
+        "G-010",
+        "G-036",
+        "G-037",
+        "G-039",
+        "G-040",
+        "G-041",
+        "G-042"
+      ],
+      "probes": {
+        "G-001": [
+          {
+            "anchor_match": true,
+            "call_index": 0,
+            "chunks": [
+              {
+                "doc_id": "fa7dac2401f1",
+                "page": 387,
+                "rank": 1,
+                "score": 7.6889729499816895
+              },
+              {
+                "doc_id": "fa7dac2401f1",
+                "page": 403,
+                "rank": 2,
+                "score": 7.6405720710754395
+              },
+              {
+                "doc_id": "fa7dac2401f1",
+                "page": 407,
+                "rank": 3,
+                "score": 7.545409202575684
+              },
+              {
+                "doc_id": "fa7dac2401f1",
+                "page": 389,
+                "rank": 4,
+                "score": 7.5417938232421875
+              },
+              {
+                "doc_id": "fa7dac2401f1",
+                "page": 409,
+                "rank": 5,
+                "score": 7.472011566162109
+              }
+            ],
+            "created_at": "2026-11-23T10:58:49",
+            "latency_ms": 22764,
+            "query": "What is the total assets figure for Deepak Nitrite for the year ended 31 March 2025 consolidated results, as printed on their statement?",
+            "row_id": "G-001",
+            "trace_first_chunk": "fa7dac2401f1:387"
+          },
+          {
+            "anchor_match": true,
+            "call_index": 1,
+            "chunks": [
+              {
+                "doc_id": "e97121aee575",
+                "page": 243,
+                "rank": 1,
+                "score": 5.927959442138672
+              },
+              {
+                "doc_id": "e97121aee575",
+                "page": 245,
+                "rank": 2,
+                "score": 5.900928020477295
+              },
+              {
+                "doc_id": "e97121aee575",
+                "page": 244,
+                "rank": 3,
+                "score": 5.8970794677734375
+              },
+              {
+                "doc_id": "e57b7fc675de",
+                "page": 369,
+                "rank": 4,
+                "score": 5.830958366394043
+              },
+              {
+                "doc_id": "011253c0a105",
+                "page": 142,
+                "rank": 5,
+                "score": 5.792465686798096
+              }
+            ],
+            "created_at": "2026-11-23T10:58:54",
+            "latency_ms": 4212,
+            "query": "What is the total assets figure for Srf for the year ended 31 March 2025 consolidated results, as printed on their statement?",
+            "row_id": "G-001",
+            "trace_first_chunk": "e97121aee575:243"
+          }
+        ],
+        "G-003": [
+          {
+            "anchor_match": true,
+            "call_index": 0,
+            "chunks": [
+              {
+                "doc_id": "fa7dac2401f1",
+                "page": 409,
+                "rank": 1,
+                "score": 7.977558612823486
+              },
+              {
+                "doc_id": "fa7dac2401f1",
+                "page": 403,
+                "rank": 2,
+                "score": 7.764336585998535
+              },
+              {
+                "doc_id": "fa7dac2401f1",
+                "page": 415,
+                "rank": 3,
+                "score": 7.671037197113037
+              },
+              {
+                "doc_id": "fa7dac2401f1",
+                "page": 407,
+                "rank": 4,
+                "score": 7.313529968261719
+              },
+              {
+                "doc_id": "fa7dac2401f1",
+                "page": 389,
+                "rank": 5,
+                "score": 7.1929168701171875
+              }
+            ],
+            "created_at": "2026-11-23T10:58:59",
+            "latency_ms": 3801,
+            "query": "For the year ended 31 March 2025, what is the total liabilities for Deepak Nitrite as printed in Rs. crore?",
+            "row_id": "G-003",
+            "trace_first_chunk": "fa7dac2401f1:409"
+          },
+          {
+            "anchor_match": true,
+            "call_index": 1,
+            "chunks": [
+              {
+                "doc_id": "fa7dac2401f1",
+                "page": 394,
+                "rank": 1,
+                "score": 6.728209495544434
+              },
+              {
+                "doc_id": "fa7dac2401f1",
+                "page": 350,
+                "rank": 2,
+                "score": 5.857010364532471
+              },
+              {
+                "doc_id": "0ca3172627a0",
+                "page": 172,
+                "rank": 3,
+                "score": 5.5796284675598145
+              },
+              {
+                "doc_id": "deed15eaf8d7",
+                "page": 207,
+                "rank": 4,
+                "score": 5.319755554199219
+              },
+              {
+                "doc_id": "011253c0a105",
+                "page": 173,
+                "rank": 5,
+                "score": 5.215114116668701
+              }
+            ],
+            "created_at": "2026-11-23T10:59:04",
+            "latency_ms": 3715,
+            "query": "For the year ended 31 March 2025, what is the total liabilities for Srf as printed in Rs. crore?",
+            "row_id": "G-003",
+            "trace_first_chunk": "fa7dac2401f1:394"
+          }
+        ],
+        "G-004": [
+          {
+            "anchor_match": true,
+            "call_index": 0,
+            "chunks": [
+              {
+                "doc_id": "8fcda929069a",
+                "page": 246,
+                "rank": 1,
+                "score": 6.75980281829834
+              },
+              {
+                "doc_id": "8fcda929069a",
+                "page": 245,
+                "rank": 2,
+                "score": 6.758907318115234
+              },
+              {
+                "doc_id": "8fcda929069a",
+                "page": 196,
+                "rank": 3,
+                "score": 6.472931861877441
+              },
+              {
+                "doc_id": "8fcda929069a",
+                "page": 228,
+                "rank": 4,
+                "score": 6.447504043579102
+              },
+              {
+                "doc_id": "8fcda929069a",
+                "page": 243,
+                "rank": 5,
+                "score": 6.372322082519531
+              }
+            ],
+            "created_at": "2026-11-23T10:59:09",
+            "latency_ms": 4362,
+            "query": "What is the total assets of Maruti Suzuki for the year ended 31 March 2025 consolidated results?",
+            "row_id": "G-004",
+            "trace_first_chunk": "8fcda929069a:246"
+          },
+          {
+            "anchor_match": true,
+            "call_index": 1,
+            "chunks": [
+              {
+                "doc_id": "36c2942b23f1",
+                "page": 477,
+                "rank": 1,
+                "score": 6.283043384552002
+              },
+              {
+                "doc_id": "36c2942b23f1",
+                "page": 478,
+                "rank": 2,
+                "score": 6.002933502197266
+              },
+              {
+                "doc_id": "36c2942b23f1",
+                "page": 474,
+                "rank": 3,
+                "score": 5.900139331817627
+              },
+              {
+                "doc_id": "36c2942b23f1",
+                "page": 391,
+                "rank": 4,
+                "score": 5.3720598220825195
+              },
+              {
+                "doc_id": "36c2942b23f1",
+                "page": 474,
+                "rank": 5,
+                "score": 5.181657791137695
+              }
+            ],
+            "created_at": "2026-11-23T10:59:13",
+            "latency_ms": 2834,
+            "query": "What is the total assets of Bosch for the year ended 31 March 2025 consolidated results?",
+            "row_id": "G-004",
+            "trace_first_chunk": "36c2942b23f1:477"
+          }
+        ],
+        "G-010": [
+          {
+            "anchor_match": true,
+            "call_index": 0,
+            "chunks": [
+              {
+                "doc_id": "e97121aee575",
+                "page": 243,
+                "rank": 1,
+                "score": 7.222408294677734
+              },
+              {
+                "doc_id": "9e092bb4d317",
+                "page": 217,
+                "rank": 2,
+                "score": 6.859781265258789
+              },
+              {
+                "doc_id": "9e092bb4d317",
+                "page": 225,
+                "rank": 3,
+                "score": 6.391715049743652
+              },
+              {
+                "doc_id": "e97121aee575",
+                "page": 249,
+                "rank": 4,
+                "score": 6.2692060470581055
+              },
+              {
+                "doc_id": "e97121aee575",
+                "page": 211,
+                "rank": 5,
+                "score": 6.26179313659668
+              }
+            ],
+            "created_at": "2026-11-23T10:59:17",
+            "latency_ms": 3549,
+            "query": "What is the total assets of Aurobindo Pharma for the year ended 31 March 2025 consolidated results?",
+            "row_id": "G-010",
+            "trace_first_chunk": "e97121aee575:243"
+          },
+          {
+            "anchor_match": true,
+            "call_index": 1,
+            "chunks": [
+              {
+                "doc_id": "bdd1b13a7b77",
+                "page": 210,
+                "rank": 1,
+                "score": 6.615788459777832
+              },
+              {
+                "doc_id": "bdd1b13a7b77",
+                "page": 210,
+                "rank": 2,
+                "score": 5.427931308746338
+              },
+              {
+                "doc_id": "fa7dac2401f1",
+                "page": 414,
+                "rank": 3,
+                "score": 5.371845722198486
+              },
+              {
+                "doc_id": "bdd1b13a7b77",
+                "page": 152,
+                "rank": 4,
+                "score": 5.145842552185059
+              },
+              {
+                "doc_id": "bdd1b13a7b77",
+                "page": 205,
+                "rank": 5,
+                "score": 4.9669508934021
+              }
+            ],
+            "created_at": "2026-11-23T10:59:23",
+            "latency_ms": 4866,
+            "query": "What is the total assets of Dr Reddys for the year ended 31 March 2025 consolidated results?",
+            "row_id": "G-010",
+            "trace_first_chunk": "bdd1b13a7b77:210"
+          }
+        ],
+        "G-036": [
+          {
+            "anchor_match": true,
+            "call_index": 0,
+            "chunks": [
+              {
+                "doc_id": "0ea899ba19c2",
+                "page": 362,
+                "rank": 1,
+                "score": 7.556372165679932
+              },
+              {
+                "doc_id": "0ea899ba19c2",
+                "page": 362,
+                "rank": 2,
+                "score": 7.532864570617676
+              },
+              {
+                "doc_id": "0ea899ba19c2",
+                "page": 362,
+                "rank": 3,
+                "score": 7.39152717590332
+              },
+              {
+                "doc_id": "0ea899ba19c2",
+                "page": 362,
+                "rank": 4,
+                "score": 7.164138317108154
+              },
+              {
+                "doc_id": "deed15eaf8d7",
+                "page": 317,
+                "rank": 5,
+                "score": 7.029808521270752
+              }
+            ],
+            "created_at": "2026-11-23T10:59:28",
+            "latency_ms": 3426,
+            "query": "Reliance year ended 31 March 2024 consolidated results total assets in Rs. crore",
+            "row_id": "G-036",
+            "trace_first_chunk": "0ea899ba19c2:362"
+          }
+        ],
+        "G-037": [
+          {
+            "anchor_match": true,
+            "call_index": 0,
+            "chunks": [
+              {
+                "doc_id": "fa7dac2401f1",
+                "page": 328,
+                "rank": 1,
+                "score": 6.221367835998535
+              },
+              {
+                "doc_id": "15fee0c19d13",
+                "page": 378,
+                "rank": 2,
+                "score": 6.095963954925537
+              },
+              {
+                "doc_id": "fa7dac2401f1",
+                "page": 329,
+                "rank": 3,
+                "score": 5.844424724578857
+              },
+              {
+                "doc_id": "1490168ab799",
+                "page": 323,
+                "rank": 4,
+                "score": 5.80606746673584
+              },
+              {
+                "doc_id": "011253c0a105",
+                "page": 212,
+                "rank": 5,
+                "score": 5.634968280792236
+              }
+            ],
+            "created_at": "2026-11-23T10:59:32",
+            "latency_ms": 3162,
+            "query": "What is the total equity of Reliance as stated in the standalone results for the year ended 31 March 2024, in Rs. in crore?",
+            "row_id": "G-037",
+            "trace_first_chunk": "fa7dac2401f1:328"
+          }
+        ],
+        "G-039": [
+          {
+            "anchor_match": true,
+            "call_index": 0,
+            "chunks": [
+              {
+                "doc_id": "deed15eaf8d7",
+                "page": 239,
+                "rank": 1,
+                "score": 6.720223426818848
+              },
+              {
+                "doc_id": "deed15eaf8d7",
+                "page": 217,
+                "rank": 2,
+                "score": 6.691682815551758
+              },
+              {
+                "doc_id": "deed15eaf8d7",
+                "page": 219,
+                "rank": 3,
+                "score": 6.473230361938477
+              },
+              {
+                "doc_id": "deed15eaf8d7",
+                "page": 314,
+                "rank": 4,
+                "score": 6.436027526855469
+              },
+              {
+                "doc_id": "deed15eaf8d7",
+                "page": 242,
+                "rank": 5,
+                "score": 6.430261135101318
+              }
+            ],
+            "created_at": "2026-11-23T10:59:36",
+            "latency_ms": 3113,
+            "query": "What is the total assets of Adani Green as stated in their standalone results for the year ended 31 March 2026?",
+            "row_id": "G-039",
+            "trace_first_chunk": "deed15eaf8d7:239"
+          }
+        ],
+        "G-040": [
+          {
+            "anchor_match": true,
+            "call_index": 0,
+            "chunks": [
+              {
+                "doc_id": "deed15eaf8d7",
+                "page": 239,
+                "rank": 1,
+                "score": 7.150742053985596
+              },
+              {
+                "doc_id": "deed15eaf8d7",
+                "page": 217,
+                "rank": 2,
+                "score": 7.059221267700195
+              },
+              {
+                "doc_id": "deed15eaf8d7",
+                "page": 219,
+                "rank": 3,
+                "score": 7.018400192260742
+              },
+              {
+                "doc_id": "deed15eaf8d7",
+                "page": 194,
+                "rank": 4,
+                "score": 6.9026923179626465
+              },
+              {
+                "doc_id": "deed15eaf8d7",
+                "page": 213,
+                "rank": 5,
+                "score": 6.829892158508301
+              }
+            ],
+            "created_at": "2026-11-23T10:59:41",
+            "latency_ms": 3826,
+            "query": "Adani Green standalone results year ended 31 March 2026 total equity in Rs. crore",
+            "row_id": "G-040",
+            "trace_first_chunk": "deed15eaf8d7:239"
+          }
+        ],
+        "G-041": [
+          {
+            "anchor_match": true,
+            "call_index": 0,
+            "chunks": [
+              {
+                "doc_id": "deed15eaf8d7",
+                "page": 239,
+                "rank": 1,
+                "score": 6.767594337463379
+              },
+              {
+                "doc_id": "deed15eaf8d7",
+                "page": 217,
+                "rank": 2,
+                "score": 6.759655952453613
+              },
+              {
+                "doc_id": "deed15eaf8d7",
+                "page": 219,
+                "rank": 3,
+                "score": 6.721014022827148
+              },
+              {
+                "doc_id": "deed15eaf8d7",
+                "page": 213,
+                "rank": 4,
+                "score": 6.650757312774658
+              },
+              {
+                "doc_id": "deed15eaf8d7",
+                "page": 314,
+                "rank": 5,
+                "score": 6.637694358825684
+              }
+            ],
+            "created_at": "2026-11-23T10:59:44",
+            "latency_ms": 2570,
+            "query": "total liabilities Adani Green standalone results year ended 31 March 2026 Rs crore",
+            "row_id": "G-041",
+            "trace_first_chunk": "deed15eaf8d7:239"
+          }
+        ],
+        "G-042": [
+          {
+            "anchor_match": true,
+            "call_index": 0,
+            "chunks": [
+              {
+                "doc_id": "728937384f00",
+                "page": 213,
+                "rank": 1,
+                "score": 8.693129539489746
+              },
+              {
+                "doc_id": "728937384f00",
+                "page": 123,
+                "rank": 2,
+                "score": 8.579941749572754
+              },
+              {
+                "doc_id": "728937384f00",
+                "page": 311,
+                "rank": 3,
+                "score": 8.23532485961914
+              },
+              {
+                "doc_id": "728937384f00",
+                "page": 173,
+                "rank": 4,
+                "score": 8.135507583618164
+              },
+              {
+                "doc_id": "728937384f00",
+                "page": 277,
+                "rank": 5,
+                "score": 8.064010620117188
+              }
+            ],
+            "created_at": "2026-11-23T10:59:49",
+            "latency_ms": 3284,
+            "query": "Ashok Leyland consolidated results year ended 31 March 2024 total equity in Rs. crore",
+            "row_id": "G-042",
+            "trace_first_chunk": "728937384f00:213"
+          }
+        ]
+      }
+    },
+    "created_at": "2026-11-23T11:03:58",
+    "model": "Qwen/Qwen3-8B",
+    "prompt_version": "trackb-mvp-v1"
+  },
+  "metrics": {
+    "n_rows": 10,
+    "probe_rows": 10,
+    "all_gold_pairs": 14,
+    "citation_refs_extracted": 11,
+    "correct_refs": 0,
+    "metrics": [
+      {
+        "metric": "document_retrieval_coverage_rows",
+        "value": 0.8,
+        "numerator": 8,
+        "denominator": 10,
+        "definition": "Rows where >=1 expected document appears in replayed top-k; denominator is complete-probe rows."
+      },
+      {
+        "metric": "expected_document_retrieval_coverage",
+        "value": 0.7143,
+        "numerator": 10,
+        "denominator": 14,
+        "definition": "Expected documents found in replayed top-k / all expected documents."
+      },
+      {
+        "metric": "page_retrieval_coverage_rows_any",
+        "value": 0.0,
+        "numerator": 0,
+        "denominator": 10,
+        "definition": "Rows where >=1 expected (document,page) pair appears in replayed top-k."
+      },
+      {
+        "metric": "expected_page_retrieval_coverage",
+        "value": 0.0,
+        "numerator": 0,
+        "denominator": 14,
+        "definition": "Expected (document,page) pairs found in replayed top-k / all expected pairs."
+      },
+      {
+        "metric": "page_retrieval_coverage_rows_all",
+        "value": 0.0,
+        "numerator": 0,
+        "denominator": 10,
+        "definition": "Rows where every expected (document,page) pair appears in replayed top-k."
+      },
+      {
+        "metric": "citation_precision",
+        "value": 0.0,
+        "numerator": 0,
+        "denominator": 11,
+        "definition": "Diagnostic citation refs matching a gold pair / all extracted citation refs."
+      },
+      {
+        "metric": "citation_recall",
+        "value": 0.0,
+        "numerator": 0,
+        "denominator": 14,
+        "definition": "Gold (row,document,page) pairs correctly cited / all gold pairs."
+      },
+      {
+        "metric": "citation_correctness_rows",
+        "value": 0.0,
+        "numerator": 0,
+        "denominator": 10,
+        "definition": "Per-query harness citation correctness / answer rows."
+      },
+      {
+        "metric": "citation_unresolved_count",
+        "value": 5,
+        "numerator": null,
+        "denominator": null,
+        "definition": "Rows whose agent stopped with citation_unresolved."
+      },
+      {
+        "metric": "wrong_document_count",
+        "value": 4,
+        "numerator": null,
+        "denominator": null,
+        "definition": "Rows with >=1 expected document missing from replayed top-k."
+      },
+      {
+        "metric": "wrong_page_count",
+        "value": 8,
+        "numerator": null,
+        "denominator": null,
+        "definition": "Rows with a retrieved expected document but no expected page in replayed top-k."
+      },
+      {
+        "metric": "answer_accuracy",
+        "value": 0.0,
+        "numerator": 0,
+        "denominator": 10,
+        "definition": "Correct answers / rows with expected_behaviour=answer."
+      },
+      {
+        "metric": "abstention_performance",
+        "value": null,
+        "numerator": 0,
+        "denominator": 0,
+        "definition": "Not measurable: no abstain rows in this 10-row sample."
+      },
+      {
+        "metric": "gold_index_coverage",
+        "value": 1.0,
+        "numerator": 14,
+        "denominator": 14,
+        "definition": "Gold (document,page) pairs present in the frozen C2 chunk index."
+      }
+    ],
+    "failure_counts": {
+      "wrong_document_retrieved": 4,
+      "correct_document_wrong_page": 8,
+      "relevant_evidence_not_retrieved": 0,
+      "citation_unresolved": 5,
+      "citation_parsing_failure": 1,
+      "unsupported_answer": 4,
+      "incorrect_answer_despite_correct_evidence": 0,
+      "other_insufficient_evidence": 0
+    },
+    "failure_labels": {
+      "wrong_document_retrieved": "Wrong document retrieved",
+      "correct_document_wrong_page": "Correct document, wrong page",
+      "relevant_evidence_not_retrieved": "Relevant evidence not retrieved",
+      "citation_unresolved": "Citation unresolved",
+      "citation_parsing_failure": "Citation parsing failure",
+      "unsupported_answer": "Unsupported answer",
+      "incorrect_answer_despite_correct_evidence": "Incorrect answer despite correct evidence",
+      "other_insufficient_evidence": "Other / insufficient evidence"
+    }
+  }
+}

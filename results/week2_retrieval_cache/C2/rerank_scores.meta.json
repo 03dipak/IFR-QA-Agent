@@ -1,0 +1,1 @@
+{"model": "BAAI/bge-reranker-base", "shape": [45, 100], "want": {"bm25": "cleaned", "dense": "bge-small-en-v1.5", "n_queries": 45, "pool_k": 100, "rrf_k": 60}}

@@ -1,0 +1,47 @@
+{
+  "query": "Between Deepak Nitrite and Srf, on total assets for the year ended 31 March 2025 consolidated results, which prints the larger figure?",
+  "requested": [
+    {
+      "company_id": "deepak_nitrite",
+      "label": "Total assets"
+    },
+    {
+      "company_id": "srf",
+      "label": "Total assets"
+    }
+  ],
+  "chunks": [
+    {
+      "chunk_id": "fa7dac2401f10d824c6e6b3e5dd482a0e0ab09b50e6164eeebc289ec952fff31:t395",
+      "id": "fa7dac2401f10d824c6e6b3e5dd482a0e0ab09b50e6164eeebc289ec952fff31:t395",
+      "text": "statement_kind: balance_sheet\nunit: ₹ in Crores\ncaption: \nreporting_basis: consolidated\nTrade Receivables 12 1,273.81 1,298.35: Trade | Receivables | 12 | 1,273.81\nCash and Cash Equivalents 13 179.41 237.97: Cash | and | Cash | Equivalents\nBank balances other than Cash and Cash Equivalents above 14 227.15 227.49: Bank | balances | other | than\nLoans 5 1.74 1.11: Loans | 5 | 1.74 | 1.11\nOther Financial Assets 15 18.56 62.21: Other | Financial | Assets | 15\n(c) Other Current Assets 16 162.13 135.40: (c) | Other | Current | Assets\nTotal Current Assets 3,297.11 2,841.60: Total | Current | Assets | 3,297.11\nTOTAL ASSETS 7,717.67 6,096.22: TOTAL | ASSETS | 7,717.67 | 6,096.22",
+      "meta": {
+        "chunk_type": "table",
+        "company_id": "deepak_nitrite",
+        "doc_type": "annual",
+        "document_id": "fa7dac2401f10d824c6e6b3e5dd482a0e0ab09b50e6164eeebc289ec952fff31",
+        "page": 363,
+        "period": "FY2025",
+        "reporting_basis": "consolidated",
+        "statement_kind": "balance_sheet",
+        "variant": "consolidated"
+      }
+    },
+    {
+      "chunk_id": "8e4e186331c2ece16878e3f3a29e1c92cd24c2fa1192e634a37e29593f706862:t363",
+      "id": "8e4e186331c2ece16878e3f3a29e1c92cd24c2fa1192e634a37e29593f706862:t363",
+      "text": "statement_kind: balance_sheet\nunit: \ncaption: \nreporting_basis: consolidated\n(v) Loans 7 17.13 13.09: (v) | Loans | 7 | 17.13\n(vi) Other financial assets 9 168.14 198.03: (vi) | Other | financial | assets\nOther current assets 10 367.57 355.76: Other | current | assets | 10\nTotal current assets 6,129.55 5,649.29: Total | current | assets | 6,129.55\nTOTAL ASSETS 21,557.12 20,481.94: TOTAL | ASSETS | 21,557.12 | 20,481.94",
+      "meta": {
+        "chunk_type": "table",
+        "company_id": "srf",
+        "doc_type": "annual",
+        "document_id": "8e4e186331c2ece16878e3f3a29e1c92cd24c2fa1192e634a37e29593f706862",
+        "page": 177,
+        "period": "FY2025",
+        "reporting_basis": "consolidated",
+        "statement_kind": "balance_sheet",
+        "variant": "consolidated"
+      }
+    }
+  ]
+}

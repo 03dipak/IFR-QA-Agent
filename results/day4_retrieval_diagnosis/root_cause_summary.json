@@ -1,0 +1,97 @@
+{
+  "n_failure_rows": 22,
+  "n_queries": 14,
+  "cause_counts": {
+    "reranker_dropped_expected_page": 4,
+    "query_document_selection_failure": 4,
+    "correct_doc_wrong_page_ranking": 11,
+    "rrf_fusion_loss": 3
+  },
+  "row_causes": {
+    "G-001": [
+      "correct_doc_wrong_page_ranking",
+      "query_document_selection_failure",
+      "reranker_dropped_expected_page"
+    ],
+    "G-003": [
+      "correct_doc_wrong_page_ranking",
+      "query_document_selection_failure",
+      "rrf_fusion_loss"
+    ],
+    "G-004": [
+      "correct_doc_wrong_page_ranking",
+      "query_document_selection_failure",
+      "reranker_dropped_expected_page",
+      "rrf_fusion_loss"
+    ],
+    "G-010": [
+      "correct_doc_wrong_page_ranking",
+      "query_document_selection_failure"
+    ],
+    "G-036": [
+      "reranker_dropped_expected_page"
+    ],
+    "G-037": [
+      "correct_doc_wrong_page_ranking"
+    ],
+    "G-039": [
+      "correct_doc_wrong_page_ranking"
+    ],
+    "G-040": [
+      "rrf_fusion_loss"
+    ],
+    "G-041": [
+      "correct_doc_wrong_page_ranking"
+    ],
+    "G-042": [
+      "reranker_dropped_expected_page"
+    ]
+  },
+  "unresolved_citations": [
+    {
+      "row_id": "G-001",
+      "stopped_reason": "citation_unresolved",
+      "answer_correct": false,
+      "diagnostic_citations": 6,
+      "harness_parsed_citations": 0,
+      "root_cause": "citation_parser_format_mismatch",
+      "evidence": "answer contains citation-like spans but production/harness parser accepted none"
+    },
+    {
+      "row_id": "G-004",
+      "stopped_reason": "citation_unresolved",
+      "answer_correct": false,
+      "diagnostic_citations": 0,
+      "harness_parsed_citations": 0,
+      "root_cause": "generation_missing_citation",
+      "evidence": "answer contains no citation-like span; agent stopped unresolved"
+    },
+    {
+      "row_id": "G-010",
+      "stopped_reason": "citation_unresolved",
+      "answer_correct": false,
+      "diagnostic_citations": 0,
+      "harness_parsed_citations": 0,
+      "root_cause": "generation_missing_citation",
+      "evidence": "answer contains no citation-like span; agent stopped unresolved"
+    },
+    {
+      "row_id": "G-040",
+      "stopped_reason": "citation_unresolved",
+      "answer_correct": false,
+      "diagnostic_citations": 0,
+      "harness_parsed_citations": 0,
+      "root_cause": "generation_missing_citation",
+      "evidence": "answer contains no citation-like span; agent stopped unresolved"
+    },
+    {
+      "row_id": "G-041",
+      "stopped_reason": "citation_unresolved",
+      "answer_correct": false,
+      "diagnostic_citations": 0,
+      "harness_parsed_citations": 0,
+      "root_cause": "generation_missing_citation",
+      "evidence": "answer contains no citation-like span; agent stopped unresolved"
+    }
+  ]
+}

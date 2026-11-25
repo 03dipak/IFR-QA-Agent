@@ -1,0 +1,22 @@
+{
+  "run_type": "arm",
+  "system": "S1",
+  "arm": "S1",
+  "gold_hash": "c8d049ac31c0389cd9e10d8a33d3fc1f28f76bae9671e3ae8af4da9166514805",
+  "gold_schema_version": {
+    "cross_company_comparison": 20,
+    "multi_hop": 15,
+    "numeric_from_table": 15,
+    "same_company_cross_period": 15,
+    "single_fact_lookup": 20,
+    "unanswerable_abstain": 15
+  },
+  "index_version": "page-fixed-800x100-v1",
+  "split_manifest_hash": "934649878c37a1e2a3e9927bf307f83b2cb07b396c2ccff2fa9e39b8e07ada46",
+  "scoring_bands_hash": "ee662b8b019936cd6c338989f13ce03b4938270dc5a5099595f2654f08db66f5",
+  "normalisation_rules_version": "norm-1",
+  "registry_version": "v0",
+  "corpus_freeze_manifest_sha256": "899ac206a760af531e102e01daf99e4ff61d36cb6fc1e2e7a28cf01b094b5edd",
+  "seed": 42,
+  "n_rows": 74
+}

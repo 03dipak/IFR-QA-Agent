@@ -1,0 +1,1 @@
+{"batch_size": 256, "batches_done": 1824, "chunk_ids_sha256": "a6269e8820fe5c8d13bc93acfd664cad72631a5a8cc63dd762f98c239ae75bfd", "chunks": 466799, "chunks_done": 466799, "dim": 384, "elapsed_seconds": 284.18, "index_version": "e9cc96eb8795d2de", "model": "local:hash384-v1", "status": "complete", "tokenizer": "tokenizer.v1", "updated_at": 1795498258.684623}

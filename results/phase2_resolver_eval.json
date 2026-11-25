@@ -1,0 +1,18 @@
+{
+  "n_answerable": 115,
+  "company_primary_accuracy": 0.7739,
+  "period_accuracy": 0.9913,
+  "basis_accuracy": 0.6933,
+  "n_basis_scored": 75,
+  "metric_detected_rate": 0.8696,
+  "unresolved_companies": {
+    "RELIANCE": 8,
+    "infosys|itc": 4,
+    "itc|coal_india": 4,
+    "infosys": 2,
+    "itc": 2,
+    "hindalco|infosys": 2,
+    "hindalco|itc": 2,
+    "hindalco|cummins": 2
+  }
+}

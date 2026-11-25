@@ -1,0 +1,21 @@
+{
+  "query": "What is total equity?",
+  "requested": [
+    {
+      "company_id": "acme",
+      "label": "Total equity"
+    }
+  ],
+  "chunks": [
+    {
+      "chunk_id": "acme-eq",
+      "text": "unit: \u20b9 in Crores\nTotal equity 50 40\nTOTAL EQUITY AND LIABILITIES 100 90",
+      "meta": {
+        "reporting_basis": "consolidated",
+        "statement_kind": "balance_sheet",
+        "company_id": "acme",
+        "page": 10
+      }
+    }
+  ]
+}

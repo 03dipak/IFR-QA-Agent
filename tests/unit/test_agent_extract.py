@@ -1,0 +1,315 @@
+import json
+from pathlib import Path
+
+import pytest
+from langgraph.checkpoint.memory import MemorySaver
+
+from src.agent.extract import build_answer, extract_figures, normalize_label
+from src.agent.graph import AgentGraph
+from src.agent.llm import StubLLM
+
+FIXTURES = Path(__file__).resolve().parents[1] / "fixtures" / "agent_figures"
+
+
+def _load(name: str) -> dict:
+    return json.loads((FIXTURES / f"{name}.json").read_text(encoding="utf-8"))
+
+
+@pytest.mark.parametrize(
+    ("fixture", "expected", "difference"),
+    [
+        (
+            "t1_total_assets",
+            {
+                "srf|total assets": "21,557.12",
+                "deepak_nitrite|total assets": "7,717.67",
+            },
+            "13,839.45",
+        ),
+        (
+            "t2_total_equity",
+            {
+                "dr_reddys|total equity": "339,274",
+                "aurobindo_pharma|total equity": "326,469.3",
+            },
+            "12,804.7",
+        ),
+        ("t3_revenue", {"coforge|revenue from operations": "91,790"}, None),
+        ("t4_profit", {"adani_green|profit for the year": "604"}, None),
+        (
+            "t5_total_assets",
+            {
+                "maruti_suzuki|total assets": "1,319,718",
+                "bosch|total assets": "202,411",
+            },
+            "1,117,307",
+        ),
+        (
+            "t6_total_assets",
+            {
+                "aurobindo_pharma|total assets": "497,849.7",
+                "dr_reddys|total assets": "494,266",
+            },
+            "3,583.7",
+        ),
+    ],
+)
+def test_fixture_figures(fixture: str, expected: dict[str, str], difference: str | None):
+    data = _load(fixture)
+    extracted = extract_figures(data["requested"], data["chunks"], basis="consolidated")
+    answer = build_answer(data["requested"], extracted, data["query"])
+
+    assert extracted["insufficient_evidence"] is False
+    actual = {
+        f"{fig['company_id']}|{normalize_label(fig['label'])}": fig["value"]
+        for fig in answer["figures"]
+    }
+    assert actual == expected
+    assert all(fig["period_column"] == "current" for fig in answer["figures"])
+    assert all(fig["chunk_id"] and fig["page"] for fig in answer["figures"])
+    if difference:
+        assert difference in answer["answer"]
+        assert answer["computed_values"] == [difference]
+
+
+def test_conflict_reports_values_but_returns_one_figure():
+    data = _load("conflict_total_assets")
+    extracted = extract_figures(data["requested"], data["chunks"])
+    answer = build_answer(data["requested"], extracted, data["query"])
+
+    assert answer["insufficient_evidence"] is True
+    assert answer["conflict"] is True
+    assert len(answer["figures"]) == 1
+    assert answer["figures"][0]["value"] in {"100", "200"}
+    assert "100" in answer["answer"] and "200" in answer["answer"]
+
+
+def test_total_equity_does_not_match_total_equity_and_liabilities():
+    data = _load("equity_not_liabilities")
+    extracted = extract_figures(data["requested"], data["chunks"])
+    answer = build_answer(data["requested"], extracted, data["query"])
+
+    assert answer["insufficient_evidence"] is False
+    assert answer["figures"][0]["value"] == "50"
+    assert answer["figures"][0]["label"] == "Total equity"
+
+
+def test_total_assets_uses_equity_and_liabilities_only_when_no_total_assets_row():
+    data = _load("total_assets_equivalence")
+    extracted = extract_figures(data["requested"], data["chunks"])
+    answer = build_answer(data["requested"], extracted, data["query"])
+
+    assert answer["insufficient_evidence"] is False
+    assert answer["figures"][0]["value"] == "100"
+    assert answer["figures"][0]["label_equivalence"] is True
+
+
+def test_t4_prefers_exact_label_chunk_and_uses_last_number():
+    data = _load("t4_profit_both_formats")
+    extracted = extract_figures(
+        data["requested"], data["chunks"], basis="consolidated",
+        statement_kind="income_statement",
+    )
+
+    assert extracted["insufficient_evidence"] is False
+    assert extracted["figures"][0]["value"] == "604"
+    assert extracted["figures"][0]["chunk_id"].endswith(":t263")
+
+
+def test_graph_uses_deterministic_answer_without_answer_llm(monkeypatch):
+    data = _load("t6_total_assets")
+    monkeypatch.setattr(
+        "src.agent.graph.detect_companies",
+        lambda query: ["aurobindo_pharma", "dr_reddys"],
+    )
+    planner = json.dumps({
+        "steps": [{"tool": "search_index", "args": {"query": "total assets", "k": 8}}],
+        "requested": data["requested"],
+    })
+    llm = StubLLM([planner, json.dumps({
+        "verdict": "accept", "feedback": "ok", "next_steps": [],
+    })])
+
+    def fake_search(query, k=5, **kwargs):
+        return {"hits": data["chunks"], "match_info": {}}
+
+    graph = AgentGraph(
+        llm=llm,
+        tools={"search_index": fake_search},
+        checkpointer=MemorySaver(),
+    )
+    result = graph.run(data["query"], thread_id="t-extract")
+
+    final = result["final_answer"]
+    assert "3,583.7" in final["answer"]
+    assert final["insufficient_evidence"] is False
+    assert final["company_mismatches"] == []
+    assert len(llm.calls) == 1
+
+
+def test_graph_runs_one_fallback_search_when_label_is_missing():
+    planner = json.dumps({
+        "steps": [{
+            "tool": "search_index",
+            "args": {"query": "alpha total assets", "k": 5, "company": "alpha"},
+        }],
+        "requested": [{"company_id": "alpha", "label": "Total assets"}],
+    })
+    calls: list[dict] = []
+
+    def fake_search(query, k=5, **kwargs):
+        calls.append({"query": query, "k": k, "company": kwargs.get("company")})
+        if k == 60:
+            return {"hits": [{
+                "chunk_id": "f1",
+                "text": "Total assets 10",
+                "meta": {"company_id": "alpha", "statement_kind": "balance_sheet"},
+            }]}
+        return {"hits": []}
+
+    graph = AgentGraph(
+        llm=StubLLM([planner]),
+        tools={"search_index": fake_search},
+        checkpointer=MemorySaver(),
+    )
+    result = graph.run("What is total assets for alpha?", thread_id="t-fallback")
+
+    assert [call["k"] for call in calls] == [20, 60]
+    assert all(call["query"] == "Total assets" for call in calls)
+    assert result["final_answer"]["figures"][0]["value"] == "10"
+    assert result["final_answer"]["fallback_used"] is True
+    assert result["final_answer"]["insufficient_evidence"] is False
+
+
+def test_multi_year_t47_row_is_excluded_and_flagged():
+    chunks = [{
+        "chunk_id": "t47",
+        "text": (
+            "Total Assets 492,989 387,518 321,854 296,654 265,491\n"
+            "Total current assets 250,181 248,053"
+        ),
+        "meta": {"company_id": "dr_reddys"},
+    }]
+    extracted = extract_figures(
+        [{"company_id": "dr_reddys", "label": "Total assets"}], chunks
+    )
+    assert extracted["conflicts"] == []
+    assert extracted["figures"][0]["multi_year_row"] is True
+
+
+def test_t435_and_t6_total_assets_expected_values():
+    data = _load("t6_total_assets")
+    extracted = extract_figures(data["requested"], data["chunks"], basis="consolidated")
+    actual = {
+        f"{fig['company_id']}|{normalize_label(fig['label'])}": fig["value"]
+        for fig in extracted["figures"]
+    }
+    assert actual["aurobindo_pharma|total assets"] == "497,849.7"
+    assert actual["dr_reddys|total assets"] == "494,266"
+
+
+def test_missing_label_is_reported_only_for_that_company():
+    planner = json.dumps({
+        "steps": [
+            {"tool": "search_index", "args": {"query": "total assets", "k": 5, "company": "alpha"}},
+            {"tool": "search_index", "args": {"query": "total assets", "k": 5, "company": "beta"}},
+        ],
+        "requested": [
+            {"company_id": "alpha", "label": "Total assets"},
+            {"company_id": "beta", "label": "Total assets"},
+        ],
+    })
+
+    def fake_search(query, k=5, **kwargs):
+        if k == 60:
+            return {"hits": []}
+        if kwargs.get("company") == "alpha":
+            return {"hits": [{
+                "chunk_id": "a1",
+                "text": "Total assets 10",
+                "meta": {"company_id": "alpha", "statement_kind": "balance_sheet"},
+            }]}
+        return {"hits": []}
+
+    graph = AgentGraph(
+        llm=StubLLM([planner]),
+        tools={"search_index": fake_search},
+        checkpointer=MemorySaver(),
+    )
+    result = graph.run("Compare total assets for alpha and beta", thread_id="t-missing")
+
+    answer = result["final_answer"]
+    assert "alpha Total assets: 10" in answer["answer"]
+    assert "beta: label not found (Total assets)" in answer["answer"]
+    assert answer["unresolved"] == [{"company_id": "beta", "label": "Total assets"}]
+    assert answer["insufficient_evidence"] is True
+
+
+def test_t263_equity_profit_uses_last_number_after_prior_balance():
+    data = _load("t4_profit_both_formats")
+    chunk = next(c for c in data["chunks"] if c["chunk_id"].endswith(":t263"))
+    extracted = extract_figures(
+        data["requested"],
+        [chunk],
+        basis="standalone",
+        statement_kind="income_statement",
+    )
+
+    assert extracted["missing"] == []
+    assert extracted["conflicts"] == []
+    assert extracted["figures"][0]["value"] == "604"
+    assert extracted["figures"][0]["equity_statement"] is True
+
+
+def _coforge_chunk(suffix: str, page: int) -> dict:
+    return {
+        "chunk_id": f"coforge:{suffix}",
+        "text": (
+            "statement_kind: income_statement\n"
+            "unit: \n"
+            "reporting_basis: consolidated\n"
+            "Revenue from operations 91,790 80,146: Revenue | from | operations"
+        ),
+        "meta": {
+            "company_id": "coforge",
+            "page": page,
+            "period": "FY2024",
+            "reporting_basis": "consolidated",
+            "statement_kind": "income_statement",
+        },
+    }
+
+
+def test_coforge_prefers_frequent_period_matched_value_over_noise():
+    chunks = [
+        _coforge_chunk("t390", 250),
+        _coforge_chunk("t392", 250),
+        _coforge_chunk("t391", 250),
+        _coforge_chunk("t308", 210),
+        {
+            "chunk_id": "coforge:noise",
+            "text": (
+                "Revenue from operations 1,64,027 1,20,733: Revenue | from | operations\n"
+                "Revenue from operations 48,489 42,305: Revenue | from | operations"
+            ),
+            "meta": {
+                "company_id": "coforge",
+                "page": 156,
+                "period": "FY2025",
+                "reporting_basis": "standalone",
+                "statement_kind": "income_statement",
+            },
+        },
+    ]
+    extracted = extract_figures(
+        [{"company_id": "coforge", "label": "Revenue from operations"}],
+        chunks,
+        basis="consolidated",
+        statement_kind="income_statement",
+        period="FY2024",
+    )
+
+    assert extracted["missing"] == []
+    assert extracted["conflicts"] == []
+    assert len(extracted["figures"]) == 1
+    assert extracted["figures"][0]["value"] == "91,790"

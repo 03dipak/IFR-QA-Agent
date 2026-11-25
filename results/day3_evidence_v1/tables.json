@@ -1,0 +1,487 @@
+{
+  "a": [
+    {
+      "query_id": "G-001",
+      "expected_document_id": "fa7dac2401f1",
+      "retrieved_document_ids": "fa7dac2401f1|e97121aee575|e57b7fc675de|011253c0a105",
+      "expected_document_retrieved": "yes",
+      "retrieval_rank": 1,
+      "retrieval_call": 0,
+      "missing_document_status": "retrieved",
+      "expected_page": 363
+    },
+    {
+      "query_id": "G-001",
+      "expected_document_id": "8e4e186331c2",
+      "retrieved_document_ids": "fa7dac2401f1|e97121aee575|e57b7fc675de|011253c0a105",
+      "expected_document_retrieved": "no",
+      "retrieval_rank": null,
+      "retrieval_call": null,
+      "missing_document_status": "indexed_not_retrieved",
+      "expected_page": 177
+    },
+    {
+      "query_id": "G-003",
+      "expected_document_id": "fa7dac2401f1",
+      "retrieved_document_ids": "fa7dac2401f1|0ca3172627a0|deed15eaf8d7|011253c0a105",
+      "expected_document_retrieved": "yes",
+      "retrieval_rank": 1,
+      "retrieval_call": 0,
+      "missing_document_status": "retrieved",
+      "expected_page": 363
+    },
+    {
+      "query_id": "G-003",
+      "expected_document_id": "8e4e186331c2",
+      "retrieved_document_ids": "fa7dac2401f1|0ca3172627a0|deed15eaf8d7|011253c0a105",
+      "expected_document_retrieved": "no",
+      "retrieval_rank": null,
+      "retrieval_call": null,
+      "missing_document_status": "indexed_not_retrieved",
+      "expected_page": 177
+    },
+    {
+      "query_id": "G-004",
+      "expected_document_id": "8fcda929069a",
+      "retrieved_document_ids": "8fcda929069a|36c2942b23f1",
+      "expected_document_retrieved": "yes",
+      "retrieval_rank": 1,
+      "retrieval_call": 0,
+      "missing_document_status": "retrieved",
+      "expected_page": 216
+    },
+    {
+      "query_id": "G-004",
+      "expected_document_id": "36c2942b23f1",
+      "retrieved_document_ids": "8fcda929069a|36c2942b23f1",
+      "expected_document_retrieved": "yes",
+      "retrieval_rank": 1,
+      "retrieval_call": 1,
+      "missing_document_status": "retrieved",
+      "expected_page": 407
+    },
+    {
+      "query_id": "G-010",
+      "expected_document_id": "e97121aee575",
+      "retrieved_document_ids": "e97121aee575|9e092bb4d317|bdd1b13a7b77|fa7dac2401f1",
+      "expected_document_retrieved": "yes",
+      "retrieval_rank": 1,
+      "retrieval_call": 0,
+      "missing_document_status": "retrieved",
+      "expected_page": 205
+    },
+    {
+      "query_id": "G-010",
+      "expected_document_id": "bdd1b13a7b77",
+      "retrieved_document_ids": "e97121aee575|9e092bb4d317|bdd1b13a7b77|fa7dac2401f1",
+      "expected_document_retrieved": "yes",
+      "retrieval_rank": 1,
+      "retrieval_call": 1,
+      "missing_document_status": "retrieved",
+      "expected_page": 176
+    },
+    {
+      "query_id": "G-036",
+      "expected_document_id": "d8e3739d2e06",
+      "retrieved_document_ids": "0ea899ba19c2|deed15eaf8d7",
+      "expected_document_retrieved": "no",
+      "retrieval_rank": null,
+      "retrieval_call": null,
+      "missing_document_status": "indexed_not_retrieved",
+      "expected_page": 110
+    },
+    {
+      "query_id": "G-037",
+      "expected_document_id": "d8e3739d2e06",
+      "retrieved_document_ids": "fa7dac2401f1|15fee0c19d13|1490168ab799|011253c0a105",
+      "expected_document_retrieved": "no",
+      "retrieval_rank": null,
+      "retrieval_call": null,
+      "missing_document_status": "indexed_not_retrieved",
+      "expected_page": 98
+    },
+    {
+      "query_id": "G-039",
+      "expected_document_id": "deed15eaf8d7",
+      "retrieved_document_ids": "deed15eaf8d7",
+      "expected_document_retrieved": "yes",
+      "retrieval_rank": 1,
+      "retrieval_call": 0,
+      "missing_document_status": "retrieved",
+      "expected_page": 179
+    },
+    {
+      "query_id": "G-040",
+      "expected_document_id": "deed15eaf8d7",
+      "retrieved_document_ids": "deed15eaf8d7",
+      "expected_document_retrieved": "yes",
+      "retrieval_rank": 1,
+      "retrieval_call": 0,
+      "missing_document_status": "retrieved",
+      "expected_page": 179
+    },
+    {
+      "query_id": "G-041",
+      "expected_document_id": "deed15eaf8d7",
+      "retrieved_document_ids": "deed15eaf8d7",
+      "expected_document_retrieved": "yes",
+      "retrieval_rank": 1,
+      "retrieval_call": 0,
+      "missing_document_status": "retrieved",
+      "expected_page": 179
+    },
+    {
+      "query_id": "G-042",
+      "expected_document_id": "728937384f00",
+      "retrieved_document_ids": "728937384f00",
+      "expected_document_retrieved": "yes",
+      "retrieval_rank": 1,
+      "retrieval_call": 0,
+      "missing_document_status": "retrieved",
+      "expected_page": 209
+    }
+  ],
+  "b": [
+    {
+      "query_id": "G-001",
+      "expected_document_id": "fa7dac2401f1",
+      "expected_page": 363,
+      "retrieved_pages": "387|403|407|389|409",
+      "correct_page_retrieved": "no",
+      "page_coverage_status": "doc_retrieved_page_missing"
+    },
+    {
+      "query_id": "G-001",
+      "expected_document_id": "8e4e186331c2",
+      "expected_page": 177,
+      "retrieved_pages": "(none)",
+      "correct_page_retrieved": "no",
+      "page_coverage_status": "doc_not_retrieved"
+    },
+    {
+      "query_id": "G-003",
+      "expected_document_id": "fa7dac2401f1",
+      "expected_page": 363,
+      "retrieved_pages": "409|403|415|407|389|394|350",
+      "correct_page_retrieved": "no",
+      "page_coverage_status": "doc_retrieved_page_missing"
+    },
+    {
+      "query_id": "G-003",
+      "expected_document_id": "8e4e186331c2",
+      "expected_page": 177,
+      "retrieved_pages": "(none)",
+      "correct_page_retrieved": "no",
+      "page_coverage_status": "doc_not_retrieved"
+    },
+    {
+      "query_id": "G-004",
+      "expected_document_id": "8fcda929069a",
+      "expected_page": 216,
+      "retrieved_pages": "246|245|196|228|243",
+      "correct_page_retrieved": "no",
+      "page_coverage_status": "doc_retrieved_page_missing"
+    },
+    {
+      "query_id": "G-004",
+      "expected_document_id": "36c2942b23f1",
+      "expected_page": 407,
+      "retrieved_pages": "477|478|474|391",
+      "correct_page_retrieved": "no",
+      "page_coverage_status": "doc_retrieved_page_missing"
+    },
+    {
+      "query_id": "G-010",
+      "expected_document_id": "e97121aee575",
+      "expected_page": 205,
+      "retrieved_pages": "243|249|211",
+      "correct_page_retrieved": "no",
+      "page_coverage_status": "doc_retrieved_page_missing"
+    },
+    {
+      "query_id": "G-010",
+      "expected_document_id": "bdd1b13a7b77",
+      "expected_page": 176,
+      "retrieved_pages": "210|152|205",
+      "correct_page_retrieved": "no",
+      "page_coverage_status": "doc_retrieved_page_missing"
+    },
+    {
+      "query_id": "G-036",
+      "expected_document_id": "d8e3739d2e06",
+      "expected_page": 110,
+      "retrieved_pages": "(none)",
+      "correct_page_retrieved": "no",
+      "page_coverage_status": "doc_not_retrieved"
+    },
+    {
+      "query_id": "G-037",
+      "expected_document_id": "d8e3739d2e06",
+      "expected_page": 98,
+      "retrieved_pages": "(none)",
+      "correct_page_retrieved": "no",
+      "page_coverage_status": "doc_not_retrieved"
+    },
+    {
+      "query_id": "G-039",
+      "expected_document_id": "deed15eaf8d7",
+      "expected_page": 179,
+      "retrieved_pages": "239|217|219|314|242",
+      "correct_page_retrieved": "no",
+      "page_coverage_status": "doc_retrieved_page_missing"
+    },
+    {
+      "query_id": "G-040",
+      "expected_document_id": "deed15eaf8d7",
+      "expected_page": 179,
+      "retrieved_pages": "239|217|219|194|213",
+      "correct_page_retrieved": "no",
+      "page_coverage_status": "doc_retrieved_page_missing"
+    },
+    {
+      "query_id": "G-041",
+      "expected_document_id": "deed15eaf8d7",
+      "expected_page": 179,
+      "retrieved_pages": "239|217|219|213|314",
+      "correct_page_retrieved": "no",
+      "page_coverage_status": "doc_retrieved_page_missing"
+    },
+    {
+      "query_id": "G-042",
+      "expected_document_id": "728937384f00",
+      "expected_page": 209,
+      "retrieved_pages": "213|123|311|173|277",
+      "correct_page_retrieved": "no",
+      "page_coverage_status": "doc_retrieved_page_missing"
+    }
+  ],
+  "c": [
+    {
+      "query_id": "G-001",
+      "generated_citation": "[fa7dac2401f1 p.387]",
+      "expected_document_page": "fa7dac2401f1 p.363|8e4e186331c2 p.177",
+      "actual_cited_document_page": "fa7dac2401f1 p.387",
+      "citation_status": "correct_document_wrong_page",
+      "failure_category": "citation_parsing_failure",
+      "harness_citation_parsed": "no"
+    },
+    {
+      "query_id": "G-001",
+      "generated_citation": "[fa7dac2401f1 p.403]",
+      "expected_document_page": "fa7dac2401f1 p.363|8e4e186331c2 p.177",
+      "actual_cited_document_page": "fa7dac2401f1 p.403",
+      "citation_status": "correct_document_wrong_page",
+      "failure_category": "citation_parsing_failure",
+      "harness_citation_parsed": "no"
+    },
+    {
+      "query_id": "G-001",
+      "generated_citation": "[fa7dac2401f1 p.407]",
+      "expected_document_page": "fa7dac2401f1 p.363|8e4e186331c2 p.177",
+      "actual_cited_document_page": "fa7dac2401f1 p.407",
+      "citation_status": "correct_document_wrong_page",
+      "failure_category": "citation_parsing_failure",
+      "harness_citation_parsed": "no"
+    },
+    {
+      "query_id": "G-001",
+      "generated_citation": "[fa7dac2401f1 p.389]",
+      "expected_document_page": "fa7dac2401f1 p.363|8e4e186331c2 p.177",
+      "actual_cited_document_page": "fa7dac2401f1 p.389",
+      "citation_status": "correct_document_wrong_page",
+      "failure_category": "citation_parsing_failure",
+      "harness_citation_parsed": "no"
+    },
+    {
+      "query_id": "G-001",
+      "generated_citation": "[fa7dac2401f1 p.409]",
+      "expected_document_page": "fa7dac2401f1 p.363|8e4e186331c2 p.177",
+      "actual_cited_document_page": "fa7dac2401f1 p.409",
+      "citation_status": "correct_document_wrong_page",
+      "failure_category": "citation_parsing_failure",
+      "harness_citation_parsed": "no"
+    },
+    {
+      "query_id": "G-001",
+      "generated_citation": "[e97121aee575 p.243]",
+      "expected_document_page": "fa7dac2401f1 p.363|8e4e186331c2 p.177",
+      "actual_cited_document_page": "e97121aee575 p.243",
+      "citation_status": "wrong_document",
+      "failure_category": "citation_parsing_failure",
+      "harness_citation_parsed": "no"
+    },
+    {
+      "query_id": "G-003",
+      "generated_citation": "[fa7dac2401f1 p.409]",
+      "expected_document_page": "fa7dac2401f1 p.363|8e4e186331c2 p.177",
+      "actual_cited_document_page": "fa7dac2401f1 p.409",
+      "citation_status": "correct_document_wrong_page",
+      "failure_category": "correct_document_wrong_page",
+      "harness_citation_parsed": "yes"
+    },
+    {
+      "query_id": "G-004",
+      "generated_citation": "(none)",
+      "expected_document_page": "8fcda929069a p.216|36c2942b23f1 p.407",
+      "actual_cited_document_page": "(none)",
+      "citation_status": "missing_or_unparseable",
+      "failure_category": "citation_unresolved",
+      "harness_citation_parsed": "no"
+    },
+    {
+      "query_id": "G-010",
+      "generated_citation": "(none)",
+      "expected_document_page": "e97121aee575 p.205|bdd1b13a7b77 p.176",
+      "actual_cited_document_page": "(none)",
+      "citation_status": "missing_or_unparseable",
+      "failure_category": "citation_unresolved",
+      "harness_citation_parsed": "no"
+    },
+    {
+      "query_id": "G-036",
+      "generated_citation": "[0ea899ba19c2 p.362]",
+      "expected_document_page": "d8e3739d2e06 p.110",
+      "actual_cited_document_page": "0ea899ba19c2 p.362",
+      "citation_status": "wrong_document",
+      "failure_category": "wrong_document",
+      "harness_citation_parsed": "yes"
+    },
+    {
+      "query_id": "G-037",
+      "generated_citation": "[fa7dac2401f1 p.328]",
+      "expected_document_page": "d8e3739d2e06 p.98",
+      "actual_cited_document_page": "fa7dac2401f1 p.328",
+      "citation_status": "wrong_document",
+      "failure_category": "wrong_document",
+      "harness_citation_parsed": "yes"
+    },
+    {
+      "query_id": "G-039",
+      "generated_citation": "[deed15eaf8d7 p.314]",
+      "expected_document_page": "deed15eaf8d7 p.179",
+      "actual_cited_document_page": "deed15eaf8d7 p.314",
+      "citation_status": "correct_document_wrong_page",
+      "failure_category": "correct_document_wrong_page",
+      "harness_citation_parsed": "yes"
+    },
+    {
+      "query_id": "G-040",
+      "generated_citation": "(none)",
+      "expected_document_page": "deed15eaf8d7 p.179",
+      "actual_cited_document_page": "(none)",
+      "citation_status": "missing_or_unparseable",
+      "failure_category": "citation_unresolved",
+      "harness_citation_parsed": "no"
+    },
+    {
+      "query_id": "G-041",
+      "generated_citation": "(none)",
+      "expected_document_page": "deed15eaf8d7 p.179",
+      "actual_cited_document_page": "(none)",
+      "citation_status": "missing_or_unparseable",
+      "failure_category": "citation_unresolved",
+      "harness_citation_parsed": "no"
+    },
+    {
+      "query_id": "G-042",
+      "generated_citation": "[728937384f00 p.213]",
+      "expected_document_page": "728937384f00 p.209",
+      "actual_cited_document_page": "728937384f00 p.213",
+      "citation_status": "correct_document_wrong_page",
+      "failure_category": "correct_document_wrong_page",
+      "harness_citation_parsed": "yes"
+    }
+  ],
+  "d": [
+    {
+      "query_id": "G-001",
+      "expected_behaviour": "answer",
+      "answer_correct": false,
+      "stopped_reason": "citation_unresolved",
+      "classifications": "wrong_document_retrieved|correct_document_wrong_page|citation_unresolved|citation_parsing_failure",
+      "primary_failure": "wrong_document_retrieved",
+      "evidence_basis": "retrieval_probe"
+    },
+    {
+      "query_id": "G-003",
+      "expected_behaviour": "answer",
+      "answer_correct": false,
+      "stopped_reason": "done",
+      "classifications": "wrong_document_retrieved|correct_document_wrong_page",
+      "primary_failure": "wrong_document_retrieved",
+      "evidence_basis": "retrieval_probe"
+    },
+    {
+      "query_id": "G-004",
+      "expected_behaviour": "answer",
+      "answer_correct": false,
+      "stopped_reason": "citation_unresolved",
+      "classifications": "correct_document_wrong_page|citation_unresolved|unsupported_answer",
+      "primary_failure": "correct_document_wrong_page",
+      "evidence_basis": "retrieval_probe"
+    },
+    {
+      "query_id": "G-010",
+      "expected_behaviour": "answer",
+      "answer_correct": false,
+      "stopped_reason": "citation_unresolved",
+      "classifications": "correct_document_wrong_page|citation_unresolved|unsupported_answer",
+      "primary_failure": "correct_document_wrong_page",
+      "evidence_basis": "retrieval_probe"
+    },
+    {
+      "query_id": "G-036",
+      "expected_behaviour": "answer",
+      "answer_correct": false,
+      "stopped_reason": "done",
+      "classifications": "wrong_document_retrieved",
+      "primary_failure": "wrong_document_retrieved",
+      "evidence_basis": "retrieval_probe"
+    },
+    {
+      "query_id": "G-037",
+      "expected_behaviour": "answer",
+      "answer_correct": false,
+      "stopped_reason": "done",
+      "classifications": "wrong_document_retrieved",
+      "primary_failure": "wrong_document_retrieved",
+      "evidence_basis": "retrieval_probe"
+    },
+    {
+      "query_id": "G-039",
+      "expected_behaviour": "answer",
+      "answer_correct": false,
+      "stopped_reason": "done",
+      "classifications": "correct_document_wrong_page",
+      "primary_failure": "correct_document_wrong_page",
+      "evidence_basis": "retrieval_probe"
+    },
+    {
+      "query_id": "G-040",
+      "expected_behaviour": "answer",
+      "answer_correct": false,
+      "stopped_reason": "citation_unresolved",
+      "classifications": "correct_document_wrong_page|citation_unresolved|unsupported_answer",
+      "primary_failure": "correct_document_wrong_page",
+      "evidence_basis": "retrieval_probe"
+    },
+    {
+      "query_id": "G-041",
+      "expected_behaviour": "answer",
+      "answer_correct": false,
+      "stopped_reason": "citation_unresolved",
+      "classifications": "correct_document_wrong_page|citation_unresolved|unsupported_answer",
+      "primary_failure": "correct_document_wrong_page",
+      "evidence_basis": "retrieval_probe"
+    },
+    {
+      "query_id": "G-042",
+      "expected_behaviour": "answer",
+      "answer_correct": false,
+      "stopped_reason": "done",
+      "classifications": "correct_document_wrong_page",
+      "primary_failure": "correct_document_wrong_page",
+      "evidence_basis": "retrieval_probe"
+    }
+  ]
+}

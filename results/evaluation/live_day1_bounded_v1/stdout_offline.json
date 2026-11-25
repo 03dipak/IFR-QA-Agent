@@ -1,0 +1,35 @@
+{
+  "run_id": "live_day1_bounded_v1",
+  "metrics": {
+    "n": 10,
+    "n_answer": 10,
+    "n_abstain": 0,
+    "answer_accuracy": 0.0,
+    "citation_correctness": 0.0,
+    "refusal_correctness": null,
+    "task_completion_rate": 0.2,
+    "failure_counts": {
+      "incorrect_answer": 10,
+      "citation_issue": 10,
+      "tool_failure": 0,
+      "token_exhaustion": 4,
+      "loop": 0,
+      "timeout": 0,
+      "incomplete_task": 0,
+      "false_refusal": 0,
+      "missed_refusal": 0
+    },
+    "mean_tool_calls": 1.4,
+    "mean_agent_steps": 1.4,
+    "mean_tokens": 3229.7,
+    "mean_latency_ms": 48659.9,
+    "mean_cost_proxy_usd": 0.0,
+    "total_tokens": 32297
+  },
+  "validation": {
+    "ok": true,
+    "errors": [],
+    "n_rows": 10
+  },
+  "report": "docs/WEEK34_DAY1_LIVE_BOUNDED.md"
+}

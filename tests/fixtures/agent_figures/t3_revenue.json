@@ -1,0 +1,27 @@
+{
+  "query": "What is Coforge's revenue from operations for FY2025 consolidated?",
+  "requested": [
+    {
+      "company_id": "coforge",
+      "label": "Revenue from operations"
+    }
+  ],
+  "chunks": [
+    {
+      "chunk_id": "15b2d66be4721fcdd64a0f825b92ec8bacb7504da4e16c903bda582de7a5b294:t390",
+      "id": "15b2d66be4721fcdd64a0f825b92ec8bacb7504da4e16c903bda582de7a5b294:t390",
+      "text": "statement_kind: income_statement\nunit: \ncaption: \nreporting_basis: consolidated\n16 Revenue from operations: 16 | Revenue | from\nSales of products 545 753: Sales | of | products\nSale of services 91,245 79,393: Sale | of | services\nRevenue from operations 91,790 80,146: Revenue | from | operations",
+      "meta": {
+        "chunk_type": "table",
+        "company_id": "coforge",
+        "doc_type": "annual",
+        "document_id": "15b2d66be4721fcdd64a0f825b92ec8bacb7504da4e16c903bda582de7a5b294",
+        "page": 250,
+        "period": "FY2024",
+        "reporting_basis": "consolidated",
+        "statement_kind": "income_statement",
+        "variant": "consolidated"
+      }
+    }
+  ]
+}

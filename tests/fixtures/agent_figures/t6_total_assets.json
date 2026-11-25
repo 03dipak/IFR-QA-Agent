@@ -1,0 +1,47 @@
+{
+  "query": "Compare total assets of Aurobindo Pharma and Dr Reddy's for FY2025 consolidated and give the difference.",
+  "requested": [
+    {
+      "company_id": "aurobindo_pharma",
+      "label": "Total assets"
+    },
+    {
+      "company_id": "dr_reddys",
+      "label": "Total assets"
+    }
+  ],
+  "chunks": [
+    {
+      "chunk_id": "e97121aee57558adf2dc27d6770bec497df8a9cb4deeb37d67186abef5484ed2:t472",
+      "id": "e97121aee57558adf2dc27d6770bec497df8a9cb4deeb37d67186abef5484ed2:t472",
+      "text": "statement_kind: balance_sheet\nunit: \ncaption: \nreporting_basis: consolidated\n(ii) Trade receivables 9(B) 57,459.3 48,167.4: (ii) | Trade | receivables | 9(B) | 57,459.3\n(iii) Cash and cash equivalents 15(A) 55,689.5 33,934.8: (iii) | Cash | and | cash | equivalents\n(iv) Bank balances other than (iii) above 15(B) 26,665.4 28,848.2: (iv) | Bank | balances | other | than\n(v) Loans 8(B) 155.6 128.6: (v) | Loans | 8(B) | 155.6 | 128.6\n(vi) Other financial assets 10(B) 2,619.5 2,631.1: (vi) | Other | financial | assets | 10(B)\n(c) Current tax assets (net) 12(B) 27.8 56.7: (c) | Current | tax | assets | (net)\n(d) Other current assets 13(B) 23,570.2 25,364.3: (d) | Other | current | assets | 13(B)\nTotal current assets 271,624.6 237,719.2: Total | current | assets | 271,624.6 | 237,719.2\nAssets held for sale 13(C) - 4,337.1: Assets | held | for | sale | 13(C)\nTOTAL ASSETS 497,849.7 450,715.1: TOTAL | ASSETS | 497,849.7 | 450,715.1",
+      "meta": {
+        "chunk_type": "table",
+        "company_id": "aurobindo_pharma",
+        "doc_type": "annual",
+        "document_id": "e97121aee57558adf2dc27d6770bec497df8a9cb4deeb37d67186abef5484ed2",
+        "page": 205,
+        "period": "FY2025",
+        "reporting_basis": "consolidated",
+        "statement_kind": "balance_sheet",
+        "variant": "consolidated"
+      }
+    },
+    {
+      "chunk_id": "bdd1b13a7b77a338641ee7aa03f94f105d1bd0f1f853ea6ea0986047a918a63c:t435",
+      "id": "bdd1b13a7b77a338641ee7aa03f94f105d1bd0f1f853ea6ea0986047a918a63c:t435",
+      "text": "statement_kind: balance_sheet\nunit: \ncaption: \nreporting_basis: consolidated\nTrade receivables 2.7 B 90,420 80,298: Trade | receivables | 2.7 | B | 90,420\nDerivative financial instruments 2.31 557 169: Derivative | financial | instruments | 2.31 | 557\nCash and cash equivalents 2.7 D 14,654 7,107: Cash | and | cash | equivalents | 2.7\nOther bank balances 2.7 E 9,948 10,170: Other | bank | balances | 2.7 | E\nOther financial assets 2.7 C 3,142 22,527: Other | financial | assets | 2.7 | C\nOther current assets 2.8 B 27,068 20,180: Other | current | assets | 2.8 | B\nTotal current assets 250,181 248,053: Total | current | assets | 250,181 | 248,053\nTotal assets 494,266 388,638: Total | assets | 494,266 | 388,638",
+      "meta": {
+        "chunk_type": "table",
+        "company_id": "dr_reddys",
+        "doc_type": "annual",
+        "document_id": "bdd1b13a7b77a338641ee7aa03f94f105d1bd0f1f853ea6ea0986047a918a63c",
+        "page": 176,
+        "period": "FY2025",
+        "reporting_basis": "consolidated",
+        "statement_kind": "balance_sheet",
+        "variant": "consolidated"
+      }
+    }
+  ]
+}
