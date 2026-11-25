@@ -1,0 +1,21 @@
+{
+  "row_id": "G-040",
+  "config": "OFF",
+  "question": "In the standalone results of Adani Green for the year ended 31 March 2026, what was total equity, reported in Rs. in crore as printed?",
+  "expected_behaviour": "answer",
+  "correct": true,
+  "hit_at_k": true,
+  "tools": [
+    "search_index",
+    "search_index",
+    "get_chunk",
+    "get_chunk"
+  ],
+  "latency_s": 3.757,
+  "citation_present": true,
+  "stop_reason": "accepted",
+  "answer": "adani_green Total equity: 14,890 (Rs. in crore), prior 8,212",
+  "citations": [
+    "[deed15eaf8d7 p.179]"
+  ]
+}

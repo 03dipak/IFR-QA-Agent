@@ -7,6 +7,7 @@ import threading
 import time
 from pathlib import Path
 from types import SimpleNamespace
+from typing import Any
 
 import httpx
 import pytest
@@ -413,7 +414,7 @@ def test_stream_logging_omits_question_and_answer(monkeypatch, caplog):
 
 
 @pytest.mark.skipif(
-    not Path(os.environ.get("AGENT_INDEX_PATH", "results/full_index_v1/page_hash384")).exists(),
+    not Path(os.environ.get("AGENT_INDEX_PATH", "results/full_index_v2/bge_small")).exists(),
     reason="AGENT_INDEX_PATH index unavailable",
 )
 def test_health_and_ask_smoke_with_current_graph(monkeypatch):
@@ -503,6 +504,8 @@ def test_session_log_writer_appends_one_jsonl_line(tmp_path):
 
 
 def test_cli_api_parity_for_t3_gold_and_aurobindo(tmp_path, monkeypatch, capsys):
+    for name in ("LANGFUSE_PUBLIC_KEY", "LANGFUSE_SECRET_KEY", "LANGFUSE_BASE_URL"):
+        monkeypatch.delenv(name, raising=False)
     g001 = (
         "Between Deepak Nitrite and Srf, on total assets for the year ended 31 March 2025 "
         "consolidated results, which prints the larger figure, and what are the two figures "
@@ -529,7 +532,7 @@ def test_cli_api_parity_for_t3_gold_and_aurobindo(tmp_path, monkeypatch, capsys)
         def __init__(self, llm):
             self.budget = SimpleNamespace(used=7)
 
-        def stream(self, question, thread_id="default"):
+        def stream(self, question, thread_id="default", *, callbacks=None, metadata=None):
             final = {
                 "answer": f"answer::{question}",
                 "citations": ["abcdef123456"],
@@ -614,5 +617,147 @@ def test_cli_api_parity_for_t3_gold_and_aurobindo(tmp_path, monkeypatch, capsys)
         for path in (tmp_path / "sessions").glob("parity-cli-*.jsonl")
         for line in path.read_text(encoding="utf-8").splitlines()
     ]
-    assert len(rows) == len(questions)
+    assert len(rows) == 2 * len(questions)
+    assert [row["status"] for row in rows].count("started") == len(questions)
+    assert [row["status"] for row in rows].count("ok") == len(questions)
     assert all(all("type" in step for step in row["steps"]) for row in rows)
+
+
+def test_run_question_without_langfuse_keys_disables_tracing(
+    monkeypatch, tmp_path, caplog
+):
+    class FakeGraph:
+        def __init__(self, llm):
+            self.budget = SimpleNamespace(used=1)
+
+        def stream(self, question, thread_id="default", *, callbacks=None, metadata=None):
+            assert callbacks is None
+            yield {"event": "state", "type": "state", "state": {
+                "final_answer": {"answer": "ok", "citations": []},
+                "stop_reason": "accepted",
+                "token_count": 1,
+            }}
+
+    def forbidden(*args, **kwargs):
+        raise AssertionError("Langfuse must not be initialized without keys")
+
+    monkeypatch.setenv("LLM_CHAT_URL", "http://test")
+    monkeypatch.setenv("LLM_MODEL", "test-model")
+    monkeypatch.setenv("LLM_API_KEY", "test-key")
+    monkeypatch.setenv("AGENT_SESSION_LOG_DIR", str(tmp_path / "sessions"))
+    monkeypatch.delenv("LANGFUSE_PUBLIC_KEY", raising=False)
+    monkeypatch.delenv("LANGFUSE_SECRET_KEY", raising=False)
+    monkeypatch.delenv("LANGFUSE_BASE_URL", raising=False)
+    monkeypatch.setattr(service, "Langfuse", forbidden)
+    monkeypatch.setattr(service, "CallbackHandler", forbidden)
+    monkeypatch.setattr(service, "EnvLLM", lambda: object())
+    monkeypatch.setattr(service, "AgentGraph", FakeGraph)
+    monkeypatch.setattr(service, "_LANGFUSE_WARNINGS", set())
+
+    with caplog.at_level(logging.WARNING, logger="ifr.service"):
+        result = service.run_question("question", session_id="no-trace-session")
+
+    assert result.answer == "ok"
+    log_rows = [
+        json.loads(line)
+        for line in (tmp_path / "sessions" / "no-trace-session.jsonl").read_text().splitlines()
+    ]
+    assert [row["status"] for row in log_rows] == ["started", "ok"]
+    warnings = [
+        record.message for record in caplog.records
+        if "Langfuse tracing disabled" in record.message
+    ]
+    assert warnings == ["Langfuse tracing disabled: missing configuration"]
+
+
+def test_run_question_attaches_langfuse_handler_and_final_metadata(
+    monkeypatch, tmp_path
+):
+    captured: dict[str, Any] = {"updates": [], "flushes": 0}
+    handler_instances: list[Any] = []
+
+    class FakeSpan:
+        def update(self, **kwargs):
+            captured["updates"].append(kwargs)
+
+    class FakeSpanContext:
+        def __enter__(self):
+            return FakeSpan()
+
+        def __exit__(self, exc_type, exc, tb):
+            captured["exited"] = True
+            return False
+
+    class FakeClient:
+        def start_as_current_observation(self, **kwargs):
+            captured.setdefault("starts", []).append(kwargs)
+            return FakeSpanContext()
+
+        def flush(self):
+            captured["flushes"] += 1
+
+    class FakeHandler:
+        def __init__(self, **kwargs):
+            captured["handler_kwargs"] = kwargs
+            handler_instances.append(self)
+
+    class FakeGraph:
+        def __init__(self, llm):
+            self.budget = SimpleNamespace(used=3)
+
+        def stream(self, question, thread_id="default", *, callbacks=None, metadata=None):
+            captured["callbacks"] = callbacks
+            captured["metadata"] = metadata
+            yield {
+                "event": "tool", "type": "tool", "name": "search_index",
+                "args_summary": "total assets",
+            }
+            yield {"event": "state", "type": "state", "state": {
+                "final_answer": {"answer": "ok", "citations": []},
+                "stop_reason": "accepted",
+                "token_count": 3,
+            }}
+
+    monkeypatch.setenv("LLM_CHAT_URL", "http://test")
+    monkeypatch.setenv("LLM_MODEL", "test-model")
+    monkeypatch.setenv("LLM_API_KEY", "test-key")
+    monkeypatch.setenv("AGENT_SESSION_LOG_DIR", str(tmp_path / "sessions"))
+    monkeypatch.setenv("LANGFUSE_PUBLIC_KEY", "pk-test")
+    monkeypatch.setenv("LANGFUSE_SECRET_KEY", "sk-test")
+    monkeypatch.setenv("LANGFUSE_BASE_URL", "http://langfuse.test")
+    monkeypatch.setattr(service, "Langfuse", lambda **kwargs: FakeClient())
+    monkeypatch.setattr(service, "CallbackHandler", FakeHandler)
+    monkeypatch.setattr(service, "EnvLLM", lambda: object())
+    monkeypatch.setattr(service, "AgentGraph", FakeGraph)
+    monkeypatch.setattr(service, "_LANGFUSE_CLIENTS", {})
+
+    result = service.run_question("question", session_id="trace-session")
+
+    assert result.answer == "ok"
+    assert captured["starts"][0]["name"] == "question"
+    assert captured["starts"][0]["as_type"] == "chain"
+    assert [
+        kwargs for kwargs in captured["starts"] if kwargs.get("as_type") == "tool"
+    ] == [{
+        "name": "search_index",
+        "as_type": "tool",
+        "input": {"name": "search_index", "args_summary": "total assets"},
+    }]
+    assert captured["handler_kwargs"] == {"public_key": "pk-test"}
+    assert captured["callbacks"] == handler_instances
+    assert captured["metadata"]["langfuse_session_id"] == "trace-session"
+    assert captured["metadata"]["session_id"] == "trace-session"
+    assert captured["exited"] is True
+    assert captured["flushes"] == 1
+    update = captured["updates"][-1]
+    assert update["metadata"]["session_id"] == "trace-session"
+    assert update["metadata"]["stop_reason"] == "accepted"
+    assert update["metadata"]["error_type"] == "other"
+    assert update["metadata"]["token_count"] == 3
+    assert isinstance(update["metadata"]["latency_s"], float)
+    assert update["output"] == {"answer": "ok", "citations": []}
+    log_rows = [
+        json.loads(line)
+        for line in (tmp_path / "sessions" / "trace-session.jsonl").read_text().splitlines()
+    ]
+    assert [row["status"] for row in log_rows] == ["started", "ok"]

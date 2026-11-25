@@ -1,0 +1,21 @@
+{
+  "row_id": "G-041",
+  "config": "ON",
+  "question": "For the standalone results of Adani Green for the year ended 31 March 2026: state total liabilities exactly as printed, in Rs. in crore.",
+  "expected_behaviour": "answer",
+  "correct": true,
+  "hit_at_k": true,
+  "tools": [
+    "search_index",
+    "search_index",
+    "get_chunk",
+    "get_chunk"
+  ],
+  "latency_s": 8.378,
+  "citation_present": true,
+  "stop_reason": "accepted",
+  "answer": "adani_green Total liabilities: 37,065 (Rs. in crore), prior 33,655",
+  "citations": [
+    "[deed15eaf8d7 p.179]"
+  ]
+}

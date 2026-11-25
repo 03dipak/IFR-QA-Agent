@@ -1,0 +1,22 @@
+{
+  "row_id": "G-043",
+  "config": "OFF",
+  "question": "From Aurobindo Pharma's the year ended 31 March 2024 standalone results, report total assets (as printed in the statement, in Rs. in million).",
+  "expected_behaviour": "answer",
+  "correct": true,
+  "hit_at_k": true,
+  "tools": [
+    "search_index",
+    "search_index",
+    "get_chunk",
+    "get_chunk",
+    "get_chunk"
+  ],
+  "latency_s": 3.294,
+  "citation_present": true,
+  "stop_reason": "accepted",
+  "answer": "aurobindo_pharma Total assets: 251,539.8 (Rs. in million (as asked; unit not confirmed on the page)), prior 250,588.1",
+  "citations": [
+    "[9e092bb4d317 p.137]"
+  ]
+}

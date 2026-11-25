@@ -21,6 +21,7 @@ DEFAULT_OUT = Path("results/full_index_v1/page_hash384")
 DIM = 384
 MODEL = "local:hash384-v1"
 BGE_MODEL = "BAAI/bge-small-en-v1.5"
+BGE_QUERY_PREFIX = "Represent this sentence for searching relevant passages: "
 EMBEDDERS = ("hash384", "bge-small")
 DEFAULT_EMBEDDER = "hash384"
 CLI_EMBEDDER = "bge-small"
@@ -656,7 +657,8 @@ class FullVectorIndex:
     def search(self, query: str, k: int = 5) -> list[dict[str, Any]]:
         if k <= 0:
             return []
-        vector = embed_text(query, int(self.meta["dim"]), self.embedder).reshape(1, -1)
+        query_text = (BGE_QUERY_PREFIX + query) if self.embedder == "bge-small" else query
+        vector = embed_text(query_text, int(self.meta["dim"]), self.embedder).reshape(1, -1)
         scores, positions = self.index.search(vector, min(k, len(self.ids)))
         return [{"chunk_id": self.ids[int(position)],
                  "score": float(score),

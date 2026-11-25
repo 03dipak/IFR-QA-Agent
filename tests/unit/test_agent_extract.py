@@ -1,12 +1,14 @@
 import json
+import os
 from pathlib import Path
 
 import pytest
 from langgraph.checkpoint.memory import MemorySaver
 
-from src.agent.extract import build_answer, extract_figures, normalize_label
+from src.agent.extract import _valid_value, build_answer, extract_figures, normalize_label
 from src.agent.graph import AgentGraph
 from src.agent.llm import StubLLM
+from src.agent.tools import _meta_rows_resolved
 
 FIXTURES = Path(__file__).resolve().parents[1] / "fixtures" / "agent_figures"
 
@@ -312,4 +314,100 @@ def test_coforge_prefers_frequent_period_matched_value_over_noise():
     assert extracted["missing"] == []
     assert extracted["conflicts"] == []
     assert len(extracted["figures"]) == 1
+    assert extracted["figures"][0]["value"] == "91,790"
+
+
+@pytest.mark.parametrize(
+    ("value", "expected"),
+    [
+        ("17,55,986", True),
+        ("1,04,727", True),
+        ("1,23,456", True),
+        ("1,234,567", True),
+        ("12,34", False),
+        ("1,2,3", False),
+    ],
+)
+def test_valid_value_rejects_malformed_indian_grouping(value: str, expected: bool):
+    assert _valid_value(value) is expected
+
+
+def test_meta_rows_cache_invalidates_on_chunks_change(tmp_path, monkeypatch):
+    from src.agent import tools
+
+    root = tmp_path / "index"
+    root.mkdir()
+    (root / "chunk_ids.json").write_text(json.dumps(["c1"]), encoding="utf-8")
+    (root / "meta.json").write_text(
+        json.dumps({"chunk_ids_sha256": "abc123", "chunks": 1}), encoding="utf-8"
+    )
+    chunks = root / "chunks.jsonl"
+    chunks.write_text(
+        json.dumps({"chunk_id": "c1", "meta": {"company_id": "old"}}) + "\n",
+        encoding="utf-8",
+    )
+    cache_dir = tmp_path / "cache"
+    monkeypatch.setattr(tools, "_META_CACHE_DIR", cache_dir)
+    _meta_rows_resolved.cache_clear()
+    first = _meta_rows_resolved(str(root))
+    old_names = {path.name for path in cache_dir.glob("*.pkl")}
+    assert len(old_names) == 1
+
+    stat = chunks.stat()
+    chunks.write_text(
+        json.dumps({"chunk_id": "c1", "meta": {"company_id": "new"}}) + "\n",
+        encoding="utf-8",
+    )
+    os.utime(chunks, ns=(stat.st_atime_ns, stat.st_mtime_ns + 1_000_000_000))
+    _meta_rows_resolved.cache_clear()
+    second = _meta_rows_resolved(str(root))
+    new_names = {path.name for path in cache_dir.glob("*.pkl")}
+    assert first[0][0] == "old"
+    assert second[0][0] == "new"
+    assert old_names < new_names
+
+
+@pytest.mark.skipif(not os.environ.get("AGENT_INDEX_PATH"), reason="real index not configured")
+def test_t3_revenue_real_index_regression(tmp_path, monkeypatch):
+    for name in ("LANGFUSE_PUBLIC_KEY", "LANGFUSE_SECRET_KEY", "LANGFUSE_BASE_URL"):
+        monkeypatch.delenv(name, raising=False)
+    monkeypatch.setenv("AGENT_SESSION_LOG_DIR", str(tmp_path / "sessions"))
+    from src.agent.service import run_question
+
+    result = run_question(
+        "What is Coforge's revenue from operations for FY2025 consolidated?",
+        session_id="test-t3-revenue-real-index",
+    )
+    assert result.answer == (
+        "coforge Revenue from operations: 91,790 (Rs. in million), prior 80,146"
+    )
+    assert "[15b2d66be472 p.250]" in result.citations
+
+
+def test_conflict_detection_groups_by_period_scope_and_unit():
+    def chunk(chunk_id: str, period: str, value: str) -> dict:
+        return {
+            "chunk_id": chunk_id,
+            "text": f"Revenue from operations {value} 80,146: Revenue | from | operations",
+            "meta": {
+                "company_id": "coforge",
+                "period": period,
+                "reporting_basis": "consolidated",
+                "statement_kind": "income_statement",
+                "page": 250 if period == "FY2024" else 156,
+            },
+        }
+
+    chunks = [
+        chunk("fca9:t527", "FY2026", "1,64,027"),
+        chunk("15b2:t390", "FY2024", "91,790"),
+    ]
+    extracted = extract_figures(
+        [{"company_id": "coforge", "label": "Revenue from operations"}],
+        chunks,
+        basis="consolidated",
+        statement_kind="income_statement",
+        period="FY2025",
+    )
+    assert extracted["conflicts"] == []
     assert extracted["figures"][0]["value"] == "91,790"

@@ -1,0 +1,24 @@
+{
+  "row_id": "G-004",
+  "config": "ON",
+  "question": "Compare Maruti Suzuki and Bosch on total assets for the year ended 31 March 2025 consolidated results (both Maruti Suzuki and Bosch at the same basis): who reports more, and by how much, in Rs. in million as printed?",
+  "expected_behaviour": "answer",
+  "correct": true,
+  "hit_at_k": true,
+  "tools": [
+    "search_index",
+    "search_index",
+    "search_index",
+    "search_index",
+    "get_chunk",
+    "get_chunk"
+  ],
+  "latency_s": 11.965,
+  "citation_present": true,
+  "stop_reason": "accepted",
+  "answer": "maruti_suzuki reports higher Total assets: 1,319,718 vs bosch 202,411; difference 1,117,307 (Rs. in million).",
+  "citations": [
+    "[8fcda929069a p.216]",
+    "[36c2942b23f1 p.407]"
+  ]
+}

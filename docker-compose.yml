@@ -3,7 +3,7 @@ services:
     build: .
     command: ["uvicorn", "src.api:app", "--host", "0.0.0.0", "--port", "8000"]
     environment:
-      AGENT_INDEX_PATH: /app/results/full_index_v1/page_hash384
+      AGENT_INDEX_PATH: /app/results/full_index_v2/bge_small
       AGENT_STATE_DB: /app/results/agent_state.sqlite
       LLM_CHAT_URL: ${LLM_CHAT_URL:?set LLM_CHAT_URL in .env}
       LLM_MODEL: ${LLM_MODEL:?set LLM_MODEL in .env}
@@ -11,7 +11,7 @@ services:
       LLM_CA_CERT: ${LLM_CA_CERT:-}
       BACKEND_URL: http://api:8000
     volumes:
-      - ./results/full_index_v1/page_hash384:/app/results/full_index_v1/page_hash384:ro
+      - ./results/full_index_v2/bge_small:/app/results/full_index_v2/bge_small:ro
     ports:
       - "8000:8000"
 

@@ -5,7 +5,9 @@ import json
 import logging
 import operator
 import os
+import pickle
 import re
+import threading
 import time
 from collections.abc import Mapping
 from functools import lru_cache
@@ -13,9 +15,93 @@ from pathlib import Path
 from typing import Any
 
 import numpy as np
+import yaml
+from requests.exceptions import Timeout as RequestsTimeout
 
-DEFAULT_INDEX_PATH = "results/full_index_v1/page_hash384"
+DEFAULT_INDEX_PATH = "results/full_index_v2/bge_small"
+_META_CACHE_DIR = Path(os.environ.get("AGENT_META_CACHE_DIR", "data/cache"))
 LOGGER = logging.getLogger(__name__)
+_RERANK_MODEL: Any | None = None
+_RERANK_LOCK = threading.Lock()
+_QUERY_EMBED_CACHE: dict[tuple[str, str], np.ndarray] = {}
+_QUERY_EMBED_LOCK = threading.Lock()
+_WARMUP_QUERY = "annual report revenue"
+
+
+@lru_cache(maxsize=1)
+def _retrieval_config() -> dict[str, Any]:
+    path = Path("configs/retrieval.yaml")
+    if not path.is_file():
+        return {}
+    try:
+        return yaml.safe_load(path.read_text(encoding="utf-8")) or {}
+    except Exception:
+        return {}
+
+
+def _hybrid_enabled() -> bool:
+    override = os.environ.get("RETRIEVAL_HYBRID")
+    if override is not None:
+        return override.strip().lower() in {"1", "true", "yes", "on"}
+    return bool((_retrieval_config().get("retrieval") or {}).get("hybrid", False))
+
+
+def _hybrid_candidate_k() -> int:
+    override = os.environ.get("RETRIEVAL_HYBRID_CANDIDATE_K")
+    if override:
+        try:
+            return max(1, int(override))
+        except ValueError:
+            pass
+    config = _retrieval_config().get("retrieval") or {}
+    return max(1, int(config.get("candidate_k", 1000)))
+
+
+def _hybrid_rrf_k() -> int:
+    return max(1, int((_retrieval_config().get("hybrid") or {}).get("rrf_k", 60)))
+
+
+def _hybrid_pool_k() -> int:
+    return max(1, int(
+        (_retrieval_config().get("hybrid") or {}).get("candidate_pool_k", 30)
+    ))
+
+
+def _rerank_pool_k() -> int:
+    override = os.environ.get("RETRIEVAL_RERANK_POOL")
+    if override:
+        try:
+            return max(1, int(override))
+        except ValueError:
+            pass
+    return max(1, int(
+        (_retrieval_config().get("rerank") or {}).get("candidate_pool_k", 30)
+    ))
+
+
+def _rerank_enabled() -> bool:
+    override = os.environ.get("RETRIEVAL_RERANK")
+    if override is not None:
+        return override.strip().lower() in {"1", "true", "yes", "on"}
+    return bool((_retrieval_config().get("rerank") or {}).get("enabled", True))
+
+
+def _rerank_model() -> Any | None:
+    if not _rerank_enabled():
+        return None
+    global _RERANK_MODEL
+    if _RERANK_MODEL is None:
+        with _RERANK_LOCK:
+            if _RERANK_MODEL is None:
+                try:
+                    from fastembed.rerank.cross_encoder import TextCrossEncoder
+                    model_name = (
+                        _retrieval_config().get("rerank") or {}
+                    ).get("model", "Xenova/ms-marco-MiniLM-L-6-v2")
+                    _RERANK_MODEL = TextCrossEncoder(model_name=model_name, threads=4)
+                except Exception:
+                    _RERANK_MODEL = False
+    return _RERANK_MODEL or None
 
 
 def _index_path() -> Path:
@@ -112,10 +198,30 @@ def _meta_row(meta: Mapping[str, Any]) -> tuple[str, str, str, str, str, str]:
     )
 
 
+def _meta_cache_path(root: Path, meta: Mapping[str, Any]) -> Path:
+    digest = str(meta.get("chunk_ids_sha256") or "unknown")
+    count = str(meta.get("chunks") or "0")
+    stat = (root / "chunks.jsonl").stat()
+    return _META_CACHE_DIR / (
+        f"meta_rows_{digest[:16]}_{count}_{stat.st_size}_{stat.st_mtime_ns}.pkl"
+    )
+
+
 @lru_cache(maxsize=4)
 def _meta_rows_resolved(resolved_path: str) -> tuple[tuple[str, str, str, str, str, str], ...]:
     root = Path(resolved_path)
     ids = json.loads((root / "chunk_ids.json").read_text(encoding="utf-8"))
+    meta = json.loads((root / "meta.json").read_text(encoding="utf-8"))
+    cache = _meta_cache_path(root, meta)
+    if cache.is_file():
+        try:
+            with cache.open("rb") as handle:
+                cached = pickle.load(handle)
+            if isinstance(cached, tuple) and len(cached) == len(ids):
+                return cached
+        except Exception:
+            LOGGER.warning("ignored unusable meta cache: %s", cache.name)
+    started = time.monotonic()
     rows: dict[str, tuple[str, str, str, str, str, str]] = {}
     with (root / "chunks.jsonl").open(encoding="utf-8") as fh:
         for line in fh:
@@ -127,7 +233,20 @@ def _meta_rows_resolved(resolved_path: str) -> tuple[tuple[str, str, str, str, s
             if chunk_id:
                 rows[str(chunk_id)] = _meta_row(chunk.get("meta") or {})
     empty = _meta_row({})
-    return tuple(rows.get(str(chunk_id), empty) for chunk_id in ids)
+    resolved = tuple(rows.get(str(chunk_id), empty) for chunk_id in ids)
+    try:
+        cache.parent.mkdir(parents=True, exist_ok=True)
+        temp = cache.with_suffix(".tmp")
+        with temp.open("wb") as handle:
+            pickle.dump(resolved, handle, protocol=pickle.HIGHEST_PROTOCOL)
+        temp.replace(cache)
+    except Exception:
+        LOGGER.warning("could not write meta cache: %s", cache.name)
+    LOGGER.info(
+        "meta_rows_built rows=%d latency_s=%.3f cache=%s",
+        len(resolved), time.monotonic() - started, cache.name,
+    )
+    return resolved
 
 
 def _meta_rows_for_index(index: Any, path: str) -> tuple[tuple[str, str, str, str, str, str], ...]:
@@ -146,8 +265,49 @@ def _query_embedding(query: str, index: Any, path: str) -> np.ndarray:
         embedder = "hash384"
     embedder = embedder or "hash384"
     dim = int(meta.get("dim", 384))
-    vector = embed_text(query, dim, embedder)
-    return np.asarray(vector, dtype=np.float32)
+    query_text = query
+    if embedder == "bge-small":
+        from src.rag_ingestion.full_index import BGE_QUERY_PREFIX
+        query_text = BGE_QUERY_PREFIX + query
+    model = str(meta.get("model") or embedder)
+    key = (model, query_text)
+    with _QUERY_EMBED_LOCK:
+        cached = _QUERY_EMBED_CACHE.get(key)
+    if cached is not None:
+        return cached
+    vector: np.ndarray | None = None
+    for attempt in range(2):
+        try:
+            vector = np.asarray(embed_text(query_text, dim, embedder), dtype=np.float32)
+            break
+        except (TimeoutError, RequestsTimeout) as exc:
+            if attempt == 0:
+                LOGGER.warning("query embedding timeout; retrying once: %s", exc)
+                continue
+            raise
+    assert vector is not None
+    with _QUERY_EMBED_LOCK:
+        _QUERY_EMBED_CACHE[key] = vector
+    return vector
+
+
+def warm_query_embedding(timeout_s: float = 600.0) -> float:
+    from concurrent.futures import ThreadPoolExecutor
+
+    started = time.monotonic()
+    executor = ThreadPoolExecutor(max_workers=1)
+    try:
+        future = executor.submit(_query_embedding, _WARMUP_QUERY, _open_index(), "")
+        future.result(timeout=timeout_s)
+    except TimeoutError as exc:
+        elapsed = time.monotonic() - started
+        LOGGER.warning("query embedding warmup timed out after %.3fs", elapsed)
+        raise TimeoutError(f"query embedding warmup exceeded {timeout_s:g}s") from exc
+    finally:
+        executor.shutdown(wait=False)
+    latency = time.monotonic() - started
+    LOGGER.info("query embedding warmup latency_s=%.3f query=%s", latency, _WARMUP_QUERY)
+    return latency
 
 
 _GENERIC_COMPANY_TOKENS = {"green", "pharma", "steel", "sun"}
@@ -312,6 +472,63 @@ def _row_matches(
     return True
 
 
+def _hybrid_hits(
+    query: str,
+    k: int,
+    index: Any,
+    positions: np.ndarray,
+    scores: np.ndarray,
+    match_info: dict[str, Any],
+) -> list[dict[str, Any]]:
+    from rank_bm25 import BM25Okapi
+
+    from src.tools.page_retrieve import _rrf, cleaned_tokens
+
+    if positions.size > _hybrid_candidate_k():
+        top = np.argpartition(-scores, _hybrid_candidate_k() - 1)[:_hybrid_candidate_k()]
+        positions = positions[top]
+        scores = scores[top]
+    order = np.argsort(-scores, kind="stable")
+    positions = positions[order]
+    scores = scores[order]
+    chunks = [index._chunk_at(int(position)) for position in positions]
+    texts = [str(chunk.get("text") or "") for chunk in chunks]
+    bm25 = BM25Okapi([cleaned_tokens(text) for text in texts])
+    bm25_scores = bm25.get_scores(cleaned_tokens(query))
+    bm25_order = np.argsort(-bm25_scores, kind="stable")
+    dense_rank = [(rank, float(score)) for rank, score in enumerate(scores)]
+    bm25_rank = [(int(position), float(bm25_scores[position]))
+                 for position in bm25_order]
+    pool = _rrf([bm25_rank, dense_rank], _hybrid_rrf_k(), _hybrid_pool_k())
+    pool = pool[:_rerank_pool_k()]
+    model = _rerank_model()
+    rerank_scores: list[float]
+    if model is not None:
+        try:
+            rerank_scores = [
+                float(score) for score in model.rerank(query, [texts[i] for i, _ in pool])
+            ]
+        except Exception:
+            rerank_scores = [score for _, score in pool]
+    else:
+        rerank_scores = [score for _, score in pool]
+    ordered = sorted(
+        zip([position for position, _ in pool], rerank_scores),
+        key=lambda item: -float(item[1]),
+    )
+    match_info["retrieval_mode"] = "hybrid"
+    match_info["hybrid_candidates"] = int(positions.size)
+    match_info["hybrid_pool"] = len(pool)
+    hits: list[dict[str, Any]] = []
+    for local_position, score in ordered[:k]:
+        chunk = dict(chunks[int(local_position)])
+        chunk["chunk_id"] = str(index.ids[int(positions[int(local_position)])])
+        chunk["score"] = float(score)
+        chunk["match_mode"] = "hybrid"
+        hits.append(chunk)
+    return hits
+
+
 def _search_once(
     query: str,
     k: int,
@@ -322,6 +539,7 @@ def _search_once(
     reporting_basis: str | None = None,
     index: Any | None = None,
     query_vector: np.ndarray | None = None,
+    hybrid: bool = False,
 ) -> tuple[list[dict[str, Any]], dict[str, Any]]:
     path = _resolved_index_path()
     index = index if index is not None else _open_index(path)
@@ -342,6 +560,15 @@ def _search_once(
     if requested_basis:
         match_info["reporting_basis_filter"] = requested_basis
     if not filtered:
+        if hybrid:
+            q = query_vector if query_vector is not None else _query_embedding(
+                query, index, path
+            )
+            scores = np.asarray(
+                np.asarray(index.embeddings) @ np.asarray(q, dtype=np.float32)
+            ).reshape(-1)
+            positions = np.arange(scores.size)
+            return _hybrid_hits(query, k, index, positions, scores, match_info), match_info
         return [dict(hit) for hit in index.search(query, k)], match_info
 
     q = query_vector if query_vector is not None else _query_embedding(query, index, path)
@@ -362,6 +589,8 @@ def _search_once(
 
     embeddings = np.asarray(index.embeddings)[positions]
     scores = np.asarray(embeddings @ q).reshape(-1)
+    if hybrid:
+        return _hybrid_hits(query, k, index, positions, scores, match_info), match_info
     if scores.size > k:
         top = np.argpartition(-scores, k - 1)[:k]
         top = top[np.argsort(-scores[top])]
@@ -401,36 +630,43 @@ def search_index(
         requested_basis = _normalize_basis(reporting_basis)
         path = _resolved_index_path()
         index = _open_index(path)
+        hybrid = _hybrid_enabled()
         has_filters = bool(
             company or period or statement_kind or doc_type or requested_basis
         )
-        query_vector = _query_embedding(query, index, path) if has_filters else None
+        query_vector = (
+            _query_embedding(query, index, path) if has_filters or hybrid else None
+        )
         relaxed: list[str] = []
         cur_period, cur_sk, cur_dt, cur_basis = (
             period, statement_kind, doc_type, requested_basis
         )
         hits, match_info = _search_once(
-            query, k, company, cur_period, cur_sk, cur_dt, cur_basis, index, query_vector
+            query, k, company, cur_period, cur_sk, cur_dt, cur_basis,
+            index, query_vector, hybrid,
         )
         if not hits and cur_sk:
             relaxed.append("drop_statement_kind")
             cur_sk = None
             hits, info = _search_once(
-                query, k, company, cur_period, cur_sk, cur_dt, cur_basis, index, query_vector
+                query, k, company, cur_period, cur_sk, cur_dt, cur_basis,
+                index, query_vector, hybrid,
             )
             _merge_info(match_info, info)
         if not hits and cur_basis:
             relaxed.append("drop_reporting_basis")
             cur_basis = None
             hits, info = _search_once(
-                query, k, company, cur_period, cur_sk, cur_dt, cur_basis, index, query_vector
+                query, k, company, cur_period, cur_sk, cur_dt, cur_basis,
+                index, query_vector, hybrid,
             )
             _merge_info(match_info, info)
         if not hits and cur_period:
             relaxed.append("drop_period")
             cur_period = None
             hits, info = _search_once(
-                query, k, company, cur_period, cur_sk, cur_dt, cur_basis, index, query_vector
+                query, k, company, cur_period, cur_sk, cur_dt, cur_basis,
+                index, query_vector, hybrid,
             )
             _merge_info(match_info, info)
         match_info["relaxed"] = relaxed

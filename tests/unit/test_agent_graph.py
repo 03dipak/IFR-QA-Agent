@@ -7,7 +7,7 @@ from langgraph.checkpoint.memory import MemorySaver
 from pydantic import ValidationError
 
 from src.agent import tools
-from src.agent.graph import AgentGraph
+from src.agent.graph import AgentGraph, _enforce_plan_tools, _growth_requested
 from src.agent.llm import StubLLM
 from src.agent.schemas import Critique, Plan
 
@@ -990,3 +990,31 @@ def test_wrong_company_citation_is_rejected(monkeypatch):
     assert result["final_answer"]["insufficient_evidence"] is True
     assert "srf" in result["final_answer"]["company_mismatches"]
     assert any("company_mismatch: srf" in error for error in result["errors"])
+
+
+def test_plan_enforcement_adds_calculator_for_growth_queries():
+    assert _growth_requested("What is Coforge growth in %?")
+    steps, notes = _enforce_plan_tools(
+        [{"tool": "search_index", "args": {"query": "Revenue from operations"}}],
+        "What is Coforge growth in %?",
+        [],
+        remaining=10,
+    )
+    assert any(step.get("tool") == "calculator" for step in steps)
+    assert any("enforced calculator" in note for note in notes)
+
+
+def test_plan_enforcement_adds_get_chunk_when_top_hit_lacks_unit():
+    tool_results = [{
+        "tool": "search_index",
+        "result": {"hits": [{"chunk_id": "abc:t1", "text": "Revenue from operations 100"}]},
+    }]
+    steps, notes = _enforce_plan_tools(
+        [{"tool": "search_index", "args": {"query": "Revenue from operations"}}],
+        "What is revenue?",
+        tool_results,
+        remaining=10,
+    )
+    get_steps = [step for step in steps if step.get("tool") == "get_chunk"]
+    assert get_steps and get_steps[0]["args"]["chunk_id"] == "abc:t1"
+    assert any("enforced get_chunk" in note for note in notes)

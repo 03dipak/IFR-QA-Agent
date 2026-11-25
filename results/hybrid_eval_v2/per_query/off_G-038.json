@@ -1,0 +1,19 @@
+{
+  "row_id": "G-038",
+  "config": "OFF",
+  "question": "For the consolidated results of Reliance for the year ended 31 March 2024: state total liabilities exactly as printed, in Rs. in crore.",
+  "expected_behaviour": "answer",
+  "correct": true,
+  "hit_at_k": true,
+  "tools": [
+    "search_index",
+    "search_index"
+  ],
+  "latency_s": 2.941,
+  "citation_present": true,
+  "stop_reason": "accepted",
+  "answer": "reliance Total liabilities: 8,30,198 ((C in crore)), prior 7,78,550",
+  "citations": [
+    "[d8e3739d2e06 p.110]"
+  ]
+}

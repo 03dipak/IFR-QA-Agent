@@ -1,0 +1,19 @@
+{
+  "row_id": "G-046",
+  "config": "OFF",
+  "question": "For the standalone results of Berger Paints for the year ended 31 March 2024: state total equity exactly as printed, in Rs. in crore.",
+  "expected_behaviour": "answer",
+  "correct": true,
+  "hit_at_k": true,
+  "tools": [
+    "search_index",
+    "search_index"
+  ],
+  "latency_s": 3.602,
+  "citation_present": true,
+  "stop_reason": "accepted",
+  "answer": "berger_paints Total equity: 5,005.24 (` in Crores), prior 4,295.19",
+  "citations": [
+    "[34d0d28c0b4a p.163]"
+  ]
+}

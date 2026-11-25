@@ -1,0 +1,19 @@
+{
+  "row_id": "G-036",
+  "config": "ON",
+  "question": "From Reliance's the year ended 31 March 2024 consolidated results, report total assets (as printed in the statement, in Rs. in crore).",
+  "expected_behaviour": "answer",
+  "correct": true,
+  "hit_at_k": true,
+  "tools": [
+    "search_index",
+    "search_index"
+  ],
+  "latency_s": 8.31,
+  "citation_present": true,
+  "stop_reason": "accepted",
+  "answer": "reliance Total assets: 17,55,986 ((C in crore)), prior 16,07,431",
+  "citations": [
+    "[d8e3739d2e06 p.110]"
+  ]
+}

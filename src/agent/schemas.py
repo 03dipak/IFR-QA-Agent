@@ -4,7 +4,7 @@ from typing import Any, Literal
 
 from pydantic import BaseModel, Field, ValidationInfo, field_validator
 
-ToolName = Literal["search_index", "calculator"]
+ToolName = Literal["search_index", "get_chunk", "calculator"]
 
 
 class PlanStep(BaseModel):

@@ -136,6 +136,16 @@ _ABSTAIN_MARKERS = (
 _YEAR_RE = re.compile(r"\b(?:FY\s*)?(?:19|20)\d{2}\b", re.I)
 _QUARTER_RE = re.compile(r"\bQ\s*[1-4](?:FY\s*(?:19|20)\d{2})?\b", re.I)
 _VALUE_RE = re.compile(r"\(?-?\d[\d,]*(?:\.\d+)?\)?")
+_PERIOD_RE = re.compile(r"\b(?:Q[1-4]\s*)?FY\s*(?:19|20)?\d{2}\b", re.I)
+_PERIOD_VALUE_RE = re.compile(
+    r"(?P<period>\b(?:Q[1-4]\s*)?FY\s*(?:19|20)?\d{2}\b)\s*[=:]\s*"
+    r"(?P<value>\(?-?\d[\d,]*(?:\.\d+)?\)?)",
+    re.I,
+)
+
+
+def _norm_period(value: str) -> str:
+    return re.sub(r"\s+", "", value).upper()
 
 
 def _answer_values(text: str) -> list[float]:
@@ -153,9 +163,43 @@ def _answer_values(text: str) -> list[float]:
     return values
 
 
+def _conflict_values_tied(expected: str, answer: str) -> bool:
+    pairs = [
+        (_norm_period(m.group("period")), m.group("value"))
+        for m in _PERIOD_VALUE_RE.finditer(expected)
+    ]
+    if not pairs:
+        return False
+    answer_periods = list(_PERIOD_RE.finditer(answer))
+    for period, value in pairs:
+        want = _answer_values(value)
+        tied = False
+        for index, match in enumerate(answer_periods):
+            if _norm_period(match.group(0)) != period:
+                continue
+            end = (
+                answer_periods[index + 1].start()
+                if index + 1 < len(answer_periods)
+                else len(answer)
+            )
+            segment = answer[match.end():end]
+            got = _answer_values(segment)
+            if want and all(
+                any(abs(actual - target) <= max(1e-6, abs(target) * 1e-6) for actual in got)
+                for target in want
+            ):
+                tied = True
+                break
+        if not tied:
+            return False
+    return True
+
+
 def answer_correct(row: dict[str, Any], answer: str) -> bool:
     expected = str(row.get("expected_answer") or "")
     lowered = str(answer or "").lower()
+    if lowered.startswith("conflict:"):
+        return _conflict_values_tied(expected, str(answer or ""))
     if row.get("expected_behaviour") == "abstain":
         return any(marker in lowered for marker in _ABSTAIN_MARKERS)
     if not expected or expected.upper() == "ABSTAIN":

@@ -1,0 +1,22 @@
+{
+  "row_id": "G-044",
+  "config": "OFF",
+  "question": "Reading the standalone results of Aurobindo Pharma for the year ended 31 March 2024 as filed, give me total equity in Rs. in million.",
+  "expected_behaviour": "answer",
+  "correct": true,
+  "hit_at_k": true,
+  "tools": [
+    "search_index",
+    "search_index",
+    "get_chunk",
+    "get_chunk",
+    "get_chunk"
+  ],
+  "latency_s": 3.225,
+  "citation_present": true,
+  "stop_reason": "accepted",
+  "answer": "aurobindo_pharma Total equity: 197,228.2 (Rs. in million (as asked; unit not confirmed on the page)), prior 180,340.3",
+  "citations": [
+    "[9e092bb4d317 p.137]"
+  ]
+}

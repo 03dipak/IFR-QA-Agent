@@ -1,0 +1,24 @@
+{
+  "row_id": "G-001",
+  "config": "OFF",
+  "question": "Between Deepak Nitrite and Srf, on total assets for the year ended 31 March 2025 consolidated results, which prints the larger figure, and what are the two figures (in Rs. in crore, as printed on each statement)?",
+  "expected_behaviour": "answer",
+  "correct": true,
+  "hit_at_k": true,
+  "tools": [
+    "search_index",
+    "search_index",
+    "search_index",
+    "search_index",
+    "get_chunk",
+    "get_chunk"
+  ],
+  "latency_s": 14.962,
+  "citation_present": true,
+  "stop_reason": "accepted",
+  "answer": "srf reports higher Total assets: 21,557.12 vs deepak_nitrite 7,717.67; difference 13,839.45 (Rs. in crore).",
+  "citations": [
+    "[fa7dac2401f1 p.363]",
+    "[8e4e186331c2 p.177]"
+  ]
+}

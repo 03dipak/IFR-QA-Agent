@@ -1,0 +1,19 @@
+{
+  "row_id": "G-052",
+  "config": "OFF",
+  "question": "Reading the standalone results of Bhel for the year ended 31 March 2024 as filed, give me total equity in Rs. in crore.",
+  "expected_behaviour": "answer",
+  "correct": true,
+  "hit_at_k": true,
+  "tools": [
+    "search_index",
+    "search_index"
+  ],
+  "latency_s": 2.932,
+  "citation_present": true,
+  "stop_reason": "accepted",
+  "answer": "bhel Total equity: 24850.59 ((I in Crore)), prior 24812.39",
+  "citations": [
+    "[acf17a18202f p.171]"
+  ]
+}

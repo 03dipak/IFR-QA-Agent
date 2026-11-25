@@ -14,7 +14,8 @@ from pydantic import BaseModel
 
 from src.config import agent_state_db_path
 
-from .extract import build_answer, extract_figures, normalize_label
+from ..safety import validate_tool_args
+from .extract import _unit as _chunk_unit, build_answer, extract_figures, normalize_label
 from .llm import LLM, EnvLLM, TokenBudget
 from .schemas import Answer, Critique, Plan, PlanStep
 from .state import AgentState
@@ -205,6 +206,69 @@ def _requested_period(tool_results: list[dict[str, Any]]) -> str | None:
     return period if saw_search else None
 
 
+def _growth_requested(query: str) -> bool:
+    lower = str(query or "").lower()
+    return bool(
+        re.search(r"\b(growth|grow|change|percent|percentage|ratio)\b", lower)
+        or "%" in lower
+    )
+
+
+def _hit_has_unit(hit: dict[str, Any]) -> bool:
+    meta = hit.get("meta") or {}
+    if isinstance(meta, dict):
+        if any(str(meta.get(key) or "").strip() for key in ("unit", "currency_unit", "amount_unit")):
+            return True
+    text = str(hit.get("text") or hit.get("content") or meta.get("text") or "").lower()
+    return bool(
+        re.search(r"unit\s*:", text)
+        or re.search(r"(?:all amounts?|figures?|amounts?)\s*(?:are\s*)?in\s*(?:rs\.?|inr|₹)?\s*(?:million|crore|cr|lakh|lac|mn)\b", text)
+        or re.search(r"(?:₹|rs\.?|inr)\s*(?:in\s*)?(?:million|crore|cr|lakh|lac|mn)\b", text)
+    )
+
+
+def _top_hit_without_unit(tool_results: list[dict[str, Any]]) -> str | None:
+    for entry in reversed(tool_results):
+        if entry.get("tool") != "search_index" or entry.get("skipped"):
+            continue
+        hits = _search_hits(entry.get("result"))
+        if not hits:
+            continue
+        for hit in hits:
+            chunk_id = str(hit.get("chunk_id") or hit.get("id") or "").strip()
+            if chunk_id and not _hit_has_unit(hit):
+                return chunk_id
+            break
+    return None
+
+
+def _enforce_plan_tools(
+    steps: list[dict[str, Any]],
+    query: str,
+    tool_results: list[dict[str, Any]],
+    remaining: int | None = None,
+) -> tuple[list[dict[str, Any]], list[str]]:
+    enforced = [dict(step) for step in steps]
+    notes: list[str] = []
+    room = len(enforced) if remaining is None else max(0, remaining)
+    if (
+        _growth_requested(query)
+        and not any(step.get("tool") == "calculator" for step in enforced)
+        and len(enforced) < room
+    ):
+        enforced.append({"tool": "calculator", "args": {"expression": "growth"}})
+        notes.append("planner: enforced calculator step for growth query")
+    chunk_id = _top_hit_without_unit(tool_results)
+    if (
+        chunk_id
+        and not any(step.get("tool") == "get_chunk" for step in enforced)
+        and len(enforced) < room
+    ):
+        enforced.append({"tool": "get_chunk", "args": {"chunk_id": chunk_id}})
+        notes.append(f"planner: enforced get_chunk step for {chunk_id[:12]}")
+    return enforced, notes
+
+
 def _tail_text(
 text: str, limit: int = 1500) -> str:
     if len(text) <= limit:
@@ -242,14 +306,50 @@ def _hit_company_id(hit: dict[str, Any]) -> str:
     return ""
 
 
+def _canonical_figure_label(label: str) -> str:
+    lower = label.lower()
+    for phrase, canonical in _FIGURE_LABELS:
+        if phrase in lower:
+            return canonical
+    return label
+
+
 def _extraction_requested(state: AgentState) -> list[dict[str, str]]:
     out: list[dict[str, str]] = []
+    seen: set[tuple[str, str]] = set()
     for item in state.get("requested") or []:
         company = str(item.get("company_id") or "").strip()
-        label = str(item.get("label") or "").strip()
-        if company and label:
+        label = _canonical_figure_label(str(item.get("label") or "").strip())
+        key = (company.lower(), normalize_label(label))
+        if company and label and key not in seen:
+            seen.add(key)
             out.append({"company_id": company, "label": label})
-    return out
+    periods: dict[tuple[str, str], list[str]] = {}
+    for step in state.get("plan") or []:
+        if step.get("tool") != "search_index":
+            continue
+        args = step.get("args") or {}
+        company = str(args.get("company") or "").strip()
+        label = normalize_label(str(args.get("query") or ""))
+        period = str(args.get("period") or "").strip()
+        if not company or not label or not period:
+            continue
+        key = (company.lower(), label)
+        if period not in periods.setdefault(key, []):
+            periods[key].append(period)
+    if _growth_requested(str(state.get("query") or "")):
+        return out
+    expanded: list[dict[str, str]] = []
+    for item in out:
+        key = (item["company_id"].lower(), normalize_label(item["label"]))
+        found = periods.get(key, [])
+        if len(found) > 1:
+            expanded.extend(
+                {**item, "period": period} for period in found
+            )
+        else:
+            expanded.append(item)
+    return expanded
 
 
 def _all_planned_searches_done(state: AgentState) -> bool:
@@ -879,7 +979,14 @@ class AgentGraph:
         )
         return builder.compile(checkpointer=self.checkpointer)
 
-    def run(self, query: str, thread_id: str = "default") -> AgentState:
+    def run(
+        self,
+        query: str,
+        thread_id: str = "default",
+        *,
+        callbacks: list[Any] | None = None,
+        metadata: dict[str, Any] | None = None,
+    ) -> AgentState:
         self.budget.reset()
         initial: AgentState = {
             "query": query,
@@ -897,11 +1004,22 @@ class AgentGraph:
             "synthesis_revise_used": False,
         }
         config = {"configurable": {"thread_id": thread_id}}
+        if callbacks is not None:
+            config["callbacks"] = callbacks
+        if metadata is not None:
+            config["metadata"] = metadata
         result = self.graph.invoke(initial, config=config)
         result["token_count"] = self.budget.used
         return result
 
-    def stream(self, query: str, thread_id: str = "default") -> Any:
+    def stream(
+        self,
+        query: str,
+        thread_id: str = "default",
+        *,
+        callbacks: list[Any] | None = None,
+        metadata: dict[str, Any] | None = None,
+    ) -> Any:
         self.budget.reset()
         state: AgentState = {
             "query": query,
@@ -919,7 +1037,12 @@ class AgentGraph:
             "synthesis_revise_used": False,
         }
         config = {"configurable": {"thread_id": thread_id}}
+        if callbacks is not None:
+            config["callbacks"] = callbacks
+        if metadata is not None:
+            config["metadata"] = metadata
         seen_tools = 0
+        seen_answer_tools = 0
         for update in self.graph.stream(state, config=config, stream_mode="updates"):
             for node, values in update.items() if isinstance(update, dict) else []:
                 if node not in {"planner", "executor", "critic", "answer"}:
@@ -927,10 +1050,7 @@ class AgentGraph:
                 if not isinstance(values, dict):
                     continue
                 for key, value in values.items():
-                    if isinstance(value, list) and isinstance(state.get(key), list):
-                        state[key] = [*state[key], *value]
-                    else:
-                        state[key] = value
+                    state[key] = value
                 yield {"event": "step", "type": "step", "node": node,
                        "detail": _STREAM_DETAILS[node]}
                 if node == "executor":
@@ -942,6 +1062,15 @@ class AgentGraph:
                                "name": str(entry.get("tool") or ""),
                                "args_summary": summary}
                     seen_tools = len(results)
+                if node == "answer":
+                    results = state.get("tool_results") or []
+                    for entry in results[seen_answer_tools:]:
+                        args = entry.get("args") or {}
+                        summary = str(args.get("expression") or args.get("chunk_id") or "")[:160]
+                        yield {"event": "tool", "type": "tool",
+                               "name": str(entry.get("tool") or ""),
+                               "args_summary": summary}
+                    seen_answer_tools = len(results)
         state["token_count"] = self.budget.used
         yield {"event": "state", "type": "state", "state": state}
 
@@ -972,7 +1101,11 @@ class AgentGraph:
                 parsed = schema.model_validate(_parse_json(raw), context=context)
                 if schema is Answer and not str(getattr(parsed, "answer", "")).strip():
                     raw_obj = _parse_json(raw)
-                    if isinstance(raw_obj, dict) and "verdict" in raw_obj and "answer" not in raw_obj:
+                    if (
+                        isinstance(raw_obj, dict)
+                        and "verdict" in raw_obj
+                        and "answer" not in raw_obj
+                    ):
                         raise ValueError("wrong_schema_for_answer")
                 return parsed
             except Exception as exc:
@@ -1039,9 +1172,11 @@ class AgentGraph:
             "Total equity, Revenue from operations, Profit for the year).\n"
             "Allowed tools: search_index(query,k,company optional,period optional,"
             "statement_kind optional,doc_type optional,reporting_basis optional), "
+            "get_chunk(chunk_id) to fetch full chunk by id for figure/unit/context verification, "
             "calculator(expression).\n"
-            "Only search_index and calculator are valid; any other tool is "
+            "Only search_index, get_chunk, and calculator are valid; any other tool is "
             "unknown_tool.\n"
+            "If a search hit lacks unit/context, plan get_chunk for that chunk_id before answering.\n"
             "If the question names N companies, emit one search_index step per company "
             "with company=<exact company id> and query=<exact requested label only>.\n"
             "Never put a company name in query; set k to at least 20.\n"
@@ -1084,6 +1219,10 @@ class AgentGraph:
                 f"planner: plan truncated to {remaining} steps (10-step limit)"
             )
             steps = steps[:remaining]
+        steps, enforced_notes = _enforce_plan_tools(
+            steps, query, state.get("tool_results", []), remaining=remaining
+        )
+        errors.extend(enforced_notes)
         return {"plan": steps, "requested": requested, "errors": errors}
 
     def _executor(self, state: AgentState) -> dict[str, Any]:
@@ -1094,7 +1233,7 @@ class AgentGraph:
             errors.append("executor: token budget exceeded")
             return {"errors": errors, "stop_reason": "token_budget"}
         critique = state.get("critique") or {}
-        steps = critique.get("next_steps") or state.get("plan") or []
+        steps = list(critique.get("next_steps") or state.get("plan") or [])
         results = list(state.get("tool_results", []))
         steps_used = int(state.get("steps_used", 0))
         detected = _detected_companies(state.get("query", ""), errors)
@@ -1183,7 +1322,13 @@ class AgentGraph:
                         break
                     continue
                 seen_searches.add(search_key)
-            if name not in {"search_index", "calculator"} or name not in self.tools:
+            if name == "calculator" and str(args.get("expression") or "").strip().lower() == "growth":
+                entry["skipped"] = "deferred_to_answer"
+                results.append(entry)
+                steps_used += 1
+                consecutive_repeats = 0
+                continue
+            if name not in {"search_index", "get_chunk", "calculator"} or name not in self.tools:
                 entry["error"] = "unknown_tool"
                 entry["skipped"] = "unknown_tool"
                 errors.append(f"executor: unknown_tool: {name}")
@@ -1200,6 +1345,12 @@ class AgentGraph:
                     }
                     return update
                 continue
+            if not validate_tool_args(name, args):
+                entry["error"] = "invalid_tool_args"
+                entry["skipped"] = "invalid_tool_args"
+                errors.append(f"executor: invalid_tool_args: {name}")
+                results.append(entry)
+                continue
             tool = self.tools[name]
             try:
                 entry["result"] = tool(**args)
@@ -1209,6 +1360,21 @@ class AgentGraph:
                     f"executor: tool {name} failed: {type(exc).__name__}: {exc}"
                 )
             results.append(entry)
+            if (
+                name == "search_index"
+                and not any(step.get("tool") == "get_chunk" for step in steps)
+                and not any(result.get("tool") == "get_chunk" for result in results)
+                and steps_used + 1 < self.max_steps
+            ):
+                missing_unit_chunk = _top_hit_without_unit(results)
+                if missing_unit_chunk:
+                    steps.append({
+                        "tool": "get_chunk",
+                        "args": {"chunk_id": missing_unit_chunk},
+                    })
+                    errors.append(
+                        f"executor: enforced get_chunk for unit check {missing_unit_chunk[:12]}"
+                    )
             steps_used += 1
             consecutive_repeats = 0
         update: dict[str, Any] = {
@@ -1336,6 +1502,67 @@ class AgentGraph:
             "stop_reason": stop_reason,
         }
 
+    def _enrich_units(self, extracted: dict[str, Any], tool_results: list[dict[str, Any]]) -> dict[str, Any]:
+        figures = list(extracted.get("figures") or [])
+        if not figures:
+            return extracted
+        changed = False
+        for fig in figures:
+            unit = str(fig.get("unit") or "").strip()
+            if unit and unit != "unit not stated in source":
+                continue
+            chunk_id = str(fig.get("chunk_id") or "").strip()
+            try:
+                page = int(fig.get("page")) if fig.get("page") is not None else None
+            except (TypeError, ValueError):
+                page = None
+            candidates: list[str] = []
+            if chunk_id:
+                candidates.append(chunk_id)
+                prefix = chunk_id.split(":", 1)[0]
+                page_numbers = []
+                if page is not None:
+                    page_numbers.extend([page, page - 1])
+                for number in page_numbers:
+                    if number > 0:
+                        candidates.append(f"{prefix}:p{number}")
+            seen_candidates: set[str] = set()
+            for cid in candidates:
+                if cid in seen_candidates:
+                    continue
+                seen_candidates.add(cid)
+                tool = self.tools.get("get_chunk")
+                if tool is None:
+                    break
+                try:
+                    chunk = tool(chunk_id=cid)
+                except Exception:
+                    continue
+                if not isinstance(chunk, dict):
+                    continue
+                if not any(
+                    entry.get("tool") == "get_chunk"
+                    and (entry.get("args") or {}).get("chunk_id") == cid
+                    for entry in tool_results
+                ):
+                    tool_results.append({
+                        "tool": "get_chunk",
+                        "args": {"chunk_id": cid},
+                        "result": chunk,
+                    })
+                resolved = _chunk_unit(chunk)
+                if resolved and resolved != "unit not stated in source":
+                    fig["unit"] = resolved
+                    fig["unit_chunk_id"] = cid
+                    changed = True
+                    break
+            if not str(fig.get("unit") or "").strip():
+                fig["unit"] = "unit not stated in source"
+        if changed:
+            extracted = dict(extracted)
+            extracted["figures"] = figures
+        return extracted
+
     def _fallback_search(
         self,
         state: AgentState,
@@ -1419,6 +1646,25 @@ class AgentGraph:
                     statement_kind=_default_statement_kind(query),
                     period=_requested_period(tool_results),
                 )
+            extracted = self._enrich_units(extracted, tool_results)
+            if _growth_requested(query):
+                calculator_tool = self.tools.get("calculator")
+                for fig in extracted.get("figures") or []:
+                    cur = _to_decimal(str(fig.get("value") or ""))
+                    prior = _to_decimal(str(fig.get("prior") or ""))
+                    if cur is None or prior in (None, 0) or calculator_tool is None:
+                        continue
+                    expression = f"({cur}-{prior})/{prior}*100"
+                    entry: dict[str, Any] = {
+                        "tool": "calculator",
+                        "args": {"expression": expression},
+                    }
+                    try:
+                        entry["result"] = calculator_tool(expression=expression)
+                        fig["growth_percent"] = round(float(entry["result"]), 2)
+                    except Exception as exc:
+                        entry["error"] = f"{type(exc).__name__}: {exc}"
+                    tool_results = [*tool_results, entry]
             built = build_answer(requested, extracted, query)
             figures = built.get("figures") or []
             matched = str(figures[0].get("company_id") or "") if figures else ""
@@ -1540,7 +1786,9 @@ class AgentGraph:
                 final_answer["answer"] = "Insufficient evidence in retrieved chunks."
                 final_answer["insufficient_evidence"] = True
             else:
-                final_answer["answer"] = state.get("draft_answer") or "Insufficient evidence in retrieved chunks."
+                final_answer["answer"] = (
+                    state.get("draft_answer") or "Insufficient evidence in retrieved chunks."
+                )
             filled_empty = True
         update: dict[str, Any] = {"final_answer": final_answer, "errors": errors}
         if filled_empty:

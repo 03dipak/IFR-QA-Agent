@@ -1,0 +1,18 @@
+{
+  "row_id": "G-037",
+  "config": "ON",
+  "question": "For the standalone results of Reliance for the year ended 31 March 2024: state total equity exactly as printed, in Rs. in crore.",
+  "expected_behaviour": "answer",
+  "correct": false,
+  "hit_at_k": true,
+  "tools": [
+    "search_index",
+    "search_index",
+    "search_index"
+  ],
+  "latency_s": 13.387,
+  "citation_present": false,
+  "stop_reason": "accepted",
+  "answer": "reliance: label not found (Total equity)",
+  "citations": []
+}

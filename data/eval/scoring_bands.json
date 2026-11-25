@@ -1,0 +1,15 @@
+{
+  "bands": {
+    "comparison_method": "stated_precision",
+    "money_crore": {"unit": "Rs. in crore", "tolerance": "stated_precision"},
+    "money_lakh": {"unit": "Rs. in lakh", "tolerance": "stated_precision"},
+    "money_million": {"unit": "Rs. in million", "tolerance": "stated_precision"},
+    "percent_class": {"unit": "percentage points", "tolerance": "stated_precision"},
+    "per_share_class": {"unit": "rupees", "tolerance": "stated_precision"},
+    "ratio_class": {"unit": "ratio", "tolerance": "stated_precision"},
+    "rule": "accept |output - expected| <= 0.5 * 10^-decimals(expected), scaled by the expected value's unit (crore/lakh/million literal in the expected text; otherwise absolute). Unit conversion is an exact power of ten. The tolerance never widens with poor extraction.",
+    "notes": "Replaces the fixed per-share/ratio bands (EPS 0.30 vs 0.80 fails, 19.51 vs 19.5 passes, ratio 0.002 vs 0.05 fails). Percent kept in percentage points."
+  },
+  "normalisation_rules_version": "norm-2",
+  "registry_version": "v0"
+}

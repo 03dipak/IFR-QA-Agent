@@ -17,6 +17,12 @@ except ImportError:  # pragma: no cover — dotenv is a runtime dep
     pass
 
 GOLD_PATH = os.environ.get("GOLD_PATH", "data/eval/datasets/gold_v2_eval_v8_public.jsonl")
+DEFAULT_AGENT_STATE_DB = "results/agent_state.sqlite"
+
+
+def agent_state_db_path() -> str:
+    """Return the SQLite checkpoint database path."""
+    return os.environ.get("AGENT_STATE_DB") or DEFAULT_AGENT_STATE_DB
 
 
 @dataclass(frozen=True)

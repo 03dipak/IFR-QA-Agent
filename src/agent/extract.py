@@ -5,6 +5,9 @@ from decimal import Decimal, InvalidOperation
 from typing import Any
 
 _NUMBER = re.compile(r"(?<![\w.])-?\d[\d,]*(?:\.\d+)?")
+_GROUPED_NUMBER = re.compile(
+    r"^-?(?:\d{1,2}(?:,\d{2})*,\d{3}|\d{1,3}(?:,\d{3})+)(?:\.\d+)?$"
+)
 _LEADING_NUMBERING = re.compile(r"^\s*(?:\([ivx]+\)|\d+[.)])\s*", re.I)
 _TRAILING_SUFFIX = re.compile(r"\s*\((?:1\s*\+\s*2\s*\+\s*3|[a-z]|net)\)\s*$", re.I)
 _NOTE_REF = re.compile(r"\s+\d+\s*$")
@@ -45,8 +48,25 @@ def _unit(chunk: dict[str, Any]) -> str:
     for line in text.splitlines():
         if line.strip().lower().startswith("unit:"):
             value = line.split(":", 1)[1].strip()
-            return value or "unit not printed"
-    return "unit not printed"
+            if value:
+                return value
+    meta = _meta(chunk)
+    for key in ("unit", "currency_unit", "amount_unit"):
+        value = str(meta.get(key) or "").strip()
+        if value:
+            return value
+    lower = text.lower()
+    currency = r"(?:rs\.?|inr|₹|`|inr)"
+    m = re.search(r"all amounts? in\s*(?:%s)?\s*(mn|million|crore|cr|lakhs?|lacs?)" % currency, lower)
+    if not m:
+        m = re.search(r"%s\s*(?:in\s*)?(mn|million|crore|cr|lakhs?|lacs?)" % currency, lower)
+    if not m:
+        m = re.search(r"\bin\s*(mn|million|crore|cr|lakhs?|lacs?)\b", lower)
+    if m:
+        token = m.group(1)
+        mapping = {"mn":"million","million":"million","crore":"crore","cr":"crore","lakh":"lakh","lakhs":"lakh","lac":"lakh","lacs":"lakh"}
+        return f"Rs. in {mapping.get(token, token)}"
+    return "unit not stated in source"
 
 
 def _meta(chunk: dict[str, Any]) -> dict[str, Any]:
@@ -87,7 +107,7 @@ def _valid_value(value: object) -> bool:
     text = str(value or "").strip()
     if not text:
         return False
-    if re.fullmatch(r"\d{1,3}(?:,\d{2})+,\d{3}(?:\.\d+)?", text):
+    if "," in text and not _GROUPED_NUMBER.fullmatch(text):
         return False
     number = _to_decimal(text)
     return number is not None and number != 0
@@ -236,6 +256,18 @@ def _candidates_for(
                 prior = numbers[-1] if len(numbers) >= 2 else None
             if not _valid_value(current):
                 continue
+            if prior and re.search(r"\d", str(prior)) and not _valid_value(prior):
+                continue
+            current_decimal = _to_decimal(current)
+            prior_decimal = _to_decimal(str(prior)) if prior else None
+            if (
+                re.fullmatch(r"\d{1,3}", str(current))
+                and current_decimal is not None
+                and prior_decimal is not None
+                and abs(prior_decimal) >= 1000
+                and abs(prior_decimal / current_decimal) >= 50
+            ):
+                continue
             chosen = {
                 "company_id": company,
                 "label": label,
@@ -287,6 +319,61 @@ def _choose_candidate(
     return dict((face or ranked)[0]), leaders
 
 
+def _candidate_group_key(candidate: dict[str, Any]) -> tuple[str, str, str, str]:
+    return (
+        str(candidate.get("company_id") or "").strip().lower(),
+        str(candidate.get("period") or "").strip().lower(),
+        str(candidate.get("reporting_basis") or "").strip().lower(),
+        str(candidate.get("unit") or "").strip().lower(),
+    )
+
+
+def _period_rank(period: str, wanted: str | None) -> tuple[int, int]:
+    if not wanted:
+        return (0, 0)
+    if period == wanted:
+        return (0, 0)
+    match = re.search(r"(\d{4})", period)
+    wanted_match = re.search(r"(\d{4})", wanted)
+    if match and wanted_match:
+        year = int(match.group(1))
+        asked = int(wanted_match.group(1))
+        if year < asked:
+            return (1, asked - year)
+        return (2, year - asked)
+    return (3, 0)
+
+
+def _choose_candidate_group(
+    candidates: list[dict[str, Any]], request_period: str | None
+) -> list[dict[str, Any]]:
+    groups: dict[tuple[str, str, str, str], list[dict[str, Any]]] = {}
+    for candidate in candidates:
+        groups.setdefault(_candidate_group_key(candidate), []).append(candidate)
+    ranked = sorted(
+        groups.values(),
+        key=lambda group: (
+            min(_period_rank(str(c.get("period") or ""), request_period) for c in group),
+            -len(group),
+        ),
+    )
+    return ranked[0]
+
+
+def _conflict_details(candidates: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    return [
+        {
+            "value": c.get("value"),
+            "chunk_id": c.get("chunk_id"),
+            "page": c.get("page"),
+            "period": c.get("period"),
+            "reporting_basis": c.get("reporting_basis"),
+            "unit": c.get("unit"),
+        }
+        for c in candidates
+    ]
+
+
 def extract_figures(
     requested: list[dict[str, str]],
     chunks: list[dict[str, Any]],
@@ -302,16 +389,17 @@ def extract_figures(
     for request in requested:
         company = str(request.get("company_id") or "").strip()
         label = str(request.get("label") or "").strip()
+        request_period = str(request.get("period") or period or "").strip() or None
         if not company or not label:
             continue
         candidates = _filter_candidates(
-            _candidates_for(ordered, company, label), period, basis, statement_kind
+            _candidates_for(ordered, company, label), request_period, basis, statement_kind
         )
         label_equivalence = False
         if not candidates and normalize_label(label) == "total assets":
             candidates = _filter_candidates(
                 _candidates_for(ordered, company, "Total equity and liabilities"),
-                period,
+                request_period,
                 basis,
                 statement_kind,
             )
@@ -319,7 +407,7 @@ def extract_figures(
         if not candidates:
             for alias in _label_aliases(label):
                 candidates = _filter_candidates(
-                    _candidates_for(ordered, company, alias), period, basis, statement_kind
+                    _candidates_for(ordered, company, alias), request_period, basis, statement_kind
                 )
                 if candidates:
                     label_equivalence = True
@@ -327,21 +415,25 @@ def extract_figures(
         if not candidates:
             candidates = _filter_candidates(
                 _candidates_for(ordered, company, label, include_multi_year=True),
-                period,
+                request_period,
                 basis,
                 statement_kind,
             )
         if not candidates:
             missing.append({"company_id": company, "label": label})
             continue
-        chosen, leaders = _choose_candidate(candidates)
-        chosen["label"] = label
+        group = _choose_candidate_group(candidates, request_period)
+        chosen, leaders = _choose_candidate(group)
+        display_label = f"{label} ({request_period})" if request_period else label
+        chosen["label"] = display_label
         if len(leaders) > 1:
             conflicts.append({
                 "company_id": company,
-                "label": label,
+                "label": display_label,
                 "values": sorted(leaders),
-                "chunk_ids": [c["chunk_id"] for c in candidates],
+                "chunk_ids": [c["chunk_id"] for c in group],
+                "group": _candidate_group_key(chosen),
+                "details": _conflict_details(group),
             })
         if label_equivalence:
             chosen["label_equivalence"] = True
@@ -380,7 +472,7 @@ def _asked_unit(query: str) -> str:
 
 
 def _display_unit(unit: str, query: str) -> str:
-    if unit != "unit not printed":
+    if unit != "unit not stated in source":
         return unit
     asked = _asked_unit(query)
     return f"{asked} (as asked; unit not confirmed on the page)" if asked else unit
@@ -412,7 +504,7 @@ def build_answer(
     if missing or not figures:
         parts = []
         for fig in figures:
-            unit = _display_unit(str(fig.get("unit") or "unit not printed"), query)
+            unit = _display_unit(str(fig.get("unit") or "unit not stated in source"), query)
             parts.append(
                 f"{fig.get('company_id')} {fig.get('label')}: "
                 f"{fig.get('value')} ({unit})"
@@ -445,9 +537,9 @@ def build_answer(
         computed.append(diff_text)
         label = str(winner.get("label") or "figure")
         loser = next(f for c, _, f in values if c == loser_company)
-        winner_unit = _display_unit(str(winner.get("unit") or "unit not printed"), query)
-        loser_unit = _display_unit(str(loser.get("unit") or "unit not printed"), query)
-        unit = winner_unit if winner_unit != "unit not printed" else loser_unit
+        winner_unit = _display_unit(str(winner.get("unit") or "unit not stated in source"), query)
+        loser_unit = _display_unit(str(loser.get("unit") or "unit not stated in source"), query)
+        unit = winner_unit if winner_unit != "unit not stated in source" else loser_unit
         answer = (
             f"{winner_company} reports higher {label}: "
             f"{winner.get('value')} vs {loser_company} {loser.get('value')}; "
@@ -456,17 +548,39 @@ def build_answer(
     else:
         parts = []
         for fig in figures:
-            unit = _display_unit(str(fig.get("unit") or "unit not printed"), query)
+            unit = _display_unit(str(fig.get("unit") or "unit not stated in source"), query)
             prior = fig.get("prior")
             prior_text = f", prior {prior}" if prior not in (None, "") else ""
             parts.append(
                 f"{fig.get('company_id')} {fig.get('label')}: "
                 f"{fig.get('value')} ({unit}){prior_text}"
             )
-        answer = "; ".join(parts)
+        if len(figures) == 1 and any(t in lower for t in ("growth", "%", "percent", "percentage", "change")):
+            fig = figures[0]
+            growth_value = fig.get("growth_percent")
+            if growth_value is None:
+                cur = _to_decimal(str(fig.get("value")))
+                prior = _to_decimal(str(fig.get("prior")))
+                if cur is not None and prior is not None and prior != 0:
+                    growth_value = (cur - prior) / prior * Decimal("100")
+            if growth_value is not None:
+                growth = Decimal(str(growth_value)).quantize(Decimal("0.01"))
+                growth_text = format(growth, "f").rstrip("0").rstrip(".")
+                answer = "; ".join(parts) + f"; growth {growth_text}% (calculated)"
+                computed.append(growth_text)
+            else:
+                answer = "; ".join(parts)
+        else:
+            answer = "; ".join(parts)
+    citation_ids: list[str] = []
+    for fig in figures:
+        for key in ("chunk_id", "unit_chunk_id"):
+            cid = str(fig.get(key) or "")
+            if cid and cid not in citation_ids:
+                citation_ids.append(cid)
     return {
         "answer": answer,
-        "citations": [str(f.get("chunk_id") or "") for f in figures if f.get("chunk_id")],
+        "citations": citation_ids,
         "insufficient_evidence": insufficient,
         "figures": [
             {

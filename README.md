@@ -11,29 +11,84 @@ Four stages (per `architecture-flow-for-mentor-review.txt`):
 - **Stage C — Agent online**: Planner → Executor → Critic loop with 3-tool cap and 10-step budget
 - **Stage D — Ship/report**: Deployed API + UI, trace dashboard, evaluation harness
 
-## Quick Start
+## Quickstart
+
+The retrieval index is gitignored. Build it locally from the corpus, or mount an
+existing one at `./results/full_index_v1/page_hash384`.
 
 ```bash
-# Clone the docs repo (tasks, LLDs, handoff)
-git clone <dataoss-capstone-project-files-only>
-
-# Clone this repo (code)
 git clone <ifr-qa-agent>
-
-# Install dependencies
 cd IFR-QA-Agent
-uv sync
 
-# Copy environment config
 cp .env.example .env
-# Edit .env with your LLM endpoint credentials
+# Fill LLM_CHAT_URL, LLM_MODEL, LLM_API_KEY and any CA settings in .env.
 
-# Run the API
-uv run uvicorn src.api:app --host 0.0.0.0 --port 8000
+# Build the local hash384 index from data/corpus/freeze_v1.json + extracts.
+# Requires uv and the corpus inputs; this can take several minutes.
+./scripts/build_index.sh
 
-# Run the UI (in another terminal)
-uv run streamlit run src/ui/app.py
+# Local WSL/no-Docker run
+AGENT_INDEX_PATH=results/full_index_v1/page_hash384 \
+  uv run uvicorn src.api:app --host 0.0.0.0 --port 8000
+
+# In another terminal
+BACKEND_URL=http://localhost:8000 \
+  uv run streamlit run src/ui/app.py --server.port 8501
 ```
+
+For containers instead, run:
+
+```bash
+docker compose build && docker compose up -d
+```
+
+Then verify either setup:
+
+```bash
+curl -s http://localhost:8000/health
+curl -s -X POST http://localhost:8000/ask -H "Content-Type: application/json" \
+  -d '{"question":"What is Coforge'\''s revenue from operations for FY2025 consolidated?"}'
+```
+
+Open the UI at `http://localhost:8501` and ask the same question. If you already
+have an index, skip `./scripts/build_index.sh`; compose mounts
+`./results/full_index_v1/page_hash384` into the API container.
+
+## Agent demo (Track B)
+
+`src/agent/demo.py` runs one real-LLM graph turn and prints the plan, tool calls,
+final answer, critique, steps used, token count, and errors.
+
+Required environment variables:
+
+- `LLM_CHAT_URL` — OpenAI-compatible chat endpoint (base URL or `/chat/completions`)
+- `LLM_MODEL` — chat model name
+- `LLM_API_KEY` — bearer token for the endpoint
+
+Optional environment variables:
+
+- `LLM_CA_CERT` — path to a CA bundle for the endpoint
+- `AGENT_STATE_DB` — SQLite checkpoint path (default: `results/agent_state.sqlite`)
+- `AGENT_TOKEN_BUDGET` — agent token budget (default: `12000`)
+- `AGENT_INDEX_PATH` — retrieval index path (default: `results/full_index_v1/page_hash384`)
+- `AGENT_QUESTION_TIMEOUT_SECONDS` — question watchdog (default: `120`); raise it for the
+  first run after clearing `data/cache/`, because the meta cache build took ~338 s here
+
+The first run builds a machine-local `data/cache/meta_rows_*.pkl` (gitignored, ~338 s for
+466,799 chunks). Warm starts took ~18 s and subsequent questions ~6 s; rebuild it per machine.
+
+```bash
+# Run from the repo root; do not paste secrets into this file.
+.venv/bin/python -m src.agent.demo "What was total revenue?" --thread-id demo-1
+```
+
+## Observability (Langfuse)
+
+Langfuse tracing is optional and enabled only when `LANGFUSE_PUBLIC_KEY`,
+`LANGFUSE_SECRET_KEY`, and `LANGFUSE_BASE_URL` are set (placeholders are in `.env.example`).
+Each `run_question` call emits one trace with the session id, Planner/Executor/Critic/Answer
+spans, search tool calls, final metadata, and a flush at completion. Missing configuration
+logs one warning and does not affect answers; keys are never logged.
 
 ## Commands
 
@@ -100,6 +155,10 @@ uv run -m src.ingestion.gate_report \
 # FOUND vs MISSING and projected_document_count:
 uv run -m src.ingestion.coverage --matrix data/seeds/coverage_matrix.csv
 
+# Read-only index/filter diagnostic (v1 meta coverage, company periods,
+# statement_kind counts, and balance_sheet/FY2025/empty-period checks):
+uv run scripts/coverage_report.py --filters
+
 # Run the test suite
 uv run pytest tests/ -q
 
@@ -114,6 +173,20 @@ uv run mypy --explicit-package-bases --ignore-missing-imports src tests
 # uv run python -m src.eval.gold_check --input data/eval/datasets/gold_v2.jsonl
 uv run python -m src.eval.gold_freeze --input data/eval/datasets/gold_v2.jsonl --out data/eval/datasets/gold_v2.split_manifest.json --seed 42 --splitter-version v2
 PYTHONPATH=. uv run python scripts/make_gold_public.py --input data/eval/datasets/gold_v2.jsonl --out data/eval/datasets/gold_v2_public.jsonl
+
+# Agent eval harness: import team gold into eval/gold.jsonl (keeps existing ids)
+uv run python scripts/import_gold.py
+
+# Full v1 run; CSV is appended row-by-row and uses 4 workers by default
+AGENT_INDEX_PATH=results/full_index_v1/page_hash384 uv run eval/run_eval.py --workers 4
+
+# Resume into a fixed CSV (skips ids already present) and fixed-seed sample
+AGENT_INDEX_PATH=results/full_index_v1/page_hash384 uv run eval/run_eval.py --resume --out eval/results_page_hash384.csv --workers 4
+AGENT_INDEX_PATH=results/full_index_v1/page_hash384 uv run eval/run_eval.py --sample 3 --workers 4
+
+# Eval-only checks
+uv run pytest tests/unit/test_eval_harness.py -q
+uv run ruff check eval
 ```
 
 ## Gold review (sign-off)

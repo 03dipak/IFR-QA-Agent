@@ -1,0 +1,24 @@
+{
+  "row_id": "G-003",
+  "config": "ON",
+  "question": "For the year ended 31 March 2025, consolidated (both companies): is total liabilities larger for Deepak Nitrite or for Srf, and what are the two figures in Rs. in crore as printed?",
+  "expected_behaviour": "answer",
+  "correct": true,
+  "hit_at_k": true,
+  "tools": [
+    "search_index",
+    "search_index",
+    "search_index",
+    "search_index",
+    "get_chunk",
+    "get_chunk"
+  ],
+  "latency_s": 42.335,
+  "citation_present": true,
+  "stop_reason": "accepted",
+  "answer": "srf reports higher Total liabilities: 8,930.92 vs deepak_nitrite 2,293.01; difference 6,637.91 (Rs. in crore).",
+  "citations": [
+    "[fa7dac2401f1 p.363]",
+    "[8e4e186331c2 p.177]"
+  ]
+}

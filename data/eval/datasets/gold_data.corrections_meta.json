@@ -1,0 +1,8 @@
+{
+  "gold_file": "data/eval/datasets/gold_data.jsonl",
+  "gold_hash": "7ee6f90cf6e865776d810060ad24de268d085e4aa7f2af5d19a8bf6a5edc9209",
+  "corrections_file": "data/eval/datasets/gold_data.corrections.jsonl",
+  "corrections_hash": "901b2fdb63caad92e1d148ac627485ba0799ad220eeaa9b2bbcbebc002ebe622",
+  "gold_view_id": "gold_v1+corr_901b2fdb63ca",
+  "updated_at": "2026-11-13T09:04:16Z"
+}

@@ -1,0 +1,18 @@
+[
+  {
+    "config": "OFF",
+    "n": 20,
+    "accuracy": 0.95,
+    "recall_at_k": 1.0,
+    "citation_rate": 0.95,
+    "avg_latency_s": 4.455
+  },
+  {
+    "config": "ON",
+    "n": 20,
+    "accuracy": 0.95,
+    "recall_at_k": 1.0,
+    "citation_rate": 0.95,
+    "avg_latency_s": 11.012
+  }
+]

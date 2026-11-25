@@ -1,0 +1,19 @@
+{
+  "row_id": "G-053",
+  "config": "OFF",
+  "question": "For the standalone results of Bhel for the year ended 31 March 2024: state total liabilities exactly as printed, in Rs. in crore.",
+  "expected_behaviour": "answer",
+  "correct": true,
+  "hit_at_k": true,
+  "tools": [
+    "search_index",
+    "search_index"
+  ],
+  "latency_s": 2.916,
+  "citation_present": true,
+  "stop_reason": "accepted",
+  "answer": "bhel Total liabilities: 34566.84 ((I in Crore)), prior 32541.75",
+  "citations": [
+    "[acf17a18202f p.172]"
+  ]
+}

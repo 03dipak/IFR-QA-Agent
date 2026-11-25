@@ -61,6 +61,7 @@ AGENTS.md
 
 # LLM disk cache (not committed)
 data/llm_cache/
+data/cache/
 
 # Local html files
 data/manual_inbox/_nse_pages/
@@ -98,11 +99,12 @@ src/eval.bak/
 #doc
 docs/
 docs/*
-#vm04-ca.crt
+#crt
 vm04-ca.crt
+vm02-ca.crt
 
 #.temp/
 .temp/
 
 #results
-results/
+#results/

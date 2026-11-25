@@ -1,0 +1,21 @@
+{
+  "row_id": "G-039",
+  "config": "OFF",
+  "question": "Reading the standalone results of Adani Green for the year ended 31 March 2026 as filed, give me total assets in Rs. in crore.",
+  "expected_behaviour": "answer",
+  "correct": true,
+  "hit_at_k": true,
+  "tools": [
+    "search_index",
+    "search_index",
+    "get_chunk",
+    "get_chunk"
+  ],
+  "latency_s": 3.191,
+  "citation_present": true,
+  "stop_reason": "accepted",
+  "answer": "adani_green Total assets: 51,955 (Rs. in crore), prior 41,867",
+  "citations": [
+    "[deed15eaf8d7 p.179]"
+  ]
+}

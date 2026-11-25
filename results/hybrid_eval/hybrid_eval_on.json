@@ -1,0 +1,426 @@
+[
+  {
+    "row_id": "G-001",
+    "config": "ON",
+    "question": "Between Deepak Nitrite and Srf, on total assets for the year ended 31 March 2025 consolidated results, which prints the larger figure, and what are the two figures (in Rs. in crore, as printed on each statement)?",
+    "expected_behaviour": "answer",
+    "correct": true,
+    "hit_at_k": true,
+    "tools": [
+      "search_index",
+      "search_index",
+      "search_index",
+      "search_index",
+      "get_chunk",
+      "get_chunk"
+    ],
+    "latency_s": 15.921,
+    "citation_present": true,
+    "stop_reason": "accepted",
+    "answer": "srf reports higher Total assets: 21,557.12 vs deepak_nitrite 7,717.67; difference 13,839.45 (Rs. in crore).",
+    "citations": [
+      "[fa7dac2401f1 p.363]",
+      "[8e4e186331c2 p.177]"
+    ]
+  },
+  {
+    "row_id": "G-003",
+    "config": "ON",
+    "question": "For the year ended 31 March 2025, consolidated (both companies): is total liabilities larger for Deepak Nitrite or for Srf, and what are the two figures in Rs. in crore as printed?",
+    "expected_behaviour": "answer",
+    "correct": true,
+    "hit_at_k": true,
+    "tools": [
+      "search_index",
+      "search_index",
+      "search_index",
+      "search_index",
+      "get_chunk",
+      "get_chunk"
+    ],
+    "latency_s": 12.241,
+    "citation_present": true,
+    "stop_reason": "accepted",
+    "answer": "srf reports higher Total liabilities: 8,930.92 vs deepak_nitrite 2,293.01; difference 6,637.91 (Rs. in crore).",
+    "citations": [
+      "[fa7dac2401f1 p.363]",
+      "[8e4e186331c2 p.177]"
+    ]
+  },
+  {
+    "row_id": "G-004",
+    "config": "ON",
+    "question": "Compare Maruti Suzuki and Bosch on total assets for the year ended 31 March 2025 consolidated results (both Maruti Suzuki and Bosch at the same basis): who reports more, and by how much, in Rs. in million as printed?",
+    "expected_behaviour": "answer",
+    "correct": true,
+    "hit_at_k": true,
+    "tools": [
+      "search_index",
+      "search_index",
+      "search_index",
+      "search_index",
+      "get_chunk",
+      "get_chunk"
+    ],
+    "latency_s": 23.617,
+    "citation_present": true,
+    "stop_reason": "accepted",
+    "answer": "maruti_suzuki reports higher Total assets: 1,319,718 vs bosch 202,411; difference 1,117,307 (Rs. in million).",
+    "citations": [
+      "[36c2942b23f1 p.407]",
+      "[8fcda929069a p.216]"
+    ]
+  },
+  {
+    "row_id": "G-006",
+    "config": "ON",
+    "question": "Between Maruti Suzuki and Bosch, on total liabilities for the year ended 31 March 2025 consolidated results, which prints the larger figure, and what are the two figures (in Rs. in million, as printed on each statement)?",
+    "expected_behaviour": "answer",
+    "correct": true,
+    "hit_at_k": true,
+    "tools": [
+      "search_index",
+      "search_index",
+      "search_index",
+      "search_index",
+      "get_chunk",
+      "get_chunk"
+    ],
+    "latency_s": 12.798,
+    "citation_present": true,
+    "stop_reason": "accepted",
+    "answer": "maruti_suzuki reports higher Total liabilities: 357,319 vs bosch 64,278; difference 293,041 (Rs. in million).",
+    "citations": [
+      "[36c2942b23f1 p.407]",
+      "[8fcda929069a p.216]"
+    ]
+  },
+  {
+    "row_id": "G-010",
+    "config": "ON",
+    "question": "Compare Aurobindo Pharma and Dr Reddys on total assets for the year ended 31 March 2025 consolidated results (both Aurobindo Pharma and Dr Reddys at the same basis): who reports more, and by how much, in Rs. in million as printed?",
+    "expected_behaviour": "answer",
+    "correct": true,
+    "hit_at_k": true,
+    "tools": [
+      "search_index",
+      "search_index",
+      "search_index",
+      "search_index",
+      "get_chunk",
+      "get_chunk",
+      "get_chunk",
+      "get_chunk",
+      "get_chunk"
+    ],
+    "latency_s": 26.36,
+    "citation_present": true,
+    "stop_reason": "accepted",
+    "answer": "aurobindo_pharma reports higher Total assets: 497,849.7 vs dr_reddys 494,266; difference 3,583.7 (Rs. in million).",
+    "citations": [
+      "[e97121aee575 p.205]",
+      "[bdd1b13a7b77 p.176]"
+    ]
+  },
+  {
+    "row_id": "G-036",
+    "config": "ON",
+    "question": "From Reliance's the year ended 31 March 2024 consolidated results, report total assets (as printed in the statement, in Rs. in crore).",
+    "expected_behaviour": "answer",
+    "correct": true,
+    "hit_at_k": true,
+    "tools": [
+      "search_index",
+      "search_index"
+    ],
+    "latency_s": 12.604,
+    "citation_present": true,
+    "stop_reason": "accepted",
+    "answer": "RELIANCE Total assets: 17,55,986 ((C in crore)), prior 16,07,431",
+    "citations": [
+      "[d8e3739d2e06 p.110]"
+    ]
+  },
+  {
+    "row_id": "G-037",
+    "config": "ON",
+    "question": "For the standalone results of Reliance for the year ended 31 March 2024: state total equity exactly as printed, in Rs. in crore.",
+    "expected_behaviour": "answer",
+    "correct": false,
+    "hit_at_k": true,
+    "tools": [
+      "search_index",
+      "search_index",
+      "search_index"
+    ],
+    "latency_s": 15.361,
+    "citation_present": false,
+    "stop_reason": "accepted",
+    "answer": "RELIANCE: label not found (Total equity)",
+    "citations": []
+  },
+  {
+    "row_id": "G-038",
+    "config": "ON",
+    "question": "For the consolidated results of Reliance for the year ended 31 March 2024: state total liabilities exactly as printed, in Rs. in crore.",
+    "expected_behaviour": "answer",
+    "correct": true,
+    "hit_at_k": true,
+    "tools": [
+      "search_index",
+      "search_index"
+    ],
+    "latency_s": 9.184,
+    "citation_present": true,
+    "stop_reason": "accepted",
+    "answer": "RELIANCE Total liabilities: 8,30,198 ((C in crore)), prior 7,78,550",
+    "citations": [
+      "[d8e3739d2e06 p.110]"
+    ]
+  },
+  {
+    "row_id": "G-039",
+    "config": "ON",
+    "question": "Reading the standalone results of Adani Green for the year ended 31 March 2026 as filed, give me total assets in Rs. in crore.",
+    "expected_behaviour": "answer",
+    "correct": true,
+    "hit_at_k": true,
+    "tools": [
+      "search_index",
+      "search_index",
+      "get_chunk",
+      "get_chunk"
+    ],
+    "latency_s": 9.781,
+    "citation_present": true,
+    "stop_reason": "accepted",
+    "answer": "adani_green Total assets: 51,955 (Rs. in crore), prior 41,867",
+    "citations": [
+      "[deed15eaf8d7 p.179]"
+    ]
+  },
+  {
+    "row_id": "G-040",
+    "config": "ON",
+    "question": "In the standalone results of Adani Green for the year ended 31 March 2026, what was total equity, reported in Rs. in crore as printed?",
+    "expected_behaviour": "answer",
+    "correct": true,
+    "hit_at_k": true,
+    "tools": [
+      "search_index",
+      "search_index",
+      "get_chunk",
+      "get_chunk"
+    ],
+    "latency_s": 9.184,
+    "citation_present": true,
+    "stop_reason": "accepted",
+    "answer": "adani_green Total equity: 14,890 (Rs. in crore), prior 8,212",
+    "citations": [
+      "[deed15eaf8d7 p.179]"
+    ]
+  },
+  {
+    "row_id": "G-041",
+    "config": "ON",
+    "question": "For the standalone results of Adani Green for the year ended 31 March 2026: state total liabilities exactly as printed, in Rs. in crore.",
+    "expected_behaviour": "answer",
+    "correct": true,
+    "hit_at_k": true,
+    "tools": [
+      "search_index",
+      "search_index",
+      "get_chunk",
+      "get_chunk"
+    ],
+    "latency_s": 8.951,
+    "citation_present": true,
+    "stop_reason": "accepted",
+    "answer": "adani_green Total liabilities: 37,065 (Rs. in crore), prior 33,655",
+    "citations": [
+      "[deed15eaf8d7 p.179]"
+    ]
+  },
+  {
+    "row_id": "G-042",
+    "config": "ON",
+    "question": "In the consolidated results of Ashok Leyland for the year ended 31 March 2024, what was total equity, reported in Rs. in crore as printed?",
+    "expected_behaviour": "answer",
+    "correct": true,
+    "hit_at_k": true,
+    "tools": [
+      "search_index",
+      "search_index",
+      "get_chunk",
+      "get_chunk"
+    ],
+    "latency_s": 10.201,
+    "citation_present": true,
+    "stop_reason": "accepted",
+    "answer": "ashok_leyland Total equity: 11,814.59 (Rs. in crore), prior 10,795.81",
+    "citations": [
+      "[728937384f00 p.209]"
+    ]
+  },
+  {
+    "row_id": "G-043",
+    "config": "ON",
+    "question": "From Aurobindo Pharma's the year ended 31 March 2024 standalone results, report total assets (as printed in the statement, in Rs. in million).",
+    "expected_behaviour": "answer",
+    "correct": true,
+    "hit_at_k": true,
+    "tools": [
+      "search_index",
+      "search_index",
+      "get_chunk",
+      "get_chunk",
+      "get_chunk"
+    ],
+    "latency_s": 7.215,
+    "citation_present": true,
+    "stop_reason": "accepted",
+    "answer": "aurobindo_pharma Total assets: 251,539.8 (Rs. in million (as asked; unit not confirmed on the page)), prior 250,588.1",
+    "citations": [
+      "[9e092bb4d317 p.137]"
+    ]
+  },
+  {
+    "row_id": "G-044",
+    "config": "ON",
+    "question": "Reading the standalone results of Aurobindo Pharma for the year ended 31 March 2024 as filed, give me total equity in Rs. in million.",
+    "expected_behaviour": "answer",
+    "correct": true,
+    "hit_at_k": true,
+    "tools": [
+      "search_index",
+      "search_index",
+      "get_chunk",
+      "get_chunk",
+      "get_chunk"
+    ],
+    "latency_s": 9.89,
+    "citation_present": true,
+    "stop_reason": "accepted",
+    "answer": "aurobindo_pharma Total equity: 197,228.2 (Rs. in million (as asked; unit not confirmed on the page)), prior 180,340.3",
+    "citations": [
+      "[9e092bb4d317 p.137]"
+    ]
+  },
+  {
+    "row_id": "G-046",
+    "config": "ON",
+    "question": "For the standalone results of Berger Paints for the year ended 31 March 2024: state total equity exactly as printed, in Rs. in crore.",
+    "expected_behaviour": "answer",
+    "correct": true,
+    "hit_at_k": true,
+    "tools": [
+      "search_index",
+      "search_index"
+    ],
+    "latency_s": 8.515,
+    "citation_present": true,
+    "stop_reason": "accepted",
+    "answer": "berger_paints Total equity: 5,005.24 (` in Crores), prior 4,295.19",
+    "citations": [
+      "[34d0d28c0b4a p.163]"
+    ]
+  },
+  {
+    "row_id": "G-049",
+    "config": "ON",
+    "question": "In the consolidated results of Bharat Electronics for the year ended 31 March 2024, what was total equity, reported in Rs. in lakh as printed?",
+    "expected_behaviour": "answer",
+    "correct": true,
+    "hit_at_k": true,
+    "tools": [
+      "search_index",
+      "search_index"
+    ],
+    "latency_s": 8.077,
+    "citation_present": true,
+    "stop_reason": "accepted",
+    "answer": "bharat_electronics Total equity: 16,34,439 ((` in Lakhs)), prior 13,87,938",
+    "citations": [
+      "[5dc0e70e9dec p.162]"
+    ]
+  },
+  {
+    "row_id": "G-051",
+    "config": "ON",
+    "question": "In the standalone results of Bhel for the year ended 31 March 2024, what was total assets, reported in Rs. in crore as printed?",
+    "expected_behaviour": "answer",
+    "correct": true,
+    "hit_at_k": true,
+    "tools": [
+      "search_index",
+      "search_index"
+    ],
+    "latency_s": 4.84,
+    "citation_present": true,
+    "stop_reason": "accepted",
+    "answer": "bhel Total assets: 59417.43 ((I in Crore)), prior 57354.14",
+    "citations": [
+      "[acf17a18202f p.171]"
+    ]
+  },
+  {
+    "row_id": "G-052",
+    "config": "ON",
+    "question": "Reading the standalone results of Bhel for the year ended 31 March 2024 as filed, give me total equity in Rs. in crore.",
+    "expected_behaviour": "answer",
+    "correct": true,
+    "hit_at_k": true,
+    "tools": [
+      "search_index",
+      "search_index"
+    ],
+    "latency_s": 4.77,
+    "citation_present": true,
+    "stop_reason": "accepted",
+    "answer": "bhel Total equity: 24850.59 ((I in Crore)), prior 24812.39",
+    "citations": [
+      "[acf17a18202f p.171]"
+    ]
+  },
+  {
+    "row_id": "G-053",
+    "config": "ON",
+    "question": "For the standalone results of Bhel for the year ended 31 March 2024: state total liabilities exactly as printed, in Rs. in crore.",
+    "expected_behaviour": "answer",
+    "correct": true,
+    "hit_at_k": true,
+    "tools": [
+      "search_index",
+      "search_index"
+    ],
+    "latency_s": 4.679,
+    "citation_present": true,
+    "stop_reason": "accepted",
+    "answer": "bhel Total liabilities: 34566.84 ((I in Crore)), prior 32541.75",
+    "citations": [
+      "[acf17a18202f p.172]"
+    ]
+  },
+  {
+    "row_id": "G-054",
+    "config": "ON",
+    "question": "From Biocon's the year ended 31 March 2024 standalone results, report total assets (as printed in the statement, in Rs. in million).",
+    "expected_behaviour": "answer",
+    "correct": true,
+    "hit_at_k": true,
+    "tools": [
+      "search_index",
+      "search_index",
+      "get_chunk",
+      "get_chunk",
+      "get_chunk"
+    ],
+    "latency_s": 6.059,
+    "citation_present": true,
+    "stop_reason": "accepted",
+    "answer": "biocon Total assets: 137,682 (Rs. in million (as asked; unit not confirmed on the page)), prior 130,299",
+    "citations": [
+      "[e57b7fc675de p.248]"
+    ]
+  }
+]

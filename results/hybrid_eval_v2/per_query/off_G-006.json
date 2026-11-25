@@ -1,0 +1,24 @@
+{
+  "row_id": "G-006",
+  "config": "OFF",
+  "question": "Between Maruti Suzuki and Bosch, on total liabilities for the year ended 31 March 2025 consolidated results, which prints the larger figure, and what are the two figures (in Rs. in million, as printed on each statement)?",
+  "expected_behaviour": "answer",
+  "correct": true,
+  "hit_at_k": true,
+  "tools": [
+    "search_index",
+    "search_index",
+    "search_index",
+    "search_index",
+    "get_chunk",
+    "get_chunk"
+  ],
+  "latency_s": 5.657,
+  "citation_present": true,
+  "stop_reason": "accepted",
+  "answer": "maruti_suzuki reports higher Total liabilities: 357,319 vs bosch 64,278; difference 293,041 (Rs. in million).",
+  "citations": [
+    "[8fcda929069a p.216]",
+    "[36c2942b23f1 p.407]"
+  ]
+}

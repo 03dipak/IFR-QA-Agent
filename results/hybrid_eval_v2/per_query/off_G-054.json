@@ -1,0 +1,22 @@
+{
+  "row_id": "G-054",
+  "config": "OFF",
+  "question": "From Biocon's the year ended 31 March 2024 standalone results, report total assets (as printed in the statement, in Rs. in million).",
+  "expected_behaviour": "answer",
+  "correct": true,
+  "hit_at_k": true,
+  "tools": [
+    "search_index",
+    "search_index",
+    "get_chunk",
+    "get_chunk",
+    "get_chunk"
+  ],
+  "latency_s": 3.115,
+  "citation_present": true,
+  "stop_reason": "accepted",
+  "answer": "Biocon Total assets: 137,682 (Rs. in million (as asked; unit not confirmed on the page)), prior 130,299",
+  "citations": [
+    "[e57b7fc675de p.248]"
+  ]
+}
