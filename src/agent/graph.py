@@ -2060,12 +2060,41 @@ class AgentGraph:
         requested = _extraction_requested(state)
         if requested:
             tool_results = list(state.get("tool_results", []))
+            req_period = _requested_period(tool_results)
             extracted = extract_figures(
                 requested,
                 _extraction_chunks(tool_results),
                 basis=_query_reporting_basis(query),
                 statement_kind=_default_statement_kind(query),
+                period=req_period,
             )
+            # If any requested FY figure came back as a different period, try next-year report
+            if req_period and re.fullmatch(r"FY\d{4}", req_period.upper()):
+                bad = [f for f in extracted.get("figures", []) if str(f.get("period") or "").upper() != req_period.upper()]
+                missing = extracted.get("missing") or []
+                if bad or (missing and not extracted.get("figures")):
+                    ny = f"FY{int(req_period.upper()[2:])+1}"
+                    ny_chunks = list(_extraction_chunks(tool_results))
+                    # also fetch from next-year search if present in tool_results
+                    extracted_ny = extract_figures(
+                        requested,
+                        ny_chunks,
+                        basis=_query_reporting_basis(query),
+                        statement_kind=_default_statement_kind(query),
+                        period=ny,
+                    )
+                    for fig in extracted_ny.get("figures", []):
+                        if str(fig.get("period") or "").upper() == ny and fig.get("prior") not in (None, ""):
+                            fig = dict(fig)
+                            # NY report columns: current=NY, prior=requested period
+                            fig["value"] = fig.get("prior")
+                            fig["prior"] = None
+                            fig["period"] = req_period.upper()
+                            fig["source_period"] = ny
+                            fig["label"] = str(fig.get("label") or "").replace(f"({ny})", f"({req_period.upper()})")
+                            extracted["figures"] = [f for f in extracted.get("figures", []) if str(f.get("period") or "").upper() == req_period.upper()]
+                            extracted["figures"].append(fig)
+                            extracted["missing"] = [m for m in extracted.get("missing", []) if str(m.get("company_id")) != str(fig.get("company_id"))]
             fallback_used = bool(state.get("fallback_used"))
             if extracted["missing"] and not fallback_used:
                 tool_results, errors = self._fallback_search(
@@ -2077,7 +2106,7 @@ class AgentGraph:
                     _extraction_chunks(tool_results),
                     basis=_query_reporting_basis(query),
                     statement_kind=_default_statement_kind(query),
-                    period=_requested_period(tool_results),
+                    period=req_period,
                 )
             extracted = self._enrich_units(extracted, tool_results)
             if _growth_requested(query):

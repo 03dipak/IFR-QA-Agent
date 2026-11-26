@@ -1000,37 +1000,69 @@ def get_metric(
     labels = sector_labels.get(normalized_metric) or _METRIC_LABELS.get(normalized_metric, [str(metric).strip()])
     chunks: list[dict[str, Any]] = []
     seen: set[str] = set()
-    for label in labels:
-        result = search_index(
-            label,
-            k=20,
-            company=company,
-            period=requested_period,
-            statement_kind=statement_kind,
-            reporting_basis=reporting_basis,
-        )
-        for hit in result.get("hits", []) if isinstance(result, dict) else []:
-            chunk_id = str(hit.get("chunk_id") or hit.get("id") or "").strip()
-            if not chunk_id or chunk_id in seen:
-                continue
-            seen.add(chunk_id)
-            chunks.append({
-                "chunk_id": chunk_id,
-                "text": str(hit.get("text") or hit.get("content") or ""),
-                "meta": hit.get("meta") or {},
-            })
+    periods_to_search = [requested_period]
+    if requested_period and re.fullmatch(r"FY\d{4}", requested_period.upper()):
+        periods_to_search.append(f"FY{int(requested_period.upper()[2:])+1}")
+    for p_search in periods_to_search:
+        for label in labels:
+            result = search_index(
+                label,
+                k=20,
+                company=company,
+                period=p_search,
+                statement_kind=statement_kind,
+                reporting_basis=reporting_basis,
+            )
+            for hit in result.get("hits", []) if isinstance(result, dict) else []:
+                chunk_id = str(hit.get("chunk_id") or hit.get("id") or "").strip()
+                if not chunk_id or chunk_id in seen:
+                    continue
+                seen.add(chunk_id)
+                chunks.append({
+                    "chunk_id": chunk_id,
+                    "text": str(hit.get("text") or hit.get("content") or ""),
+                    "meta": hit.get("meta") or {},
+                })
     # prefer consolidated, then standalone, same doc/period/basis
     basis_candidates = [reporting_basis] if reporting_basis else ["consolidated", "standalone", None]
-    for basis_try in basis_candidates:
-        for label in labels:
-            extracted = extract_figures(
-                [{"company_id": company, "label": label}],
-                chunks,
-                basis=basis_try,
-                statement_kind=statement_kind,
-                period=requested_period,
-            )
-            figures = extracted.get("figures") or []
+    periods_to_try = [requested_period]
+    # FY report for year Y contains Y as prior column in Y+1 report
+    if requested_period and re.fullmatch(r"FY\d{4}", requested_period.upper()):
+        y = int(requested_period.upper()[2:])
+        periods_to_try.append(f"FY{y+1}")
+    for period_try in periods_to_try:
+        for basis_try in basis_candidates:
+            for label in labels:
+                extracted = extract_figures(
+                    [{"company_id": company, "label": label}],
+                    chunks,
+                    basis=basis_try,
+                    statement_kind=statement_kind,
+                    period=period_try,
+                )
+                figures = extracted.get("figures") or []
+                if not figures:
+                    continue
+                fig = figures[0]
+                fig_meta_period = str(fig.get("period") or "").upper()
+                req_up = str(requested_period or "").upper()
+                if period_try != requested_period and requested_period:
+                    # extracted from next-year report; requested period is the prior column
+                    if fig_meta_period == period_try.upper() and fig.get("prior") not in (None, ""):
+                        fig = dict(fig)
+                        current_val = fig.get("value")
+                        fig["value"] = fig.get("prior")
+                        fig["prior"] = current_val
+                        fig["period"] = requested_period.upper()
+                        fig["source_period"] = period_try.upper()
+                        fig["note_prior_column"] = True
+                    else:
+                        continue
+                elif req_up and fig_meta_period and fig_meta_period != req_up:
+                    # figure is from a different period than requested; skip
+                    continue
+                figures = [fig]
+                break
             if not figures:
                 continue
             fig = figures[0]
@@ -1045,15 +1077,22 @@ def get_metric(
                         continue
                     c_doc = str(chunk_meta.get("document_id") or (str(chunk.get("chunk_id") or "").split(":")[0])).strip()
                     c_period = str(chunk_meta.get("period") or "").strip().lower()
-                    if fig_period and c_period and c_period != fig_period:
+                    src_period = str(fig.get("source_period") or "").strip().lower()
+                    allowed_periods = {p for p in (fig_period, src_period) if p}
+                    if allowed_periods and c_period and c_period not in allowed_periods:
                         continue
                     if fig_doc and c_doc and c_doc != fig_doc:
                         continue
-                    # inherit only from same table or its page header (same doc+period+page)
+                    # inherit only from same table or its page header (same doc+period, page or page-1)
                     c_page = chunk_meta.get("page")
                     fig_page = fig.get("page")
-                    if fig_page is not None and c_page is not None and str(c_page) != str(fig_page):
-                        continue
+                    if fig_page is not None and c_page is not None:
+                        try:
+                            if abs(int(c_page) - int(fig_page)) > 1:
+                                continue
+                        except (TypeError, ValueError):
+                            if str(c_page) != str(fig_page):
+                                continue
                     candidate_unit = _chunk_unit(chunk)
                     if candidate_unit and candidate_unit != "unit not stated in source":
                         inferred_unit = candidate_unit
@@ -1079,9 +1118,10 @@ def get_metric(
                     unit = "unit not stated in source"
                     note = ((note + "; ") if note else "") + "unit not stated in source"
                 else:
-                    value, unit, normalized = _normalize_value_to_crore(value, unit)
-                    if inferred_unit and normalized:
+                    if inferred_unit:
                         note = ((note + "; ") if note else "") + "unit inherited from page header"
+                    else:
+                        value, unit, normalized = _normalize_value_to_crore(value, unit)
             excluded_for_ranking = False
             return {
                 "company_id": company,
