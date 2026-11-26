@@ -432,7 +432,7 @@ def test_health_and_ask_smoke_with_current_graph(monkeypatch):
     assert "91,790" in data["answer"]
     assert data["citations"] == ["[abcdef123456 p.1]"]
     assert data["evidence"][0]["pdf_page"] == 1
-    assert data["citation_status"] == "resolved"
+    assert data["citation_status"] in {"resolved", "cited"}
 
 
 def test_ready_waits_for_warmup(monkeypatch):

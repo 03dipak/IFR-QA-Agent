@@ -192,9 +192,16 @@ def _watch_question_timeout(
 
 def _formatted_citations(final_answer: dict[str, Any]) -> list[str]:
     pages: dict[str, Any] = {}
+    doc_ids: dict[str, str] = {}
     for figure in final_answer.get("figures") or []:
-        if isinstance(figure, dict) and figure.get("chunk_id"):
-            pages[str(figure["chunk_id"])] = figure.get("page")
+        if not isinstance(figure, dict):
+            continue
+        cid = str(figure.get("chunk_id") or "")
+        if cid:
+            if figure.get("page") is not None:
+                pages[cid] = figure.get("page")
+            if figure.get("document_id"):
+                doc_ids[cid] = str(figure.get("document_id"))
     citations: list[str] = []
     seen: set[str] = set()
     for raw in final_answer.get("citations") or []:
@@ -204,7 +211,8 @@ def _formatted_citations(final_answer: dict[str, Any]) -> list[str]:
             m = __import__("re").search(r":p(\d+)$", chunk_id)
             if m:
                 page = int(m.group(1))
-        citation = f"[{chunk_id[:12]} p.{page}]" if page is not None else chunk_id
+        doc_id = doc_ids.get(chunk_id) or chunk_id.split(":")[0]
+        citation = f"[{doc_id[:12]} p.{page}]" if page is not None else chunk_id
         if citation not in seen:
             seen.add(citation)
             citations.append(citation)

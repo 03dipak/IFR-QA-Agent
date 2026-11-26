@@ -125,6 +125,7 @@ class EvidenceItem(BaseModel):
     document_id: str
     pdf_page: int
     citation: str
+    citation_label: str = ""
     text: str = ""
 
 
@@ -231,21 +232,46 @@ def _answer_refs(answer: str) -> set[tuple[str, int]]:
     return {(doc_id.lower(), int(page)) for doc_id, page in _CITATION_RE.findall(answer or "")}
 
 
+def _citation_label(meta: dict[str, Any], doc_id: str, page: int) -> str:
+    company = str(meta.get("company_id") or meta.get("company") or "").replace("_", " ").strip().title()
+    period = str(meta.get("period") or meta.get("fiscal_year") or "").strip().upper()
+    fy = period if period.startswith("FY") else (f"FY{period}" if period else "")
+    if company and fy:
+        return f"{company} · Annual Report {fy} · PDF page {page}"
+    if company:
+        return f"{company} · PDF page {page}"
+    return f"Document {doc_id[:12]} · PDF page {page}"
+
+
 def _evidence_from_tool_results(tool_results: list[dict[str, Any]]) -> list[EvidenceItem]:
     items: list[EvidenceItem] = []
-    seen: set[tuple[str, int]] = set()
+    seen: set[tuple[str, int, str]] = set()
     for entry in tool_results:
         if not isinstance(entry, dict):
             continue
         result = entry.get("result")
-        hits = result.get("hits") if isinstance(result, dict) else None
-        if not isinstance(hits, list):
-            continue
-        for hit in hits:
+        candidates = []
+        if isinstance(result, dict):
+            hits = result.get("hits")
+            if isinstance(hits, list):
+                candidates.extend(hits)
+            rows = result.get("rows")
+            if isinstance(rows, list):
+                for row in rows:
+                    if not isinstance(row, dict):
+                        continue
+                    for side in ("base", "compare"):
+                        cid = row.get(f"{side}_citation")
+                        page = row.get(f"{side}_page")
+                        doc = row.get(f"{side}_document_id")
+                        if cid and page is not None:
+                            candidates.append({"chunk_id": cid, "document_id": doc, "page": page, "meta": {"company_id": row.get("company_id"), "period": row.get(f"{side}_period_actual") or row.get(f"{side}_period")}})
+        for hit in candidates:
             if not isinstance(hit, dict):
                 continue
-            doc_id = str(hit.get("chunk_id") or hit.get("id") or "")
+            chunk_id = str(hit.get("chunk_id") or hit.get("id") or "")
             meta = hit.get("meta") if isinstance(hit.get("meta"), dict) else {}
+            doc_id = str(hit.get("document_id") or meta.get("document_id") or chunk_id.split(":")[0] or "")
             raw_page = meta.get("page", hit.get("page"))
             try:
                 page = int(raw_page)
@@ -253,7 +279,7 @@ def _evidence_from_tool_results(tool_results: list[dict[str, Any]]) -> list[Evid
                 continue
             if not doc_id:
                 continue
-            key = (doc_id[:12].lower(), page)
+            key = (doc_id[:12].lower(), page, chunk_id)
             if key in seen:
                 continue
             seen.add(key)
@@ -261,19 +287,31 @@ def _evidence_from_tool_results(tool_results: list[dict[str, Any]]) -> list[Evid
                 document_id=doc_id,
                 pdf_page=page,
                 citation=f"[{doc_id[:12]} p.{page}]",
+                citation_label=_citation_label(meta, doc_id, page),
                 text=str(hit.get("text") or "")[:600],
             ))
     return items
 
 
-def _citation_status(answer: str, evidence: list[EvidenceItem]) -> str:
+def _citation_status(answer: str, evidence: list[EvidenceItem], citations: list[str] | None = None, figures: list[dict[str, Any]] | None = None) -> str:
     refs = _answer_refs(answer)
+    # also accept refs from formatted citation list
+    for c in citations or []:
+        refs.update((d.lower(), int(p)) for d, p in _CITATION_RE.findall(str(c)))
     if not refs:
+        # if figures exist but none have both doc+page, not cited
+        figs = [f for f in (figures or []) if isinstance(f, dict)]
+        if figs:
+            all_have = all(f.get("document_id") and f.get("page") is not None for f in figs)
+            return "cited" if all_have else "no_citations"
         return "no_citations"
     available = {(item.document_id[:12].lower(), item.pdf_page) for item in evidence}
     missing = refs - available
     if not missing:
-        return "resolved"
+        figs = [f for f in (figures or []) if isinstance(f, dict)]
+        if figs and not all(f.get("document_id") and f.get("page") is not None for f in figs):
+            return "partially_unresolved"
+        return "cited"
     if len(missing) == len(refs):
         return "unresolved"
     return "partially_unresolved"
@@ -290,6 +328,8 @@ def _build_response(result: QuestionResult) -> AskResponse:
         reason=str(refusal_data.get("reason") or ""),
         escalate=bool(refusal_data.get("escalate")),
     )
+    final_answer = state.get("final_answer") or {}
+    figures = final_answer.get("figures") if isinstance(final_answer, dict) else []
     return AskResponse(
         answer=result.answer,
         citations=list(result.citations),
@@ -297,7 +337,7 @@ def _build_response(result: QuestionResult) -> AskResponse:
         trace=tool_results,
         session_id=result.session_id,
         stopped_reason=str(state.get("stop_reason") or "done"),
-        citation_status=_citation_status(result.answer, evidence),
+        citation_status=_citation_status(result.answer, evidence, result.citations, figures),
         refusal=refusal,
         escalated=bool(state.get("escalated") or refusal.escalate),
         tokens=result.token_count,

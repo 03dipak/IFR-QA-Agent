@@ -1822,6 +1822,7 @@ class AgentGraph:
         ]
         if compare_entries:
             citations = []
+            figures = []
             blocks = []
             for entry in compare_entries:
                 result = entry["result"]
@@ -1849,9 +1850,20 @@ class AgentGraph:
                         f"{name}: {row.get('base_value')}{unit} ({base_period}) -> "
                         f"{row.get('compare_value')}{unit} ({compare_period}), growth {growth_text}{note}{basis}"
                     )
-                    for cid in (row.get("base_citation"), row.get("compare_citation")):
-                        if cid and cid not in citations:
+                    for side in ("base", "compare"):
+                        cid = row.get(f"{side}_citation")
+                        if cid and str(cid) not in citations:
                             citations.append(str(cid))
+                        figures.append({
+                            "company_id": row.get("company_id"),
+                            "label": metric,
+                            "value": row.get(f"{side}_value"),
+                            "unit": row.get("unit"),
+                            "chunk_id": cid,
+                            "document_id": row.get(f"{side}_document_id"),
+                            "page": row.get(f"{side}_page"),
+                            "period": base_period if side == "base" else compare_period,
+                        })
                 if missing_rows:
                     lines.append("Not available: " + ", ".join(str(row.get("company_id")) for row in missing_rows))
                 header = f"{metric} {base_period} to {compare_period}"
@@ -1873,7 +1885,7 @@ class AgentGraph:
                     "answer": answer,
                     "citations": citations,
                     "insufficient_evidence": not bool(rows),
-                    "figures": [],
+                    "figures": figures,
                     "computed_values": [row.get("growth_percent") for row in rows],
                     "company_mismatches": [],
                     "zero_hit_companies_not_stated": [],

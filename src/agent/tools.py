@@ -1123,6 +1123,12 @@ def get_metric(
                     else:
                         value, unit, normalized = _normalize_value_to_crore(value, unit)
             excluded_for_ranking = False
+            doc_id = str(fig.get("document_id") or fig_doc or "").strip() or None
+            page = fig.get("page")
+            try:
+                page = int(page) if page is not None else None
+            except (TypeError, ValueError):
+                page = None
             return {
                 "company_id": company,
                 "display_name": display_name(company),
@@ -1131,6 +1137,8 @@ def get_metric(
                 "value": value,
                 "unit": unit,
                 "citation": fig.get("chunk_id"),
+                "document_id": doc_id,
+                "page": page,
                 "period": fig.get("period") or requested_period,
                 "reporting_basis": fig.get("reporting_basis") or basis_try,
                 "statement_kind": fig.get("statement_kind"),
@@ -1176,6 +1184,8 @@ def get_metric(
                     "value": None,
                     "unit": "percent",
                     "citation": [c for c in (revenue.get("citation"), expenses.get("citation"), finance.get("citation")) if c],
+                    "document_id": revenue.get("document_id") or expenses.get("document_id") or finance.get("document_id"),
+                    "page": revenue.get("page") or expenses.get("page") or finance.get("page"),
                     "period": requested_period,
                     "reporting_basis": revenue.get("reporting_basis"),
                     "statement_kind": revenue.get("statement_kind"),
@@ -1204,6 +1214,8 @@ def get_metric(
                     "value": margin_val,
                     "unit": "percent",
                     "citation": [c for c in (revenue.get("citation"), expenses.get("citation"), finance.get("citation")) if c],
+                    "document_id": revenue.get("document_id") or expenses.get("document_id") or finance.get("document_id"),
+                    "page": revenue.get("page") or expenses.get("page") or finance.get("page"),
                     "period": requested_period,
                     "reporting_basis": revenue.get("reporting_basis"),
                     "statement_kind": revenue.get("statement_kind"),
@@ -1237,6 +1249,8 @@ def get_metric(
                     "value": op_value,
                     "unit": op_unit,
                     "citation": citations,
+                    "document_id": revenue.get("document_id") or expenses.get("document_id") or finance.get("document_id"),
+                    "page": revenue.get("page") or expenses.get("page") or finance.get("page"),
                     "period": requested_period,
                     "reporting_basis": revenue.get("reporting_basis"),
                     "statement_kind": revenue.get("statement_kind"),
@@ -1519,6 +1533,9 @@ def compare_periods(
                 "company_id": company, "display_name": dn, "base_period": base_p, "compare_period": compare_p,
                 "base_value": base_result.get("value"), "compare_value": compare_result.get("value"),
                 "growth_percent": None, "base_citation": base_result.get("citation"), "compare_citation": compare_result.get("citation"),
+                "base_document_id": base_result.get("document_id"), "compare_document_id": compare_result.get("document_id"),
+                "base_page": base_result.get("page"), "compare_page": compare_result.get("page"),
+                "base_period_actual": base_result.get("period"), "compare_period_actual": compare_result.get("period"),
                 "unit": base_result.get("unit") or compare_result.get("unit"), "missing": True,
                 "reporting_basis": base_result.get("reporting_basis") or compare_result.get("reporting_basis"),
                 "note": base_result.get("note") or compare_result.get("note"),
@@ -1534,6 +1551,9 @@ def compare_periods(
             "company_id": company, "display_name": dn, "base_period": base_p, "compare_period": compare_p,
             "base_value": base_result.get("value"), "compare_value": compare_result.get("value"),
             "growth_percent": growth_pct, "base_citation": base_result.get("citation"), "compare_citation": compare_result.get("citation"),
+            "base_document_id": base_result.get("document_id"), "compare_document_id": compare_result.get("document_id"),
+            "base_page": base_result.get("page"), "compare_page": compare_result.get("page"),
+            "base_period_actual": base_result.get("period"), "compare_period_actual": compare_result.get("period"),
             "unit": base_result.get("unit") or compare_result.get("unit"), "missing": False,
             "reporting_basis": base_result.get("reporting_basis") or compare_result.get("reporting_basis"),
             "note": note, "check_extraction": check_extraction,

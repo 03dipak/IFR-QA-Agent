@@ -185,13 +185,22 @@ def render_status(data: dict[str, Any]) -> None:
         st.info("No page citations were returned with this answer.")
 
 
-def render_citations(citations: list[str]) -> None:
-    with st.expander("Citations (chunk id + page)"):
+def _citation_display(citation: str, evidence: list[dict[str, Any]]) -> str:
+    text = str(citation).strip().strip("[]")
+    doc_id, _, page = text.partition(" p.")
+    for item in evidence:
+        c = str(item.get("citation", "")).strip().strip("[]")
+        if c == text and item.get("citation_label"):
+            return str(item["citation_label"])
+    if page:
+        return f"Document {doc_id[:12]} · PDF page {page}"
+    return str(citation)
+
+
+def render_citations(citations: list[str], evidence: list[dict[str, Any]] | None = None) -> None:
+    with st.expander("Citations (source pages)"):
         for citation in citations:
-            text = str(citation).strip().strip("[]")
-            chunk_id, _, page = text.partition(" p.")
-            suffix = f" — page {page}" if page else ""
-            st.markdown(f"- `{chunk_id}`{suffix}")
+            st.markdown(f"- {_citation_display(citation, evidence or [])}")
 
 
 def render_evidence(evidence: list[dict[str, Any]]) -> None:
@@ -228,9 +237,9 @@ def render_answer(data: dict[str, Any]) -> None:
         return
     render_status(data)
     citations = list(data.get("citations") or [])
-    if citations:
-        render_citations(citations)
     evidence = list(data.get("evidence") or [])
+    if citations:
+        render_citations(citations, evidence)
     if evidence:
         with st.expander("Supporting evidence (document IDs + PDF pages)"):
             render_evidence(evidence)
