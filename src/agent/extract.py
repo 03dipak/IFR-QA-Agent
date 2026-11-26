@@ -47,30 +47,45 @@ def _to_decimal(value: str | None) -> Decimal | None:
         return None
 
 
+_UNIT_MAP = {"mn": "million", "million": "million", "millions": "million",
+             "crore": "crore", "crores": "crore", "cr": "crore",
+             "lakh": "lakh", "lakhs": "lakh", "lac": "lakh", "lacs": "lakh"}
+
+def _normalize_unit_token(raw: str) -> str:
+    value = str(raw or "").strip()
+    if not value:
+        return ""
+    lower = value.lower()
+    if not re.search(r"(million|crore|cr\b|lakh|lac\b|mn\b)", lower):
+        return ""
+    # garbled currency symbols (H, I, f, ~, (, {, etc.) are common OCR artifacts
+    m = re.search(r"\b(millions?|crores?|cr|lakhs?|lacs?|mn)\b", lower)
+    if not m:
+        return ""
+    return f"Rs. in {_UNIT_MAP.get(m.group(1), m.group(1))}"
+
+
 def _unit(chunk: dict[str, Any], *, allow_inferred: bool = False) -> str:
     text = str(chunk.get("text") or "")
-    for line in text.splitlines():
-        if line.strip().lower().startswith("unit:"):
-            value = line.split(":", 1)[1].strip()
-            if value and re.search(r"(million|crore|lakh|mn|\bcr\b|lacs?)", value.lower()):
-                return value
     meta = _meta(chunk)
-    for key in ("unit", "currency_unit", "amount_unit"):
-        value = str(meta.get(key) or "").strip()
-        if value and re.search(r"(million|crore|lakh|mn|\bcr\b|lacs?)", value.lower()):
-            return value
+    # same-table/chunk unit line or meta
+    for source in [text] + [str(meta.get(k) or "") for k in ("unit", "currency_unit", "amount_unit")]:
+        for line in source.splitlines():
+            candidate = line.split(":", 1)[1].strip() if ":" in line and line.strip().lower().startswith("unit") else line.strip()
+            norm = _normalize_unit_token(candidate)
+            if norm:
+                return norm
     lower = text.lower()
     header_patterns = [
-        r"all amounts?\s*(?:are\s*)?in\s*[^\n,]{0,30}?(million|crore|cr|lakhs?|lacs?)\b",
-        r"(?:rs\.?|inr|₹|`|i|c)\s*(?:in\s*)?(million|crore|cr|lakhs?|lacs?)\b",
-        r"\bin\s*[^\n,]{0,30}?(million|crore|cr|lakhs?|lacs?)\b",
+        r"all amounts?\s*(?:are\s*)?in\s*[^\n,]{0,40}?\b(millions?|crores?|cr|lakhs?|lacs?)\b",
+        r"[^\w\s]?\s*(?:rs\.?|inr|₹|`|[a-z])\s*(?:in\s*)?\b(millions?|crores?|cr|lakhs?|lacs?)\b",
+        r"\bin\s*[^\n,]{0,40}?\b(millions?|crores?|cr|lakhs?|lacs?)\b",
+        r"\b(millions?|crores?|lakhs?|lacs?)\b(?=\s*(?:except|unless|$|\)))",
     ]
     for pat in header_patterns:
         m = re.search(pat, lower)
         if m:
-            token = m.group(1)
-            mapping = {"mn":"million","million":"million","crore":"crore","cr":"crore","lakh":"lakh","lakhs":"lakh","lac":"lakh","lacs":"lakh"}
-            return f"Rs. in {mapping.get(token, token)}"
+            return f"Rs. in {_UNIT_MAP.get(m.group(1), m.group(1))}"
     if allow_inferred:
         return "unit not stated in source"
     return "unit not stated in source"

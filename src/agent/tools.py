@@ -1049,10 +1049,16 @@ def get_metric(
                         continue
                     if fig_doc and c_doc and c_doc != fig_doc:
                         continue
+                    # inherit only from same table or its page header (same doc+period+page)
+                    c_page = chunk_meta.get("page")
+                    fig_page = fig.get("page")
+                    if fig_page is not None and c_page is not None and str(c_page) != str(fig_page):
+                        continue
                     candidate_unit = _chunk_unit(chunk)
                     if candidate_unit and candidate_unit != "unit not stated in source":
                         inferred_unit = candidate_unit
                         fig["unit"] = candidate_unit
+                        fig["unit_source"] = "same_page_header"
                         break
             note = "banking revenue proxy" if banking_proxy else None
             label_used = str(fig.get("label") or label)
@@ -1070,14 +1076,12 @@ def get_metric(
                 unit = "percent"
             else:
                 if str(unit or "").strip() in {"", "unit not stated in source"}:
-                    unit = "Rs. crore"
-                    value = fig.get("value")
-                    normalized = True
-                    note = ((note + "; ") if note else "") + "unit assumed Rs. crore"
+                    unit = "unit not stated in source"
+                    note = ((note + "; ") if note else "") + "unit not stated in source"
                 else:
                     value, unit, normalized = _normalize_value_to_crore(value, unit)
                     if inferred_unit and normalized:
-                        note = ((note + "; ") if note else "") + "unit inferred"
+                        note = ((note + "; ") if note else "") + "unit inherited from page header"
             excluded_for_ranking = False
             return {
                 "company_id": company,
