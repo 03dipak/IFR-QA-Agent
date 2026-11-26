@@ -542,6 +542,7 @@ def _hybrid_hits(
     positions: np.ndarray,
     scores: np.ndarray,
     match_info: dict[str, Any],
+    filtered: bool = False,
 ) -> list[dict[str, Any]]:
     from rank_bm25 import BM25Okapi
 
@@ -556,12 +557,16 @@ def _hybrid_hits(
     scores = scores[order]
     chunks = [index._chunk_at(int(position)) for position in positions]
     texts = [str(chunk.get("text") or "") for chunk in chunks]
-    bm25 = BM25Okapi([cleaned_tokens(text) for text in texts])
-    bm25_scores = bm25.get_scores(cleaned_tokens(query))
-    bm25_order = np.argsort(-bm25_scores, kind="stable")
+    tokenized = [cleaned_tokens(text) for text in texts]
     dense_rank = [(rank, float(score)) for rank, score in enumerate(scores)]
-    bm25_rank = [(int(position), float(bm25_scores[position]))
-                 for position in bm25_order]
+    if any(tokenized):
+        bm25 = BM25Okapi(tokenized)
+        bm25_scores = bm25.get_scores(cleaned_tokens(query))
+        bm25_order = np.argsort(-bm25_scores, kind="stable")
+        bm25_rank = [(int(position), float(bm25_scores[position]))
+                     for position in bm25_order]
+    else:
+        bm25_rank = list(dense_rank)
     pool = _rrf([bm25_rank, dense_rank], _hybrid_rrf_k(), _hybrid_pool_k())
     pool = pool[:_rerank_pool_k()]
     model = _rerank_model()
@@ -587,7 +592,7 @@ def _hybrid_hits(
         chunk = dict(chunks[int(local_position)])
         chunk["chunk_id"] = str(index.ids[int(positions[int(local_position)])])
         chunk["score"] = float(score)
-        chunk["match_mode"] = "hybrid"
+        chunk["match_mode"] = "exact" if filtered else "hybrid"
         hits.append(chunk)
     return hits
 
@@ -631,7 +636,7 @@ def _search_once(
                 np.asarray(index.embeddings) @ np.asarray(q, dtype=np.float32)
             ).reshape(-1)
             positions = np.arange(scores.size)
-            return _hybrid_hits(query, k, index, positions, scores, match_info), match_info
+            return _hybrid_hits(query, k, index, positions, scores, match_info, filtered=False), match_info
         return [dict(hit) for hit in index.search(query, k)], match_info
 
     q = query_vector if query_vector is not None else _query_embedding(query, index, path)
@@ -653,7 +658,7 @@ def _search_once(
     embeddings = np.asarray(index.embeddings)[positions]
     scores = np.asarray(embeddings @ q).reshape(-1)
     if hybrid:
-        return _hybrid_hits(query, k, index, positions, scores, match_info), match_info
+        return _hybrid_hits(query, k, index, positions, scores, match_info, filtered=True), match_info
     if scores.size > k:
         top = np.argpartition(-scores, k - 1)[:k]
         top = top[np.argsort(-scores[top])]
