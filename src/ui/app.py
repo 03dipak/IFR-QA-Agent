@@ -11,9 +11,13 @@ from typing import Any
 
 import httpx
 import streamlit as st
+from dotenv import load_dotenv
+
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+load_dotenv(PROJECT_ROOT / ".env", override=False)
 
 DEFAULT_BACKEND_URL = os.environ.get(
-    "BACKEND_URL", os.environ.get("FASTAPI_URL", "http://localhost:8000")
+    "BACKEND_URL", os.environ.get("FASTAPI_URL", "http://127.0.0.1:8000")
 )
 REQUEST_TIMEOUT = float(os.environ.get("BACKEND_TIMEOUT_SECONDS", "300"))
 SCENARIOS_PATH = Path(__file__).resolve().parents[2] / "docs" / "DEMO_SCENARIOS.md"
@@ -146,13 +150,14 @@ def stream_answer(backend_url: str, question: str, timeout: float) -> Iterator[d
 
 
 @st.cache_data(ttl=1)
-def backend_health(backend_url: str) -> str:
+def backend_ready(backend_url: str) -> tuple[bool, str]:
     try:
-        response = httpx.get(f"{backend_url.rstrip('/')}/health", timeout=3)
+        response = httpx.get(f"{backend_url.rstrip('/')}/ready", timeout=3)
         response.raise_for_status()
-        return str(response.json().get("status") or "starting")
-    except Exception:
-        return "unavailable"
+        data = response.json()
+        return bool(data.get("ready")), str(data.get("error") or "")
+    except Exception as exc:
+        return False, f"cannot reach backend: {type(exc).__name__}: {exc}"
 
 
 def is_conversational(data: dict[str, Any]) -> bool:
@@ -289,12 +294,11 @@ def main() -> None:
         st.session_state["progress"] = initial_progress()
         st.session_state["chat_input"] = ""
         st.rerun()
-    health_status = backend_health(backend_url)
-    backend_ready = health_status == "ok"
-    if backend_ready:
+    ready, ready_error = backend_ready(backend_url)
+    if ready:
         st.sidebar.success("Backend online")
     else:
-        st.sidebar.info("Backend warming up, please wait")
+        st.sidebar.info(f"Backend not ready: {ready_error or 'warming up'}")
 
     messages: list[dict[str, Any]] = st.session_state["messages"]
     pending = str(st.session_state["pending_question"])
@@ -304,7 +308,7 @@ def main() -> None:
             st.markdown("Ask a question about Indian company annual reports.")
 
     question = st.chat_input("Ask an annual-report question...", key="chat_input",
-                             disabled=bool(pending) or not backend_ready)
+                             disabled=bool(pending) or not ready)
     if question and question.strip() and not pending:
         add_user_message(st.session_state["messages"], question.strip())
         st.session_state["pending_question"] = question.strip()

@@ -7,7 +7,7 @@ from dataclasses import dataclass
 from typing import Any
 
 APPROVAL_REQUIRED = "Requires human approval"
-ALLOWED_TOOLS = frozenset({"search_index", "get_chunk", "calculator"})
+ALLOWED_TOOLS = frozenset({"search_index", "get_chunk", "calculator", "list_companies", "get_metric", "rank_values", "rank_companies", "sum_values", "compare_periods"})
 _PII_MASK = "[REDACTED]"
 
 
@@ -152,6 +152,18 @@ def validate_tool_args(tool_name: str, args: dict) -> bool:
     if tool_name == "calculator":
         expression = args.get("expression")
         return isinstance(expression, str) and 0 < len(expression.strip()) <= 200
+    if tool_name == "list_companies":
+        return True
+    if tool_name == "get_metric":
+        return isinstance(args.get("company"), str) and bool(str(args.get("company")).strip()) and isinstance(args.get("metric"), str) and bool(str(args.get("metric")).strip())
+    if tool_name == "rank_values":
+        return isinstance(args.get("items"), list)
+    if tool_name == "rank_companies":
+        return isinstance(args.get("metric"), str) and bool(str(args.get("metric")).strip())
+    if tool_name == "sum_values":
+        return isinstance(args.get("items"), list)
+    if tool_name == "compare_periods":
+        return isinstance(args.get("metric"), str) and bool(str(args.get("metric")).strip()) and isinstance(args.get("base_period"), str) and isinstance(args.get("compare_period"), str)
     return False
 
 

@@ -8,17 +8,21 @@ _NUMBER = re.compile(r"(?<![\w.])-?\d[\d,]*(?:\.\d+)?")
 _GROUPED_NUMBER = re.compile(
     r"^-?(?:\d{1,2}(?:,\d{2})*,\d{3}|\d{1,3}(?:,\d{3})+)(?:\.\d+)?$"
 )
-_LEADING_NUMBERING = re.compile(r"^\s*(?:\([ivx]+\)|\d+[.)])\s*", re.I)
+_LEADING_NUMBERING = re.compile(r"^\s*(?:\([ivx]+\)|\d+[.)]|\d+(?=\s+[A-Za-z]))\s*", re.I)
 _TRAILING_SUFFIX = re.compile(r"\s*\((?:1\s*\+\s*2\s*\+\s*3|[a-z]|net)\)\s*$", re.I)
 _NOTE_REF = re.compile(r"\s+\d+\s*$")
 def _label_aliases(label: str) -> tuple[str, ...]:
-    if normalize_label(label).startswith("net profit"):
+    normalized = normalize_label(label)
+    if normalized == "revenue from operations":
+        return ("Total revenue", "Total income", "Net sales")
+    if normalized.startswith("net profit"):
         return ("Profit for the year",)
     return ()
 
 
 def normalize_label(label: str) -> str:
     text = str(label or "").strip().lower()
+    text = re.sub(r"(?<![a-z0-9])([a-z])\s+(?=[a-z]{3,})", r"\1", text)
     text = _LEADING_NUMBERING.sub("", text)
     while True:
         updated = _TRAILING_SUFFIX.sub("", text)
@@ -43,29 +47,32 @@ def _to_decimal(value: str | None) -> Decimal | None:
         return None
 
 
-def _unit(chunk: dict[str, Any]) -> str:
+def _unit(chunk: dict[str, Any], *, allow_inferred: bool = False) -> str:
     text = str(chunk.get("text") or "")
     for line in text.splitlines():
         if line.strip().lower().startswith("unit:"):
             value = line.split(":", 1)[1].strip()
-            if value:
+            if value and re.search(r"(million|crore|lakh|mn|\bcr\b|lacs?)", value.lower()):
                 return value
     meta = _meta(chunk)
     for key in ("unit", "currency_unit", "amount_unit"):
         value = str(meta.get(key) or "").strip()
-        if value:
+        if value and re.search(r"(million|crore|lakh|mn|\bcr\b|lacs?)", value.lower()):
             return value
     lower = text.lower()
-    currency = r"(?:rs\.?|inr|₹|`|inr)"
-    m = re.search(r"all amounts? in\s*(?:%s)?\s*(mn|million|crore|cr|lakhs?|lacs?)" % currency, lower)
-    if not m:
-        m = re.search(r"%s\s*(?:in\s*)?(mn|million|crore|cr|lakhs?|lacs?)" % currency, lower)
-    if not m:
-        m = re.search(r"\bin\s*(mn|million|crore|cr|lakhs?|lacs?)\b", lower)
-    if m:
-        token = m.group(1)
-        mapping = {"mn":"million","million":"million","crore":"crore","cr":"crore","lakh":"lakh","lakhs":"lakh","lac":"lakh","lacs":"lakh"}
-        return f"Rs. in {mapping.get(token, token)}"
+    header_patterns = [
+        r"all amounts?\s*(?:are\s*)?in\s*[^\n,]{0,30}?(million|crore|cr|lakhs?|lacs?)\b",
+        r"(?:rs\.?|inr|₹|`|i|c)\s*(?:in\s*)?(million|crore|cr|lakhs?|lacs?)\b",
+        r"\bin\s*[^\n,]{0,30}?(million|crore|cr|lakhs?|lacs?)\b",
+    ]
+    for pat in header_patterns:
+        m = re.search(pat, lower)
+        if m:
+            token = m.group(1)
+            mapping = {"mn":"million","million":"million","crore":"crore","cr":"crore","lakh":"lakh","lakhs":"lakh","lac":"lakh","lacs":"lakh"}
+            return f"Rs. in {mapping.get(token, token)}"
+    if allow_inferred:
+        return "unit not stated in source"
     return "unit not stated in source"
 
 
@@ -218,23 +225,46 @@ def _balance_face_chunk(chunk: dict[str, Any]) -> bool:
     )
 
 
+def _statement_header(chunk: dict[str, Any]) -> str:
+    text = str(chunk.get("text") or "")
+    for line in text.splitlines()[:8]:
+        l = line.lower()
+        if "profit and loss" in l or "income statement" in l or "statement of profit" in l:
+            return line.strip()
+    return ""
+
+
+def _is_pl_statement(chunk: dict[str, Any]) -> bool:
+    text = str(chunk.get("text") or "").lower()
+    sk = _statement_kind(chunk)
+    if sk == "income_statement":
+        return True
+    if "profit and loss" in text or "statement of profit and loss" in text or "income statement" in text:
+        return True
+    return False
+
+
 def _candidates_for(
     chunks: list[dict[str, Any]],
     company: str,
     label: str,
     *,
     include_multi_year: bool = False,
+    require_pl: bool = False,
 ) -> list[dict[str, Any]]:
     wanted = normalize_label(label)
     out: list[dict[str, Any]] = []
     for chunk in chunks:
         if _company(chunk).lower() != company.lower():
             continue
+        if require_pl and not _is_pl_statement(chunk):
+            continue
         text = str(chunk.get("text") or "")
         equity_statement = "balance as at" in text.lower()
         chunk_basis = _basis(chunk)
         chunk_kind = _statement_kind(chunk)
         chunk_period = _period(chunk)
+        statement_header = _statement_header(chunk)
         chosen: dict[str, Any] | None = None
         for line in _iter_lines(text):
             body = line.split(":", 1)[0]
@@ -283,6 +313,8 @@ def _candidates_for(
                 "period": chunk_period,
                 "reporting_basis": chunk_basis,
                 "statement_kind": chunk_kind,
+                "statement_header": statement_header,
+                "raw_row": body.strip(),
             }
         if chosen is not None:
             out.append(chosen)
@@ -392,13 +424,14 @@ def extract_figures(
         request_period = str(request.get("period") or period or "").strip() or None
         if not company or not label:
             continue
+        require_pl = normalize_label(label) in {"total expenses", "total costs", "revenue from operations", "total revenue", "total income", "net sales", "profit for the year", "profit after tax", "net profit"}
         candidates = _filter_candidates(
-            _candidates_for(ordered, company, label), request_period, basis, statement_kind
+            _candidates_for(ordered, company, label, require_pl=require_pl), request_period, basis, statement_kind
         )
         label_equivalence = False
         if not candidates and normalize_label(label) == "total assets":
             candidates = _filter_candidates(
-                _candidates_for(ordered, company, "Total equity and liabilities"),
+                _candidates_for(ordered, company, "Total equity and liabilities", require_pl=False),
                 request_period,
                 basis,
                 statement_kind,
@@ -407,14 +440,14 @@ def extract_figures(
         if not candidates:
             for alias in _label_aliases(label):
                 candidates = _filter_candidates(
-                    _candidates_for(ordered, company, alias), request_period, basis, statement_kind
+                    _candidates_for(ordered, company, alias, require_pl=require_pl), request_period, basis, statement_kind
                 )
                 if candidates:
                     label_equivalence = True
                     break
         if not candidates:
             candidates = _filter_candidates(
-                _candidates_for(ordered, company, label, include_multi_year=True),
+                _candidates_for(ordered, company, label, include_multi_year=True, require_pl=require_pl),
                 request_period,
                 basis,
                 statement_kind,

@@ -19,6 +19,7 @@ import yaml
 from requests.exceptions import Timeout as RequestsTimeout
 
 DEFAULT_INDEX_PATH = "results/full_index_v2/bge_small"
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
 _META_CACHE_DIR = Path(os.environ.get("AGENT_META_CACHE_DIR", "data/cache"))
 LOGGER = logging.getLogger(__name__)
 _RERANK_MODEL: Any | None = None
@@ -109,7 +110,10 @@ def _index_path() -> Path:
 
 
 def _resolved_index_path(path: str | None = None) -> str:
-    return str((Path(path) if path else _index_path()).resolve())
+    candidate = Path(path) if path else _index_path()
+    if not candidate.is_absolute():
+        candidate = PROJECT_ROOT / candidate
+    return str(candidate.resolve())
 
 
 @lru_cache(maxsize=4)
@@ -123,10 +127,13 @@ def _open_index(path: str | None = None) -> Any:
     return _open_index_resolved(_resolved_index_path(path))
 
 
-def warm_index() -> None:
-    path = _resolved_index_path()
-    index = _open_index(path)
-    _meta_rows_for_index(index, path)
+def warm_index() -> str:
+    index = _open_index()
+    return str(getattr(index, "backend", "faiss"))
+
+
+def index_backend(path: str | None = None) -> str:
+    return str(getattr(_open_index(path), "backend", "faiss"))
 
 
 @lru_cache(maxsize=4)
@@ -162,12 +169,17 @@ def company_ids(path: str | None = None) -> tuple[str, ...]:
     if ids_path.is_file():
         payload = json.loads(ids_path.read_text(encoding="utf-8"))
         values = payload.get("company_ids") if isinstance(payload, dict) else payload
-        if isinstance(values, (list, tuple)):
+        if isinstance(values, (list, tuple)) and any(isinstance(v, str) and v.strip() for v in values):
             return tuple(sorted(
                 value.strip() for value in values
                 if isinstance(value, str) and value.strip()
             ))
     ids = _ids_from_meta(_index_meta(resolved_path))
+    if not ids:
+        try:
+            ids = {row[0] for row in _meta_rows_resolved(resolved_path) if row and row[0]}
+        except Exception:
+            ids = set()
     ids_path.write_text(
         json.dumps({"company_ids": sorted(ids)}, indent=2), encoding="utf-8"
     )
@@ -375,6 +387,8 @@ def detect_companies(
     aliases: dict[str, set[str]] = _unique_alias_map(available)
     for token in query_tokens:
         if len(token) < 3 or token in _COMPANY_STOPWORDS:
+            continue
+        if re.fullmatch(r"fy\d{4}", token) or re.fullmatch(r"\d{4}", token):
             continue
         targets = [
             company
@@ -755,3 +769,720 @@ def calculator(expression: str) -> int | float:
         raise ValueError("expression too long")
     tree = ast.parse(_normalize_calculator_expression(expression), mode="eval")
     return _eval_arithmetic(tree)
+
+
+_MANUFACTURING_SECTORS = {
+    "automobile", "metals & mining", "electricals", "capital goods", "cement",
+}
+
+_BANKING_SECTORS = {"banking"}
+
+
+def _normalize_period_filter(period: Any = None, fiscal_year: Any = None) -> str | None:
+    value = str(period if period is not None else (fiscal_year if fiscal_year is not None else "")).strip()
+    if not value:
+        return None
+    if re.fullmatch(r"\d{4}", value):
+        return "FY" + value
+    return value
+
+
+@lru_cache(maxsize=1)
+def _sector_map() -> dict[str, str]:
+    path = PROJECT_ROOT / "data" / "company_sectors.json"
+    if not path.is_file():
+        return {}
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+    except Exception:
+        return {}
+    out: dict[str, str] = {}
+    for company, value in payload.items():
+        if isinstance(value, dict):
+            sector = value.get("sector")
+        else:
+            sector = value
+        if sector is not None:
+            out[str(company).strip()] = str(sector).strip()
+    return out
+
+
+@lru_cache(maxsize=1)
+def _display_name_map() -> dict[str, str]:
+    path = PROJECT_ROOT / "data" / "company_sectors.json"
+    if not path.is_file():
+        return {}
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+    except Exception:
+        return {}
+    out: dict[str, str] = {}
+    for company, value in payload.items():
+        if isinstance(value, dict):
+            name = value.get("display_name") or company
+        else:
+            name = company
+        out[str(company).strip()] = str(name).strip()
+    return out
+
+
+def display_name(company_id: str) -> str:
+    cid = str(company_id or "").strip()
+    return _display_name_map().get(cid, cid.replace("_", " ").strip())
+
+
+@lru_cache(maxsize=1)
+def _sector_label_map() -> dict[str, dict[str, list[str]]]:
+    path = PROJECT_ROOT / "config" / "sector_label_map.json"
+    if not path.is_file():
+        return {}
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+    except Exception:
+        return {}
+    if not isinstance(payload, dict):
+        return {}
+    out: dict[str, dict[str, list[str]]] = {}
+    for sector, metrics in payload.items():
+        if not isinstance(metrics, dict):
+            continue
+        norm_sector = str(sector).strip().lower()
+        out[norm_sector] = {}
+        for metric, labels in metrics.items():
+            if isinstance(labels, list):
+                out[norm_sector][str(metric).strip().lower()] = [str(l) for l in labels if str(l).strip()]
+    return out
+
+
+def _company_periods(path: str | None = None) -> dict[str, list[str]]:
+    resolved = _resolved_index_path(path)
+    rows = _meta_rows_resolved(resolved)
+    out: dict[str, set[str]] = {}
+    for row in rows:
+        company = str(row[0]).strip()
+        period = str(row[1]).strip()
+        if company:
+            out.setdefault(company, set()).add(period)
+    return {company: sorted(values) for company, values in out.items()}
+
+
+def list_companies(
+    sector: str | None = None,
+    fiscal_year: Any = None,
+    period: str | None = None,
+) -> dict[str, Any]:
+    requested_period = _normalize_period_filter(period, fiscal_year)
+    sector_filter = str(sector or "").strip()
+    sectors = _sector_map()
+    periods_by_company = _company_periods()
+    companies: list[str] = []
+    for company in company_ids():
+        company_sector = sectors.get(company)
+        if sector_filter:
+            if company_sector is None:
+                continue
+            if sector_filter.lower() in {"manufacturing", "manufacturing sector"}:
+                if company_sector.lower() not in _MANUFACTURING_SECTORS:
+                    continue
+            elif company_sector.lower() != sector_filter.lower():
+                continue
+        if requested_period:
+            available = periods_by_company.get(company, [])
+            if not any(
+                str(item).strip().upper() == requested_period.upper()
+                or str(item).strip().upper().startswith(requested_period.upper())
+                for item in available
+            ):
+                continue
+        companies.append(company)
+    return {
+        "companies": sorted(companies),
+        "count": len(companies),
+        "sector": sector_filter or None,
+        "period": requested_period,
+        "assumed_sectors": True,
+    }
+
+
+_METRIC_LABELS: dict[str, list[str]] = {
+    "revenue": ["Revenue from operations", "Total revenue", "Total income", "Net sales"],
+    "revenue from operations": ["Revenue from operations", "Total revenue from operations", "Total revenue", "Total income", "Net sales"],
+    "total revenue": ["Total revenue", "Revenue from operations", "Total income", "Net sales"],
+    "total income": ["Total income", "Total revenue", "Revenue from operations", "Net sales"],
+    "net sales": ["Net sales", "Revenue from operations", "Total revenue", "Total income"],
+    "operating expenses": ["Total expenses", "Total costs"],
+    "total expenses": ["Total expenses", "Total costs"],
+    "total costs": ["Total costs", "Total expenses"],
+    "net profit": ["Net profit", "Profit after tax", "Profit for the year"],
+    "profit after tax": ["Profit after tax", "Net profit", "Profit for the year"],
+    "profit for the year": ["Profit for the year", "Profit after tax", "Net profit"],
+}
+
+
+def get_metric(
+    company: str,
+    metric: str,
+    fiscal_year: Any = None,
+    period: str | None = None,
+    statement_kind: str | None = None,
+    reporting_basis: str | None = None,
+) -> dict[str, Any]:
+    from decimal import Decimal, InvalidOperation
+
+    from .extract import extract_figures, normalize_label
+
+    company = str(company or "").strip()
+    requested_period = _normalize_period_filter(period, fiscal_year)
+    normalized_metric = normalize_label(metric)
+    sector = _sector_map().get(company, "")
+    sector_labels = _sector_label_map().get(str(sector).lower(), {})
+    banking_proxy = bool(sector and str(sector).lower() in _BANKING_SECTORS and normalized_metric in {
+        "revenue", "revenue from operations", "total revenue", "total income", "net sales"
+    })
+    labels = sector_labels.get(normalized_metric) or _METRIC_LABELS.get(normalized_metric, [str(metric).strip()])
+    chunks: list[dict[str, Any]] = []
+    seen: set[str] = set()
+    for label in labels:
+        result = search_index(
+            label,
+            k=20,
+            company=company,
+            period=requested_period,
+            statement_kind=statement_kind,
+            reporting_basis=reporting_basis,
+        )
+        for hit in result.get("hits", []) if isinstance(result, dict) else []:
+            chunk_id = str(hit.get("chunk_id") or hit.get("id") or "").strip()
+            if not chunk_id or chunk_id in seen:
+                continue
+            seen.add(chunk_id)
+            chunks.append({
+                "chunk_id": chunk_id,
+                "text": str(hit.get("text") or hit.get("content") or ""),
+                "meta": hit.get("meta") or {},
+            })
+    # prefer consolidated, then standalone, same doc/period/basis
+    basis_candidates = [reporting_basis] if reporting_basis else ["consolidated", "standalone", None]
+    for basis_try in basis_candidates:
+        for label in labels:
+            extracted = extract_figures(
+                [{"company_id": company, "label": label}],
+                chunks,
+                basis=basis_try,
+                statement_kind=statement_kind,
+                period=requested_period,
+            )
+            figures = extracted.get("figures") or []
+            if not figures:
+                continue
+            fig = figures[0]
+            from .extract import _unit as _chunk_unit
+            inferred_unit = None
+            fig_doc = str((fig.get("chunk_id") or "")).split(":")[0]
+            fig_period = str(fig.get("period") or requested_period or "").strip().lower()
+            if str(fig.get("unit") or "").strip() in {"", "unit not stated in source"}:
+                for chunk in chunks:
+                    chunk_meta = chunk.get("meta") or {}
+                    if str(chunk_meta.get("company_id") or "").strip() != str(fig.get("company_id") or company).strip():
+                        continue
+                    c_doc = str(chunk_meta.get("document_id") or (str(chunk.get("chunk_id") or "").split(":")[0])).strip()
+                    c_period = str(chunk_meta.get("period") or "").strip().lower()
+                    if fig_period and c_period and c_period != fig_period:
+                        continue
+                    if fig_doc and c_doc and c_doc != fig_doc:
+                        continue
+                    candidate_unit = _chunk_unit(chunk)
+                    if candidate_unit and candidate_unit != "unit not stated in source":
+                        inferred_unit = candidate_unit
+                        fig["unit"] = candidate_unit
+                        break
+            note = "banking revenue proxy" if banking_proxy else None
+            label_used = str(fig.get("label") or label)
+            value = fig.get("value")
+            unit = fig.get("unit")
+            normalized = False
+            is_margin = "margin" in normalized_metric
+            is_growth = "growth" in normalized_metric
+            if is_margin or is_growth:
+                try:
+                    val = float(str(value).replace(",", ""))
+                    value = round(val, 2)
+                except Exception:
+                    pass
+                unit = "percent"
+            else:
+                value, unit, normalized = _normalize_value_to_crore(value, unit)
+                if inferred_unit and normalized:
+                    note = ((note + "; ") if note else "") + "unit inferred"
+            if str(unit or "").strip() in {"", "unit not stated in source"} and not (is_margin or is_growth):
+                return {
+                    "company_id": company,
+                    "display_name": display_name(company),
+                    "metric": metric,
+                    "label_used": label_used,
+                    "value": fig.get("value"),
+                    "unit": "unit not stated in source",
+                    "citation": fig.get("chunk_id"),
+                    "period": fig.get("period") or requested_period,
+                    "reporting_basis": fig.get("reporting_basis"),
+                    "statement_kind": fig.get("statement_kind"),
+                    "missing": True,
+                    "derived": False,
+                    "note": "excluded: unit not stated and cannot infer",
+                    "sector": sector,
+                    "normalized_to_crore": False,
+                }
+            excluded_for_ranking = bool(inferred_unit)
+            if excluded_for_ranking:
+                note = ((note + "; ") if note else "") + "unit inferred; excluded from ranking/sums"
+            return {
+                "company_id": company,
+                "display_name": display_name(company),
+                "metric": metric,
+                "label_used": label_used,
+                "value": value,
+                "unit": unit,
+                "citation": fig.get("chunk_id"),
+                "period": fig.get("period") or requested_period,
+                "reporting_basis": fig.get("reporting_basis") or basis_try,
+                "statement_kind": fig.get("statement_kind"),
+                "missing": False,
+                "derived": False,
+                "note": note,
+                "sector": sector,
+                "normalized_to_crore": normalized,
+                "excluded_for_ranking": excluded_for_ranking,
+                "statement_header": fig.get("statement_header"),
+                "raw_row": fig.get("raw_row"),
+            }
+    if normalized_metric in {"operating profit", "operating profit margin"}:
+        margin_requested = normalized_metric == "operating profit margin"
+        # enforce same basis: try consolidated then standalone
+        chosen_basis = reporting_basis
+        revenue = expenses = finance = None
+        for basis_try in ([reporting_basis] if reporting_basis else ["consolidated", "standalone"]):
+            r = get_metric(company, "Revenue from operations", fiscal_year=fiscal_year, period=period, statement_kind=statement_kind, reporting_basis=basis_try)
+            e = get_metric(company, "Total expenses", fiscal_year=fiscal_year, period=period, statement_kind=statement_kind, reporting_basis=basis_try)
+            f = get_metric(company, "Finance cost", fiscal_year=fiscal_year, period=period, statement_kind=statement_kind, reporting_basis=basis_try)
+            if not r.get("missing") and not e.get("missing") and not f.get("missing"):
+                # same period/doc basis already ensured by same basis_try; ensure same period
+                if str(r.get("period","")).upper()==str(e.get("period","")).upper()==str(f.get("period","")).upper():
+                    revenue, expenses, finance, chosen_basis = r, e, f, basis_try
+                    break
+        if revenue is None:
+            # fallback individual to report missing
+            revenue = get_metric(company, "Revenue from operations", fiscal_year=fiscal_year, period=period, statement_kind=statement_kind, reporting_basis=reporting_basis)
+            expenses = get_metric(company, "Total expenses", fiscal_year=fiscal_year, period=period, statement_kind=statement_kind, reporting_basis=reporting_basis)
+            finance = get_metric(company, "Finance cost", fiscal_year=fiscal_year, period=period, statement_kind=statement_kind, reporting_basis=reporting_basis)
+        if margin_requested:
+            rev_missing = revenue.get("missing")
+            exp_label = str(expenses.get("label_used") or "").lower()
+            exp_missing = expenses.get("missing") or (normalize_label(exp_label) not in {"total expenses", "total costs"})
+            fin_missing = finance.get("missing")
+            if rev_missing or exp_missing or fin_missing:
+                return {
+                    "company_id": company,
+                    "display_name": display_name(company),
+                    "metric": metric,
+                    "label_used": "Derived: (Revenue - Total expenses + Finance costs) / Revenue",
+                    "value": None,
+                    "unit": "percent",
+                    "citation": [c for c in (revenue.get("citation"), expenses.get("citation"), finance.get("citation")) if c],
+                    "period": requested_period,
+                    "reporting_basis": revenue.get("reporting_basis"),
+                    "statement_kind": revenue.get("statement_kind"),
+                    "missing": True,
+                    "derived": True,
+                    "formula": "(Revenue - Total expenses + Finance costs) / Revenue * 100",
+                    "note": (("standalone; " if str(chosen_basis).lower()=="standalone" else "") + ("not available: missing margin inputs" if (rev_missing or fin_missing or expenses.get("missing")) else "not available: expense label not full total")).strip(),
+                    "sector": sector,
+                    "components": {
+                        "revenue": {"value": revenue.get("value"), "unit": revenue.get("unit"), "missing": rev_missing},
+                        "total_expenses": {"value": expenses.get("value"), "unit": expenses.get("unit"), "missing": exp_missing, "label_used": expenses.get("label_used")},
+                        "finance_costs": {"value": finance.get("value"), "unit": finance.get("unit"), "missing": fin_missing},
+                    },
+                }
+            try:
+                rev = Decimal(str(revenue.get("value")).replace(",", ""))
+                exp = Decimal(str(expenses.get("value")).replace(",", ""))
+                fin = Decimal(str(finance.get("value")).replace(",", ""))
+                margin = (rev - exp + fin) / rev * 100 if rev != 0 else None
+                margin_val = round(float(margin), 2) if margin is not None else None
+                out_of_range = margin_val is not None and (margin_val < -50 or margin_val > 60)
+                return {
+                    "company_id": company,
+                    "metric": metric,
+                    "label_used": "Derived: (Revenue - Total expenses + Finance costs) / Revenue",
+                    "value": margin_val,
+                    "unit": "percent",
+                    "citation": [c for c in (revenue.get("citation"), expenses.get("citation"), finance.get("citation")) if c],
+                    "period": requested_period,
+                    "reporting_basis": revenue.get("reporting_basis"),
+                    "statement_kind": revenue.get("statement_kind"),
+                    "missing": bool(out_of_range or margin_val is None),
+                    "derived": True,
+                    "formula": "(Revenue - Total expenses + Finance costs) / Revenue * 100",
+                    "note": (("standalone; " if str(chosen_basis).lower()=="standalone" else "") + ("check extraction" if out_of_range else "")).strip("; ") or None,
+                    "sector": sector,
+                    "components": {
+                        "revenue": {"value": revenue.get("value"), "unit": revenue.get("unit"), "missing": False, "label_used": revenue.get("label_used")},
+                        "total_expenses": {"value": expenses.get("value"), "unit": expenses.get("unit"), "missing": False, "label_used": expenses.get("label_used"), "citation": expenses.get("citation")},
+                        "finance_costs": {"value": finance.get("value"), "unit": finance.get("unit"), "missing": False, "label_used": finance.get("label_used")},
+                    },
+                }
+            except (InvalidOperation, ValueError):
+                pass
+        if not expenses.get("missing") and not revenue.get("missing"):
+            try:
+                rev = Decimal(str(revenue.get("value")).replace(",", ""))
+                exp = Decimal(str(expenses.get("value")).replace(",", ""))
+                fin = Decimal("0")
+                if not finance.get("missing"):
+                    fin = Decimal(str(finance.get("value")).replace(",", ""))
+                operating = rev - exp + fin
+                citations = [c for c in (revenue.get("citation"), expenses.get("citation"), finance.get("citation")) if c]
+                op_value, op_unit, op_norm = _normalize_value_to_crore(str(operating), revenue.get("unit"))
+                return {
+                    "company_id": company,
+                    "metric": metric,
+                    "label_used": "Derived: Revenue from operations - Total expenses + Finance cost",
+                    "value": op_value,
+                    "unit": op_unit,
+                    "citation": citations,
+                    "period": requested_period,
+                    "reporting_basis": revenue.get("reporting_basis"),
+                    "statement_kind": revenue.get("statement_kind"),
+                    "missing": False,
+                    "derived": True,
+                    "formula": "Revenue from operations - Total expenses + Finance cost",
+                    "note": "banking revenue proxy" if banking_proxy else None,
+                    "sector": sector,
+                    "normalized_to_crore": op_norm,
+                }
+            except (InvalidOperation, ValueError):
+                pass
+    return {
+        "company_id": company,
+        "display_name": display_name(company),
+        "metric": metric,
+        "label_used": None,
+        "value": None,
+        "unit": None,
+        "citation": None,
+        "period": requested_period,
+        "reporting_basis": None,
+        "statement_kind": None,
+        "missing": True,
+        "derived": False,
+        "note": "banking revenue proxy" if banking_proxy else None,
+        "sector": sector,
+    }
+
+
+def compute_growth(current: Any, prior: Any) -> dict[str, Any]:
+    from decimal import Decimal, InvalidOperation
+
+    try:
+        cur = Decimal(str(current).replace(",", ""))
+        prev = Decimal(str(prior).replace(",", ""))
+        if prev == 0:
+            return {"growth_percent": None, "error": "prior is zero"}
+        return {"growth_percent": round(float((cur - prev) / prev * 100), 2)}
+    except (InvalidOperation, ValueError):
+        return {"growth_percent": None, "error": "invalid number"}
+
+
+def compute_margin(numerator: Any, denominator: Any) -> dict[str, Any]:
+    from decimal import Decimal, InvalidOperation
+
+    try:
+        num = Decimal(str(numerator).replace(",", ""))
+        den = Decimal(str(denominator).replace(",", ""))
+        if den == 0:
+            return {"margin_percent": None, "error": "denominator is zero"}
+        return {"margin_percent": round(float(num / den * 100), 2)}
+    except (InvalidOperation, ValueError):
+        return {"margin_percent": None, "error": "invalid number"}
+
+
+def rank_values(items: Any) -> dict[str, Any]:
+    if not isinstance(items, list):
+        return {"ranked": [], "error": "items must be a list"}
+    ranked = sorted(
+        [item for item in items if isinstance(item, dict)],
+        key=lambda item: _to_decimal_safe(item.get("value")),
+        reverse=True,
+    )
+    return {"ranked": ranked, "count": len(ranked)}
+
+
+
+def rank_companies(
+    metric: str,
+    fiscal_year: Any = None,
+    period: str | None = None,
+    sector: str | None = None,
+    n: int = 10,
+    statement_kind: str | None = None,
+    reporting_basis: str | None = None,
+) -> dict[str, Any]:
+    from decimal import Decimal
+
+    requested_period = _normalize_period_filter(period, fiscal_year)
+    companies_info = list_companies(sector=sector, fiscal_year=fiscal_year, period=requested_period)
+    companies = companies_info.get("companies", [])
+    # dedupe by canonical company id
+    seen_companies=set()
+    deduped=[]
+    for c in companies:
+        canon=str(c).strip()
+        key=canon.lower()
+        if key in seen_companies:
+            continue
+        seen_companies.add(key)
+        deduped.append(canon)
+    companies=deduped
+    rows: list[dict[str, Any]] = []
+    missing: list[str] = []
+    for company in companies:
+        result = get_metric(
+            company, metric, fiscal_year=fiscal_year, period=requested_period,
+            statement_kind=statement_kind, reporting_basis=reporting_basis,
+        )
+        if result.get("missing"):
+            missing.append(company)
+            continue
+        actual_period = str(result.get("period") or "").strip().upper()
+        if actual_period and requested_period and actual_period != str(requested_period).upper():
+            missing.append(company)
+            continue
+        unit = str(result.get("unit") or "")
+        lower_unit = unit.lower()
+        try:
+            raw_value = Decimal(str(result.get("value")).replace(",", ""))
+        except Exception:
+            raw_value = None
+        converted = None
+        is_margin = "margin" in str(metric).lower() or lower_unit == "percent"
+        if raw_value is not None and is_margin:
+            converted = raw_value
+        elif raw_value is not None:
+            if result.get("normalized_to_crore") or lower_unit == "rs. crore":
+                converted = raw_value
+            elif "million" in lower_unit or lower_unit.endswith("mn") or " mn" in lower_unit:
+                converted = raw_value / Decimal("10")
+            elif "lakh" in lower_unit or "lac" in lower_unit:
+                converted = raw_value / Decimal("100")
+            elif "crore" in lower_unit or " cr" in lower_unit or lower_unit.endswith("cr"):
+                converted = raw_value
+            elif "unit not stated" in lower_unit or not lower_unit:
+                if raw_value >= Decimal("1000000000"):
+                    converted = raw_value / Decimal("10000000")
+        if converted is None or result.get("excluded_for_ranking"):
+            missing.append(company)
+            continue
+        row = {
+            "company_id": str(result.get("company_id") or company).strip(),
+            "display_name": str(result.get("display_name") or display_name(company)),
+            "value": result.get("value"),
+            "unit": unit,
+            "value_in_crore": str(converted),
+            "citation": result.get("citation"),
+            "period": result.get("period"),
+            "reporting_basis": result.get("reporting_basis"),
+            "derived": result.get("derived", False),
+            "label_used": result.get("label_used"),
+            "note": result.get("note"),
+            "sector": result.get("sector") or _sector_map().get(company),
+        }
+        if isinstance(result.get("components"), dict):
+            row["components"] = result["components"]
+        if "revenue" in str(metric).lower() and not str(row.get("sector") or "").strip():
+            missing.append(company)
+            continue
+        # 5x YoY revenue sanity guard
+        if "revenue" in str(metric).lower() and "growth" not in str(metric).lower() and "margin" not in str(metric).lower():
+            try:
+                py = None
+                if requested_period and re.fullmatch(r"FY\d{4}", str(requested_period)):
+                    py = "FY" + str(int(str(requested_period)[2:]) - 1)
+                if py:
+                    prev = get_metric(company, metric, period=py, statement_kind=statement_kind, reporting_basis=reporting_basis)
+                    if not prev.get("missing"):
+                        prev_val, _, prev_norm = _normalize_value_to_crore(prev.get("value"), prev.get("unit"))
+                        if prev_norm:
+                            cur = Decimal(str(row.get("value_in_crore")))
+                            prv = Decimal(str(prev_val))
+                            if prv != 0 and (cur / prv > 5 or prv / cur > 5):
+                                missing.append(company)
+                                row["note"] = "check units"
+                                continue
+            except Exception:
+                pass
+        if "revenue" in str(metric).lower() and not str(row.get("sector") or "").strip():
+            missing.append(company)
+            continue
+        rows.append(row)
+    def _key(item: dict[str, Any]) -> Decimal:
+        for field in ("value_in_crore", "value"):
+            try:
+                return Decimal(str(item.get(field)).replace(",", ""))
+            except Exception:
+                continue
+        return Decimal("-Infinity")
+    rows.sort(key=_key, reverse=True)
+    limit = max(1, int(n or 10))
+    return {
+        "metric": metric,
+        "period": requested_period,
+        "sector": sector,
+        "ranked": rows[:limit],
+        "count_covered": len(companies),
+        "count_found": len(rows),
+        "missing": missing,
+        "truncated": len(rows) > limit,
+    }
+
+
+def sum_values(items: Any) -> dict[str, Any]:
+    from decimal import Decimal, InvalidOperation
+
+    total = Decimal("0")
+    count = 0
+    for item in items if isinstance(items, list) else []:
+        try:
+            total += Decimal(str(item.get("value") if isinstance(item, dict) else item).replace(",", ""))
+            count += 1
+        except (InvalidOperation, ValueError):
+            continue
+    return {"total": str(total), "count": count}
+
+def detect_sector(text: str) -> str | None:
+    lower = str(text or "").lower()
+    aliases = {
+        "healthcare": "Pharmaceuticals",
+        "pharmaceutical": "Pharmaceuticals",
+        "pharma": "Pharmaceuticals",
+        "automobile": "Automobile",
+        "auto": "Automobile",
+        "energy": "Energy",
+        "banking": "Banking",
+        "manufacturing": "Manufacturing",
+        "chemicals": "Chemicals",
+        "chemical": "Chemicals",
+        "fmcg": "FMCG",
+        "it": "IT",
+        "telecom": "Telecom",
+        "insurance": "Insurance",
+    }
+    for alias, sector in sorted(aliases.items(), key=lambda item: len(item[0]), reverse=True):
+        if re.search(r"\b" + re.escape(alias) + r"\b", lower):
+            return sector
+    for sector in sorted(set(_sector_map().values()), key=len, reverse=True):
+        if re.search(r"\b" + re.escape(sector.lower()) + r"\b", lower):
+            return sector
+    return None
+
+
+
+def compare_periods(
+    metric: str,
+    base_period: str,
+    compare_period: str,
+    sector: str | None = None,
+    fiscal_year: Any = None,
+    statement_kind: str | None = None,
+    reporting_basis: str | None = None,
+) -> dict[str, Any]:
+    base_p = _normalize_period_filter(base_period, fiscal_year)
+    compare_p = _normalize_period_filter(compare_period, fiscal_year)
+    companies_info = list_companies(sector=sector, period=compare_p)
+    # include companies present in either period
+    base_companies = set(list_companies(sector=sector, period=base_p).get("companies", []))
+    compare_companies = set(companies_info.get("companies", []))
+    companies = sorted(base_companies | compare_companies)
+    rows: list[dict[str, Any]] = []
+    for company in companies:
+        base_result = get_metric(
+            company, metric, period=base_p, statement_kind=statement_kind,
+            reporting_basis=reporting_basis,
+        )
+        compare_result = get_metric(
+            company, metric, period=compare_p, statement_kind=statement_kind,
+            reporting_basis=reporting_basis,
+        )
+        base_period_actual = str(base_result.get("period") or "").strip().upper()
+        compare_period_actual = str(compare_result.get("period") or "").strip().upper()
+        if (base_result.get("missing") or compare_result.get("missing")
+                or base_period_actual not in {"", str(base_p).upper()}
+                or compare_period_actual not in {"", str(compare_p).upper()}):
+            # normalize FY prefix
+            if base_period_actual and base_period_actual != str(base_p).upper():
+                base_result["missing"] = True
+            if compare_period_actual and compare_period_actual != str(compare_p).upper():
+                compare_result["missing"] = True
+        dn = display_name(company)
+        if base_result.get("missing") or compare_result.get("missing"):
+            rows.append({
+                "company_id": company, "display_name": dn, "base_period": base_p, "compare_period": compare_p,
+                "base_value": base_result.get("value"), "compare_value": compare_result.get("value"),
+                "growth_percent": None, "base_citation": base_result.get("citation"), "compare_citation": compare_result.get("citation"),
+                "unit": base_result.get("unit") or compare_result.get("unit"), "missing": True,
+                "reporting_basis": base_result.get("reporting_basis") or compare_result.get("reporting_basis"),
+                "note": base_result.get("note") or compare_result.get("note"),
+            })
+            continue
+        growth = compute_growth(compare_result.get("value"), base_result.get("value"))
+        rows.append({
+            "company_id": company, "display_name": dn, "base_period": base_p, "compare_period": compare_p,
+            "base_value": base_result.get("value"), "compare_value": compare_result.get("value"),
+            "growth_percent": growth.get("growth_percent"), "base_citation": base_result.get("citation"), "compare_citation": compare_result.get("citation"),
+            "unit": base_result.get("unit") or compare_result.get("unit"), "missing": False,
+            "reporting_basis": base_result.get("reporting_basis") or compare_result.get("reporting_basis"),
+            "note": base_result.get("note") or compare_result.get("note"),
+        })
+    return {
+        "metric": metric,
+        "base_period": base_p,
+        "compare_period": compare_p,
+        "sector": sector,
+        "rows": rows,
+        "count_covered": len(companies),
+        "count_found": sum(1 for row in rows if not row.get("missing")),
+    }
+
+
+
+def _normalize_value_to_crore(value: Any, unit: Any) -> tuple[Any, str | None, bool]:
+    from decimal import Decimal, InvalidOperation
+    raw_unit = str(unit or "").strip()
+    lower = raw_unit.lower()
+    try:
+        dec = Decimal(str(value).replace(",", ""))
+    except (InvalidOperation, ValueError):
+        return value, raw_unit or None, False
+    converted = None
+    if any(t in lower for t in ["million", "millions", "mn"]):
+        converted = dec / Decimal("10")
+    elif any(t in lower for t in ["lakh", "lakhs", "lac", "lacs"]):
+        converted = dec / Decimal("100")
+    elif "crore" in lower or re.search(r"\bcr\.?\b", lower):
+        converted = dec
+    elif raw_unit in {"", "unit not stated in source"}:
+        # do not guess here; infer_unit_from_document may handle
+        return value, raw_unit or None, False
+    if converted is None:
+        return value, raw_unit or None, False
+    out = format(converted.normalize(), "f")
+    if "." in out:
+        out = out.rstrip("0").rstrip(".")
+    return out, "Rs. crore", True
+
+
+def _to_decimal_safe(value: Any) -> Any:
+    from decimal import Decimal, InvalidOperation
+
+    try:
+        return Decimal(str(value).replace(",", ""))
+    except (InvalidOperation, ValueError):
+        return Decimal("-Infinity")

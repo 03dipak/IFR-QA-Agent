@@ -16,12 +16,16 @@ import uuid
 from pathlib import Path
 from typing import Any
 
+from dotenv import load_dotenv
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import StreamingResponse
 from pydantic import BaseModel, Field
 
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+load_dotenv(PROJECT_ROOT / ".env", override=False)
+
 from src.agent.service import QuestionResult, run_question
-from src.agent.tools import warm_index, warm_query_embedding
+from src.agent.tools import index_backend, warm_index, warm_query_embedding
 
 app = FastAPI(title="IFR-QA Agent API", version="0.1.0")
 log = logging.getLogger("ifr.api")
@@ -33,7 +37,12 @@ if not log.handlers:
 
 _CITATION_RE = re.compile(r"\[([0-9a-f]{12}) p\.(\d+)\]", re.I)
 _INDEX_PATH = Path(os.environ.get("AGENT_INDEX_PATH", "results/full_index_v2/bge_small"))
-_INDEX_FILES = ("chunks.jsonl", "chunk_ids.json", "embeddings.npy", "index.faiss", "meta.json")
+if not _INDEX_PATH.is_absolute():
+    _INDEX_PATH = PROJECT_ROOT / _INDEX_PATH
+_INDEX_FILES = (
+    "chunks.jsonl", "chunk_ids.json", "embeddings.npy", "chunk_offsets.json",
+    "meta.json",
+)
 
 
 def _index_status() -> tuple[str, str]:
@@ -47,8 +56,12 @@ def _index_status() -> tuple[str, str]:
 
 _INDEX_STATUS, _INDEX_REASON = _index_status()
 _INDEX_HEALTHY = _INDEX_STATUS == "healthy"
-HEALTH_STATUS = "starting" if _INDEX_HEALTHY else "degraded"
-HEALTH_REASON = "" if _INDEX_HEALTHY else _INDEX_REASON
+HEALTH_STATUS = "ok"
+HEALTH_REASON = _INDEX_REASON
+READY = False
+READY_ERROR = ""
+WARMUP_ERROR = ""
+INDEX_BACKEND = "unknown"
 _WARM_TASK: asyncio.Task[None] | None = None
 _CONVERSATIONAL_PATTERNS = {
     "goodbye": re.compile(
@@ -142,32 +155,41 @@ async def warm_index_at_startup() -> None:
     global _WARM_TASK
     if not _INDEX_HEALTHY:
         log.error("index check failed: %s", _INDEX_REASON)
-        return
 
     def run_warmup() -> None:
-        global HEALTH_STATUS, HEALTH_REASON
+        global READY, READY_ERROR, WARMUP_ERROR, INDEX_BACKEND
         try:
-            warm_index()
+            backend = warm_index()
+            INDEX_BACKEND = str(backend or "unknown")
+            READY = True
+            READY_ERROR = ""
+        except Exception as exc:
+            READY = False
+            READY_ERROR = f"index load failed: {type(exc).__name__}: {exc}"
+            log.exception("index warmup failed")
+        try:
             warm_query_embedding()
         except Exception as exc:
-            log.exception("index warmup failed")
-            HEALTH_STATUS = "degraded"
-            HEALTH_REASON = f"warmup failed: {type(exc).__name__}"
-            return
-        HEALTH_STATUS = "ok"
-        HEALTH_REASON = ""
+            WARMUP_ERROR = f"query embedding warmup failed: {type(exc).__name__}: {exc}"
+            log.warning("query embedding warmup failed: %s", exc)
 
     _WARM_TASK = asyncio.create_task(asyncio.to_thread(run_warmup))
 
 
 @app.get("/health")
 async def health():
-    """Health check endpoint."""
-    if HEALTH_STATUS != "ok":
-        if HEALTH_REASON:
-            return {"status": HEALTH_STATUS, "reason": HEALTH_REASON}
-        return {"status": HEALTH_STATUS}
-    return {"status": "ok"}
+    """Cheap process health endpoint; use /ready for index readiness."""
+    return {"status": HEALTH_STATUS, "ready": READY, "backend": INDEX_BACKEND}
+
+
+@app.get("/ready")
+async def readiness():
+    """Index readiness endpoint."""
+    detail: dict[str, Any] = {"ready": READY, "backend": INDEX_BACKEND}
+    error = READY_ERROR or WARMUP_ERROR
+    if error:
+        detail["error"] = error
+    return detail
 
 
 @app.get("/corpus")

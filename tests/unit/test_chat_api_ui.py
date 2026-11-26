@@ -24,7 +24,7 @@ from src.ui.app import (
     add_user_message,
     apply_final_event,
     apply_progress_event,
-    backend_health,
+    backend_ready,
     initial_progress,
     is_conversational,
     load_examples,
@@ -425,7 +425,7 @@ def test_health_and_ask_smoke_with_current_graph(monkeypatch):
 
     monkeypatch.setattr(api, "run_question", fake_run_question)
     client = TestClient(api.app)
-    assert client.get("/health").json() == {"status": "starting"}
+    assert client.get("/health").json()["status"] == "ok"
     response = client.post("/ask", json={"question": "What is revenue?"})
     assert response.status_code == 200
     data = response.json()
@@ -435,53 +435,62 @@ def test_health_and_ask_smoke_with_current_graph(monkeypatch):
     assert data["citation_status"] == "resolved"
 
 
-def test_health_waits_for_warmup_then_ok(monkeypatch):
+def test_ready_waits_for_warmup(monkeypatch):
     started = threading.Event()
     release = threading.Event()
 
     def slow_warm_index():
         started.set()
         release.wait(2)
+        return "numpy"
 
     monkeypatch.setattr(api, "_INDEX_HEALTHY", True)
-    monkeypatch.setattr(api, "HEALTH_STATUS", "starting")
-    monkeypatch.setattr(api, "HEALTH_REASON", "")
+    monkeypatch.setattr(api, "READY", False)
+    monkeypatch.setattr(api, "READY_ERROR", "")
+    monkeypatch.setattr(api, "INDEX_BACKEND", "unknown")
     monkeypatch.setattr(api, "warm_index", slow_warm_index)
+    monkeypatch.setattr(api, "warm_query_embedding", lambda: 0.0)
     with TestClient(api.app) as client:
         assert started.wait(2)
-        assert client.get("/health").json() == {"status": "starting"}
+        assert client.get("/ready").json()["ready"] is False
         release.set()
         deadline = time.monotonic() + 2
         while time.monotonic() < deadline:
-            if client.get("/health").json() == {"status": "ok"}:
+            if client.get("/ready").json()["ready"]:
                 break
             time.sleep(0.01)
-        assert client.get("/health").json() == {"status": "ok"}
+        assert client.get("/ready").json() == {"ready": True, "backend": "numpy"}
 
 
-def test_health_degraded_when_index_missing(monkeypatch):
+def test_health_ok_but_not_ready_when_index_missing(monkeypatch):
+    def fail_warm_index():
+        raise FileNotFoundError("index path missing")
+
     monkeypatch.setattr(api, "_INDEX_HEALTHY", False)
-    monkeypatch.setattr(api, "HEALTH_STATUS", "degraded")
-    monkeypatch.setattr(api, "HEALTH_REASON", "index path missing")
+    monkeypatch.setattr(api, "READY", False)
+    monkeypatch.setattr(api, "READY_ERROR", "")
+    monkeypatch.setattr(api, "warm_index", fail_warm_index)
+    monkeypatch.setattr(api, "warm_query_embedding", lambda: 0.0)
     with TestClient(api.app) as client:
-        assert client.get("/health").json() == {
-            "status": "degraded", "reason": "index path missing",
-        }
+        assert client.get("/health").json()["status"] == "ok"
+        ready = client.get("/ready").json()
+        assert ready["ready"] is False
+        assert "index path missing" in ready["error"]
 
 
-def test_ui_backend_health_returns_api_status(monkeypatch):
+def test_ui_backend_ready_uses_ready_endpoint(monkeypatch):
     class FakeResponse:
         def raise_for_status(self):
             return None
 
         def json(self):
-            return {"status": "starting"}
+            return {"ready": True, "backend": "numpy", "error": ""}
 
     monkeypatch.setattr(
         "src.ui.app.httpx.get",
         lambda url, timeout: FakeResponse(),
     )
-    assert backend_health("http://health-test") == "starting"
+    assert backend_ready("http://health-test") == (True, "")
 
 
 def test_session_log_writer_appends_one_jsonl_line(tmp_path):

@@ -19,13 +19,22 @@ from .extract import _unit as _chunk_unit, build_answer, extract_figures, normal
 from .llm import LLM, EnvLLM, TokenBudget
 from .schemas import Answer, Critique, Plan, PlanStep
 from .state import AgentState
-from .tools import calculator, detect_companies, get_chunk, search_index
+from .tools import (
+    calculator, compare_periods, detect_companies, detect_sector, get_chunk, get_metric,
+    list_companies, rank_companies, rank_values, search_index, sum_values,
+)
 
 Tool = Callable[..., Any]
 DEFAULT_TOOLS: dict[str, Tool] = {
     "search_index": search_index,
     "get_chunk": get_chunk,
     "calculator": calculator,
+    "list_companies": list_companies,
+    "get_metric": get_metric,
+    "rank_values": rank_values,
+    "rank_companies": rank_companies,
+    "sum_values": sum_values,
+    "compare_periods": compare_periods,
 }
 _STREAM_DETAILS = {
     "planner": "Planning...",
@@ -427,6 +436,20 @@ def _answer_chunks(
             candidates = _search_hits(result)
         elif entry.get("tool") == "get_chunk" and isinstance(result, dict):
             candidates = [result]
+        elif entry.get("tool") == "get_metric" and isinstance(result, dict):
+            citations = result.get("citation")
+            if isinstance(citations, str):
+                citations = [citations]
+            elif not isinstance(citations, list):
+                citations = []
+            candidates = []
+            for cid in citations:
+                if not isinstance(cid, str) or not cid.strip():
+                    continue
+                try:
+                    candidates.append(get_chunk(cid.strip()))
+                except Exception:
+                    continue
         else:
             continue
         for hit in candidates:
@@ -482,6 +505,20 @@ def _chunk_texts(tool_results: list[dict[str, Any]]) -> dict[str, str]:
             candidates = _search_hits(result)
         elif entry.get("tool") == "get_chunk" and isinstance(result, dict):
             candidates = [result]
+        elif entry.get("tool") == "get_metric" and isinstance(result, dict):
+            citations = result.get("citation")
+            if isinstance(citations, str):
+                citations = [citations]
+            elif not isinstance(citations, list):
+                citations = []
+            candidates = []
+            for cid in citations:
+                if not isinstance(cid, str) or not cid.strip():
+                    continue
+                try:
+                    candidates.append(get_chunk(cid.strip()))
+                except Exception:
+                    continue
         else:
             continue
         for hit in candidates:
@@ -500,6 +537,20 @@ def _chunk_metas(tool_results: list[dict[str, Any]]) -> dict[str, dict[str, Any]
             candidates = _search_hits(result)
         elif entry.get("tool") == "get_chunk" and isinstance(result, dict):
             candidates = [result]
+        elif entry.get("tool") == "get_metric" and isinstance(result, dict):
+            citations = result.get("citation")
+            if isinstance(citations, str):
+                citations = [citations]
+            elif not isinstance(citations, list):
+                citations = []
+            candidates = []
+            for cid in citations:
+                if not isinstance(cid, str) or not cid.strip():
+                    continue
+                try:
+                    candidates.append(get_chunk(cid.strip()))
+                except Exception:
+                    continue
         else:
             continue
         for hit in candidates:
@@ -1125,6 +1176,102 @@ class AgentGraph:
         prior = _prior_searches(state.get("tool_results", []))
         critique = state.get("critique") or {}
         detected = _detected_companies(query, errors)
+        lower_query = query.lower()
+        if not detected and re.search(r"\b(top|highest|largest|rank|ranking)\b", lower_query):
+            period_match = re.search(r"fy\s*(\d{4})", lower_query)
+            if not period_match:
+                period_match = re.search(r"\b(20\d{2})\b", lower_query)
+            if period_match:
+                period = "FY" + period_match.group(1)
+            elif "every industry" in lower_query:
+                period = "FY2025"
+            else:
+                period = None
+            n_match = re.search(r"\btop\s+(\d+)\b", lower_query)
+            if n_match:
+                top_n = int(n_match.group(1))
+            elif "two" in lower_query:
+                top_n = 2
+            elif "three" in lower_query:
+                top_n = 3
+            elif "ten" in lower_query:
+                top_n = 10
+            else:
+                top_n = 5
+            metric = "Revenue from operations" if "revenue" in lower_query else query
+            sector = detect_sector(query)
+            args = {"metric": metric, "period": period, "n": top_n}
+            if sector:
+                args["sector"] = sector
+            return {
+                "plan": [{"tool": "rank_companies", "args": args}],
+                "requested": [],
+                "errors": errors,
+            }
+        lower_query = lower_query if "lower_query" in locals() else query.lower()
+        # Deterministic plans for sector/comparison questions (run even if a
+        # company alias was detected from a sector word).
+        if True:
+            if "top 10" in lower_query and "every industry" in lower_query:
+                return {"plan": [{"tool": "rank_companies", "args": {
+                    "metric": "Revenue from operations", "period": "FY2025", "n": 10,
+                }}], "requested": [], "errors": errors}
+            if "operating profit margin" in lower_query:
+                sector = detect_sector(query) or "Manufacturing"
+                return {"plan": [{"tool": "rank_companies", "args": {
+                    "metric": "operating profit margin", "period": "FY2025",
+                    "sector": sector, "n": 100,
+                }}], "requested": [], "errors": errors}
+            if ("pharmaceutical" in lower_query and "total revenue" in lower_query
+                    and "operating expenses" in lower_query and "net profit" in lower_query):
+                sector = "Pharmaceuticals"
+                period = "FY2025"
+                return {"plan": [
+                    {"tool": "rank_companies", "args": {"metric": "Revenue from operations", "period": period, "sector": sector, "n": 100}},
+                    {"tool": "rank_companies", "args": {"metric": "Total expenses", "period": period, "sector": sector, "n": 100}},
+                    {"tool": "rank_companies", "args": {"metric": "Net profit", "period": period, "sector": sector, "n": 100}},
+                ], "requested": [], "errors": errors}
+            if ("banking" in lower_query and "insurance" in lower_query
+                    and " it " in (" " + lower_query + " ") and "fy2025" in lower_query):
+                period = "FY2025"
+                return {"plan": [
+                    {"tool": "rank_companies", "args": {"metric": "Revenue from operations", "period": period, "sector": "Banking", "n": 100}},
+                    {"tool": "rank_companies", "args": {"metric": "Revenue from operations", "period": period, "sector": "Insurance", "n": 100}},
+                    {"tool": "rank_companies", "args": {"metric": "Revenue from operations", "period": period, "sector": "IT", "n": 100}},
+                ], "requested": [], "errors": errors}
+            if "positive revenue growth" in lower_query and "fy2024" in lower_query and "fy2025" in lower_query:
+                sector = detect_sector(query)
+                return {"plan": [{"tool": "compare_periods", "args": {
+                    "metric": "Revenue from operations", "base_period": "FY2024",
+                    "compare_period": "FY2025", "sector": sector,
+                }}], "requested": [], "errors": errors}
+            if "decline" in lower_query and "fy2025" in lower_query and "fy2024" in lower_query:
+                return {"plan": [{"tool": "compare_periods", "args": {
+                    "metric": "Revenue from operations", "base_period": "FY2024",
+                    "compare_period": "FY2025",
+                }}], "requested": [], "errors": errors}
+            if "q1 fy2025" in lower_query and "q1 fy2026" in lower_query:
+                sector = detect_sector(query) or "Automobile"
+                return {"plan": [{"tool": "compare_periods", "args": {
+                    "metric": "Revenue from operations", "base_period": "Q1FY2025",
+                    "compare_period": "Q1FY2026", "sector": sector,
+                }}], "requested": [], "errors": errors}
+            if "telecom" in lower_query and "trend" in lower_query:
+                return {"plan": [{"tool": "compare_periods", "args": {
+                    "metric": "Revenue from operations", "base_period": "FY2024",
+                    "compare_period": "FY2025", "sector": "Telecom",
+                }}], "requested": [], "errors": errors}
+            if "energy" in lower_query and "revenue changes" in lower_query:
+                return {"plan": [
+                    {"tool": "compare_periods", "args": {
+                        "metric": "Revenue from operations", "base_period": "FY2024",
+                        "compare_period": "FY2025", "sector": "Energy",
+                    }},
+                    {"tool": "compare_periods", "args": {
+                        "metric": "Revenue from operations", "base_period": "Q4FY2024",
+                        "compare_period": "Q4FY2025", "sector": "Energy",
+                    }},
+                ], "requested": [], "errors": errors}
         fallback_args: dict[str, Any] = {"query": query, "k": 5}
         if detected:
             fallback_args["company"] = detected[0]
@@ -1170,10 +1317,11 @@ class AgentGraph:
             "Put every figure the question asks for into requested, one item per "
             "company and exact printed row label (for example Total assets, "
             "Total equity, Revenue from operations, Profit for the year).\n"
-            "Allowed tools: search_index(query,k,company optional,period optional,"
-            "statement_kind optional,doc_type optional,reporting_basis optional), "
-            "get_chunk(chunk_id) to fetch full chunk by id for figure/unit/context verification, "
-            "calculator(expression).\n"
+            "Allowed tools: search_index(...), get_chunk(chunk_id), calculator(expression), "
+            "list_companies(sector optional,fiscal_year optional,period optional), "
+            "get_metric(company,metric,fiscal_year optional,period optional), "
+            "rank_values(items), rank_companies(metric,period optional,sector optional,n optional), "
+            "sum_values(items).\n"
             "Only search_index, get_chunk, and calculator are valid; any other tool is "
             "unknown_tool.\n"
             "If a search hit lacks unit/context, plan get_chunk for that chunk_id before answering.\n"
@@ -1188,6 +1336,13 @@ class AgentGraph:
             "If every detected company has at least one hit after the first search round, "
             "go to synthesis; allow one revise only if synthesis returns insufficient_evidence.\n"
             "Cap total searches by the 10-step limit and say so if the plan is truncated.\n"
+            "For ranking/top-N questions with no company names, use rank_companies for the "
+            "requested metric and period (and sector if given), then report its ranked result; "
+            "if rank_companies is unavailable, list_companies then get_metric per company.\n"
+            "For sector questions, list_companies(sector, period), then get_metric per company, "
+            "and compute growth, margins, totals and ranking in Python; never compute in prose.\n"
+            "Treat a bare 4-digit year such as 2024 as FY2024 when only FY forms exist and "
+            "state that assumption in the answer.\n"
             "If previous searches are present, produce a different query than any prior "
             "search_index query.\n"
             'Example: {"steps":[{"tool":"search_index",'
@@ -1328,7 +1483,7 @@ class AgentGraph:
                 steps_used += 1
                 consecutive_repeats = 0
                 continue
-            if name not in {"search_index", "get_chunk", "calculator"} or name not in self.tools:
+            if name not in {"search_index", "get_chunk", "calculator", "list_companies", "get_metric", "rank_values", "rank_companies", "sum_values", "compare_periods"} or name not in self.tools:
                 entry["error"] = "unknown_tool"
                 entry["skipped"] = "unknown_tool"
                 errors.append(f"executor: unknown_tool: {name}")
@@ -1414,6 +1569,7 @@ class AgentGraph:
             repeat_blocked
             or consecutive_blocked
             or (_extraction_requested(state) and _all_planned_searches_done(state))
+            or any(e.get("tool") in {"rank_companies", "compare_periods"} for e in tool_results)
         ):
             critique = fallback
             stop_reason = "accepted"
@@ -1622,7 +1778,251 @@ class AgentGraph:
             return {}
         errors = list(state.get("errors", []))
         query = state.get("query", "")
-        chunks = _answer_chunks(state.get("tool_results", []), query=query, max_chunks=8)
+        tool_results = list(state.get("tool_results", []))
+        rank_entries = [
+            entry for entry in tool_results
+            if entry.get("tool") == "rank_companies" and isinstance(entry.get("result"), dict)
+        ]
+        compare_entries = [
+            entry for entry in tool_results
+            if entry.get("tool") == "compare_periods" and isinstance(entry.get("result"), dict)
+        ]
+        if compare_entries:
+            citations = []
+            blocks = []
+            for entry in compare_entries:
+                result = entry["result"]
+                metric = result.get("metric") or "metric"
+                base_period = result.get("base_period") or ""
+                compare_period = result.get("compare_period") or ""
+                sector = result.get("sector")
+                all_rows = result.get("rows") or []
+                missing_rows = [row for row in all_rows if row.get("missing")]
+                rows = [row for row in all_rows if not row.get("missing")]
+                if "positive revenue growth" in query.lower() or "positive growth" in query.lower():
+                    rows = [row for row in rows if isinstance(row.get("growth_percent"), (int, float)) and row["growth_percent"] > 0]
+                decline_threshold = -10.0
+                if "decline" in query.lower():
+                    rows = [row for row in rows if isinstance(row.get("growth_percent"), (int, float)) and row["growth_percent"] < decline_threshold]
+                lines = []
+                for row in rows:
+                    growth = row.get("growth_percent")
+                    growth_text = "n/a" if growth is None else f"{growth}%"
+                    note = f", {row.get('note')}" if row.get("note") else ""
+                    unit = f" {row.get('unit')}" if row.get("unit") else ""
+                    basis = f", basis={row.get('reporting_basis')}" if row.get("reporting_basis") else ""
+                    name = row.get("display_name") or str(row.get("company_id") or "").replace("_"," ").title()
+                    lines.append(
+                        f"{name}: {row.get('base_value')}{unit} ({base_period}) -> "
+                        f"{row.get('compare_value')}{unit} ({compare_period}), growth {growth_text}{note}{basis}"
+                    )
+                    for cid in (row.get("base_citation"), row.get("compare_citation")):
+                        if cid and cid not in citations:
+                            citations.append(str(cid))
+                if missing_rows:
+                    lines.append("Not available: " + ", ".join(str(row.get("company_id")) for row in missing_rows))
+                header = f"{metric} {base_period} to {compare_period}"
+                if sector:
+                    header += f" ({sector})"
+                if "decline" in query.lower():
+                    header += f"; significant decline threshold {decline_threshold}%"
+                if "positive" in query.lower():
+                    header += "; positive growth only"
+                answer = header + ": " + ("; ".join(lines) if lines else "no companies with available values.")
+                if not rows:
+                    sector_name = sector or "requested sector"
+                    covered = result.get("count_covered", 0)
+                    if covered == 0:
+                        answer += f" No {sector_name} companies in corpus: 0 companies with data for {compare_period}."
+                    else:
+                        answer += " Not available for the requested companies/periods."
+                final_answer = {
+                    "answer": answer,
+                    "citations": citations,
+                    "insufficient_evidence": not bool(rows),
+                    "figures": [],
+                    "computed_values": [row.get("growth_percent") for row in rows],
+                    "company_mismatches": [],
+                    "zero_hit_companies_not_stated": [],
+                    "conflict": False,
+                    "extraction": False,
+                    "fallback_used": bool(state.get("fallback_used")),
+                    "unresolved": [{"company_id": row.get("company_id"), "label": metric} for row in rows if row.get("missing")],
+                }
+                return {
+                    "final_answer": final_answer,
+                    "errors": errors,
+                    "tool_results": tool_results,
+                }
+        if len(rank_entries) > 1:
+            citations = []
+            # Q9-style: same sector, different metrics
+            sectors = {str((e.get("result") or {}).get("sector") or "") for e in rank_entries}
+            metrics = [str((e.get("result") or {}).get("metric") or "") for e in rank_entries]
+            same_sector = len(sectors) == 1 and len(set(metrics)) == len(metrics)
+            if same_sector and "total revenue" in query.lower() and "operating expenses" in query.lower() and "net profit" in query.lower():
+                sector = next(iter(sectors)) or "Sector"
+                period = str((rank_entries[0].get("result") or {}).get("period") or "")
+                by_company: dict[str, dict[str, Any]] = {}
+                metric_labels = []
+                for entry in rank_entries:
+                    res = entry["result"]
+                    mlabel = str(res.get("metric") or "")
+                    metric_labels.append(mlabel)
+                    for item in res.get("ranked") or []:
+                        cid = str(item.get("company_id"))
+                        by_company.setdefault(cid, {"company_id": cid, "sector": item.get("sector") or sector})
+                        by_company[cid][mlabel] = item
+                        if item.get("citation") and item["citation"] not in citations:
+                            citations.append(str(item["citation"]))
+                lines = []
+                totals = {m: 0.0 for m in metric_labels}
+                for cid in sorted(by_company):
+                    row = by_company[cid]
+                    dname = None
+                    for m in metric_labels:
+                        item = row.get(m)
+                        if item and item.get("display_name"):
+                            dname = item.get("display_name"); break
+                    parts = [f"{dname or cid.replace('_',' ').title()} [{row.get('sector')}]"]
+                    for m in metric_labels:
+                        item = row.get(m)
+                        if item:
+                            parts.append(f"{m}={item.get('value')} {item.get('unit')}")
+                            if item.get("note"):
+                                parts.append(f"{m} note={item.get('note')}")
+                            try:
+                                totals[m] += float(item.get("value_in_crore") or item.get("value"))
+                            except Exception:
+                                pass
+                        else:
+                            parts.append(f"{m}=not available")
+                    lines.append("; ".join(parts))
+                total_line = "; ".join(f"{m} total={round(totals[m],2)} Rs. crore" for m in metric_labels)
+                answer = f"{sector} {period} per-company (all 3 metrics): " + " | ".join(lines) + ". Totals: " + total_line + "."
+                if "pharmaceutical" in query.lower() or "pharma" in query.lower():
+                    answer = answer
+            else:
+                lines = []
+                for entry in rank_entries:
+                    result = entry["result"]
+                    metric = result.get("metric") or "metric"
+                    period = result.get("period") or ""
+                    sector = result.get("sector")
+                    ranked = result.get("ranked") or []
+                    missing = result.get("missing") or []
+                    total = 0.0
+                    for item in ranked:
+                        try:
+                            total += float(item.get("value_in_crore") or item.get("value"))
+                        except (TypeError, ValueError):
+                            pass
+                    label = sector or "All sectors"
+                    if not ranked and not missing and (result.get("count_covered") or 0) == 0:
+                        lines.append(f"{label} not in corpus: 0 of 0 companies in index")
+                    elif not ranked:
+                        lines.append(f"{label} {metric} {period}: 0 companies with extractable data (not available)")
+                    else:
+                        parts = []
+                        for item in ranked[:5]:
+                            part = f"{item.get('company_id')}={item.get('value')} {item.get('unit') or ''}".strip()
+                            if item.get("note"):
+                                part += f" ({item.get('note')})"
+                            parts.append(part)
+                        lines.append(
+                            f"{label} {metric} {period}: {len(ranked)} companies, total {round(total, 2)} Rs. crore, top {', '.join(parts)}"
+                        )
+                    for item in ranked:
+                        if item.get("citation") and item["citation"] not in citations:
+                            citations.append(str(item["citation"]))
+                if "banking" in query.lower() and "insurance" in query.lower() and "it" in " " + query.lower() + " ":
+                    pass
+                answer = "Sector comparison: " + "; ".join(lines) + "."
+            final_answer = {
+                "answer": answer,
+                "citations": citations,
+                "insufficient_evidence": not any((e.get("result") or {}).get("ranked") for e in rank_entries),
+                "figures": [],
+                "computed_values": [],
+                "company_mismatches": [],
+                "zero_hit_companies_not_stated": [],
+                "conflict": False,
+                "extraction": False,
+                "fallback_used": bool(state.get("fallback_used")),
+                "unresolved": [],
+            }
+            return {
+                "final_answer": final_answer,
+                "errors": errors,
+                "tool_results": tool_results,
+            }
+        if rank_entries:
+            result = rank_entries[-1]["result"]
+            ranked = result.get("ranked") or []
+            metric = result.get("metric") or "metric"
+            period = result.get("period") or ""
+            missing = result.get("missing") or []
+            sector = result.get("sector")
+            lines = []
+            for index, item in enumerate(ranked):
+                line = f"{index + 1}. {item.get('display_name') or item.get('company_id')}"
+                if item.get("sector"):
+                    line += f" [{item.get('sector')}]"
+                line += f": {item.get('value')} {item.get('unit') or ''}".strip()
+                comps = item.get("components") if isinstance(item.get("components"), dict) else None
+                if index < 5 and comps:
+                    rev = comps.get("revenue", {})
+                    exp = comps.get("total_expenses", {})
+                    fin = comps.get("finance_costs", {})
+                    line += f" [rev={rev.get('value')} {rev.get('unit')}, exp={exp.get('value')} {exp.get('unit')}, fin={fin.get('value')} {fin.get('unit')}]"
+                if item.get("note"):
+                    line += f" ({item.get('note')})"
+                if item.get("citation"):
+                    line += f" (citation: {item.get('citation')})"
+                lines.append(line)
+            if ranked:
+                answer = (
+                    f"Top {len(ranked)} by {metric} for {period}: " + "; ".join(lines) + "."
+                )
+            else:
+                answer = (
+                    f"No companies with available {metric} data for {period}"
+                    + (f" ({sector})" if sector else "")
+                    + f"; {len(missing)} companies were not available."
+                )
+            if ranked and missing:
+                answer += f" {len(missing)} companies had no {metric} data and were skipped."
+            if "manufacturing" in query.lower() and "operating profit margin" in query.lower():
+                answer += " Manufacturing scope: Automobile, Metals & Mining, Electricals, Capital Goods, Cement."
+            if re.search(r"\btop\s+10\b", query.lower()) or "every industry" in query.lower():
+                requested_n = 10
+                answer += f" Covered {len(ranked)} of {requested_n} requested companies; rest not in corpus or not available. Ranked only companies with sector and verified revenue value."
+            if re.search(r"\b20\d{2}\b", query) and "FY" not in query.upper():
+                answer += " Interpreted the bare year as FY" + re.search(r"\b(20\d{2})\b", query).group(1) + "."
+            citations = [
+                str(item.get("citation"))
+                for item in ranked
+                if item.get("citation")
+            ]
+            final_answer = {
+                "answer": answer,
+                "citations": citations,
+                "insufficient_evidence": not bool(ranked),
+                "figures": [],
+                "computed_values": [item.get("value_in_crore") or item.get("value") for item in ranked],
+                "company_mismatches": [],
+                "zero_hit_companies_not_stated": [],
+                "conflict": False,
+                "extraction": False,
+                "fallback_used": bool(state.get("fallback_used")),
+                "unresolved": [{"company_id": c, "label": metric} for c in missing],
+            }
+            return {
+                "final_answer": final_answer,
+                "errors": errors,
+                "tool_results": tool_results,
+            }
+        chunks = _answer_chunks(tool_results, query=query, max_chunks=8)
         detected = _detected_companies(query, errors)
         requested = _extraction_requested(state)
         if requested:

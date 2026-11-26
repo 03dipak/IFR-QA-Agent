@@ -3,6 +3,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import logging
 import os
 import re
 import time
@@ -10,7 +11,6 @@ import zlib
 from pathlib import Path
 from typing import Any
 
-import faiss
 import numpy as np
 import requests
 
@@ -33,6 +33,7 @@ PROGRESS_NAME = "embedding_progress.json"
 FAILED_DOCS_NAME = "failed_docs.txt"
 FAISS_BATCH = 4096
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
+LOGGER = logging.getLogger(__name__)
 
 
 def _sha256_file(path: Path) -> str:
@@ -578,6 +579,12 @@ def build(out: Path | str = DEFAULT_OUT, variant: str = "page", dim: int = DIM,
                     status="complete" if processed == len(ids) else "running")
 
     embeddings.flush()
+    try:
+        import faiss
+    except (ImportError, OSError) as exc:
+        raise RuntimeError(
+            "faiss is required to build index.faiss; install faiss-cpu or use a prebuilt index"
+        ) from exc
     search_index = faiss.IndexFlatIP(dim)
     for start in range(0, len(ids), FAISS_BATCH):
         block = np.asarray(embeddings[start:start + FAISS_BATCH])
@@ -635,7 +642,6 @@ class FullVectorIndex:
         self.ids = json.loads((self.cache / "chunk_ids.json").read_text(encoding="utf-8"))
         self.embedder = self.meta.get("embedder", "hash384")
         self.embeddings = np.load(self.cache / "embeddings.npy", mmap_mode="r")
-        self.index = faiss.read_index(str(self.cache / "index.faiss"))
         raw_offsets = json.loads(
             (self.cache / "chunk_offsets.json").read_text(encoding="utf-8"))
         if isinstance(raw_offsets, dict):
@@ -644,8 +650,37 @@ class FullVectorIndex:
             self.offsets = raw_offsets
         if self.embeddings.shape[0] != len(self.ids):
             raise ValueError("full index embeddings and chunk ids disagree")
-        if self.index.ntotal != len(self.ids):
-            raise ValueError("FAISS index and chunk ids disagree")
+        self.backend = "faiss"
+        self.index: Any | None = None
+        self.search_matrix: Any | None = None
+        try:
+            import faiss
+            self.index = faiss.read_index(str(self.cache / "index.faiss"))
+            if self.index.ntotal != len(self.ids):
+                raise ValueError("FAISS index and chunk ids disagree")
+        except (ImportError, OSError, RuntimeError, ValueError) as exc:
+            self.backend = "numpy"
+            self.index = None
+            self.search_matrix = self._load_fallback_vectors()
+            LOGGER.warning(
+                "faiss unavailable (%s); using NumPy brute-force inner-product search",
+                exc,
+            )
+
+    def _load_fallback_vectors(self) -> Any:
+        vectors_path = self.cache / "vectors.npy"
+        vector_meta_path = self.cache / "vector_meta.json"
+        if vectors_path.is_file() and vector_meta_path.is_file():
+            vector_meta = json.loads(vector_meta_path.read_text(encoding="utf-8"))
+            vector_ids = vector_meta.get("chunk_ids")
+            if vector_ids is not None and list(vector_ids) != list(self.ids):
+                raise ValueError("vectors.npy chunk ids disagree with chunk_ids.json")
+            matrix = np.load(vectors_path, mmap_mode="r")
+        else:
+            matrix = self.embeddings
+        if matrix.shape != self.embeddings.shape:
+            raise ValueError("vectors.npy shape disagrees with embeddings.npy")
+        return matrix
 
     def _chunk_at(self, position: int) -> dict[str, Any]:
         offset, size = self.offsets[position]
@@ -659,11 +694,22 @@ class FullVectorIndex:
             return []
         query_text = (BGE_QUERY_PREFIX + query) if self.embedder == "bge-small" else query
         vector = embed_text(query_text, int(self.meta["dim"]), self.embedder).reshape(1, -1)
-        scores, positions = self.index.search(vector, min(k, len(self.ids)))
-        return [{"chunk_id": self.ids[int(position)],
-                 "score": float(score),
-                 **self._chunk_at(int(position))}
-                for score, position in zip(scores[0], positions[0]) if position >= 0]
+        limit = min(k, len(self.ids))
+        if self.backend == "faiss":
+            assert self.index is not None
+            scores, positions = self.index.search(vector, limit)
+            pairs = [(float(score), int(position))
+                     for score, position in zip(scores[0], positions[0]) if position >= 0]
+        else:
+            assert self.search_matrix is not None
+            matrix = np.asarray(self.search_matrix, dtype=np.float32)
+            all_scores = matrix @ np.asarray(vector, dtype=np.float32).reshape(-1)
+            positions = np.argsort(-all_scores, kind="stable")[:limit]
+            pairs = [(float(all_scores[int(position)]), int(position)) for position in positions]
+        return [{"chunk_id": self.ids[position],
+                 "score": score,
+                 **self._chunk_at(position)}
+                for score, position in pairs]
 
 
 def main() -> int:

@@ -13,27 +13,26 @@ Four stages (per `architecture-flow-for-mentor-review.txt`):
 
 ## Quickstart
 
-The retrieval index is gitignored. Build it locally from the corpus, or mount an
-existing one at `./results/full_index_v1/page_hash384`.
+The retrieval index is gitignored. Mount an existing v2 BGE index at
+`./results/full_index_v2/bge_small`, or unzip `results/full_index_v2/bge_small.zip`.
 
 ```bash
 git clone <ifr-qa-agent>
 cd IFR-QA-Agent
+uv sync
 
 cp .env.example .env
-# Fill LLM_CHAT_URL, LLM_MODEL, LLM_API_KEY and any CA settings in .env.
+# Fill LLM_CHAT_URL, LLM_MODEL, LLM_API_KEY, EMBEDDINGS_MODEL,
+# EMBEDDINGS_API_KEY, and any CA settings in .env.
 
-# Build the local hash384 index from data/corpus/freeze_v1.json + extracts.
-# Requires uv and the corpus inputs; this can take several minutes.
-./scripts/build_index.sh
+# If you received bge_small.zip, extract it before starting the backend.
+unzip results/full_index_v2/bge_small.zip -d results/full_index_v2
 
-# Local WSL/no-Docker run
-AGENT_INDEX_PATH=results/full_index_v1/page_hash384 \
-  uv run uvicorn src.api:app --host 0.0.0.0 --port 8000
+# Backend (.env supplies AGENT_INDEX_PATH)
+uv run uvicorn src.api:app --host 0.0.0.0 --port 8000
 
-# In another terminal
-BACKEND_URL=http://localhost:8000 \
-  uv run streamlit run src/ui/app.py --server.port 8501
+# In another terminal (.env supplies BACKEND_URL)
+uv run streamlit run src/ui/app.py --server.port 8501
 ```
 
 For containers instead, run:
@@ -51,8 +50,53 @@ curl -s -X POST http://localhost:8000/ask -H "Content-Type: application/json" \
 ```
 
 Open the UI at `http://localhost:8501` and ask the same question. If you already
-have an index, skip `./scripts/build_index.sh`; compose mounts
-`./results/full_index_v1/page_hash384` into the API container.
+have an index, skip the unzip step; compose mounts
+`./results/full_index_v2/bge_small` into the API container.
+
+## Run without Docker
+
+Both backend and UI load `.env` from the repo root, so no inline
+`AGENT_INDEX_PATH=` or `BACKEND_URL=` prefix is needed.
+
+Windows PowerShell (VS Code terminal):
+
+```powershell
+uv sync
+copy .env.example .env
+# Edit .env: AGENT_INDEX_PATH=results/full_index_v2/bge_small
+#            BACKEND_URL=http://127.0.0.1:8000
+if (Test-Path results\full_index_v2\bge_small.zip) {
+  Expand-Archive results\full_index_v2\bge_small.zip results\full_index_v2 -Force
+}
+
+# Terminal 1
+uv run uvicorn src.api:app --host 0.0.0.0 --port 8000
+
+# Terminal 2
+uv run streamlit run src/ui/app.py --server.port 8501
+```
+
+WSL/Linux bash:
+
+```bash
+uv sync
+cp .env.example .env
+# Edit .env: AGENT_INDEX_PATH=results/full_index_v2/bge_small
+#            BACKEND_URL=http://127.0.0.1:8000
+if [ -f results/full_index_v2/bge_small.zip ]; then
+  unzip -o results/full_index_v2/bge_small.zip -d results/full_index_v2
+fi
+
+# Terminal 1
+uv run uvicorn src.api:app --host 0.0.0.0 --port 8000
+
+# Terminal 2
+uv run streamlit run src/ui/app.py --server.port 8501
+```
+
+Check readiness with `curl http://127.0.0.1:8000/health` and
+`curl http://127.0.0.1:8000/ready`. Chat is enabled only when `/ready`
+returns `ready: true`.
 
 ## Agent demo (Track B)
 
@@ -70,9 +114,9 @@ Optional environment variables:
 - `LLM_CA_CERT` — path to a CA bundle for the endpoint
 - `AGENT_STATE_DB` — SQLite checkpoint path (default: `results/agent_state.sqlite`)
 - `AGENT_TOKEN_BUDGET` — agent token budget (default: `12000`)
-- `AGENT_INDEX_PATH` — retrieval index path (default: `results/full_index_v1/page_hash384`)
-- `AGENT_QUESTION_TIMEOUT_SECONDS` — question watchdog (default: `120`); raise it for the
-  first run after clearing `data/cache/`, because the meta cache build took ~338 s here
+- `AGENT_INDEX_PATH` — retrieval index path (default: `results/full_index_v2/bge_small`)
+- `AGENT_RUN_TIMEOUT` — question watchdog (default: `120`; use `600` for eval); the legacy
+  `AGENT_QUESTION_TIMEOUT_SECONDS` name is still accepted
 
 The first run builds a machine-local `data/cache/meta_rows_*.pkl` (gitignored, ~338 s for
 466,799 chunks). Warm starts took ~18 s and subsequent questions ~6 s; rebuild it per machine.
@@ -178,11 +222,11 @@ PYTHONPATH=. uv run python scripts/make_gold_public.py --input data/eval/dataset
 uv run python scripts/import_gold.py
 
 # Full v1 run; CSV is appended row-by-row and uses 4 workers by default
-AGENT_INDEX_PATH=results/full_index_v1/page_hash384 uv run eval/run_eval.py --workers 4
+AGENT_INDEX_PATH=results/full_index_v2/bge_small uv run eval/run_eval.py --workers 4
 
 # Resume into a fixed CSV (skips ids already present) and fixed-seed sample
-AGENT_INDEX_PATH=results/full_index_v1/page_hash384 uv run eval/run_eval.py --resume --out eval/results_page_hash384.csv --workers 4
-AGENT_INDEX_PATH=results/full_index_v1/page_hash384 uv run eval/run_eval.py --sample 3 --workers 4
+AGENT_INDEX_PATH=results/full_index_v2/bge_small uv run eval/run_eval.py --resume --out eval/results_page_hash384.csv --workers 4
+AGENT_INDEX_PATH=results/full_index_v2/bge_small uv run eval/run_eval.py --sample 3 --workers 4
 
 # Eval-only checks
 uv run pytest tests/unit/test_eval_harness.py -q

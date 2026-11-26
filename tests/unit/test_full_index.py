@@ -1,3 +1,4 @@
+import builtins
 import json
 
 import numpy as np
@@ -205,3 +206,39 @@ def test_append_missing_chunks_detects_and_skips_existing(tmp_path, monkeypatch)
     assert new in present_ids
     assert bad not in present_ids
     assert fi.read_failed_docs(fi.failed_docs_path(out)) == [bad]
+
+
+def test_full_index_falls_back_to_numpy_when_faiss_blocked(tmp_path, monkeypatch):
+    chunks = [
+        {"chunk_id": "a", "company": "acme", "page": 1},
+        {"chunk_id": "b", "company": "acme", "page": 2},
+        {"chunk_id": "c", "company": "acme", "page": 3},
+    ]
+    offsets = []
+    with (tmp_path / "chunks.jsonl").open("wb") as handle:
+        for chunk in chunks:
+            offset = handle.tell()
+            encoded = json.dumps(chunk).encode("utf-8") + b"\n"
+            handle.write(encoded)
+            offsets.append([offset, len(encoded)])
+    (tmp_path / "chunk_ids.json").write_text(json.dumps([c["chunk_id"] for c in chunks]))
+    (tmp_path / "chunk_offsets.json").write_text(json.dumps(offsets))
+    (tmp_path / "meta.json").write_text(json.dumps({"dim": 3, "embedder": "hash384"}))
+    vectors = np.array([[1.0, 0.0, 0.0], [0.0, 1.0, 0.0], [0.0, 0.0, 1.0]], dtype=np.float32)
+    np.save(tmp_path / "embeddings.npy", vectors)
+
+    real_import = builtins.__import__
+
+    def fake_import(name, *args, **kwargs):
+        if name == "faiss":
+            raise ImportError("faiss blocked by test")
+        return real_import(name, *args, **kwargs)
+
+    monkeypatch.setattr(builtins, "__import__", fake_import)
+    monkeypatch.setattr(fi, "embed_text", lambda text, dim, embedder: np.array([1.0, 0.0, 0.0]))
+
+    index = fi.FullVectorIndex(tmp_path)
+    hits = index.search("revenue", k=2)
+    assert index.backend == "numpy"
+    assert [hit["chunk_id"] for hit in hits] == ["a", "b"]
+    assert hits[0]["score"] == 1.0
