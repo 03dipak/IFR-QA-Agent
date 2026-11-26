@@ -449,6 +449,8 @@ def test_ready_waits_for_warmup(monkeypatch):
     monkeypatch.setattr(api, "READY_ERROR", "")
     monkeypatch.setattr(api, "INDEX_BACKEND", "unknown")
     monkeypatch.setattr(api, "warm_index", slow_warm_index)
+    monkeypatch.setattr(api, "warm_meta_rows", lambda: 1)
+    monkeypatch.setattr(api, "warm_reranker", lambda: True)
     monkeypatch.setattr(api, "warm_query_embedding", lambda: 0.0)
     with TestClient(api.app) as client:
         assert started.wait(2)
@@ -459,7 +461,10 @@ def test_ready_waits_for_warmup(monkeypatch):
             if client.get("/ready").json()["ready"]:
                 break
             time.sleep(0.01)
-        assert client.get("/ready").json() == {"ready": True, "backend": "numpy"}
+        assert client.get("/ready").json() == {
+            "ready": True, "backend": "numpy",
+            "stages": ["index", "meta_rows", "reranker", "query_embedding"],
+        }
 
 
 def test_health_ok_but_not_ready_when_index_missing(monkeypatch):

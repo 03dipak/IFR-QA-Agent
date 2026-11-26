@@ -1,9 +1,11 @@
 from __future__ import annotations
 
 import json
+import logging
 import os
 import re
 import sqlite3
+import time
 from collections.abc import Callable, Mapping
 from decimal import Decimal, InvalidOperation
 from pathlib import Path
@@ -12,6 +14,7 @@ from typing import Any
 from langgraph.graph import END, StateGraph
 from pydantic import BaseModel
 
+from src import request_deadline as budget
 from src.config import agent_state_db_path
 
 from ..safety import validate_tool_args
@@ -23,6 +26,8 @@ from .tools import (
     calculator, compare_periods, detect_companies, detect_sector, get_chunk, get_metric,
     list_companies, rank_companies, rank_values, search_index, sum_values,
 )
+
+log = logging.getLogger("ifr.graph")
 
 Tool = Callable[..., Any]
 DEFAULT_TOOLS: dict[str, Tool] = {
@@ -36,6 +41,8 @@ DEFAULT_TOOLS: dict[str, Tool] = {
     "sum_values": sum_values,
     "compare_periods": compare_periods,
 }
+MAX_AGENT_STEPS = 10
+
 _STREAM_DETAILS = {
     "planner": "Planning...",
     "executor": "Searching...",
@@ -45,10 +52,10 @@ _STREAM_DETAILS = {
 
 
 def _token_budget() -> int:
-    try:
-        return int(os.environ.get("AGENT_TOKEN_BUDGET", "12000"))
-    except ValueError:
-        return 12000
+    value = os.environ.get("AGENT_TOKEN_BUDGET")
+    if not value:
+        raise RuntimeError("AGENT_TOKEN_BUDGET is not configured")
+    return int(value)
 
 
 def _make_checkpointer() -> Any:
@@ -997,10 +1004,21 @@ class AgentGraph:
         llm: LLM | None = None,
         tools: Mapping[str, Tool] | None = None,
         checkpointer: Any | None = None,
-        max_revisions: int = 3,
-        max_steps: int = 10,
+        max_revisions: int | None = None,
+        max_steps: int | None = None,
         max_tokens: int | None = None,
     ) -> None:
+        if max_revisions is None:
+            revisions_value = os.environ.get("AGENT_MAX_REVISIONS")
+            if not revisions_value:
+                raise RuntimeError("AGENT_MAX_REVISIONS is not configured")
+            max_revisions = int(revisions_value)
+        if max_steps is None:
+            steps_value = os.environ.get("AGENT_MAX_STEPS")
+            if not steps_value:
+                raise RuntimeError("AGENT_MAX_STEPS is not configured")
+            max_steps = int(steps_value)
+        max_steps = min(max_steps, MAX_AGENT_STEPS)
         self.llm = llm if llm is not None else EnvLLM()
         self.tools = {**DEFAULT_TOOLS, **dict(tools or {})}
         self.max_revisions = max_revisions
@@ -1009,12 +1027,25 @@ class AgentGraph:
         self.checkpointer = checkpointer if checkpointer is not None else _make_checkpointer()
         self.graph = self._build()
 
+    def _timed_node(self, name: str, fn: Callable[..., Any]) -> Any:
+        def node(state: AgentState) -> dict[str, Any]:
+            budget.check()
+            started = time.monotonic()
+            log.info("node_start name=%s", name)
+            try:
+                return fn(state)
+            finally:
+                log.info(
+                    "node_end name=%s latency_s=%.3f", name, time.monotonic() - started
+                )
+        return node
+
     def _build(self) -> Any:
         builder = StateGraph(AgentState)
-        builder.add_node("planner", self._planner)
-        builder.add_node("executor", self._executor)
-        builder.add_node("critic", self._critic)
-        builder.add_node("answer", self._answer)
+        builder.add_node("planner", self._timed_node("planner", self._planner))
+        builder.add_node("executor", self._timed_node("executor", self._executor))
+        builder.add_node("critic", self._timed_node("critic", self._critic))
+        builder.add_node("answer", self._timed_node("answer", self._answer))
         builder.set_entry_point("planner")
         builder.add_edge("planner", "executor")
         builder.add_edge("executor", "critic")
@@ -1136,6 +1167,7 @@ class AgentGraph:
         max_attempts: int = 3,
     ) -> Any:
         for attempt in range(max_attempts):
+            budget.check()
             if self.budget.exceeded:
                 errors.append(f"{node}: token budget exceeded")
                 return fallback
@@ -1507,6 +1539,7 @@ class AgentGraph:
                 results.append(entry)
                 continue
             tool = self.tools[name]
+            budget.check()
             try:
                 entry["result"] = tool(**args)
             except Exception as exc:

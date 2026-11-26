@@ -16,9 +16,7 @@ from typing import Any
 
 import numpy as np
 import yaml
-from requests.exceptions import Timeout as RequestsTimeout
 
-DEFAULT_INDEX_PATH = "results/full_index_v2/bge_small"
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 _META_CACHE_DIR = Path(os.environ.get("AGENT_META_CACHE_DIR", "data/cache"))
 LOGGER = logging.getLogger(__name__)
@@ -87,26 +85,53 @@ def _rerank_enabled() -> bool:
     return bool((_retrieval_config().get("rerank") or {}).get("enabled", True))
 
 
-def _rerank_model() -> Any | None:
+def _rerank_model() -> Any:
     if not _rerank_enabled():
-        return None
+        raise RuntimeError("reranker disabled by RETRIEVAL_RERANK; Track B requires it")
     global _RERANK_MODEL
     if _RERANK_MODEL is None:
         with _RERANK_LOCK:
             if _RERANK_MODEL is None:
+                model_name = os.environ.get("RERANK_MODEL")
+                if not model_name:
+                    raise RuntimeError("RERANK_MODEL is not configured")
+                cache_dir_value = os.environ.get("RERANK_CACHE_DIR")
+                if not cache_dir_value:
+                    raise RuntimeError("RERANK_CACHE_DIR is not configured")
+                cache_dir = Path(cache_dir_value)
+                if not cache_dir.is_absolute():
+                    cache_dir = PROJECT_ROOT / cache_dir
+                started = time.monotonic()
+                LOGGER.info(
+                    "rerank_load_start model=%s cache=%s", model_name, cache_dir.name
+                )
                 try:
                     from fastembed.rerank.cross_encoder import TextCrossEncoder
-                    model_name = (
-                        _retrieval_config().get("rerank") or {}
-                    ).get("model", "Xenova/ms-marco-MiniLM-L-6-v2")
-                    _RERANK_MODEL = TextCrossEncoder(model_name=model_name, threads=4)
-                except Exception:
-                    _RERANK_MODEL = False
-    return _RERANK_MODEL or None
+                    threads = os.environ.get("RERANK_THREADS")
+                    if not threads:
+                        raise RuntimeError("RERANK_THREADS is not configured")
+                    _RERANK_MODEL = TextCrossEncoder(
+                        model_name=model_name, cache_dir=str(cache_dir), threads=int(threads)
+                    )
+                except Exception as exc:
+                    LOGGER.error(
+                        "rerank_load_failed error=%s latency_s=%.3f",
+                        type(exc).__name__, time.monotonic() - started,
+                    )
+                    raise RuntimeError(
+                        f"reranker unavailable: {type(exc).__name__}: {exc}"
+                    ) from exc
+                LOGGER.info(
+                    "rerank_load_end latency_s=%.3f", time.monotonic() - started
+                )
+    return _RERANK_MODEL
 
 
 def _index_path() -> Path:
-    return Path(os.environ.get("AGENT_INDEX_PATH", DEFAULT_INDEX_PATH))
+    value = os.environ.get("AGENT_INDEX_PATH")
+    if not value:
+        raise RuntimeError("AGENT_INDEX_PATH is not configured")
+    return Path(value)
 
 
 def _resolved_index_path(path: str | None = None) -> str:
@@ -124,7 +149,15 @@ def _open_index_resolved(resolved_path: str) -> Any:
 
 
 def _open_index(path: str | None = None) -> Any:
-    return _open_index_resolved(_resolved_index_path(path))
+    started = time.monotonic()
+    LOGGER.info("index_load_start")
+    index = _open_index_resolved(_resolved_index_path(path))
+    LOGGER.info(
+        "index_load_end latency_s=%.3f cached=%s",
+        time.monotonic() - started,
+        _open_index_resolved.cache_info().hits > 0,
+    )
+    return index
 
 
 def warm_index() -> str:
@@ -287,25 +320,41 @@ def _query_embedding(query: str, index: Any, path: str) -> np.ndarray:
         cached = _QUERY_EMBED_CACHE.get(key)
     if cached is not None:
         return cached
-    vector: np.ndarray | None = None
-    for attempt in range(2):
-        try:
-            vector = np.asarray(embed_text(query_text, dim, embedder), dtype=np.float32)
-            break
-        except (TimeoutError, RequestsTimeout) as exc:
-            if attempt == 0:
-                LOGGER.warning("query embedding timeout; retrying once: %s", exc)
-                continue
-            raise
-    assert vector is not None
+    started = time.monotonic()
+    LOGGER.info("query_embedding_start embedder=%s", embedder)
+    vector = np.asarray(embed_text(query_text, dim, embedder), dtype=np.float32)
+    LOGGER.info(
+        "query_embedding_end latency_s=%.3f cache_hit=false",
+        time.monotonic() - started,
+    )
     with _QUERY_EMBED_LOCK:
         _QUERY_EMBED_CACHE[key] = vector
     return vector
 
 
-def warm_query_embedding(timeout_s: float = 600.0) -> float:
+def warm_meta_rows() -> int:
+    started = time.monotonic()
+    LOGGER.info("meta_rows_warm_start")
+    rows = _meta_rows_resolved(_resolved_index_path())
+    LOGGER.info(
+        "meta_rows_warm_end rows=%d latency_s=%.3f", len(rows), time.monotonic() - started
+    )
+    return len(rows)
+
+
+def warm_reranker() -> bool:
+    _rerank_model()
+    return True
+
+
+def warm_query_embedding(timeout_s: float | None = None) -> float:
     from concurrent.futures import ThreadPoolExecutor
 
+    if timeout_s is None:
+        value = os.environ.get("QUERY_EMBED_WARM_TIMEOUT_SECONDS")
+        if not value:
+            raise RuntimeError("QUERY_EMBED_WARM_TIMEOUT_SECONDS is not configured")
+        timeout_s = float(value)
     started = time.monotonic()
     executor = ThreadPoolExecutor(max_workers=1)
     try:
@@ -638,6 +687,10 @@ def search_index(
     call_number = _SEARCH_CALL_COUNT
     started = time.monotonic()
     filtered = bool(company or period or statement_kind or doc_type or reporting_basis)
+    LOGGER.info(
+        "search_start call=%d query=%r company=%s period=%s filtered=%s",
+        call_number, query, company, period, filtered,
+    )
     try:
         if k <= 0:
             return {"hits": [], "match_info": {"excluded_empty_period": 0}}

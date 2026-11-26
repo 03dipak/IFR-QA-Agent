@@ -14,6 +14,8 @@ from typing import Any
 import numpy as np
 import requests
 
+from src import request_deadline as budget
+
 from . import chunking
 from .tokenizer import TOKENIZER_VERSION, tokenize
 
@@ -98,7 +100,6 @@ def _embed_hash(text: str, dim: int) -> np.ndarray:
 
 
 _LAST_EMBED_CALL = 0.0
-_BGE_MAX_RETRIES = 5
 _FALLBACK_MAX_CHARS = 400
 
 
@@ -155,10 +156,17 @@ def _bge_request(
                         for index in range(len(texts))]
     wait = 1.0 - (time.time() - _LAST_EMBED_CALL)
     if wait > 0:
-        time.sleep(wait)
+        budget.sleep(wait)
     _LAST_EMBED_CALL = time.time()
     response = None
-    for attempt in range(_BGE_MAX_RETRIES):
+    max_retries = budget.max_retries()
+    for attempt in range(max_retries + 1):
+        budget.check()
+        attempt_started = time.monotonic()
+        LOGGER.info(
+            "embed_call_start path=/v1/embeddings attempt=%d inputs=%d",
+            attempt, len(texts),
+        )
         try:
             response = requests.post(
                 base.rstrip("/") + "/embeddings",
@@ -166,10 +174,14 @@ def _bge_request(
                          "Content-Type": "application/json"},
                 json={"model": env.get("EMBEDDINGS_MODEL", "bge-small-en-v1.5"),
                       "input": texts},
-                timeout=120,
+                timeout=budget.remaining(budget.embed_timeout_s()),
                 verify=verify,
             )
             response.raise_for_status()
+            LOGGER.info(
+                "embed_call_end status=%d attempt=%d latency_s=%.3f",
+                response.status_code, attempt, time.monotonic() - attempt_started,
+            )
             break
         except requests.RequestException as exc:
             error_response = getattr(exc, "response", None)
@@ -207,9 +219,9 @@ def _bge_request(
                 return np.zeros((1, dim), dtype=np.float32)
             status_code = status if isinstance(status, int) else 0
             retryable = status_code == 429 or 500 <= status_code < 600 or status is None
-            if attempt == _BGE_MAX_RETRIES - 1 or not retryable:
+            if attempt == max_retries or not retryable:
                 raise
-            time.sleep(2 ** attempt)
+            budget.sleep(budget.backoff_s(attempt))
     assert response is not None
     rows = sorted(response.json()["data"], key=lambda row: row["index"])
     vectors = np.asarray([row["embedding"] for row in rows], dtype=np.float32)

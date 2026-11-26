@@ -25,7 +25,9 @@ PROJECT_ROOT = Path(__file__).resolve().parents[2]
 load_dotenv(PROJECT_ROOT / ".env", override=False)
 
 from src.agent.service import QuestionResult, run_question
-from src.agent.tools import index_backend, warm_index, warm_query_embedding
+from src.agent.tools import (
+    index_backend, warm_index, warm_meta_rows, warm_query_embedding, warm_reranker,
+)
 
 app = FastAPI(title="IFR-QA Agent API", version="0.1.0")
 log = logging.getLogger("ifr.api")
@@ -34,9 +36,23 @@ if not log.handlers:
     handler = logging.StreamHandler()
     handler.setFormatter(logging.Formatter("%(asctime)s %(levelname)s %(name)s %(message)s"))
     log.addHandler(handler)
+for _name in (
+    "ifr.service", "ifr.graph", "ifr.llm",
+    "src.agent.tools", "src.rag_ingestion.full_index",
+):
+    _child = logging.getLogger(_name)
+    _child.setLevel(logging.INFO)
+    if not _child.handlers:
+        _child.addHandler(handler)
+    _child.propagate = False
+
+BACKEND_BUDGET_SECONDS = float(os.environ["AGENT_RUN_TIMEOUT"])
 
 _CITATION_RE = re.compile(r"\[([0-9a-f]{12}) p\.(\d+)\]", re.I)
-_INDEX_PATH = Path(os.environ.get("AGENT_INDEX_PATH", "results/full_index_v2/bge_small"))
+_index_path_value = os.environ.get("AGENT_INDEX_PATH")
+if not _index_path_value:
+    raise RuntimeError("AGENT_INDEX_PATH is not configured")
+_INDEX_PATH = Path(_index_path_value)
 if not _INDEX_PATH.is_absolute():
     _INDEX_PATH = PROJECT_ROOT / _INDEX_PATH
 _INDEX_FILES = (
@@ -61,6 +77,7 @@ HEALTH_REASON = _INDEX_REASON
 READY = False
 READY_ERROR = ""
 WARMUP_ERROR = ""
+WARMUP_STAGES: list[str] = []
 INDEX_BACKEND = "unknown"
 _WARM_TASK: asyncio.Task[None] | None = None
 _CONVERSATIONAL_PATTERNS = {
@@ -157,21 +174,31 @@ async def warm_index_at_startup() -> None:
         log.error("index check failed: %s", _INDEX_REASON)
 
     def run_warmup() -> None:
-        global READY, READY_ERROR, WARMUP_ERROR, INDEX_BACKEND
+        global READY, READY_ERROR, WARMUP_ERROR, INDEX_BACKEND, WARMUP_STAGES
+        READY = False
+        READY_ERROR = ""
+        WARMUP_ERROR = ""
+        WARMUP_STAGES = []
+        stage = "index"
         try:
             backend = warm_index()
             INDEX_BACKEND = str(backend or "unknown")
+            WARMUP_STAGES.append(stage)
+            stage = "meta_rows"
+            warm_meta_rows()
+            WARMUP_STAGES.append(stage)
+            stage = "reranker"
+            warm_reranker()
+            WARMUP_STAGES.append(stage)
+            stage = "query_embedding"
+            warm_query_embedding()
+            WARMUP_STAGES.append(stage)
             READY = True
-            READY_ERROR = ""
+            log.info("warmup complete stages=%s backend=%s", ",".join(WARMUP_STAGES), INDEX_BACKEND)
         except Exception as exc:
             READY = False
-            READY_ERROR = f"index load failed: {type(exc).__name__}: {exc}"
-            log.exception("index warmup failed")
-        try:
-            warm_query_embedding()
-        except Exception as exc:
-            WARMUP_ERROR = f"query embedding warmup failed: {type(exc).__name__}: {exc}"
-            log.warning("query embedding warmup failed: %s", exc)
+            READY_ERROR = f"warmup failed at {stage}: {type(exc).__name__}: {exc}"
+            log.error("%s", READY_ERROR)
 
     _WARM_TASK = asyncio.create_task(asyncio.to_thread(run_warmup))
 
@@ -185,7 +212,9 @@ async def health():
 @app.get("/ready")
 async def readiness():
     """Index readiness endpoint."""
-    detail: dict[str, Any] = {"ready": READY, "backend": INDEX_BACKEND}
+    detail: dict[str, Any] = {
+        "ready": READY, "backend": INDEX_BACKEND, "stages": list(WARMUP_STAGES)
+    }
     error = READY_ERROR or WARMUP_ERROR
     if error:
         detail["error"] = error
@@ -397,6 +426,24 @@ async def ask_stream(payload: AskRequest, request: Request):
             while True:
                 if await request.is_disconnected():
                     status = "disconnected"
+                    break
+                if (
+                    task is not None
+                    and not task.done()
+                    and queue.empty()
+                    and time.monotonic() - started >= BACKEND_BUDGET_SECONDS
+                ):
+                    message = (
+                        f"TimeoutError: question exceeded {BACKEND_BUDGET_SECONDS:g}s"
+                    )
+                    yield _sse({"event": "error", "type": "error", "message": message})
+                    event_count += 1
+                    yield _sse({"event": "error", "message": message})
+                    event_count += 1
+                    status = "error"
+                    error_category = message
+                    yield _sse({"event": "end"})
+                    event_count += 1
                     break
                 try:
                     event = await asyncio.wait_for(queue.get(), timeout=1.0)

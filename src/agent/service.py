@@ -12,12 +12,14 @@ from typing import Any
 from langfuse import Langfuse
 from langfuse.langchain import CallbackHandler
 
+from src import request_deadline as budget
+
 from ..llmops.session_log import write_session_log
 from ..safety import check_input, mask_value
 from .graph import AgentGraph
 from .llm import EnvLLM
 
-REQUIRED_ENV = ("LLM_CHAT_URL", "LLM_MODEL", "LLM_API_KEY")
+REQUIRED_ENV = ("LLM_CHAT_URL", "LLM_MODEL", "LLM_API_KEY", "AGENT_RUN_TIMEOUT")
 log = logging.getLogger("ifr.service")
 _LANGFUSE_WARNINGS: set[str] = set()
 _LANGFUSE_CLIENTS: dict[tuple[str, str, str], Langfuse] = {}
@@ -280,13 +282,10 @@ def run_question(
     safe_question = decision.sanitized
     thread_id = session_id or "default"
     started = time.monotonic()
-    timeout_s = float(
-        os.environ.get("AGENT_RUN_TIMEOUT")
-        or os.environ.get("AGENT_QUESTION_TIMEOUT_SECONDS")
-        or "120"
-    )
+    timeout_s = float(os.environ["AGENT_RUN_TIMEOUT"])
     if timeout_s <= 0:
-        timeout_s = 120.0
+        raise ValueError("AGENT_RUN_TIMEOUT must be positive")
+    budget.start(timeout_s)
     _write_log(safe_question, "", [], 0.0, [], thread_id, "", status="started")
     if decision.refused:
         latency_s = round(time.monotonic() - started, 3)
@@ -367,6 +366,11 @@ def run_question(
                         continue
                     _record_langfuse_tool(client, event)
                     event["elapsed_s"] = round(time.monotonic() - started, 3)
+                    log.info(
+                        "stage name=%s kind=%s elapsed_s=%.3f",
+                        event.get("node") or event.get("name") or event.get("stage") or "step",
+                        event.get("event", ""), event["elapsed_s"],
+                    )
                     events.append(event)
                     if on_event is not None:
                         on_event(event)
@@ -424,6 +428,7 @@ def run_question(
             status = "timeout" if timeout_state["timed_out"] else "error"
         raise
     finally:
+        budget.finish()
         finished.set()
         if not timeout_state["logged"]:
             if not latency_s:

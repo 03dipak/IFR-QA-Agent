@@ -53,7 +53,7 @@ def test_query_embedding_uses_bge_prefix(monkeypatch):
     assert vector.shape == (4,)
 
 
-def test_query_embedding_retries_timeout_and_caches(monkeypatch):
+def test_query_embedding_propagates_timeout_and_caches(monkeypatch):
     calls = []
 
     def fake_embed(text, dim, embedder):
@@ -64,6 +64,8 @@ def test_query_embedding_retries_timeout_and_caches(monkeypatch):
 
     monkeypatch.setattr(fi, "embed_text", fake_embed)
     index = _FakeIndex("bge-small")
+    with pytest.raises(RequestsTimeout):
+        tools._query_embedding("revenue", index, "dummy")
     first = tools._query_embedding("revenue", index, "dummy")
     second = tools._query_embedding("revenue", index, "dummy")
     assert len(calls) == 2

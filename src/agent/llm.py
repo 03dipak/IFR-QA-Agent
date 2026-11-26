@@ -1,12 +1,18 @@
 from __future__ import annotations
 
+import logging
 import os
+import time
 from collections import deque
 from collections.abc import Callable, Iterable
 from pathlib import Path
 from typing import Protocol
 
 import requests
+
+from src import request_deadline as budget
+
+log = logging.getLogger("ifr.llm")
 
 
 class LLM(Protocol):
@@ -51,20 +57,47 @@ class EnvLLM:
         endpoint = self.url.rstrip("/")
         if not endpoint.endswith("/chat/completions"):
             endpoint += "/chat/completions"
-        response = requests.post(
-            endpoint,
-            headers=headers,
-            json={
-                "model": self.model,
-                "messages": [{"role": "user", "content": prompt}],
-                "temperature": 0,
-                "max_tokens": max_tokens,
-            },
-            timeout=120,
-            verify=verify,
-        )
-        response.raise_for_status()
-        return response.json()["choices"][0]["message"]["content"]
+        started = time.monotonic()
+        retries = 0
+        log.info("llm_call_start model=%s prompt_chars=%d", self.model, len(prompt))
+        try:
+            while True:
+                budget.check()
+                response = requests.post(
+                    endpoint,
+                    headers=headers,
+                    json={
+                        "model": self.model,
+                        "messages": [{"role": "user", "content": prompt}],
+                        "temperature": 0,
+                        "max_tokens": max_tokens,
+                    },
+                    timeout=budget.remaining(budget.llm_timeout_s()),
+                    verify=verify,
+                )
+                if (
+                    response.status_code in {429, 503}
+                    and retries < budget.max_retries()
+                ):
+                    budget.sleep(budget.backoff_s(retries))
+                    retries += 1
+                    log.warning(
+                        "llm_call_retry status=%d retry=%d", response.status_code, retries
+                    )
+                    continue
+                response.raise_for_status()
+                content = response.json()["choices"][0]["message"]["content"]
+                log.info(
+                    "llm_call_end status=%d retries=%d latency_s=%.3f",
+                    response.status_code, retries, time.monotonic() - started,
+                )
+                return content
+        except Exception as exc:
+            log.error(
+                "llm_call_error error=%s retries=%d latency_s=%.3f",
+                type(exc).__name__, retries, time.monotonic() - started,
+            )
+            raise
 
 
 class TokenBudget:

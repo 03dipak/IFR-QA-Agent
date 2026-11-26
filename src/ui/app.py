@@ -19,7 +19,7 @@ load_dotenv(PROJECT_ROOT / ".env", override=False)
 DEFAULT_BACKEND_URL = os.environ.get(
     "BACKEND_URL", os.environ.get("FASTAPI_URL", "http://127.0.0.1:8000")
 )
-REQUEST_TIMEOUT = float(os.environ.get("BACKEND_TIMEOUT_SECONDS", "300"))
+REQUEST_TIMEOUT = float(os.environ["BACKEND_TIMEOUT_SECONDS"])
 SCENARIOS_PATH = Path(__file__).resolve().parents[2] / "docs" / "DEMO_SCENARIOS.md"
 STAGE_LABELS = {
     "request": "Request received",
