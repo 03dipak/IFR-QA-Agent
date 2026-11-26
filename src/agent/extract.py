@@ -14,7 +14,7 @@ _NOTE_REF = re.compile(r"\s+\d+\s*$")
 def _label_aliases(label: str) -> tuple[str, ...]:
     normalized = normalize_label(label)
     if normalized == "revenue from operations":
-        return ("Net sales", "Total revenue", "Total income")
+        return ("Total revenue from operations", "Net sales", "Total revenue")
     if normalized.startswith("net profit"):
         return ("Profit for the year",)
     return ()

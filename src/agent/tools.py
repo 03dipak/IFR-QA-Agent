@@ -963,11 +963,11 @@ def list_companies(
 
 
 _METRIC_LABELS: dict[str, list[str]] = {
-    "revenue": ["Revenue from operations", "Net sales", "Total revenue", "Total income"],
-    "revenue from operations": ["Revenue from operations", "Net sales", "Total revenue", "Total income"],
-    "total revenue": ["Revenue from operations", "Net sales", "Total revenue", "Total income"],
-    "total income": ["Revenue from operations", "Net sales", "Total revenue", "Total income"],
-    "net sales": ["Revenue from operations", "Net sales", "Total revenue", "Total income"],
+    "revenue": ["Revenue from operations", "Total revenue from operations", "Net sales", "Total revenue"],
+    "revenue from operations": ["Revenue from operations", "Total revenue from operations", "Net sales", "Total revenue"],
+    "total revenue": ["Revenue from operations", "Total revenue from operations", "Net sales", "Total revenue"],
+    "total income": ["Total income"],
+    "net sales": ["Revenue from operations", "Total revenue from operations", "Net sales", "Total revenue"],
     "operating expenses": ["Total expenses"],
     "total expenses": ["Total expenses"],
     "total costs": ["Total expenses"],
