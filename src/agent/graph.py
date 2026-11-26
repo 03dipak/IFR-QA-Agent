@@ -1208,17 +1208,27 @@ class AgentGraph:
         prior = _prior_searches(state.get("tool_results", []))
         critique = state.get("critique") or {}
         detected = _detected_companies(query, errors)
+        def _period_from_text(text: str) -> str | None:
+            low = str(text or "").lower()
+            fy = re.search(r"\bfy\s*(20\d{2})\s*[-/]\s*(20)?(\d{2})\b", low)
+            if fy:
+                return "FY" + fy.group(1)[0:2] + fy.group(3)
+            yr = re.search(r"\b(20\d{2})\s*[-/]\s*(20)?(\d{2})\b", low)
+            if yr:
+                return "FY" + yr.group(1)[0:2] + yr.group(3)
+            fy_single = re.search(r"\bfy\s*(20\d{2})\b", low)
+            if fy_single:
+                return "FY" + fy_single.group(1)
+            year = re.search(r"\b(20\d{2})\b", low)
+            if year:
+                return "FY" + year.group(1)
+            return None
+
         lower_query = query.lower()
         if not detected and re.search(r"\b(top|highest|largest|rank|ranking)\b", lower_query):
-            period_match = re.search(r"fy\s*(\d{4})", lower_query)
-            if not period_match:
-                period_match = re.search(r"\b(20\d{2})\b", lower_query)
-            if period_match:
-                period = "FY" + period_match.group(1)
-            elif "every industry" in lower_query:
+            period = _period_from_text(lower_query)
+            if period is None and "every industry" in lower_query:
                 period = "FY2025"
-            else:
-                period = None
             n_match = re.search(r"\btop\s+(\d+)\b", lower_query)
             if n_match:
                 top_n = int(n_match.group(1))

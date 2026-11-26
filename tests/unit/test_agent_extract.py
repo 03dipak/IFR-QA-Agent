@@ -411,3 +411,67 @@ def test_conflict_detection_groups_by_period_scope_and_unit():
     )
     assert extracted["conflicts"] == []
     assert extracted["figures"][0]["value"] == "91,790"
+
+
+def test_extract_cipla_p353_selects_fy2025_column_by_header():
+    from src.agent.tools import get_chunk
+    chunk = get_chunk("ac7e314c36eb9a51b806663ac56a49b06009ba3c14f05dc019b30d0694fd6d9b:p353")
+    extracted = extract_figures(
+        [{"company_id": "cipla", "label": "Revenue from operations", "period": "FY2025"}],
+        [chunk],
+        period="FY2025",
+    )
+    assert extracted["missing"] == []
+    fig = extracted["figures"][0]
+    assert fig["value"] == "27,547.62"
+    assert fig["reporting_basis"] == "consolidated"
+    assert fig["column_year"] == 2025
+    assert fig["comparative_column"] is True
+
+
+def test_extract_aurobindo_p205_selects_header_year_not_note():
+    from src.agent.tools import get_chunk
+    chunk = get_chunk("e97121aee57558adf2dc27d6770bec497df8a9cb4deeb37d67186abef5484ed2:p205")
+    for period, value in [("FY2024", "290,018.7"), ("FY2025", "317,237.3")]:
+        extracted = extract_figures(
+            [{"company_id": "aurobindo_pharma", "label": "Revenue from operations", "period": period}],
+            [chunk],
+            period=period,
+        )
+        assert extracted["missing"] == []
+        fig = extracted["figures"][0]
+        assert fig["value"] == value
+        assert fig["reporting_basis"] == "consolidated"
+        assert fig["column_year"] == int(period[2:])
+
+
+def test_extract_biocon_p349_consolidated_face_statement():
+    from src.agent.tools import get_chunk
+    chunk = get_chunk("4d1c338c892adf88bcfa40799c3d6c77dfc4e44c640cea76e1ca7de7b7bdc6c6:p349")
+    extracted = extract_figures(
+        [{"company_id": "biocon", "label": "Revenue from operations", "period": "FY2025"}],
+        [chunk],
+        period="FY2025",
+    )
+    assert extracted["missing"] == []
+    fig = extracted["figures"][0]
+    assert fig["value"] == "152,617"
+    assert fig["reporting_basis"] == "consolidated"
+
+
+def test_extract_rejects_standalone_or_note_rows_without_consolidated_header_match():
+    from src.agent.tools import get_chunk
+    standalone = get_chunk("9e092bb4d317944f9b65229c7d6cd2efe8032505deb88b934aa3a34f810884e6:p137")
+    note = get_chunk("4d1c338c892adf88bcfa40799c3d6c77dfc4e44c640cea76e1ca7de7b7bdc6c6:p414")
+    r1 = extract_figures(
+        [{"company_id": "aurobindo_pharma", "label": "Revenue from operations", "period": "FY2024"}],
+        [standalone],
+        period="FY2024",
+    )
+    assert not any(str(f.get("reporting_basis")).lower() == "consolidated" for f in r1["figures"])
+    r2 = extract_figures(
+        [{"company_id": "biocon", "label": "Revenue from operations", "period": "FY2025"}],
+        [note],
+        period="FY2025",
+    )
+    assert r2["figures"] == [] or all(f.get("value") != "47" for f in r2["figures"])

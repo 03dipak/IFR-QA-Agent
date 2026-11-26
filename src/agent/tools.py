@@ -296,6 +296,21 @@ def _meta_rows_resolved(resolved_path: str) -> tuple[tuple[str, str, str, str, s
     return resolved
 
 
+@lru_cache(maxsize=4)
+def _chunk_ids_by_company_period(resolved_path: str) -> dict[tuple[str, str], tuple[str, ...]]:
+    ids = json.loads((Path(resolved_path) / "chunk_ids.json").read_text(encoding="utf-8"))
+    rows = _meta_rows_resolved(resolved_path)
+    out: dict[tuple[str, str], list[str]] = {}
+    for chunk_id, row in zip(ids, rows, strict=False):
+        company = str(row[0] or "").strip().lower()
+        period = str(row[1] or "").strip().upper()
+        if not company:
+            continue
+        key = (company, period)
+        out.setdefault(key, []).append(str(chunk_id))
+    return {k: tuple(v) for k, v in out.items()}
+
+
 def _meta_rows_for_index(index: Any, path: str) -> tuple[tuple[str, str, str, str, str, str], ...]:
     supplied = getattr(index, "chunk_metas", None)
     if supplied is not None:
@@ -545,6 +560,7 @@ def _hybrid_hits(
     scores: np.ndarray,
     match_info: dict[str, Any],
     filtered: bool = False,
+    rerank_pool: int | None = None,
 ) -> list[dict[str, Any]]:
     from rank_bm25 import BM25Okapi
 
@@ -569,8 +585,9 @@ def _hybrid_hits(
                      for position in bm25_order]
     else:
         bm25_rank = list(dense_rank)
-    pool = _rrf([bm25_rank, dense_rank], _hybrid_rrf_k(), _hybrid_pool_k())
-    pool = pool[:_rerank_pool_k()]
+    pool_k = max(1, int(rerank_pool if rerank_pool is not None else _rerank_pool_k()))
+    pool = _rrf([bm25_rank, dense_rank], _hybrid_rrf_k(), max(_hybrid_pool_k(), pool_k))
+    pool = pool[:pool_k]
     model = _rerank_model()
     rerank_scores: list[float]
     if model is not None:
@@ -617,6 +634,7 @@ def _search_once(
     index: Any | None = None,
     query_vector: np.ndarray | None = None,
     hybrid: bool = False,
+    rerank_pool: int | None = None,
 ) -> tuple[list[dict[str, Any]], dict[str, Any]]:
     path = _resolved_index_path()
     index = index if index is not None else _open_index(path)
@@ -645,7 +663,7 @@ def _search_once(
                 np.asarray(index.embeddings) @ np.asarray(q, dtype=np.float32)
             ).reshape(-1)
             positions = np.arange(scores.size)
-            return _hybrid_hits(query, k, index, positions, scores, match_info, filtered=False), match_info
+            return _hybrid_hits(query, k, index, positions, scores, match_info, filtered=False, rerank_pool=rerank_pool), match_info
         return [dict(hit) for hit in index.search(query, k)], match_info
 
     q = query_vector if query_vector is not None else _query_embedding(query, index, path)
@@ -667,7 +685,7 @@ def _search_once(
     embeddings = np.asarray(index.embeddings)[positions]
     scores = np.asarray(embeddings @ q).reshape(-1)
     if hybrid:
-        return _hybrid_hits(query, k, index, positions, scores, match_info, filtered=True), match_info
+        return _hybrid_hits(query, k, index, positions, scores, match_info, filtered=True, rerank_pool=rerank_pool), match_info
     if scores.size > k:
         top = np.argpartition(-scores, k - 1)[:k]
         top = top[np.argsort(-scores[top])]
@@ -686,7 +704,7 @@ def _search_once(
 
 _SEARCH_CALL_COUNT = 0
 _SEARCH_CACHE_LOCK = threading.Lock()
-_SEARCH_CACHE_SCHEMA = "search_index_v2_soft_boost"
+_SEARCH_CACHE_SCHEMA = "search_index_v3_header_extraction"
 
 
 def _search_cache_dir() -> Path:
@@ -715,7 +733,7 @@ def _search_index_fingerprint(resolved_path: str) -> dict[str, Any]:
     }
 
 
-def _search_settings_fingerprint() -> dict[str, Any]:
+def _search_settings_fingerprint(rerank_pool: int | None = None) -> dict[str, Any]:
     return {
         "schema": _SEARCH_CACHE_SCHEMA,
         "hybrid": _hybrid_enabled(),
@@ -723,7 +741,7 @@ def _search_settings_fingerprint() -> dict[str, Any]:
         "rrf_k": _hybrid_rrf_k(),
         "hybrid_pool_k": _hybrid_pool_k(),
         "rerank": _rerank_enabled(),
-        "rerank_pool_k": _rerank_pool_k(),
+        "rerank_pool_k": int(rerank_pool) if rerank_pool is not None else _rerank_pool_k(),
         "rerank_model": os.environ.get("RERANK_MODEL"),
         "rerank_cache_dir": os.environ.get("RERANK_CACHE_DIR"),
         "rerank_threads": os.environ.get("RERANK_THREADS"),
@@ -739,6 +757,7 @@ def _search_cache_key(
     doc_type: str | None,
     reporting_basis: str | None,
     resolved_path: str,
+    rerank_pool: int | None = None,
 ) -> str:
     payload = {
         "query": str(query),
@@ -749,7 +768,7 @@ def _search_cache_key(
         "doc_type": doc_type,
         "reporting_basis": reporting_basis,
         "index": _search_index_fingerprint(resolved_path),
-        "settings": _search_settings_fingerprint(),
+        "settings": _search_settings_fingerprint(rerank_pool),
     }
     encoded = json.dumps(payload, sort_keys=True, separators=(",", ":"), default=str)
     return hashlib.sha256(encoded.encode("utf-8")).hexdigest()
@@ -784,6 +803,7 @@ def search_index(
     statement_kind: str | None = None,
     doc_type: str | None = None,
     reporting_basis: str | None = None,
+    rerank_pool: int | None = None,
 ) -> dict[str, Any]:
     global _SEARCH_CALL_COUNT
     _SEARCH_CALL_COUNT += 1
@@ -802,7 +822,7 @@ def search_index(
         cache_path = _search_cache_dir() / (
             _search_cache_key(
                 query, k, company, period, statement_kind, doc_type,
-                reporting_basis, path,
+                reporting_basis, path, rerank_pool=rerank_pool,
             ) + ".json"
         )
         cached = _read_search_cache(cache_path)
@@ -823,14 +843,14 @@ def search_index(
         )
         hits, match_info = _search_once(
             query, k, company, cur_period, cur_sk, cur_dt, cur_basis,
-            index, query_vector, hybrid,
+            index, query_vector, hybrid, rerank_pool=rerank_pool,
         )
         if not hits and cur_sk:
             relaxed.append("drop_statement_kind")
             cur_sk = None
             hits, info = _search_once(
                 query, k, company, cur_period, cur_sk, cur_dt, cur_basis,
-                index, query_vector, hybrid,
+                index, query_vector, hybrid, rerank_pool=rerank_pool,
             )
             _merge_info(match_info, info)
         if not hits and cur_basis:
@@ -838,7 +858,7 @@ def search_index(
             cur_basis = None
             hits, info = _search_once(
                 query, k, company, cur_period, cur_sk, cur_dt, cur_basis,
-                index, query_vector, hybrid,
+                index, query_vector, hybrid, rerank_pool=rerank_pool,
             )
             _merge_info(match_info, info)
         if not hits and cur_period:
@@ -846,7 +866,7 @@ def search_index(
             cur_period = None
             hits, info = _search_once(
                 query, k, company, cur_period, cur_sk, cur_dt, cur_basis,
-                index, query_vector, hybrid,
+                index, query_vector, hybrid, rerank_pool=rerank_pool,
             )
             _merge_info(match_info, info)
         match_info["relaxed"] = relaxed
@@ -1097,7 +1117,7 @@ def get_metric(
 ) -> dict[str, Any]:
     from decimal import Decimal, InvalidOperation
 
-    from .extract import extract_figures, normalize_label
+    from .extract import _unit as _chunk_unit, extract_figures, normalize_label
 
     company = str(company or "").strip()
     requested_period = _normalize_period_filter(period, fiscal_year)
@@ -1108,159 +1128,273 @@ def get_metric(
         "revenue", "revenue from operations", "total revenue", "total income", "net sales"
     })
     labels = sector_labels.get(normalized_metric) or _METRIC_LABELS.get(normalized_metric, [str(metric).strip()])
-    chunks: list[dict[str, Any]] = []
-    seen: set[str] = set()
-    periods_to_search = [requested_period]
+    # One filtered lookup per company/metric/period; prefer a canonical revenue query.
+    canonical_query = "Revenue from operations" if "revenue" in normalized_metric else str(labels[0] if labels else metric).strip() or str(metric)
+    periods_to_search: list[str | None] = [requested_period]
     if requested_period and re.fullmatch(r"FY\d{4}", requested_period.upper()):
         periods_to_search.append(f"FY{int(requested_period.upper()[2:])+1}")
-    for p_search in periods_to_search:
-        for label in labels:
-            result = search_index(
-                label,
-                k=20,
-                company=company,
-                period=p_search,
-                statement_kind=statement_kind,
-                reporting_basis=reporting_basis,
-            )
-            for hit in result.get("hits", []) if isinstance(result, dict) else []:
-                chunk_id = str(hit.get("chunk_id") or hit.get("id") or "").strip()
-                if not chunk_id or chunk_id in seen:
-                    continue
-                seen.add(chunk_id)
-                chunks.append({
-                    "chunk_id": chunk_id,
-                    "text": str(hit.get("text") or hit.get("content") or ""),
-                    "meta": hit.get("meta") or {},
-                })
-    # prefer consolidated, then standalone, same doc/period/basis
-    basis_candidates = [reporting_basis] if reporting_basis else ["consolidated", "standalone", None]
-    periods_to_try = [requested_period]
-    # FY report for year Y contains Y as prior column in Y+1 report
-    if requested_period and re.fullmatch(r"FY\d{4}", requested_period.upper()):
-        y = int(requested_period.upper()[2:])
-        periods_to_try.append(f"FY{y+1}")
-    for period_try in periods_to_try:
-        for basis_try in basis_candidates:
-            for label in labels:
-                extracted = extract_figures(
-                    [{"company_id": company, "label": label}],
-                    chunks,
-                    basis=basis_try,
-                    statement_kind=statement_kind,
-                    period=period_try,
-                )
-                figures = extracted.get("figures") or []
-                if not figures:
-                    continue
-                fig = figures[0]
-                fig_meta_period = str(fig.get("period") or "").upper()
-                req_up = str(requested_period or "").upper()
-                if period_try != requested_period and requested_period:
-                    # extracted from next-year report; requested period is the prior column
-                    if fig_meta_period == period_try.upper() and fig.get("prior") not in (None, ""):
-                        fig = dict(fig)
-                        current_val = fig.get("value")
-                        fig["value"] = fig.get("prior")
-                        fig["prior"] = current_val
-                        fig["period"] = requested_period.upper()
-                        fig["source_period"] = period_try.upper()
-                        fig["note_prior_column"] = True
-                    else:
-                        continue
-                elif req_up and fig_meta_period and fig_meta_period != req_up:
-                    # figure is from a different period than requested; skip
-                    continue
-                figures = [fig]
-                break
-            if not figures:
+
+    def _search_chunks(p_search: str | None) -> list[dict[str, Any]]:
+        result = search_index(
+            canonical_query,
+            k=60,
+            company=company,
+            period=p_search,
+            statement_kind=statement_kind,
+            reporting_basis=reporting_basis,
+            rerank_pool=12,
+        )
+        out: list[dict[str, Any]] = []
+        seen: set[str] = set()
+        for hit in result.get("hits", []) if isinstance(result, dict) else []:
+            chunk_id = str(hit.get("chunk_id") or hit.get("id") or "").strip()
+            if not chunk_id or chunk_id in seen:
                 continue
-            fig = figures[0]
-            from .extract import _unit as _chunk_unit
-            inferred_unit = None
-            fig_doc = str((fig.get("chunk_id") or "")).split(":")[0]
-            fig_period = str(fig.get("period") or requested_period or "").strip().lower()
-            if str(fig.get("unit") or "").strip() in {"", "unit not stated in source"}:
-                for chunk in chunks:
-                    chunk_meta = chunk.get("meta") or {}
-                    if str(chunk_meta.get("company_id") or "").strip() != str(fig.get("company_id") or company).strip():
-                        continue
-                    c_doc = str(chunk_meta.get("document_id") or (str(chunk.get("chunk_id") or "").split(":")[0])).strip()
-                    c_period = str(chunk_meta.get("period") or "").strip().lower()
-                    src_period = str(fig.get("source_period") or "").strip().lower()
-                    allowed_periods = {p for p in (fig_period, src_period) if p}
-                    if allowed_periods and c_period and c_period not in allowed_periods:
-                        continue
-                    if fig_doc and c_doc and c_doc != fig_doc:
-                        continue
-                    # inherit only from same table or its page header (same doc+period, page or page-1)
-                    c_page = chunk_meta.get("page")
-                    fig_page = fig.get("page")
-                    if fig_page is not None and c_page is not None:
-                        try:
-                            if abs(int(c_page) - int(fig_page)) > 1:
-                                continue
-                        except (TypeError, ValueError):
-                            if str(c_page) != str(fig_page):
-                                continue
-                    candidate_unit = _chunk_unit(chunk)
-                    if candidate_unit and candidate_unit != "unit not stated in source":
-                        inferred_unit = candidate_unit
-                        fig["unit"] = candidate_unit
-                        fig["unit_source"] = "same_page_header"
-                        break
-            note = "banking revenue proxy" if banking_proxy else None
-            label_used = str(fig.get("label") or label)
-            value = fig.get("value")
-            unit = fig.get("unit")
-            normalized = False
-            is_margin = "margin" in normalized_metric
-            is_growth = "growth" in normalized_metric
-            if is_margin or is_growth:
-                try:
-                    val = float(str(value).replace(",", ""))
-                    value = round(val, 2)
-                except Exception:
-                    pass
-                unit = "percent"
-            else:
-                if str(unit or "").strip() in {"", "unit not stated in source"}:
-                    unit = "unit not stated in source"
-                    note = ((note + "; ") if note else "") + "unit not stated in source"
-                else:
-                    if inferred_unit:
-                        note = ((note + "; ") if note else "") + "unit inherited from page header"
-                    else:
-                        value, unit, normalized = _normalize_value_to_crore(value, unit)
-            excluded_for_ranking = False
-            doc_id = str(fig.get("document_id") or fig_doc or "").strip() or None
-            page = fig.get("page")
+            seen.add(chunk_id)
+            out.append({
+                "chunk_id": chunk_id,
+                "text": str(hit.get("text") or hit.get("content") or ""),
+                "meta": hit.get("meta") or {},
+            })
+        # add corresponding page chunks for table hits to recover headers
+        for chunk in list(out):
+            cid = str(chunk.get("chunk_id") or "")
+            if ":t" not in cid:
+                continue
+            page = (chunk.get("meta") or {}).get("page")
+            doc = str((chunk.get("meta") or {}).get("document_id") or cid.split(":")[0])
+            if page is None or not doc:
+                continue
+            page_cid = f"{doc}:p{int(page)}"
+            if page_cid in seen:
+                continue
             try:
-                page = int(page) if page is not None else None
-            except (TypeError, ValueError):
-                page = None
-            return {
-                "company_id": company,
-                "display_name": display_name(company),
-                "metric": metric,
-                "label_used": label_used,
-                "value": value,
-                "unit": unit,
-                "citation": fig.get("chunk_id"),
-                "document_id": doc_id,
-                "page": page,
-                "period": fig.get("period") or requested_period,
-                "reporting_basis": fig.get("reporting_basis") or basis_try,
-                "statement_kind": fig.get("statement_kind"),
-                "missing": False,
-                "derived": False,
-                "note": note,
-                "sector": sector,
-                "normalized_to_crore": normalized,
-                "excluded_for_ranking": excluded_for_ranking,
-                "statement_header": fig.get("statement_header"),
-                "raw_row": fig.get("raw_row"),
-            }
+                pc = get_chunk(page_cid)
+            except Exception:
+                continue
+            seen.add(page_cid)
+            out.append({
+                "chunk_id": page_cid,
+                "text": str(pc.get("text") or ""),
+                "meta": pc.get("meta") or {},
+            })
+        return out
+
+    def _resolve(chunks: list[dict[str, Any]]) -> dict[str, Any] | None:
+        best: dict[str, Any] | None = None
+        best_rank: tuple[int, int, int, int] | None = None
+        for label in labels:
+            extracted = extract_figures(
+                [{"company_id": company, "label": label, "period": requested_period}],
+                chunks,
+                basis=reporting_basis,
+                statement_kind=statement_kind,
+                period=requested_period,
+            )
+            for cand in extracted.get("figures") or []:
+                c_basis = str(cand.get("reporting_basis") or "").lower()
+                if reporting_basis is None and c_basis != "consolidated":
+                    continue
+                basis_rank = 0 if c_basis == "consolidated" else (1 if c_basis == "standalone" else 2)
+                comp_rank = 1 if cand.get("comparative_column") else 0
+                src_rank = 0 if str(cand.get("source_period") or "").upper() == str(requested_period or "").upper() else 1
+                chunk_text = ""
+                for ch in chunks:
+                    if str(ch.get("chunk_id") or "") == str(cand.get("chunk_id") or ""):
+                        chunk_text = str(ch.get("text") or "").lower()
+                        break
+                note_rank = 1 if ("notes to" in chunk_text[:180] or cand.get("note_chunk")) else 0
+                rank = (basis_rank, src_rank, comp_rank, note_rank)
+                if best is None or rank < best_rank:
+                    best = dict(cand)
+                    best_rank = rank
+        if best is not None:
+            return best
+        if normalize_label(str(metric)) == "total assets":
+            extracted = extract_figures(
+                [{"company_id": company, "label": "Total equity and liabilities", "period": requested_period}],
+                chunks,
+                basis=reporting_basis,
+                statement_kind=statement_kind,
+                period=requested_period,
+            )
+            figures = extracted.get("figures") or []
+            if figures:
+                fig = dict(figures[0])
+                fig["label_equivalence"] = True
+                fig["label"] = str(metric)
+                return fig
+        return None
+
+    def _statement_scan_chunks(p_search: str | None) -> list[dict[str, Any]]:
+        """Scan matched company-period chunks in local index without embedding/rerank."""
+        resolved_path = _resolved_index_path()
+        index = _open_index(resolved_path)
+        chunk_ids = json.loads((Path(resolved_path) / "chunk_ids.json").read_text(encoding="utf-8"))
+        by_period = _chunk_ids_by_company_period(resolved_path)
+        rows = _meta_rows_for_index(index, resolved_path)
+        key = (company.lower(), str(p_search or "").upper())
+        candidate_ids = set(by_period.get(key, ()))
+        if not candidate_ids:
+            for cid, row in zip(chunk_ids, rows, strict=False):
+                if str(row[0]).strip().lower() == company.lower() and str(row[1]).strip().upper() == str(p_search or "").upper():
+                    candidate_ids.add(str(cid))
+        out: list[dict[str, Any]] = []
+        seen_local: set[str] = set()
+        wanted_label_norms = {normalize_label(l) for l in labels}
+        for cid in candidate_ids:
+            if cid in seen_local:
+                continue
+            seen_local.add(cid)
+            try:
+                chunk = get_chunk(cid)
+            except Exception:
+                continue
+            meta = chunk.get("meta") or {}
+            if str(meta.get("company_id") or "").strip().lower() != company.lower():
+                continue
+            text = str(chunk.get("text") or "")
+            if not text:
+                continue
+            basis = str(meta.get("reporting_basis") or "").lower()
+            sk = str(meta.get("statement_kind") or "").lower()
+            text_low = text.lower()
+            looks_pl = sk == "income_statement" or "statement of profit" in text_low or "profit and loss" in text_low or "income statement" in text_low
+            if not looks_pl:
+                continue
+            if basis == "standalone" or sk in {"note", "segment"}:
+                continue
+            if "standalone" in text_low and "consolidated" not in text_low:
+                continue
+            if "consolidated" not in text_low and basis != "consolidated":
+                continue
+            has_label = any(
+                normalize_label(line.split(':',1)[0]) in wanted_label_norms
+                or any(normalize_label(line.split(':',1)[0]) == normalize_label(lbl) for lbl in wanted_label_norms)
+                for line in text.splitlines() if line.strip()
+            )
+            if not has_label:
+                text_norm = normalize_label(text_low)
+                has_label = any(normalize_label(lbl) in text_norm for lbl in wanted_label_norms)
+            if not has_label and "revenue from operations" not in text_low and "total revenue" not in text_low:
+                continue
+            # Prefer face consolidated P&L pages over notes.
+            is_note = "notes to" in text_low[:160] or "note " in text_low[:60]
+            out.append({"chunk_id": cid, "text": text, "meta": meta, "_is_note": is_note})
+        out.sort(key=lambda c: (1 if c.get("_is_note") else 0, str(c.get("chunk_id") or "")))
+        for c in out:
+            c.pop("_is_note", None)
+        return out
+
+    chunks: list[dict[str, Any]] = []
+    for p_search in periods_to_search:
+        new_chunks = _search_chunks(p_search)
+        existing_ids = {str(c.get("chunk_id") or "") for c in chunks}
+        for c in new_chunks:
+            if str(c.get("chunk_id") or "") not in existing_ids:
+                chunks.append(c)
+    fig = _resolve(chunks)
+    if requested_period:
+        # Always run deterministic local statement scan after the single filtered lookup;
+        # it uses preloaded metadata/offsets and no embedding/rerank calls.
+        for p_search in periods_to_search:
+            scan_chunks = _statement_scan_chunks(p_search)
+            existing_ids = {str(c.get("chunk_id") or "") for c in chunks}
+            for c in scan_chunks:
+                if str(c.get("chunk_id") or "") not in existing_ids:
+                    chunks.append(c)
+        fig = _resolve(chunks)
+
+    if fig is not None:
+        fig_doc = str((fig.get("chunk_id") or "")).split(":")[0]
+        fig_period = str(fig.get("period") or requested_period or "").strip().lower()
+        if str(fig.get("unit") or "").strip() in {"", "unit not stated in source"}:
+            for chunk in chunks:
+                chunk_meta = chunk.get("meta") or {}
+                if str(chunk_meta.get("company_id") or "").strip() != str(fig.get("company_id") or company).strip():
+                    continue
+                c_doc = str(chunk_meta.get("document_id") or (str(chunk.get("chunk_id") or "").split(":")[0])).strip()
+                c_period = str(chunk_meta.get("period") or "").strip().lower()
+                src_period = str(fig.get("source_period") or "").strip().lower()
+                allowed_periods = {p for p in (fig_period, src_period) if p}
+                if allowed_periods and c_period and c_period not in allowed_periods:
+                    continue
+                if fig_doc and c_doc and c_doc != fig_doc:
+                    continue
+                c_page = chunk_meta.get("page")
+                fig_page = fig.get("page")
+                if fig_page is not None and c_page is not None:
+                    try:
+                        if abs(int(c_page) - int(fig_page)) > 1:
+                            continue
+                    except (TypeError, ValueError):
+                        if str(c_page) != str(fig_page):
+                            continue
+                candidate_unit = _chunk_unit(chunk)
+                if candidate_unit and candidate_unit != "unit not stated in source":
+                    fig["unit"] = candidate_unit
+                    fig["unit_source"] = "same_page_header"
+                    break
+
+        note = "banking revenue proxy" if banking_proxy else None
+        if fig.get("comparative_column"):
+            note = ((note + "; ") if note else "") + "comparative column"
+        printed_value = fig.get("value")
+        printed_unit = fig.get("unit")
+        label_used = str(fig.get("label") or metric)
+        value = fig.get("value")
+        unit = fig.get("unit")
+        normalized = False
+        is_margin = "margin" in normalized_metric
+        is_growth = "growth" in normalized_metric
+        if is_margin or is_growth:
+            try:
+                value = round(float(str(value).replace(",", "")), 2)
+            except Exception:
+                pass
+            unit = "percent"
+            printed_unit = printed_unit or unit
+        else:
+            if str(unit or "").strip() in {"", "unit not stated in source"}:
+                unit = "unit not stated in source"
+                note = ((note + "; ") if note else "") + "unit not stated in source"
+            else:
+                if fig.get("unit_source") == "same_page_header":
+                    note = ((note + "; ") if note else "") + "unit inherited from page header"
+                value, unit, normalized = _normalize_value_to_crore(value, unit)
+        doc_id = str(fig.get("document_id") or fig_doc or "").strip() or None
+        page = fig.get("page")
+        try:
+            page = int(page) if page is not None else None
+        except (TypeError, ValueError):
+            page = None
+        return {
+            "company_id": company,
+            "display_name": display_name(company),
+            "metric": metric,
+            "label_used": label_used,
+            "printed_value": printed_value,
+            "printed_unit": printed_unit,
+            "value": value,
+            "unit": unit,
+            "citation": fig.get("chunk_id"),
+            "document_id": doc_id,
+            "page": page,
+            "period": fig.get("period") or requested_period,
+            "source_period": fig.get("source_period"),
+            "column_header": fig.get("column_header") or fig.get("statement_header"),
+            "comparative_column": bool(fig.get("comparative_column")),
+            "reporting_basis": fig.get("reporting_basis") or reporting_basis,
+            "statement_kind": fig.get("statement_kind"),
+            "missing": False,
+            "derived": False,
+            "note": note,
+            "sector": sector,
+            "normalized_to_crore": normalized,
+            "excluded_for_ranking": False,
+            "statement_header": fig.get("statement_header"),
+            "raw_row": fig.get("raw_row"),
+        }
     if normalized_metric in {"operating profit", "operating profit margin"}:
         margin_requested = normalized_metric == "operating profit margin"
         # enforce same basis: try consolidated then standalone
