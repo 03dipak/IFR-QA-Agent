@@ -343,6 +343,35 @@ def _statement_header(chunk: dict[str, Any]) -> str:
     return ""
 
 
+_NON_FACE_PL_TOKENS = (
+    "summarised", "summarized", "summary", "notes to", "note to",
+    "segment", "subsidiary", "joint venture", "associate",
+    "breakup", "break-up",
+)
+
+
+def _is_non_face_pl_context(chunk: dict[str, Any], lines: list[str], row_index: int) -> bool:
+    text_low = str(chunk.get("text") or "").lower()
+    head = " ".join(str(l or "").lower() for l in lines[:12])
+    if any(tok in head for tok in ("notes to", "note to")):
+        return True
+    # inspect local section heading near row
+    for idx in range(row_index, max(-1, row_index - 12), -1):
+        low = str(lines[idx] or "").lower()
+        if any(tok in low for tok in _NON_FACE_PL_TOKENS):
+            # allow "Statement of Profit and Loss" face heading alone
+            if ("statement of profit and loss" in low or "income statement" in low) and not any(
+                t in low for t in ("summarised", "summarized", "summary", "reconciliation")
+            ):
+                continue
+            return True
+        if "statement of profit and loss" in low or "income statement" in low or "statement of profit" in low:
+            if any(t in low for t in ("summarised", "summarized", "summary")):
+                return True
+            return False
+    return any(tok in text_low[:220] for tok in ("notes to", "note to"))
+
+
 def _section_kind_at(lines: list[str], row_index: int) -> str | None:
     last_kind: str | None = None
     for idx in range(row_index, -1, -1):
@@ -355,13 +384,10 @@ def _section_kind_at(lines: list[str], row_index: int) -> str | None:
             last_kind = "balance_sheet"
             continue
         if last_kind == "balance_sheet":
-            # balance sheet ended and P&L started
             if low in {"income", "income:"} or low.startswith("revenue from operations") or low.startswith("total income"):
                 return "income_statement"
             if "total equity and liabilities" in low or "total assets" == low:
-                # still in balance sheet
                 return "balance_sheet"
-            # if we've passed well below balance sheet total assets and see P&L-like rows, mark income
             if any(k in low for k in ("profit before tax", "tax expense", "earnings per equity share", "total expenses")):
                 return "income_statement"
     return last_kind
@@ -496,11 +522,12 @@ def _candidates_for(
                 continue
             section_kind = _section_kind_at(lines, idx)
             if require_pl and not _is_pl_statement(chunk, section_kind):
-                # allow if row is in unknown section but chunk has PL somewhere and not in BS section
                 if section_kind != "balance_sheet" and (chunk_has_pl or _statement_kind(chunk) == "income_statement"):
                     pass
                 else:
                     continue
+            if require_pl and _is_non_face_pl_context(chunk, lines, idx):
+                continue
             header_years = _header_years(lines, idx)
             numbers = _select_row_values(raw_numbers, header_years)
             equity_profit = equity_statement and wanted == "profit for the year"

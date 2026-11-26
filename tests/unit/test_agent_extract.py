@@ -475,3 +475,25 @@ def test_extract_rejects_standalone_or_note_rows_without_consolidated_header_mat
         period="FY2025",
     )
     assert r2["figures"] == [] or all(f.get("value") != "47" for f in r2["figures"])
+
+
+def test_extract_rejects_summarised_note_and_selects_face_pl_comparative():
+    from src.agent.tools import get_chunk
+    summary = get_chunk("e57b7fc675de5a90df876e355e2b4c92b0d6928e6e8a67020496f9fc6700cb53:p367")
+    face = get_chunk("4d1c338c892adf88bcfa40799c3d6c77dfc4e44c640cea76e1ca7de7b7bdc6c6:p349")
+    r_summary = extract_figures(
+        [{"company_id": "biocon", "label": "Revenue from operations", "period": "FY2024"}],
+        [summary],
+        period="FY2024",
+    )
+    assert not any(f.get("value") == "88,242" for f in r_summary["figures"])
+    r_face = extract_figures(
+        [{"company_id": "biocon", "label": "Revenue from operations", "period": "FY2024"}],
+        [face],
+        period="FY2024",
+    )
+    assert r_face["missing"] == []
+    fig = r_face["figures"][0]
+    assert fig["value"] == "147,557"
+    assert fig.get("comparative_column") is True
+    assert str(fig.get("reporting_basis")).lower() == "consolidated"
