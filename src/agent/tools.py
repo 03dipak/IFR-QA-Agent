@@ -580,9 +580,16 @@ def _hybrid_hits(
             rerank_scores = [score for _, score in pool]
     else:
         rerank_scores = [score for _, score in pool]
+    # soft boost for P&L metrics: prefer income_statement, no hard filter
+    ql = str(query or "").lower()
+    pl_query = any(t in ql for t in ("revenue", "profit", "income", "expense", "eps", "ebitda", "margin"))
+    bs_query = any(t in ql for t in ("total assets", "total liabilities", "equity", "balance sheet"))
+    boost = pl_query and not bs_query
     ordered = sorted(
         zip([position for position, _ in pool], rerank_scores),
-        key=lambda item: -float(item[1]),
+        key=lambda item: (
+            -float(item[1]) - (0.25 if boost and str((chunks[int(item[0])].get("meta") or {}).get("statement_kind") or "").lower() == "income_statement" else 0.0),
+        ),
     )
     match_info["retrieval_mode"] = "hybrid"
     match_info["hybrid_candidates"] = int(positions.size)
