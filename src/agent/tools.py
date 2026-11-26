@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 import ast
+import copy
+import hashlib
 import json
 import logging
 import operator
@@ -683,6 +685,95 @@ def _search_once(
 
 
 _SEARCH_CALL_COUNT = 0
+_SEARCH_CACHE_LOCK = threading.Lock()
+_SEARCH_CACHE_SCHEMA = "search_index_v2_soft_boost"
+
+
+def _search_cache_dir() -> Path:
+    value = os.environ.get("AGENT_SEARCH_CACHE_DIR", "data/cache/search_index")
+    cache_dir = Path(value)
+    if not cache_dir.is_absolute():
+        cache_dir = PROJECT_ROOT / cache_dir
+    return cache_dir
+
+
+@lru_cache(maxsize=4)
+def _search_index_fingerprint(resolved_path: str) -> dict[str, Any]:
+    root = Path(resolved_path)
+    meta = _index_meta(resolved_path)
+    chunks = root / "chunks.jsonl"
+    try:
+        stat = chunks.stat()
+        chunk_stat = [stat.st_size, stat.st_mtime_ns]
+    except OSError:
+        chunk_stat = None
+    return {
+        "path": str(root),
+        "chunk_ids_sha256": str(meta.get("chunk_ids_sha256") or ""),
+        "chunks": str(meta.get("chunks") or ""),
+        "chunk_stat": chunk_stat,
+    }
+
+
+def _search_settings_fingerprint() -> dict[str, Any]:
+    return {
+        "schema": _SEARCH_CACHE_SCHEMA,
+        "hybrid": _hybrid_enabled(),
+        "candidate_k": _hybrid_candidate_k(),
+        "rrf_k": _hybrid_rrf_k(),
+        "hybrid_pool_k": _hybrid_pool_k(),
+        "rerank": _rerank_enabled(),
+        "rerank_pool_k": _rerank_pool_k(),
+        "rerank_model": os.environ.get("RERANK_MODEL"),
+        "rerank_cache_dir": os.environ.get("RERANK_CACHE_DIR"),
+        "rerank_threads": os.environ.get("RERANK_THREADS"),
+    }
+
+
+def _search_cache_key(
+    query: str,
+    k: int,
+    company: str | None,
+    period: str | None,
+    statement_kind: str | None,
+    doc_type: str | None,
+    reporting_basis: str | None,
+    resolved_path: str,
+) -> str:
+    payload = {
+        "query": str(query),
+        "k": int(k),
+        "company": company,
+        "period": period,
+        "statement_kind": statement_kind,
+        "doc_type": doc_type,
+        "reporting_basis": reporting_basis,
+        "index": _search_index_fingerprint(resolved_path),
+        "settings": _search_settings_fingerprint(),
+    }
+    encoded = json.dumps(payload, sort_keys=True, separators=(",", ":"), default=str)
+    return hashlib.sha256(encoded.encode("utf-8")).hexdigest()
+
+
+def _read_search_cache(cache_path: Path) -> dict[str, Any] | None:
+    try:
+        payload = json.loads(cache_path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return None
+    if not isinstance(payload, dict) or "hits" not in payload or "match_info" not in payload:
+        return None
+    return copy.deepcopy(payload)
+
+
+def _write_search_cache(cache_path: Path, result: dict[str, Any]) -> None:
+    try:
+        cache_path.parent.mkdir(parents=True, exist_ok=True)
+        temp = cache_path.with_suffix(f".{threading.get_ident()}.tmp")
+        temp.write_text(json.dumps(result, default=str), encoding="utf-8")
+        with _SEARCH_CACHE_LOCK:
+            temp.replace(cache_path)
+    except (OSError, TypeError, ValueError) as exc:
+        LOGGER.warning("search_cache_write_failed error=%s", type(exc).__name__)
 
 
 def search_index(
@@ -708,6 +799,16 @@ def search_index(
             return {"hits": [], "match_info": {"excluded_empty_period": 0}}
         requested_basis = _normalize_basis(reporting_basis)
         path = _resolved_index_path()
+        cache_path = _search_cache_dir() / (
+            _search_cache_key(
+                query, k, company, period, statement_kind, doc_type,
+                reporting_basis, path,
+            ) + ".json"
+        )
+        cached = _read_search_cache(cache_path)
+        if cached is not None:
+            LOGGER.info("search_cache_hit call=%d path=%s", call_number, cache_path.name)
+            return cached
         index = _open_index(path)
         hybrid = _hybrid_enabled()
         has_filters = bool(
@@ -753,7 +854,9 @@ def search_index(
         match_info["final_statement_kind_filter"] = cur_sk
         match_info["final_doc_type_filter"] = cur_dt
         match_info["final_reporting_basis_filter"] = cur_basis
-        return {"hits": hits, "match_info": match_info}
+        result = {"hits": hits, "match_info": match_info}
+        _write_search_cache(cache_path, result)
+        return result
     finally:
         LOGGER.info(
             "search_index call=%d first=%s elapsed=%.3fs filtered=%s",

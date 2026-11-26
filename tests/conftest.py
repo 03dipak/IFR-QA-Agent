@@ -9,6 +9,11 @@ _GUARDED = [
 ]
 
 @pytest.fixture(autouse=True)
+def _isolate_search_cache(monkeypatch, tmp_path):
+    monkeypatch.setenv("AGENT_SEARCH_CACHE_DIR", str(tmp_path / "search_cache"))
+
+
+@pytest.fixture(autouse=True)
 def _guard_canonical_files():
     before = {p: p.read_bytes() if p.exists() else None for p in _GUARDED}
     yield
