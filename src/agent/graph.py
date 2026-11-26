@@ -1803,7 +1803,7 @@ class AgentGraph:
                     rows = [row for row in rows if isinstance(row.get("growth_percent"), (int, float)) and row["growth_percent"] > 0]
                 decline_threshold = -10.0
                 if "decline" in query.lower():
-                    rows = [row for row in rows if isinstance(row.get("growth_percent"), (int, float)) and row["growth_percent"] < decline_threshold]
+                    rows = [row for row in rows if not row.get("check_extraction") and isinstance(row.get("growth_percent"), (int, float)) and row["growth_percent"] < decline_threshold]
                 lines = []
                 for row in rows:
                     growth = row.get("growth_percent")

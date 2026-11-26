@@ -1,0 +1,292 @@
+{
+  "ICICI": {
+    "assumed": true,
+    "display_name": "ICICI Bank",
+    "sector": "Banking"
+  },
+  "RELIANCE": {
+    "assumed": true,
+    "display_name": "Reliance Industries",
+    "sector": "Energy"
+  },
+  "adani_green": {
+    "assumed": true,
+    "display_name": "Adani Green Energy",
+    "sector": "Energy"
+  },
+  "ashok_leyland": {
+    "assumed": true,
+    "display_name": "Ashok Leyland",
+    "sector": "Automobile"
+  },
+  "asian_paints": {
+    "assumed": true,
+    "display_name": "Asian Paints",
+    "sector": "FMCG"
+  },
+  "aurobindo_pharma": {
+    "assumed": true,
+    "display_name": "Aurobindo Pharma",
+    "sector": "Pharmaceuticals"
+  },
+  "berger_paints": {
+    "assumed": true,
+    "display_name": "Berger Paints",
+    "sector": "FMCG"
+  },
+  "bharat_electronics": {
+    "assumed": true,
+    "display_name": "Bharat Electronics",
+    "sector": "Defence & Electricals"
+  },
+  "bhel": {
+    "assumed": true,
+    "display_name": "BHEL",
+    "sector": "Energy"
+  },
+  "biocon": {
+    "assumed": true,
+    "display_name": "Biocon",
+    "sector": "Pharmaceuticals"
+  },
+  "bosch": {
+    "assumed": true,
+    "display_name": "Bosch",
+    "sector": "Automobile"
+  },
+  "britannia": {
+    "assumed": true,
+    "display_name": "Britannia Industries",
+    "sector": "FMCG"
+  },
+  "cipla": {
+    "assumed": true,
+    "display_name": "Cipla",
+    "sector": "Pharmaceuticals"
+  },
+  "coal_india": {
+    "assumed": true,
+    "display_name": "Coal India",
+    "sector": "Energy"
+  },
+  "coforge": {
+    "assumed": true,
+    "display_name": "Coforge",
+    "sector": "IT"
+  },
+  "cummins_india": {
+    "assumed": true,
+    "display_name": "Cummins India",
+    "sector": "Automobile"
+  },
+  "dabur": {
+    "assumed": true,
+    "display_name": "Dabur India",
+    "sector": "FMCG"
+  },
+  "deepak_nitrite": {
+    "assumed": true,
+    "display_name": "Deepak Nitrite",
+    "sector": "Chemicals"
+  },
+  "dr_reddys": {
+    "assumed": true,
+    "display_name": "Dr. Reddy's Laboratories",
+    "sector": "Pharmaceuticals"
+  },
+  "eicher_motors": {
+    "assumed": true,
+    "display_name": "Eicher Motors",
+    "sector": "Automobile"
+  },
+  "emami": {
+    "assumed": true,
+    "display_name": "Emami",
+    "sector": "FMCG"
+  },
+  "force_motors": {
+    "assumed": true,
+    "display_name": "Force Motors",
+    "sector": "Automobile"
+  },
+  "glenmark_pharmaceuticals": {
+    "assumed": true,
+    "display_name": "Glenmark Pharmaceuticals",
+    "sector": "Pharmaceuticals"
+  },
+  "godrej_consumer_products": {
+    "assumed": true,
+    "display_name": "Godrej Consumer Products",
+    "sector": "FMCG"
+  },
+  "havells_india": {
+    "assumed": true,
+    "display_name": "Havells India",
+    "sector": "FMCG"
+  },
+  "hcl": {
+    "assumed": true,
+    "display_name": "HCL Technologies",
+    "sector": "IT"
+  },
+  "hindalco": {
+    "assumed": true,
+    "display_name": "Hindalco Industries",
+    "sector": "Metals & Mining"
+  },
+  "hindustan_unilever": {
+    "assumed": true,
+    "display_name": "Hindustan Unilever",
+    "sector": "FMCG"
+  },
+  "infosys": {
+    "assumed": true,
+    "display_name": "Infosys",
+    "sector": "IT"
+  },
+  "itc": {
+    "assumed": true,
+    "display_name": "ITC",
+    "sector": "FMCG"
+  },
+  "jk_cement": {
+    "assumed": true,
+    "display_name": "JK Cement",
+    "sector": "Cement"
+  },
+  "jsw_steel": {
+    "assumed": true,
+    "display_name": "JSW Steel",
+    "sector": "Metals & Mining"
+  },
+  "kpi_tech": {
+    "assumed": true,
+    "display_name": "KPI Green Energy",
+    "sector": "IT"
+  },
+  "l_and_t": {
+    "assumed": true,
+    "display_name": "Larsen & Toubro",
+    "sector": "Infrastructure"
+  },
+  "local": {
+    "assumed": true,
+    "display_name": "Local",
+    "sector": "Unknown"
+  },
+  "lupin": {
+    "assumed": true,
+    "display_name": "Lupin",
+    "sector": "Pharmaceuticals"
+  },
+  "marico": {
+    "assumed": true,
+    "display_name": "Marico",
+    "sector": "FMCG"
+  },
+  "maruti_suzuki": {
+    "assumed": true,
+    "display_name": "Maruti Suzuki",
+    "sector": "Automobile"
+  },
+  "mrf": {
+    "assumed": true,
+    "display_name": "MRF",
+    "sector": "Automobile"
+  },
+  "ntpc": {
+    "assumed": true,
+    "display_name": "NTPC",
+    "sector": "Energy"
+  },
+  "ongc": {
+    "assumed": true,
+    "display_name": "ONGC",
+    "sector": "Energy"
+  },
+  "pidilite": {
+    "assumed": true,
+    "display_name": "Pidilite Industries",
+    "sector": "FMCG"
+  },
+  "polycab": {
+    "assumed": true,
+    "display_name": "Polycab India",
+    "sector": "Electricals"
+  },
+  "power_grid": {
+    "assumed": true,
+    "display_name": "Power Grid Corporation",
+    "sector": "Energy"
+  },
+  "sail": {
+    "assumed": true,
+    "display_name": "Steel Authority of India",
+    "sector": "Metals & Mining"
+  },
+  "samvardhana_motherson": {
+    "assumed": true,
+    "display_name": "Samvardhana Motherson International",
+    "sector": "Automobile"
+  },
+  "srf": {
+    "assumed": true,
+    "display_name": "SRF",
+    "sector": "Chemicals"
+  },
+  "sun_pharma": {
+    "assumed": true,
+    "display_name": "Sun Pharmaceutical Industries",
+    "sector": "Pharmaceuticals"
+  },
+  "tata_chemicals": {
+    "assumed": true,
+    "display_name": "Tata Chemicals",
+    "sector": "Chemicals"
+  },
+  "tata_steel": {
+    "assumed": true,
+    "display_name": "Tata Steel",
+    "sector": "Metals & Mining"
+  },
+  "tcs": {
+    "assumed": true,
+    "display_name": "Tata Consultancy Services",
+    "sector": "IT"
+  },
+  "tech_mahindra": {
+    "assumed": true,
+    "display_name": "Tech Mahindra",
+    "sector": "IT"
+  },
+  "thermax": {
+    "assumed": true,
+    "display_name": "Thermax",
+    "sector": "Capital Goods"
+  },
+  "torrent_pharma": {
+    "assumed": true,
+    "display_name": "Torrent Pharmaceuticals",
+    "sector": "Pharmaceuticals"
+  },
+  "tvs_motor": {
+    "assumed": true,
+    "display_name": "TVS Motor Company",
+    "sector": "Automobile"
+  },
+  "upl": {
+    "assumed": true,
+    "display_name": "UPL",
+    "sector": "Chemicals"
+  },
+  "wipro": {
+    "assumed": true,
+    "display_name": "Wipro",
+    "sector": "IT"
+  },
+  "zydus_lifesciences": {
+    "assumed": true,
+    "display_name": "Zydus Lifesciences",
+    "sector": "Pharmaceuticals"
+  }
+}

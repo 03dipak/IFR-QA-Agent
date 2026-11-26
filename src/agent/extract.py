@@ -8,13 +8,13 @@ _NUMBER = re.compile(r"(?<![\w.])-?\d[\d,]*(?:\.\d+)?")
 _GROUPED_NUMBER = re.compile(
     r"^-?(?:\d{1,2}(?:,\d{2})*,\d{3}|\d{1,3}(?:,\d{3})+)(?:\.\d+)?$"
 )
-_LEADING_NUMBERING = re.compile(r"^\s*(?:\([ivx]+\)|\d+[.)]|\d+(?=\s+[A-Za-z]))\s*", re.I)
+_LEADING_NUMBERING = re.compile(r"^\s*(?:\([ivx]+\)|[ivx]+\s+|\d+[.)]|\d+(?=\s+[A-Za-z]))\s*", re.I)
 _TRAILING_SUFFIX = re.compile(r"\s*\((?:1\s*\+\s*2\s*\+\s*3|[a-z]|net)\)\s*$", re.I)
 _NOTE_REF = re.compile(r"\s+\d+\s*$")
 def _label_aliases(label: str) -> tuple[str, ...]:
     normalized = normalize_label(label)
     if normalized == "revenue from operations":
-        return ("Total revenue", "Total income", "Net sales")
+        return ("Net sales", "Total revenue", "Total income")
     if normalized.startswith("net profit"):
         return ("Profit for the year",)
     return ()
@@ -235,11 +235,13 @@ def _statement_header(chunk: dict[str, Any]) -> str:
 
 
 def _is_pl_statement(chunk: dict[str, Any]) -> bool:
-    text = str(chunk.get("text") or "").lower()
     sk = _statement_kind(chunk)
-    if sk == "income_statement":
+    if sk == "balance_sheet":
+        return False
+    header = _statement_header(chunk).lower()
+    if header and ("profit and loss" in header or "income statement" in header or "statement of profit" in header):
         return True
-    if "profit and loss" in text or "statement of profit and loss" in text or "income statement" in text:
+    if sk == "income_statement":
         return True
     return False
 
@@ -424,7 +426,7 @@ def extract_figures(
         request_period = str(request.get("period") or period or "").strip() or None
         if not company or not label:
             continue
-        require_pl = normalize_label(label) in {"total expenses", "total costs", "revenue from operations", "total revenue", "total income", "net sales", "profit for the year", "profit after tax", "net profit"}
+        require_pl = normalize_label(label) in {"total expenses", "revenue from operations", "total revenue", "total income", "net sales", "profit for the year", "profit after tax", "net profit"}
         candidates = _filter_candidates(
             _candidates_for(ordered, company, label, require_pl=require_pl), request_period, basis, statement_kind
         )

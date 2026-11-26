@@ -1,0 +1,12 @@
+[
+ {"id":1,"question":"For FY2024, identify the top 2 revenue-generating companies in the Indian Banking sector."},
+ {"id":2,"question":"How has the Indian Telecom sector's revenue trend changed from FY2024 to FY2025?"},
+ {"id":3,"question":"Which Healthcare companies recorded positive revenue growth between FY2024 and FY2025?"},
+ {"id":4,"question":"Compare the operating profit margins of companies in the Indian Manufacturing sector for FY2025."},
+ {"id":5,"question":"Compare Q1 FY2025 and Q1 FY2026 revenue for companies in the Automobile sector."},
+ {"id":6,"question":"Compare the revenue performance of the Banking, Insurance and IT sectors in FY2025."},
+ {"id":7,"question":"Identify companies with a significant decline in revenue in FY2025 compared with FY2024."},
+ {"id":8,"question":"Using annual and quarterly reports, explain the major revenue changes in the Energy sector."},
+ {"id":9,"question":"What were the total revenue, operating expenses and net profit of companies in the Indian Pharmaceutical sector in FY2025?"},
+ {"id":10,"question":"Provide the top 10 Indian companies by revenue across every industry, including companies whose reports are not in your available corpus."}
+]

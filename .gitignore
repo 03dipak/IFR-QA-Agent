@@ -58,7 +58,8 @@ AGENTS.md
 
 # Locally downloaded annual-report corpus
 /data/corpus/raw/*.pdf
-
+/data/corpus/extract/
+/data/manual_inbox/
 # LLM disk cache (not committed)
 data/llm_cache/
 data/cache/
@@ -108,3 +109,12 @@ vm02-ca.crt
 
 #results
 #results/
+/results/**/*.npy
+/results/**/*.zip
+/results/**/vector_meta.json
+/results/agent_state.sqlite-shm
+/results/agent_state.sqlite-wal
+/results/hybrid_eval_v2/
+/results/week2_retrieval_cache/
+/data/sessions/
+/data/corpus/*.bak-*

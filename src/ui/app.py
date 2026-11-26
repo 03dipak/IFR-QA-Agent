@@ -149,15 +149,16 @@ def stream_answer(backend_url: str, question: str, timeout: float) -> Iterator[d
         yield from parse_sse(response)
 
 
-@st.cache_data(ttl=1)
 def backend_ready(backend_url: str) -> tuple[bool, str]:
     try:
         response = httpx.get(f"{backend_url.rstrip('/')}/ready", timeout=3)
         response.raise_for_status()
         data = response.json()
-        return bool(data.get("ready")), str(data.get("error") or "")
+        if data.get("ready"):
+            return True, ""
+        return False, str(data.get("error") or data.get("status") or "warming up")
     except Exception as exc:
-        return False, f"cannot reach backend: {type(exc).__name__}: {exc}"
+        return False, f"cannot reach {backend_url}: {type(exc).__name__}: {exc}"
 
 
 def is_conversational(data: dict[str, Any]) -> bool:
@@ -296,9 +297,18 @@ def main() -> None:
         st.rerun()
     ready, ready_error = backend_ready(backend_url)
     if ready:
+        st.session_state["_ready_retries"] = 0
         st.sidebar.success("Backend online")
     else:
         st.sidebar.info(f"Backend not ready: {ready_error or 'warming up'}")
+        retries = int(st.session_state.get("_ready_retries", 0))
+        if retries < 20:
+            st.session_state["_ready_retries"] = retries + 1
+            time.sleep(1)
+            st.rerun()
+        if st.sidebar.button("Retry backend"):
+            st.session_state["_ready_retries"] = 0
+            st.rerun()
 
     messages: list[dict[str, Any]] = st.session_state["messages"]
     pending = str(st.session_state["pending_question"])

@@ -905,14 +905,14 @@ def list_companies(
 
 
 _METRIC_LABELS: dict[str, list[str]] = {
-    "revenue": ["Revenue from operations", "Total revenue", "Total income", "Net sales"],
-    "revenue from operations": ["Revenue from operations", "Total revenue from operations", "Total revenue", "Total income", "Net sales"],
-    "total revenue": ["Total revenue", "Revenue from operations", "Total income", "Net sales"],
-    "total income": ["Total income", "Total revenue", "Revenue from operations", "Net sales"],
-    "net sales": ["Net sales", "Revenue from operations", "Total revenue", "Total income"],
-    "operating expenses": ["Total expenses", "Total costs"],
-    "total expenses": ["Total expenses", "Total costs"],
-    "total costs": ["Total costs", "Total expenses"],
+    "revenue": ["Revenue from operations", "Net sales", "Total revenue", "Total income"],
+    "revenue from operations": ["Revenue from operations", "Net sales", "Total revenue", "Total income"],
+    "total revenue": ["Revenue from operations", "Net sales", "Total revenue", "Total income"],
+    "total income": ["Revenue from operations", "Net sales", "Total revenue", "Total income"],
+    "net sales": ["Revenue from operations", "Net sales", "Total revenue", "Total income"],
+    "operating expenses": ["Total expenses"],
+    "total expenses": ["Total expenses"],
+    "total costs": ["Total expenses"],
     "net profit": ["Net profit", "Profit after tax", "Profit for the year"],
     "profit after tax": ["Profit after tax", "Net profit", "Profit for the year"],
     "profit for the year": ["Profit for the year", "Profit after tax", "Net profit"],
@@ -1011,30 +1011,16 @@ def get_metric(
                     pass
                 unit = "percent"
             else:
-                value, unit, normalized = _normalize_value_to_crore(value, unit)
-                if inferred_unit and normalized:
-                    note = ((note + "; ") if note else "") + "unit inferred"
-            if str(unit or "").strip() in {"", "unit not stated in source"} and not (is_margin or is_growth):
-                return {
-                    "company_id": company,
-                    "display_name": display_name(company),
-                    "metric": metric,
-                    "label_used": label_used,
-                    "value": fig.get("value"),
-                    "unit": "unit not stated in source",
-                    "citation": fig.get("chunk_id"),
-                    "period": fig.get("period") or requested_period,
-                    "reporting_basis": fig.get("reporting_basis"),
-                    "statement_kind": fig.get("statement_kind"),
-                    "missing": True,
-                    "derived": False,
-                    "note": "excluded: unit not stated and cannot infer",
-                    "sector": sector,
-                    "normalized_to_crore": False,
-                }
-            excluded_for_ranking = bool(inferred_unit)
-            if excluded_for_ranking:
-                note = ((note + "; ") if note else "") + "unit inferred; excluded from ranking/sums"
+                if str(unit or "").strip() in {"", "unit not stated in source"}:
+                    unit = "Rs. crore"
+                    value = fig.get("value")
+                    normalized = True
+                    note = ((note + "; ") if note else "") + "unit assumed Rs. crore"
+                else:
+                    value, unit, normalized = _normalize_value_to_crore(value, unit)
+                    if inferred_unit and normalized:
+                        note = ((note + "; ") if note else "") + "unit inferred"
+            excluded_for_ranking = False
             return {
                 "company_id": company,
                 "display_name": display_name(company),
@@ -1077,7 +1063,7 @@ def get_metric(
         if margin_requested:
             rev_missing = revenue.get("missing")
             exp_label = str(expenses.get("label_used") or "").lower()
-            exp_missing = expenses.get("missing") or (normalize_label(exp_label) not in {"total expenses", "total costs"})
+            exp_missing = expenses.get("missing") or not normalize_label(exp_label).startswith("total expenses")
             fin_missing = finance.get("missing")
             if rev_missing or exp_missing or fin_missing:
                 return {
@@ -1313,10 +1299,12 @@ def rank_companies(
                         if prev_norm:
                             cur = Decimal(str(row.get("value_in_crore")))
                             prv = Decimal(str(prev_val))
-                            if prv != 0 and (cur / prv > 5 or prv / cur > 5):
-                                missing.append(company)
-                                row["note"] = "check units"
-                                continue
+                            if prv != 0:
+                                growth = (cur - prv) / prv * 100
+                                if growth > Decimal("100") or growth < Decimal("-50"):
+                                    missing.append(company)
+                                    row["note"] = "check extraction"
+                                    continue
             except Exception:
                 pass
         if "revenue" in str(metric).lower() and not str(row.get("sector") or "").strip():
@@ -1350,6 +1338,8 @@ def sum_values(items: Any) -> dict[str, Any]:
     total = Decimal("0")
     count = 0
     for item in items if isinstance(items, list) else []:
+        if isinstance(item, dict) and item.get("check_extraction"):
+            continue
         try:
             total += Decimal(str(item.get("value") if isinstance(item, dict) else item).replace(",", ""))
             count += 1
@@ -1433,13 +1423,18 @@ def compare_periods(
             })
             continue
         growth = compute_growth(compare_result.get("value"), base_result.get("value"))
+        growth_pct = growth.get("growth_percent")
+        check_extraction = isinstance(growth_pct, (int, float)) and (growth_pct > 100 or growth_pct < -50)
+        note = base_result.get("note") or compare_result.get("note")
+        if check_extraction:
+            note = ((str(note) + "; ") if note else "") + "check extraction"
         rows.append({
             "company_id": company, "display_name": dn, "base_period": base_p, "compare_period": compare_p,
             "base_value": base_result.get("value"), "compare_value": compare_result.get("value"),
-            "growth_percent": growth.get("growth_percent"), "base_citation": base_result.get("citation"), "compare_citation": compare_result.get("citation"),
+            "growth_percent": growth_pct, "base_citation": base_result.get("citation"), "compare_citation": compare_result.get("citation"),
             "unit": base_result.get("unit") or compare_result.get("unit"), "missing": False,
             "reporting_basis": base_result.get("reporting_basis") or compare_result.get("reporting_basis"),
-            "note": base_result.get("note") or compare_result.get("note"),
+            "note": note, "check_extraction": check_extraction,
         })
     return {
         "metric": metric,

@@ -1,0 +1,9 @@
+{
+  "Banking": {
+    "revenue": ["Total income", "Interest earned", "Total interest income"],
+    "revenue from operations": ["Total income", "Interest earned", "Total interest income"],
+    "total revenue": ["Total income", "Interest earned", "Total interest income"],
+    "total income": ["Total income", "Interest earned", "Total interest income"],
+    "net sales": ["Total income", "Interest earned", "Total interest income"]
+  }
+}
