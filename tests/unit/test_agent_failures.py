@@ -26,7 +26,7 @@ def test_malformed_planner_json_one_repair_then_clean_failure():
     assert sum(1 for e in result["errors"] if "planner: invalid JSON attempt" in e) == 2
     assert result["stop_reason"] == "reasoning_error"
     assert result["final_answer"]["insufficient_evidence"] is True
-    assert "insufficient evidence" in result["final_answer"]["answer"].lower()
+    assert "could not find" in result["final_answer"]["answer"].lower()
     assert result["final_answer"].get("figures", []) == []
     assert not result["final_answer"].get("citations")
 
@@ -123,7 +123,7 @@ def test_no_evidence_returns_insufficient_without_invented_figure():
 
     final = result["final_answer"]
     assert final["insufficient_evidence"] is True
-    assert "insufficient evidence" in final["answer"].lower()
+    assert "could not find" in final["answer"].lower()
     assert "9999" not in final["answer"]
     assert final.get("citations") == []
     assert final.get("figures") == []

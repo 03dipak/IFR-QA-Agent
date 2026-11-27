@@ -560,7 +560,7 @@ def test_insufficient_evidence_passes_through():
         "steps": [{"tool": "search_index", "args": {"query": "revenue", "k": 5}}],
     })
     answer = json.dumps({
-        "answer": "Insufficient evidence in retrieved chunks.",
+        "answer": "I could not find the requested information in the available annual reports.",
         "citations": [],
         "insufficient_evidence": True,
     })

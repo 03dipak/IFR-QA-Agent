@@ -1,0 +1,1 @@
+{"ready":true,"backend":"faiss","stages":["index","meta_rows","reranker","query_embedding"]}

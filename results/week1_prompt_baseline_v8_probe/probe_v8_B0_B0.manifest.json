@@ -1,0 +1,31 @@
+{
+  "arm": "B0",
+  "corpus_freeze_manifest_sha256": "899ac206a760af531e102e01daf99e4ff61d36cb6fc1e2e7a28cf01b094b5edd",
+  "error_rate": 0.0,
+  "finished_at": "2026-11-26T19:24:30.722955+00:00",
+  "git_commit": "5c0feab",
+  "gold_hash": "828b6704037297cd2e86da4c514edd9665b1945ee9c062ae7e5a15e417f0b09c",
+  "label": "SCORED",
+  "model_params": {
+    "cache": false,
+    "disable_thinking": true,
+    "max_tokens": 512,
+    "model": "Qwen/Qwen3-8B",
+    "temperature": 0.0,
+    "timeout": 60.0,
+    "top_p": 1.0
+  },
+  "model_params_hash": "4583d74de0e7bcfa05b19563d5eb9e3a85e603864884dc14839c02584d11b2cd",
+  "n_completed_before": 0,
+  "n_errors": 0,
+  "n_processed_this_run": 1,
+  "n_rows": 1,
+  "output_path": "results/week1_prompt_baseline_v8_probe/probe_v8_B0_B0.jsonl",
+  "prompt_set_hash": "abc60a7fb40cc1a4b6109b37103000abc826d9961867d71cf690233dd5da7228",
+  "prompt_set_version": "prompt_baselines.v2",
+  "run_id": "probe_v8_B0",
+  "smoke": false,
+  "split": "dev",
+  "started_at": "2026-11-26T19:24:29.506433+00:00",
+  "stopped_reason": null
+}

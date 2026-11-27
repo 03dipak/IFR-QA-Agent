@@ -1,0 +1,73 @@
+{
+  "checks": {
+    "api_rate_limit": [
+      200,
+      429
+    ],
+    "baseline_label": "run after agent code",
+    "baseline_notes": [
+      "S1 had 74 raw lines after a resume retry of one error row; metrics use 73 unique row_ids, keeping the latest record.",
+      "S3 JSONL had trailing null bytes from an interrupted write; nulls removed and missing row QT-030 resumed. Metrics use 73 unique rows."
+    ],
+    "baseline_run_id": "after_agent_code_v8_final_v2",
+    "baseline_split": "dev",
+    "baseline_stopped_reason": null,
+    "baseline_unique_counts": {
+      "B0": {
+        "duplicates_removed": 0,
+        "n_unique": 73,
+        "raw_lines": 73
+      },
+      "S1": {
+        "duplicates_removed": 1,
+        "n_unique": 73,
+        "raw_lines": 74
+      },
+      "S2": {
+        "duplicates_removed": 0,
+        "n_unique": 45,
+        "raw_lines": 45
+      },
+      "S3": {
+        "duplicates_removed": 0,
+        "n_unique": 73,
+        "raw_lines": 73
+      }
+    },
+    "constrained_decoding": "NOT FOUND",
+    "dev_error_rate_above_threshold": true,
+    "dev_n_matches_file_rows": true,
+    "dev_split_is_dev": true,
+    "dev_stop_reason": "error_rate_exceeded",
+    "docker_build": "NOT RUN",
+    "report_08_word_count": 5601,
+    "safety_result": {
+      "failed": 0,
+      "n": 20,
+      "passed": 20
+    },
+    "smoke_n_matches_metrics": true,
+    "trace_status_codes": [
+      200,
+      200,
+      200,
+      200
+    ],
+    "week1_gate": "MISSING"
+  },
+  "cited_files": [
+    "results/evaluation/day5_page_live_n10_final_smoke/manifest.json",
+    "results/evaluation/day5_page_live_n10_final_smoke/metrics.json",
+    "results/evaluation/day5_page_live_n10_final_smoke/per_query.jsonl",
+    "results/evaluation/day5_full_dev_eval_final/manifest.json",
+    "results/evaluation/day5_full_dev_eval_final/metrics.json",
+    "results/evaluation/day5_full_dev_eval_final/per_query.jsonl",
+    "results/evaluation/day5_full_dev_eval_final/failures.json",
+    "results/week1_prompt_baseline_v8_after_agent_code_v2/summary.json",
+    "results/safety/live_safety_final_v8/manifest.json",
+    "results/deployment/no_docker_api_v8/manifest.json",
+    "results/evidence/langfuse_final/trace_evidence.json"
+  ],
+  "code_state": "capstone-freeze / 72c610f87858c246563cc49e6197a39983cf5a73",
+  "report_version": "v3"
+}

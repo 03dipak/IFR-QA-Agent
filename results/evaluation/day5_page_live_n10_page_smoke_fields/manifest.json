@@ -1,0 +1,17 @@
+{
+  "run_id": "day5_page_live_n10_page_smoke_fields",
+  "live": true,
+  "split": "dev",
+  "limit": 10,
+  "row_ids": null,
+  "missing_row_ids": [],
+  "source": "live",
+  "n_rows": 10,
+  "gold_hash": "828b6704037297cd2e86da4c514edd9665b1945ee9c062ae7e5a15e417f0b09c",
+  "model": "Qwen/Qwen3-8B",
+  "cost_price_source": "college endpoint: no published price; cost proxy is tokens only",
+  "index_version": "C2-cached-50221",
+  "prompt_version": "trackb-mvp-v1",
+  "orchestrator": "src.agent.service.run_question (src.agent.graph)",
+  "created_at": "2026-11-26T20:02:51"
+}

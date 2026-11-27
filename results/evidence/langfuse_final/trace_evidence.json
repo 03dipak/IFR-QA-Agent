@@ -1,0 +1,112 @@
+{
+  "code_state": "capstone-freeze / 72c610f",
+  "endpoint": "/api/public/v2/observations?fields=core,basic,usage,metadata",
+  "run_id": "langfuse_final_v8",
+  "traces": [
+    {
+      "generation_ids": [
+        "5e717ba1adfe67db",
+        "5ec4df6a9e31a58c"
+      ],
+      "label": "day5_full_dev_eval_final/G-037",
+      "names": {
+        "LangGraph": 1,
+        "_route_after_answer": 1,
+        "_route_after_critic": 1,
+        "answer": 1,
+        "critic": 2,
+        "executor": 1,
+        "llm_call": 2,
+        "planner": 2,
+        "question": 1,
+        "search_index": 3
+      },
+      "observation_count": 15,
+      "status_code": 200,
+      "trace_id": "9f9d5a3cf4a680ad8f8bba6a8d4e752e",
+      "types": {
+        "CHAIN": 10,
+        "GENERATION": 2,
+        "TOOL": 3
+      }
+    },
+    {
+      "generation_ids": [
+        "424eec773043b1b3"
+      ],
+      "label": "day5_full_dev_eval_final/G-057",
+      "names": {
+        "LangGraph": 1,
+        "_route_after_answer": 1,
+        "_route_after_critic": 1,
+        "answer": 1,
+        "critic": 2,
+        "executor": 1,
+        "llm_call": 1,
+        "planner": 1,
+        "question": 1,
+        "search_index": 2
+      },
+      "observation_count": 12,
+      "status_code": 200,
+      "trace_id": "066ae700c9886e6fc4ab4e57584e2c7f",
+      "types": {
+        "CHAIN": 9,
+        "GENERATION": 1,
+        "TOOL": 2
+      }
+    },
+    {
+      "generation_ids": [
+        "104f1e59863f3fa4"
+      ],
+      "label": "day5_full_dev_eval_final/G-066",
+      "names": {
+        "LangGraph": 1,
+        "_route_after_answer": 1,
+        "_route_after_critic": 1,
+        "answer": 1,
+        "critic": 2,
+        "executor": 1,
+        "llm_call": 1,
+        "planner": 1,
+        "question": 1,
+        "search_index": 2
+      },
+      "observation_count": 12,
+      "status_code": 200,
+      "trace_id": "79f38854427282564a3d39fd411da441",
+      "types": {
+        "CHAIN": 9,
+        "GENERATION": 1,
+        "TOOL": 2
+      }
+    },
+    {
+      "generation_ids": [
+        "9b71aa4a820b91d4"
+      ],
+      "label": "day5_page_live_n10_final_smoke/G-037",
+      "names": {
+        "LangGraph": 1,
+        "_route_after_answer": 1,
+        "_route_after_critic": 1,
+        "answer": 1,
+        "critic": 2,
+        "executor": 1,
+        "llm_call": 1,
+        "planner": 1,
+        "question": 1,
+        "search_index": 3
+      },
+      "observation_count": 13,
+      "status_code": 200,
+      "trace_id": "c8c4d142d72628fc54237a368c1df91d",
+      "types": {
+        "CHAIN": 9,
+        "GENERATION": 1,
+        "TOOL": 3
+      }
+    }
+  ]
+}

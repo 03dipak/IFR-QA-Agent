@@ -1025,6 +1025,7 @@ class AgentGraph:
         self.max_steps = max_steps
         self.budget = TokenBudget(_token_budget() if max_tokens is None else max_tokens)
         self.checkpointer = checkpointer if checkpointer is not None else _make_checkpointer()
+        self._emit_event: Callable[[dict[str, Any]], None] | None = None
         self.graph = self._build()
 
     def _timed_node(self, name: str, fn: Callable[..., Any]) -> Any:
@@ -1101,8 +1102,10 @@ class AgentGraph:
         *,
         callbacks: list[Any] | None = None,
         metadata: dict[str, Any] | None = None,
+        on_event: Callable[[dict[str, Any]], None] | None = None,
     ) -> Any:
         self.budget.reset()
+        self._emit_event = on_event
         state: AgentState = {
             "query": query,
             "plan": [],
@@ -1125,16 +1128,28 @@ class AgentGraph:
             config["metadata"] = metadata
         seen_tools = 0
         seen_answer_tools = 0
-        for update in self.graph.stream(state, config=config, stream_mode="updates"):
-            for node, values in update.items() if isinstance(update, dict) else []:
-                if node not in {"planner", "executor", "critic", "answer"}:
-                    continue
-                if not isinstance(values, dict):
-                    continue
-                for key, value in values.items():
-                    state[key] = value
-                yield {"event": "step", "type": "step", "node": node,
-                       "detail": _STREAM_DETAILS[node]}
+        emitted_company: list[dict[str, Any]] = []
+        previous_emit = self._emit_event
+
+        def capture(event: dict[str, Any]) -> None:
+            emitted_company.append(dict(event))
+            if previous_emit is not None:
+                previous_emit(event)
+
+        self._emit_event = capture
+        try:
+            for update in self.graph.stream(state, config=config, stream_mode="updates"):
+                while emitted_company:
+                    yield emitted_company.pop(0)
+                for node, values in update.items() if isinstance(update, dict) else []:
+                    if node not in {"planner", "executor", "critic", "answer"}:
+                        continue
+                    if not isinstance(values, dict):
+                        continue
+                    for key, value in values.items():
+                        state[key] = value
+                    yield {"event": "step", "type": "step", "node": node,
+                           "detail": _STREAM_DETAILS[node]}
                 if node == "executor":
                     results = state.get("tool_results") or []
                     for entry in results[seen_tools:]:
@@ -1153,6 +1168,12 @@ class AgentGraph:
                                "name": str(entry.get("tool") or ""),
                                "args_summary": summary}
                     seen_answer_tools = len(results)
+                while emitted_company:
+                    yield emitted_company.pop(0)
+        finally:
+            self._emit_event = previous_emit
+        while emitted_company:
+            yield emitted_company.pop(0)
         state["token_count"] = self.budget.used
         yield {"event": "state", "type": "state", "state": state}
 
@@ -1251,6 +1272,28 @@ class AgentGraph:
                 "errors": errors,
             }
         lower_query = lower_query if "lower_query" in locals() else query.lower()
+        if len(detected) >= 2 and any(tok in lower_query for tok in ("compare", "versus", "vs", "between", "larger", "higher", "more", "difference", "by how much")):
+            period = _period_from_text(lower_query)
+            metric = "Total assets" if "total assets" in lower_query else (
+                "Total liabilities" if "total liabilities" in lower_query else (
+                    "Total equity" if "total equity" in lower_query else (
+                        "Revenue from operations" if "revenue" in lower_query else (
+                            "Profit for the year" if "profit" in lower_query else None
+                        )
+                    )
+                )
+            )
+            if metric and period:
+                basis = _query_reporting_basis(query)
+                steps = []
+                requested = []
+                for cid in detected[:2]:
+                    args = {"company": cid, "metric": metric, "period": period}
+                    if basis:
+                        args["reporting_basis"] = basis
+                    steps.append({"tool": "get_metric", "args": args})
+                    requested.append({"company_id": cid, "label": metric})
+                return {"plan": steps, "requested": requested, "errors": errors}
         # Deterministic plans for sector/comparison questions (run even if a
         # company alias was detected from a sector word).
         if True:
@@ -1402,7 +1445,7 @@ class AgentGraph:
                 "errors": errors,
                 "stop_reason": "reasoning_error",
                 "final_answer": {
-                    "answer": "Insufficient evidence in retrieved chunks.",
+                    "answer": "I could not find the requested figures in the available annual reports.",
                     "citations": [],
                     "insufficient_evidence": True,
                     "figures": [],
@@ -1429,6 +1472,17 @@ class AgentGraph:
         if self.budget.exceeded:
             errors.append("executor: token budget exceeded")
             return {"errors": errors, "stop_reason": "token_budget"}
+        try:
+            budget.soft_check()
+        except TimeoutError as exc:
+            errors.append(f"executor: soft deadline: {exc}")
+            return {
+                "tool_results": list(state.get("tool_results", [])),
+                "draft_answer": _draft_answer(state.get("tool_results", [])),
+                "steps_used": int(state.get("steps_used", 0)),
+                "errors": errors,
+                "stop_reason": "soft_deadline",
+            }
         critique = state.get("critique") or {}
         steps = list(critique.get("next_steps") or state.get("plan") or [])
         results = list(state.get("tool_results", []))
@@ -1449,6 +1503,22 @@ class AgentGraph:
             label for labels in labels_by_company.values() for label in labels
         )) or _requested_labels(state.get("query", ""))
         used_companies: set[str] = set()
+        partial_company_events: list[dict[str, Any]] = []
+
+        company_timings: dict[str, list[dict[str, Any]]] = {}
+
+        def emit_partial(event: dict[str, Any]) -> None:
+            payload = dict(event)
+            payload.setdefault("event", "company")
+            payload.setdefault("type", "company")
+            payload.setdefault("latency_ms", None)
+            partial_company_events.append(payload)
+            tool_name = str(payload.get("tool") or "")
+            if tool_name:
+                company_timings.setdefault(tool_name, []).append(payload)
+            if self._emit_event is not None:
+                self._emit_event(payload)
+
         seen_searches = {
             (
                 entry.get("tool"),
@@ -1549,14 +1619,45 @@ class AgentGraph:
                 results.append(entry)
                 continue
             tool = self.tools[name]
-            budget.check()
+            call_args = dict(args)
+            if name in {"rank_companies", "compare_periods"} and "on_company" not in call_args:
+                tool_name = name
+
+                def _emit(ev: dict[str, Any], _tool=tool_name) -> None:
+                    ev = dict(ev)
+                    ev.setdefault("tool", _tool)
+                    emit_partial(ev)
+
+                call_args["on_company"] = _emit
+            budget.soft_check()
+            t0 = time.monotonic()
             try:
-                entry["result"] = tool(**args)
+                entry["result"] = tool(**call_args)
+            except TimeoutError as exc:
+                entry["latency_ms"] = int((time.monotonic() - t0) * 1000)
+                entry["error"] = f"{type(exc).__name__}: {exc}"
+                errors.append(
+                    f"executor: soft deadline: {type(exc).__name__}: {exc}"
+                )
+                results.append(entry)
+                update = {
+                    "tool_results": results,
+                    "draft_answer": _draft_answer(results),
+                    "steps_used": steps_used,
+                    "errors": errors,
+                    "stop_reason": "soft_deadline",
+                }
+                return update
             except Exception as exc:
+                entry["latency_ms"] = int((time.monotonic() - t0) * 1000)
                 entry["error"] = f"{type(exc).__name__}: {exc}"
                 errors.append(
                     f"executor: tool {name} failed: {type(exc).__name__}: {exc}"
                 )
+            else:
+                entry["latency_ms"] = int((time.monotonic() - t0) * 1000)
+                if name in company_timings:
+                    entry["company_timings"] = company_timings[name]
             results.append(entry)
             if (
                 name == "search_index"
@@ -1830,6 +1931,100 @@ class AgentGraph:
             entry for entry in tool_results
             if entry.get("tool") == "compare_periods" and isinstance(entry.get("result"), dict)
         ]
+        def _fmt_amount(value: Any) -> str:
+            try:
+                num = float(str(value).replace(",", ""))
+            except Exception:
+                return str(value)
+            return f"{num:,.2f}"
+
+        get_metric_tools = [t for t in tool_results if t.get("tool") == "get_metric" and isinstance(t.get("result"), dict)]
+        requested_items = _extraction_requested(state)
+        compare_query = any(tok in query.lower() for tok in ("compare", "versus", " vs ", "between", "larger", "higher", "difference", "by how much"))
+        if not rank_entries and not compare_entries and compare_query and len(get_metric_tools) >= 2 and len(requested_items) >= 2:
+            from .tools import display_name as _dname
+            rows = []
+            citations: list[str] = []
+            figures: list[dict[str, Any]] = []
+            missing_rows = []
+            for tr in get_metric_tools:
+                r = tr.get("result") or {}
+                cid = str(r.get("company_id") or "")
+                name = _dname(cid)
+                metric_label = str(r.get("metric") or requested_items[0].get("label") or "Metric")
+                period_label = str(r.get("period") or r.get("source_period") or "").upper()
+                basis = str(r.get("reporting_basis") or "consolidated")
+                unit = str(r.get("unit") or r.get("printed_unit") or "unit not stated in source")
+                val = r.get("value") if r.get("value") is not None else r.get("printed_value")
+                page = r.get("page")
+                doc_id = str(r.get("document_id") or "")
+                cit = str(r.get("citation") or "")
+                printed_or_computed = "Computed" if r.get("derived") else "Printed"
+                row = {
+                    "company": name, "company_id": cid, "metric": metric_label, "period": period_label, "basis": basis,
+                    "value": val, "unit": unit, "printed_or_computed": printed_or_computed,
+                    "source": f"{name} Annual Report {period_label}, PDF page {page}" if page is not None else "Source unavailable",
+                    "citation": cit, "page": page, "document_id": doc_id, "missing": bool(r.get("missing")), "note": str(r.get("note") or ""),
+                }
+                rows.append(row)
+                if cit and cit not in citations:
+                    citations.append(cit)
+                figures.append({"company_id": cid, "display_name": name, "label": metric_label, "value": val, "unit": unit, "chunk_id": cit, "document_id": doc_id, "page": page, "period": period_label, "reporting_basis": basis})
+                if r.get("missing"):
+                    missing_rows.append(name)
+            req_cids = {str(x.get("company_id") or "").lower() for x in requested_items}
+            rows = [r for i, r in enumerate(rows) if str(get_metric_tools[i].get("result", {}).get("company_id", "")).lower() in req_cids]
+            seen_c: set[str] = set(); dedup = []
+            for r in rows:
+                k = r["company"].lower()
+                if k in seen_c: continue
+                seen_c.add(k); dedup.append(r)
+            rows = dedup
+            valid = [r for r in rows if not r["missing"] and r["value"] is not None]
+            if len(valid) >= 2:
+                def _num(v):
+                    try: return Decimal(str(v).replace(",", ""))
+                    except Exception: return None
+                v0, v1 = _num(valid[0]["value"]), _num(valid[1]["value"])
+                if v0 is not None and v1 is not None:
+                    if v0 == v1:
+                        lead = f"{valid[0]['company']} and {valid[1]['company']} reported the same {valid[0]['metric']} for {valid[0]['period']} ({valid[0]['basis']}): {_fmt_amount(valid[0]['value'])} {valid[0]['unit']}."
+                    else:
+                        hi, lo = (valid[0], valid[1]) if v0 > v1 else (valid[1], valid[0])
+                        diff = abs(v0 - v1)
+                        diff_txt = format(diff.normalize(), "f")
+                        if "." in diff_txt: diff_txt = diff_txt.rstrip("0").rstrip(".")
+                        lead = f"{hi['company']} reported higher {hi['metric']} for {hi['period']} ({hi['basis']}): {_fmt_amount(hi['value'])} vs {_fmt_amount(lo['value'])} {hi['unit']} (difference {_fmt_amount(diff_txt)} {hi['unit']})."
+                else:
+                    lead = "Comparison could not be computed from the retrieved figures."
+            elif len(valid) == 1 and missing_rows:
+                lead = f"Found {valid[0]['metric']} for {valid[0]['company']} ({valid[0]['period']}, {valid[0]['basis']}): {_fmt_amount(valid[0]['value'])} {valid[0]['unit']}. Missing: {', '.join(missing_rows)}."
+            else:
+                missing_txt = ", ".join(missing_rows) if missing_rows else "the requested figures"
+                lead = f"I could not find {missing_txt} in the available annual reports for this comparison."
+            table = ["| Company | Metric | FY / date | Basis | Value as printed | Printed/Computed | Source |", "|---|---|---|---|---:|---|---|"]
+            for r in rows:
+                val_txt = f"{_fmt_amount(r['value'])} {r['unit']}" if r["value"] is not None else "Not found"
+                table.append(f"| {r['company']} | {r['metric']} | {r['period']} | {r['basis'].capitalize()} | {val_txt} | {r['printed_or_computed'] if r['value'] is not None else 'Missing'} | {r['source']} |")
+            notes = []
+            for r in rows:
+                if r.get("note"):
+                    notes.append(f"{r['company']}: {r['note']}")
+            if state.get("stop_reason") == "soft_deadline":
+                notes.append("Partial answer returned before the request time limit; some requested figures may be missing.")
+            if missing_rows:
+                notes.append("Missing figures: " + ", ".join(missing_rows) + ".")
+            ans = lead + "\n\n" + "\n".join(table)
+            if notes:
+                ans += "\n\n" + "\n".join(f"- {n}" for n in notes)
+            final_answer = {
+                "answer": ans, "citations": citations, "insufficient_evidence": len(valid) < len(requested_items),
+                "figures": figures, "computed_values": [], "company_mismatches": [], "zero_hit_companies_not_stated": [],
+                "conflict": False, "extraction": False, "fallback_used": bool(state.get("fallback_used")),
+                "unresolved": [{"company_id": r["company"], "label": r["metric"]} for r in rows if r["missing"]],
+                "partial": state.get("stop_reason") == "soft_deadline",
+            }
+            return {"final_answer": final_answer, "errors": errors, "tool_results": tool_results}
         if compare_entries:
             citations = []
             figures = []
@@ -1884,31 +2079,34 @@ class AgentGraph:
                 if "positive" in query.lower():
                     header += "; positive growth only"
                 answer = header + ": " + ("; ".join(lines) if lines else "no companies with available values.")
-                if not rows:
-                    sector_name = sector or "requested sector"
-                    covered = result.get("count_covered", 0)
-                    if covered == 0:
-                        answer += f" No {sector_name} companies in corpus: 0 companies with data for {compare_period}."
-                    else:
-                        answer += " Not available for the requested companies/periods."
-                final_answer = {
-                    "answer": answer,
-                    "citations": citations,
-                    "insufficient_evidence": not bool(rows),
-                    "figures": figures,
-                    "computed_values": [row.get("growth_percent") for row in rows],
-                    "company_mismatches": [],
-                    "zero_hit_companies_not_stated": [],
-                    "conflict": False,
-                    "extraction": False,
-                    "fallback_used": bool(state.get("fallback_used")),
-                    "unresolved": [{"company_id": row.get("company_id"), "label": metric} for row in rows if row.get("missing")],
-                }
-                return {
-                    "final_answer": final_answer,
-                    "errors": errors,
-                    "tool_results": tool_results,
-                }
+            if not rows:
+                sector_name = sector or "requested sector"
+                covered = result.get("count_covered", 0)
+                if covered == 0:
+                    answer += f" No {sector_name} companies in corpus: 0 companies with data for {compare_period}."
+                else:
+                    answer += " Not available for the requested companies/periods."
+            if state.get("stop_reason") == "soft_deadline":
+                answer += " Partial answer returned before the request time limit; some companies may be missing."
+            final_answer = {
+                "answer": answer,
+                "citations": citations,
+                "insufficient_evidence": not bool(rows),
+                "figures": figures,
+                "computed_values": [row.get("growth_percent") for row in rows],
+                "company_mismatches": [],
+                "zero_hit_companies_not_stated": [],
+                "conflict": False,
+                "extraction": False,
+                "fallback_used": bool(state.get("fallback_used")),
+                "unresolved": [{"company_id": row.get("company_id"), "label": metric} for row in rows if row.get("missing")],
+                "partial": state.get("stop_reason") == "soft_deadline",
+            }
+            return {
+                "final_answer": final_answer,
+                "errors": errors,
+                "tool_results": tool_results,
+            }
         if len(rank_entries) > 1:
             citations = []
             # Q9-style: same sector, different metrics
@@ -1934,12 +2132,13 @@ class AgentGraph:
                 totals = {m: 0.0 for m in metric_labels}
                 for cid in sorted(by_company):
                     row = by_company[cid]
+                    from .tools import display_name as _dname
                     dname = None
                     for m in metric_labels:
                         item = row.get(m)
                         if item and item.get("display_name"):
                             dname = item.get("display_name"); break
-                    parts = [f"{dname or cid.replace('_',' ').title()} [{row.get('sector')}]"]
+                    parts = [f"{dname or _dname(cid)} [{row.get('sector')}]"]
                     for m in metric_labels:
                         item = row.get(m)
                         if item:
@@ -2018,59 +2217,81 @@ class AgentGraph:
             period = result.get("period") or ""
             missing = result.get("missing") or []
             sector = result.get("sector")
-            lines = []
-            for index, item in enumerate(ranked):
-                line = f"{index + 1}. {item.get('display_name') or item.get('company_id')}"
-                if item.get("sector"):
-                    line += f" [{item.get('sector')}]"
-                line += f": {item.get('value')} {item.get('unit') or ''}".strip()
-                comps = item.get("components") if isinstance(item.get("components"), dict) else None
-                if index < 5 and comps:
-                    rev = comps.get("revenue", {})
-                    exp = comps.get("total_expenses", {})
-                    fin = comps.get("finance_costs", {})
-                    line += f" [rev={rev.get('value')} {rev.get('unit')}, exp={exp.get('value')} {exp.get('unit')}, fin={fin.get('value')} {fin.get('unit')}]"
-                if item.get("note"):
-                    line += f" ({item.get('note')})"
-                if item.get("citation"):
-                    line += f" (citation: {item.get('citation')})"
-                lines.append(line)
-            if ranked:
-                answer = (
-                    f"Top {len(ranked)} by {metric} for {period}: " + "; ".join(lines) + "."
-                )
-            else:
-                answer = (
-                    f"No companies with available {metric} data for {period}"
-                    + (f" ({sector})" if sector else "")
-                    + f"; {len(missing)} companies were not available."
-                )
-            if ranked and missing:
-                answer += f" {len(missing)} companies had no {metric} data and were skipped."
-            if "manufacturing" in query.lower() and "operating profit margin" in query.lower():
-                answer += " Manufacturing scope: Automobile, Metals & Mining, Electricals, Capital Goods, Cement."
-            if re.search(r"\btop\s+10\b", query.lower()) or "every industry" in query.lower():
-                requested_n = 10
-                answer += f" Covered {len(ranked)} of {requested_n} requested companies; rest not in corpus or not available. Ranked only companies with sector and verified revenue value."
-            if re.search(r"\b20\d{2}\b", query) and "FY" not in query.upper():
-                answer += " Interpreted the bare year as FY" + re.search(r"\b(20\d{2})\b", query).group(1) + "."
-            citations = [
-                str(item.get("citation"))
-                for item in ranked
-                if item.get("citation")
+            requested_n = None
+            n_match = re.search(r"\btop\s+(\d+)\b", query.lower())
+            if n_match:
+                requested_n = int(n_match.group(1))
+            sector_name = str(sector or "requested sector")
+            metric_label = "Revenue from operations" if "revenue" in str(metric).lower() else str(metric)
+            period_label = str(period or "").upper()
+
+            # _fmt_amount defined above
+
+            header = f"Top {requested_n or len(ranked)} {sector_name} companies by {metric_label} ({period_label})"
+            rows_md = [
+                "| Rank | Company | Sub-sector | Revenue from operations (Rs. crore) | Basis | Source |",
+                "|---:|---|---|---:|---|---|",
             ]
+            citations: list[str] = []
+            figures: list[dict[str, Any]] = []
+            comparative_rows: list[str] = []
+            unresolved_rows: list[str] = []
+            for index, item in enumerate(ranked, start=1):
+                from .tools import display_name as _dname
+                display = str(item.get("display_name") or _dname(str(item.get("company_id") or ""))).strip()
+                sub_sector = str(item.get("sector") or sector_name).replace("_", " ").strip()
+                basis = str(item.get("reporting_basis") or "consolidated").strip().lower()
+                source_period = str(item.get("source_period") or item.get("period") or period_label).upper()
+                page = item.get("page")
+                doc_id = str(item.get("document_id") or "")
+                citation = str(item.get("citation") or "")
+                source = f"{display} Annual Report {source_period}, PDF page {page}" if page is not None else "Source unavailable"
+                amount = _fmt_amount(item.get("value"))
+                rows_md.append(f"| {index} | {display} | {sub_sector} | {amount} | {basis.capitalize()} | {source} |")
+                if citation and citation not in citations:
+                    citations.append(citation)
+                if item.get("comparative_column"):
+                    comparative_rows.append(f"{display} ({source_period} comparative column)")
+                if not citation or page is None:
+                    unresolved_rows.append(display)
+                figures.append({
+                    "company_id": item.get("company_id"), "display_name": display, "label": metric_label,
+                    "value": item.get("value"), "unit": item.get("unit"), "chunk_id": citation,
+                    "document_id": doc_id, "page": page, "period": item.get("period"),
+                    "reporting_basis": basis, "comparative_column": bool(item.get("comparative_column")),
+                })
+
+            covered = result.get("count_covered")
+            found = result.get("count_found")
+            if covered is None:
+                covered = len(ranked) + len(missing)
+            if found is None:
+                found = len(ranked)
+            note_lines = [f"Ranking covers {found} of {covered} {sector_name} companies in the corpus with available data."]
+            if comparative_rows:
+                note_lines.append("Comparative-column figures: " + "; ".join(comparative_rows) + ".")
+            if missing:
+                note_lines.append(f"{len(missing)} companies had no usable {metric_label} figure and were skipped.")
+            if requested_n is not None and len(ranked) < requested_n:
+                note_lines.append(f"Covered {len(ranked)} of {requested_n} requested companies; remaining companies were unavailable or excluded before the deadline.")
+            if state.get("stop_reason") == "soft_deadline":
+                note_lines.append("Partial answer returned before the request time limit; some companies may be missing.")
+            answer = header + "\n\n" + "\n".join(rows_md) + "\n\n" + "\n".join(f"- {line}" for line in note_lines)
+            if unresolved_rows:
+                answer += "\n- Verification warning: citation could not be resolved for " + ", ".join(unresolved_rows) + "."
             final_answer = {
                 "answer": answer,
                 "citations": citations,
                 "insufficient_evidence": not bool(ranked),
-                "figures": [],
+                "figures": figures,
                 "computed_values": [item.get("value_in_crore") or item.get("value") for item in ranked],
                 "company_mismatches": [],
                 "zero_hit_companies_not_stated": [],
                 "conflict": False,
                 "extraction": False,
                 "fallback_used": bool(state.get("fallback_used")),
-                "unresolved": [{"company_id": c, "label": metric} for c in missing],
+                "unresolved": [{"company_id": c.get("company_id") if isinstance(c, dict) else c, "label": metric} for c in missing],
+                "partial": state.get("stop_reason") == "soft_deadline",
             }
             return {
                 "final_answer": final_answer,
@@ -2196,7 +2417,7 @@ class AgentGraph:
             else ""
         )
         fallback = Answer(
-            answer="Insufficient evidence in retrieved chunks.",
+            answer="I could not find the requested figures in the available annual reports.",
             citations=[],
             insufficient_evidence=True,
             figures=[],
@@ -2260,18 +2481,29 @@ class AgentGraph:
         if search_attempted and not has_hits:
             final_answer = dict(final_answer)
             final_answer["insufficient_evidence"] = True
-            final_answer["answer"] = "Insufficient evidence in retrieved chunks."
+            # name what's missing
+            req = state.get("requested") or []
+            if req:
+                parts = []
+                for r in req[:4]:
+                    cid = str(r.get("company_id") or "").strip()
+                    label = str(r.get("label") or "requested figure").strip()
+                    from .tools import display_name as _dname
+                    parts.append(f"{_dname(cid)} {label}" if cid else label)
+                final_answer["answer"] = f"I could not find {', '.join(parts)} in the available annual reports."
+            else:
+                final_answer["answer"] = "I could not find the requested information in the available annual reports."
             final_answer["citations"] = []
             final_answer["figures"] = []
         filled_empty = False
         if not str(final_answer.get("answer") or "").strip():
             final_answer = dict(final_answer)
             if not final_answer.get("citations") and not final_answer.get("figures"):
-                final_answer["answer"] = "Insufficient evidence in retrieved chunks."
+                final_answer["answer"] = "I could not find the requested information in the available annual reports."
                 final_answer["insufficient_evidence"] = True
             else:
                 final_answer["answer"] = (
-                    state.get("draft_answer") or "Insufficient evidence in retrieved chunks."
+                    state.get("draft_answer") or "I could not find the requested information in the available annual reports."
                 )
             filled_empty = True
         update: dict[str, Any] = {"final_answer": final_answer, "errors": errors}
@@ -2325,7 +2557,7 @@ class AgentGraph:
         if not final.get("insufficient_evidence"):
             return "end"
         if (
-            final.get("answer") == "Insufficient evidence in retrieved chunks."
+            final.get("insufficient_evidence")
             and not final.get("citations")
             and not final.get("figures")
         ):

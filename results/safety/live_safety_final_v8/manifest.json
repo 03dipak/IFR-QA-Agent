@@ -1,0 +1,17 @@
+{
+  "run_id": "live_safety_final_v8",
+  "captured_at": "2026-11-27",
+  "code_state": "capstone-freeze / 72c610f",
+  "source": {
+    "summary": "/tmp/opencode/live_safety_summary.json",
+    "log": "/tmp/opencode/live_safety.log",
+    "runner_script": "/tmp/opencode/run_live_safety.py",
+    "fixtures": "tests/safety/fixtures.jsonl"
+  },
+  "fixtures_sha256": "4bbdbf6e7ddeff5531661da835445acb09dc333e2c791ebf00505f173ee18d08",
+  "summary_sha256": "33b913f23a69d781062563b41bce6018f66c91927ffe940161ee921da090b73c",
+  "result": {"n": 20, "passed": 20, "failed": 0},
+  "raw_outputs_status": "MISSING: full per-fixture answers, state payloads, and Langfuse trace IDs were not persisted by the temporary runner. Only the compact summary rows (id, category, ok, stop_reason, error_type), stdout log, and runner script were retained.",
+  "corpus_modified": false,
+  "secrets_or_pii_included": false
+}

@@ -26,8 +26,9 @@ load_dotenv(PROJECT_ROOT / ".env", override=False)
 
 from src.agent.service import QuestionResult, run_question
 from src.agent.tools import (
-    index_backend, warm_index, warm_meta_rows, warm_query_embedding, warm_reranker,
+    get_chunk, index_backend, warm_index, warm_meta_rows, warm_query_embedding, warm_reranker,
 )
+from src.safety.refusal import check_intent
 
 app = FastAPI(title="IFR-QA Agent API", version="0.1.0")
 log = logging.getLogger("ifr.api")
@@ -182,8 +183,12 @@ class AskResponse(BaseModel):
     session_id: str = ""
     stopped_reason: str = "done"
     citation_status: str = "no_citations"
+    unresolved_citations: list[str] = Field(default_factory=list)
     refusal: RefusalInfo = Field(default_factory=RefusalInfo)
     escalated: bool = False
+    response_type: str = "financial"
+    conversation_kind: str | None = None
+    request_id: str = ""
     tokens: int = 0
     latency_ms: int = 0
     response_type: str = "financial"
@@ -263,85 +268,118 @@ def _answer_refs(answer: str) -> set[tuple[str, int]]:
     return {(doc_id.lower(), int(page)) for doc_id, page in _CITATION_RE.findall(answer or "")}
 
 
+_CITATION_VERIFY_CACHE: dict[str, bool] = {}
+
+
 def _citation_label(meta: dict[str, Any], doc_id: str, page: int) -> str:
-    company = str(meta.get("company_id") or meta.get("company") or "").replace("_", " ").strip().title()
+    from ..agent.tools import display_name
+    raw_company = str(meta.get("company_id") or meta.get("company") or "").strip()
+    company = display_name(raw_company) if raw_company else str(meta.get("display_name") or meta.get("company_name") or "").strip()
     period = str(meta.get("period") or meta.get("fiscal_year") or "").strip().upper()
     fy = period if period.startswith("FY") else (f"FY{period}" if period else "")
+    basis = str(meta.get("reporting_basis") or "").strip().lower()
+    basis_txt = f", {basis}" if basis in {"consolidated", "standalone"} else ""
     if company and fy:
-        return f"{company} · Annual Report {fy} · PDF page {page}"
+        return f"{company} Annual Report {fy}{basis_txt}, PDF page {page}"
     if company:
-        return f"{company} · PDF page {page}"
-    return f"Document {doc_id[:12]} · PDF page {page}"
+        return f"{company}, PDF page {page}"
+    return f"Annual report, PDF page {page}"
+
+
+def _citation_exists(chunk_id: str, doc_id: str, page: int) -> bool:
+    key = str(chunk_id or "").strip()
+    if not key:
+        return False
+    if key in _CITATION_VERIFY_CACHE:
+        return _CITATION_VERIFY_CACHE[key]
+    try:
+        chunk = get_chunk(key)
+    except Exception:
+        _CITATION_VERIFY_CACHE[key] = False
+        return False
+    meta = chunk.get("meta") if isinstance(chunk.get("meta"), dict) else {}
+    actual_doc = str(meta.get("document_id") or key.split(":")[0]).strip().lower()
+    try:
+        actual_page = int(meta.get("page"))
+    except Exception:
+        actual_page = None
+    want_doc = str(doc_id).strip().lower()
+    doc_ok = bool(actual_doc and want_doc and (actual_doc == want_doc or actual_doc.startswith(want_doc) or want_doc.startswith(actual_doc)))
+    ok = bool(doc_ok and actual_page == int(page))
+    _CITATION_VERIFY_CACHE[key] = ok
+    return ok
 
 
 def _evidence_from_tool_results(tool_results: list[dict[str, Any]]) -> list[EvidenceItem]:
     items: list[EvidenceItem] = []
     seen: set[tuple[str, int, str]] = set()
+
+    def add_candidate(hit: dict[str, Any]) -> None:
+        if not isinstance(hit, dict):
+            return
+        chunk_id = str(hit.get("chunk_id") or hit.get("id") or hit.get("citation") or "").strip()
+        meta = hit.get("meta") if isinstance(hit.get("meta"), dict) else {}
+        doc_id = str(hit.get("document_id") or meta.get("document_id") or chunk_id.split(":")[0] or "").strip()
+        raw_page = hit.get("page", meta.get("page", hit.get("pdf_page")))
+        try:
+            page = int(raw_page)
+        except (TypeError, ValueError):
+            return
+        if not doc_id:
+            return
+        if chunk_id and not _citation_exists(chunk_id, doc_id, page):
+            return
+        key = (doc_id[:12].lower(), page, chunk_id)
+        if key in seen:
+            return
+        seen.add(key)
+        merged_meta = {**meta, **{k: hit.get(k) for k in ("company_id", "display_name", "period", "reporting_basis") if hit.get(k) is not None}}
+        items.append(EvidenceItem(
+            document_id=doc_id,
+            pdf_page=page,
+            citation=f"[{doc_id[:12]} p.{page}]",
+            citation_label=_citation_label(merged_meta, doc_id, page),
+            text=str(hit.get("text") or "")[:600],
+        ))
+
     for entry in tool_results:
         if not isinstance(entry, dict):
             continue
         result = entry.get("result")
-        candidates = []
         if isinstance(result, dict):
             hits = result.get("hits")
             if isinstance(hits, list):
-                candidates.extend(hits)
-            rows = result.get("rows")
-            if isinstance(rows, list):
-                for row in rows:
-                    if not isinstance(row, dict):
-                        continue
-                    for side in ("base", "compare"):
-                        cid = row.get(f"{side}_citation")
-                        page = row.get(f"{side}_page")
-                        doc = row.get(f"{side}_document_id")
-                        if cid and page is not None:
-                            candidates.append({"chunk_id": cid, "document_id": doc, "page": page, "meta": {"company_id": row.get("company_id"), "period": row.get(f"{side}_period_actual") or row.get(f"{side}_period")}})
-        for hit in candidates:
-            if not isinstance(hit, dict):
-                continue
-            chunk_id = str(hit.get("chunk_id") or hit.get("id") or "")
-            meta = hit.get("meta") if isinstance(hit.get("meta"), dict) else {}
-            doc_id = str(hit.get("document_id") or meta.get("document_id") or chunk_id.split(":")[0] or "")
-            raw_page = meta.get("page", hit.get("page"))
-            try:
-                page = int(raw_page)
-            except (TypeError, ValueError):
-                continue
-            if not doc_id:
-                continue
-            key = (doc_id[:12].lower(), page, chunk_id)
-            if key in seen:
-                continue
-            seen.add(key)
-            items.append(EvidenceItem(
-                document_id=doc_id,
-                pdf_page=page,
-                citation=f"[{doc_id[:12]} p.{page}]",
-                citation_label=_citation_label(meta, doc_id, page),
-                text=str(hit.get("text") or "")[:600],
-            ))
+                for hit in hits:
+                    add_candidate(hit)
+            for row in result.get("rows") or []:
+                if not isinstance(row, dict):
+                    continue
+                for side in ("base", "compare"):
+                    cid = row.get(f"{side}_citation")
+                    page = row.get(f"{side}_page")
+                    doc = row.get(f"{side}_document_id")
+                    if cid and page is not None:
+                        add_candidate({"chunk_id": cid, "document_id": doc, "page": page, "meta": {"company_id": row.get("company_id"), "display_name": row.get("display_name"), "period": row.get(f"{side}_period_actual") or row.get(f"{side}_period"), "reporting_basis": row.get("reporting_basis")}})
+            for item in result.get("ranked") or []:
+                if not isinstance(item, dict):
+                    continue
+                cid = item.get("citation")
+                if cid and item.get("page") is not None:
+                    add_candidate({"chunk_id": cid, "document_id": item.get("document_id"), "page": item.get("page"), "meta": {"company_id": item.get("company_id"), "display_name": item.get("display_name"), "period": item.get("period"), "reporting_basis": item.get("reporting_basis")}})
+            if entry.get("tool") == "get_metric" and result.get("citation") and result.get("page") is not None:
+                add_candidate({"chunk_id": result.get("citation"), "document_id": result.get("document_id"), "page": result.get("page"), "meta": {"company_id": result.get("company_id"), "display_name": result.get("display_name"), "period": result.get("period"), "reporting_basis": result.get("reporting_basis")}})
     return items
 
 
 def _citation_status(answer: str, evidence: list[EvidenceItem], citations: list[str] | None = None, figures: list[dict[str, Any]] | None = None) -> str:
     refs = _answer_refs(answer)
-    # also accept refs from formatted citation list
     for c in citations or []:
         refs.update((d.lower(), int(p)) for d, p in _CITATION_RE.findall(str(c)))
     if not refs:
-        # if figures exist but none have both doc+page, not cited
-        figs = [f for f in (figures or []) if isinstance(f, dict)]
-        if figs:
-            all_have = all(f.get("document_id") and f.get("page") is not None for f in figs)
-            return "cited" if all_have else "no_citations"
         return "no_citations"
     available = {(item.document_id[:12].lower(), item.pdf_page) for item in evidence}
     missing = refs - available
     if not missing:
-        figs = [f for f in (figures or []) if isinstance(f, dict)]
-        if figs and not all(f.get("document_id") and f.get("page") is not None for f in figs):
-            return "partially_unresolved"
         return "cited"
     if len(missing) == len(refs):
         return "unresolved"
@@ -361,6 +399,13 @@ def _build_response(result: QuestionResult) -> AskResponse:
     )
     final_answer = state.get("final_answer") or {}
     figures = final_answer.get("figures") if isinstance(final_answer, dict) else []
+    citation_status = _citation_status(result.answer, evidence, result.citations, figures)
+    available = {(item.document_id[:12].lower(), item.pdf_page) for item in evidence}
+    unresolved = []
+    for c in list(result.citations):
+        refs = list(_CITATION_RE.findall(str(c)))
+        if refs and any((d.lower(), int(p)) not in available for d, p in refs):
+            unresolved.append(str(c))
     return AskResponse(
         answer=result.answer,
         citations=list(result.citations),
@@ -368,7 +413,8 @@ def _build_response(result: QuestionResult) -> AskResponse:
         trace=tool_results,
         session_id=result.session_id,
         stopped_reason=str(state.get("stop_reason") or "done"),
-        citation_status=_citation_status(result.answer, evidence, result.citations, figures),
+        citation_status=citation_status,
+        unresolved_citations=unresolved,
         refusal=refusal,
         escalated=bool(state.get("escalated") or refusal.escalate),
         tokens=result.token_count,
@@ -387,6 +433,21 @@ def _conversational_response(kind: str, request_id: str, latency_ms: int) -> Ask
     )
 
 
+def _refusal_response(reason: str, request_id: str, latency_ms: int, category: str = "") -> AskResponse:
+    return AskResponse(
+        answer=reason,
+        citations=[],
+        evidence=[],
+        trace=[],
+        stopped_reason="refused",
+        refusal=RefusalInfo(refused=True, reason=reason),
+        response_type="refusal",
+        conversation_kind=category,
+        request_id=request_id,
+        latency_ms=latency_ms,
+    )
+
+
 @app.post("/ask", response_model=AskResponse)
 async def ask(payload: AskRequest, request: Request):
     """Route conversational inputs locally; send financial questions to LangGraph."""
@@ -400,6 +461,15 @@ async def ask(payload: AskRequest, request: Request):
         log.info(
             "ask request_id=%s status=ok response_type=conversational kind=%s duration_ms=%d",
             request_id, kind, response.latency_ms,
+        )
+        return response
+    refusal = check_intent(payload.question)
+    if refusal.refused:
+        duration_ms = int((time.monotonic() - started) * 1000)
+        response = _refusal_response(refusal.reason, request_id, duration_ms, refusal.category)
+        log.info(
+            "ask request_id=%s status=ok response_type=refusal category=%s duration_ms=%d",
+            request_id, refusal.category, duration_ms,
         )
         return response
     try:
@@ -436,7 +506,11 @@ async def ask_stream(payload: AskRequest, request: Request):
     started = time.monotonic()
     request_id = uuid.uuid4().hex[:12]
     kind = classify_conversational(payload.question)
-    response_type = "conversational" if kind else "financial"
+    refusal = None if kind else check_intent(payload.question)
+    if refusal is not None and refusal.refused:
+        response_type = "refusal"
+    else:
+        response_type = "conversational" if kind else "financial"
     loop = asyncio.get_running_loop()
     queue: asyncio.Queue[dict[str, Any]] = asyncio.Queue()
     session_id = payload.session_id or uuid.uuid4().hex[:12]
@@ -494,6 +568,19 @@ async def ask_stream(payload: AskRequest, request: Request):
                                   "status": "completed", "label": "Completed"})
                 queue.put_nowait({"event": "final", "data": response.model_dump()})
                 queue.put_nowait({"event": "end"})
+            elif refusal is not None and refusal.refused:
+                response = _refusal_response(
+                    refusal.reason, request_id, int((time.monotonic() - started) * 1000), refusal.category
+                )
+                queue.put_nowait({
+                    "event": "answer", "type": "answer", "text": response.answer,
+                    "citations": [], "latency_s": response.latency_ms / 1000,
+                    "session_id": session_id,
+                })
+                queue.put_nowait({"event": "progress", "stage": "completed",
+                                  "status": "completed", "label": "Completed"})
+                queue.put_nowait({"event": "final", "data": response.model_dump()})
+                queue.put_nowait({"event": "end"})
             else:
                 task = asyncio.create_task(worker())
             while True:
@@ -507,14 +594,15 @@ async def ask_stream(payload: AskRequest, request: Request):
                     and time.monotonic() - started >= BACKEND_BUDGET_SECONDS
                 ):
                     message = (
-                        f"TimeoutError: question exceeded {BACKEND_BUDGET_SECONDS:g}s"
+                        f"Request timed out after {BACKEND_BUDGET_SECONDS:g}s. "
+                        "Partial results, if any, were emitted before timeout; timed-out work was stopped at the next deadline check."
                     )
                     yield _sse({"event": "error", "type": "error", "message": message})
                     event_count += 1
-                    yield _sse({"event": "error", "message": message})
+                    yield _sse({"event": "progress", "stage": "completed", "status": "failed", "label": "Timed out"})
                     event_count += 1
                     status = "error"
-                    error_category = message
+                    error_category = f"TimeoutError: question exceeded {BACKEND_BUDGET_SECONDS:g}s"
                     yield _sse({"event": "end"})
                     event_count += 1
                     break

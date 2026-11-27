@@ -1,0 +1,27 @@
+{
+  "arms": [
+    {
+      "answer_accuracy": 0.0,
+      "arm": "B0",
+      "citation_validity": 0.0,
+      "error_rate": 1.0,
+      "manifest_n_processed_this_run": 1,
+      "manifest_stopped_reason": "error rate 1/1 exceeded 5%",
+      "mean_latency_ms": 1,
+      "n": 1,
+      "n_citation_scored": 1,
+      "n_errors": 1,
+      "quota_errors": 0,
+      "tokens_per_query": 0,
+      "total_tokens": 0
+    }
+  ],
+  "code_state": "capstone-freeze / 72c610f",
+  "label": "run after agent code",
+  "n_dev_queries": 73,
+  "queries": "src.eval.prompting.inputs.load_dev_rows()",
+  "run_id": "after_agent_code_v8_final",
+  "scorer": "src.eval.prompting.scoring.score_prediction",
+  "split": "dev",
+  "stopped_reason": "B0: error rate 1/1 exceeded 5%"
+}

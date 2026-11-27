@@ -1,0 +1,65 @@
+{
+  "run_id": "day5_page_live_n10_final_smoke",
+  "live": true,
+  "split": "dev",
+  "limit": null,
+  "row_ids": [
+    "G-001",
+    "G-003",
+    "G-004",
+    "G-010",
+    "G-036",
+    "G-037",
+    "G-039",
+    "G-040",
+    "G-041",
+    "G-042"
+  ],
+  "missing_row_ids": [],
+  "source": "live",
+  "n_rows": 10,
+  "gold_hash": "828b6704037297cd2e86da4c514edd9665b1945ee9c062ae7e5a15e417f0b09c",
+  "model": "Qwen/Qwen3-8B",
+  "cost_price_source": "college endpoint: no published price; cost proxy is tokens only",
+  "index_version": "C2-cached-50221",
+  "prompt_version": "trackb-mvp-v1",
+  "orchestrator": "src.agent.service.run_question (src.agent.graph)",
+  "created_at": "2026-11-27T06:42:45",
+  "cache_enabled": "0",
+  "warmup": {
+    "created_at": "2026-11-27T06:42:45",
+    "cache_enabled": "0",
+    "retrieval_hybrid": "1",
+    "retrieval_rerank": "1",
+    "ok": true,
+    "steps": [
+      {
+        "name": "index",
+        "ok": true,
+        "result": "faiss",
+        "latency_ms": 12899
+      },
+      {
+        "name": "meta_rows",
+        "ok": true,
+        "result": "466799",
+        "latency_ms": 13186
+      },
+      {
+        "name": "reranker",
+        "ok": true,
+        "result": "True",
+        "latency_ms": 5052
+      },
+      {
+        "name": "query_embedding",
+        "ok": true,
+        "latency_s": 0.637,
+        "latency_ms": 637
+      }
+    ]
+  },
+  "stopped_reason": "complete",
+  "max_error_rate": 0.05,
+  "error_count": 0
+}

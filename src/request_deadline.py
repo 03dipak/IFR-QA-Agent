@@ -32,6 +32,18 @@ def check() -> None:
         raise TimeoutError("request deadline exceeded")
 
 
+def soft_check(margin_s: float = 20.0) -> None:
+    """Raise TimeoutError when only the soft-deadline margin remains."""
+    remaining_s = getattr(_local, "deadline", None)
+    if remaining_s is None:
+        return
+    left = float(remaining_s) - time.monotonic()
+    if left <= 0:
+        raise TimeoutError("request deadline exceeded")
+    if left <= float(margin_s):
+        raise TimeoutError(f"soft deadline reached ({left:.1f}s left)")
+
+
 def remaining(default_s: float) -> float:
     """Return the smaller of the call timeout and the remaining budget."""
     check()

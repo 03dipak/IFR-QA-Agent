@@ -1,0 +1,21 @@
+{
+  "run_id": "no_docker_api_v8",
+  "code_state": "capstone-freeze / 72c610f",
+  "docker_build": "NOT RUN: docker command unavailable in this environment",
+  "startup_commands": [
+    "API_RATE_LIMIT_PER_MINUTE=1 AGENT_RUN_TIMEOUT=600 RETRIEVAL_HYBRID=1 RETRIEVAL_RERANK=1 AGENT_CACHE_ENABLED=0 uv run uvicorn src.api:app --host 127.0.0.1 --port 8000",
+    "BACKEND_URL=http://127.0.0.1:8000 uv run streamlit run src/ui/app.py --server.port 8501"
+  ],
+  "health": {"status_code_file": "health.status", "status": 200, "body_file": "health.json"},
+  "ready": {"status_code_file": "ready.status", "status": 200, "ready": true, "backend": "faiss", "body_file": "ready.json"},
+  "rate_limit_test": {
+    "configured_limit_per_minute": 1,
+    "query": "hi",
+    "endpoint": "POST /ask",
+    "explanation": "The rate limiter runs before conversational routing. Query 1 populated the one-slot bucket and returned 200; query 2 returned 429 without invoking the LLM.",
+    "first": {"status": 200, "status_file": "query_1.status", "body_file": "query_1.body.json"},
+    "second": {"status": 429, "status_file": "query_2_429.status", "body_file": "query_2_429.body.json", "detail": "Rate limit exceeded"}
+  },
+  "logs": ["api.log", "ui.log"],
+  "secrets_or_pii_included": false
+}

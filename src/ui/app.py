@@ -162,7 +162,7 @@ def backend_ready(backend_url: str) -> tuple[bool, str]:
 
 
 def is_conversational(data: dict[str, Any]) -> bool:
-    return str(data.get("response_type", "financial")) == "conversational"
+    return str(data.get("response_type", "financial")) in {"conversational", "refusal"}
 
 
 def apply_final_event(progress: dict[str, dict[str, str]], event: dict[str, Any]) -> None:
@@ -175,14 +175,14 @@ def render_status(data: dict[str, Any]) -> None:
     refusal = data.get("refusal") or {}
     stopped = str(data.get("stopped_reason", ""))
     if refusal.get("refused") or stopped == "refused":
-        st.warning(f"Refusal: {refusal.get('reason', 'out of scope')}")
-    elif stopped == "no_evidence":
-        st.warning("Insufficient in-corpus evidence; no financial figure was returned.")
+        return
+    if stopped == "no_evidence":
+        st.warning("I could not find that figure in the available annual reports.")
     citation_status = str(data.get("citation_status", ""))
     if citation_status in {"unresolved", "partially_unresolved"}:
-        st.warning(f"Unresolved citations: status={citation_status}; verify evidence below.")
-    elif citation_status == "no_citations" and stopped not in {"no_evidence", "refused"}:
-        st.info("No page citations were returned with this answer.")
+        unresolved = [str(c) for c in (data.get("unresolved_citations") or [])]
+        detail = f" Affected citation(s): {', '.join(unresolved)}." if unresolved else ""
+        st.warning(f"Some citations could not be verified against the cited PDF pages.{detail}")
 
 
 def _citation_display(citation: str, evidence: list[dict[str, Any]]) -> str:
@@ -193,7 +193,7 @@ def _citation_display(citation: str, evidence: list[dict[str, Any]]) -> str:
         if c == text and item.get("citation_label"):
             return str(item["citation_label"])
     if page:
-        return f"Document {doc_id[:12]} · PDF page {page}"
+        return f"Annual report, PDF page {page}"
     return str(citation)
 
 
@@ -221,14 +221,27 @@ def render_calculations(calculations: list[dict[str, Any]]) -> None:
 
 
 def safe_trace(trace: list[dict[str, Any]]) -> list[dict[str, Any]]:
-    return [
-        {
+    rows = []
+    for step in trace:
+        if not isinstance(step, dict):
+            continue
+        latency = step.get("latency_ms")
+        row = {
             "tool": step.get("tool", ""),
             "status": "failed" if step.get("error") else "ok",
-            "latency_ms": step.get("latency_ms", 0),
+            "latency_ms": latency if isinstance(latency, (int, float)) and latency > 0 else "unmeasured",
         }
-        for step in trace
-    ]
+        if step.get("company_timings"):
+            row["company_timings"] = [
+                {
+                    "company": t.get("display_name") or t.get("company_id") or "",
+                    "status": "missing" if t.get("missing") else "ok",
+                    "latency_ms": t.get("latency_ms", "unmeasured"),
+                }
+                for t in step.get("company_timings", []) if isinstance(t, dict)
+            ]
+        rows.append(row)
+    return rows
 
 
 def render_answer(data: dict[str, Any]) -> None:
@@ -240,16 +253,9 @@ def render_answer(data: dict[str, Any]) -> None:
     evidence = list(data.get("evidence") or [])
     if citations:
         render_citations(citations, evidence)
-    if evidence:
-        with st.expander("Supporting evidence (document IDs + PDF pages)"):
-            render_evidence(evidence)
-    calculations = list(data.get("calculations") or [])
-    if calculations:
-        with st.expander("Calculation results"):
-            render_calculations(calculations)
     trace = list(data.get("trace") or [])
     if trace:
-        with st.expander("Execution trace"):
+        with st.expander("Execution trace", expanded=False):
             st.json({
                 "session_id": data.get("session_id", ""),
                 "stopped_reason": data.get("stopped_reason", ""),
@@ -271,13 +277,14 @@ def render_history(messages: list[dict[str, Any]]) -> None:
 
 
 def main() -> None:
-    st.set_page_config(page_title="IFR-QA Agent", page_icon="📄", layout="wide")
-    st.title("Indian Financial-Report QA Agent")
+    st.set_page_config(page_title="Indian Financial-Report QA Agent | Team DataOSS", page_icon="📄", layout="wide")
+    st.title("Indian Financial-Report QA Agent | Team DataOSS")
     st.caption("Streamlit UI → FastAPI REST → LangGraph agent → page-level retrieval")
 
     st.session_state.setdefault("messages", [])
     st.session_state.setdefault("pending_question", "")
     st.session_state.setdefault("progress", initial_progress())
+    st.session_state.setdefault("render_nonce", 0)
 
     examples = load_examples()
 
@@ -292,17 +299,13 @@ def main() -> None:
     timeout = st.sidebar.number_input(
         "Request timeout (seconds)", min_value=10, max_value=1200, value=int(REQUEST_TIMEOUT)
     )
-    st.sidebar.selectbox(
-        "Example questions",
-        ["Custom question"] + [label for label, _ in examples],
-        key="example_selector",
-        on_change=on_example_change,
-    )
+    # Example questions removed per UX request.
     if st.sidebar.button("New Chat"):
         st.session_state["messages"] = []
         st.session_state["pending_question"] = ""
         st.session_state["progress"] = initial_progress()
         st.session_state["chat_input"] = ""
+        st.session_state["render_nonce"] = st.session_state.get("render_nonce", 0) + 1
         st.rerun()
     ready, ready_error = backend_ready(backend_url)
     if ready:
@@ -332,6 +335,7 @@ def main() -> None:
         add_user_message(st.session_state["messages"], question.strip())
         st.session_state["pending_question"] = question.strip()
         st.session_state["progress"] = initial_progress()
+        st.session_state["render_nonce"] = st.session_state.get("render_nonce", 0) + 1
         st.rerun()
 
     if not pending:
@@ -341,15 +345,21 @@ def main() -> None:
     with st.chat_message("assistant"):
         status = st.status("Working...", expanded=True)
         answer_placeholder = st.empty()
-        status_lines = ["Request received"]
-        status.write("\n".join(f"- {line}" for line in status_lines))
+        status_lines: list[str] = []
+        seen_status: set[str] = set()
         started = time.monotonic()
         final_data: dict[str, Any] | None = None
         error_message = ""
 
         def show_status(label: str) -> None:
+            label = str(label).strip()
+            if not label or label in seen_status:
+                return
+            seen_status.add(label)
             status_lines.append(label)
             status.write("\n".join(f"- {line}" for line in status_lines))
+
+        show_status("Request received")
 
         try:
             for event in stream_answer(backend_url, pending, float(timeout)):
@@ -358,10 +368,22 @@ def main() -> None:
                     show_status(step_status_label(event))
                 elif kind == "tool":
                     show_status(tool_status_label(event))
+                elif kind == "company":
+                    company = str(event.get("display_name") or event.get("company_id") or "company")
+                    if event.get("missing"):
+                        show_status(f"{company}: missing ({event.get('reason','')})")
+                    else:
+                        val = event.get("value")
+                        unit = event.get("unit") or ""
+                        show_status(f"{company}: {val} {unit}".strip())
                 elif kind == "answer":
                     answer_placeholder.markdown(str(event.get("text") or ""))
                 elif event.get("event") == "progress":
                     apply_progress_event(progress, event)
+                    stage = str(event.get("stage") or "")
+                    label = STAGE_LABELS.get(stage)
+                    if label and stage not in {"request", "intent"}:
+                        show_status(label)
                 elif event.get("event") == "final":
                     apply_final_event(progress, event)
                     final_data = event.get("data") or {}
@@ -387,13 +409,35 @@ def main() -> None:
         if final_data is None:
             if not error_message:
                 error_message = "Streaming ended before the final answer was received."
+            friendly = error_message
+            if "TimeoutError: question exceeded" in error_message or "Request timed out" in error_message:
+                friendly = (
+                    "The request exceeded the time limit before completing. I can show only figures retrieved with citations; "
+                    "if nothing was retrieved, I could not confirm the requested figures before the time limit."
+                )
             status.update(label=f"Failed in {elapsed:.1f} s", state="error", expanded=False)
-            answer_placeholder.error(error_message)
-            add_assistant_message(st.session_state["messages"], error=error_message)
+            answer_placeholder.error(friendly)
+            add_assistant_message(st.session_state["messages"], error=friendly)
         else:
             status.update(label=f"Done in {elapsed:.1f} s", state="complete", expanded=False)
+            render_status(final_data)
+            citations = list(final_data.get("citations") or [])
+            evidence = list(final_data.get("evidence") or [])
+            if citations:
+                render_citations(citations, evidence)
+            trace = list(final_data.get("trace") or [])
+            if trace:
+                with st.expander("Execution trace", expanded=False):
+                    st.json({
+                        "session_id": final_data.get("session_id", ""),
+                        "stopped_reason": final_data.get("stopped_reason", ""),
+                        "tokens": final_data.get("tokens", 0),
+                        "latency_ms": final_data.get("latency_ms", 0),
+                        "trace": safe_trace(trace),
+                    })
             add_assistant_message(st.session_state["messages"], data=final_data)
         st.session_state["pending_question"] = ""
+        st.session_state["render_nonce"] = st.session_state.get("render_nonce", 0) + 1
         st.rerun()
 
 

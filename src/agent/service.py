@@ -3,6 +3,7 @@ from __future__ import annotations
 import hashlib
 import logging
 import os
+import re
 import threading
 import time
 from collections.abc import Callable
@@ -307,6 +308,34 @@ def _watch_question_timeout(
     timeout_state["logged"] = True
 
 
+def _clarification_response(question: str) -> str | None:
+    q = str(question or "").strip()
+    lower = q.lower()
+    if not q:
+        return None
+    if not any(token in lower for token in ("compare", "versus", "vs", "against")):
+        return None
+    if re.search(r"\btop\s+\d+\b", lower):
+        return None
+    try:
+        from .tools import detect_companies, detect_sector, list_companies
+        if detect_companies(q):
+            return None
+        sector = detect_sector(q)
+        if not sector:
+            return None
+        companies = list_companies(sector=sector).get("companies", [])
+        if len(companies) <= 3:
+            return None
+        sample = ", ".join(companies[:3])
+        return (
+            f"Please pick up to 3 companies from the {sector} corpus for this comparison "
+            f"(for example: {sample}). I can then compare them with cited figures."
+        )
+    except Exception:
+        return None
+
+
 def _formatted_citations(final_answer: dict[str, Any]) -> list[str]:
     pages: dict[str, Any] = {}
     doc_ids: dict[str, str] = {}
@@ -412,6 +441,35 @@ def run_question(
         raise ValueError("AGENT_RUN_TIMEOUT must be positive")
     budget.start(timeout_s)
     _write_log(safe_question, "", [], 0.0, [], thread_id, "", status="started")
+    clarification = _clarification_response(safe_question)
+    if clarification is not None:
+        latency_s = round(time.monotonic() - started, 3)
+        state = {
+            "stop_reason": "clarification",
+            "final_answer": {
+                "answer": clarification,
+                "citations": [],
+                "insufficient_evidence": True,
+                "figures": [],
+            },
+        }
+        result = QuestionResult(
+            state=state,
+            answer=clarification,
+            citations=[],
+            raw_citations=[],
+            draft_answer=clarification,
+            session_id=thread_id,
+            latency_s=latency_s,
+            steps=[],
+            events=[],
+            token_count=0,
+            stop_reason="clarification",
+            error_type="clarification",
+            trace_id=_trace_id(thread_id),
+        )
+        _write_log(safe_question, clarification, [], latency_s, [], thread_id, "", stop_reason="clarification", error_type="clarification", status="ok")
+        return result
     if decision.refused:
         latency_s = round(time.monotonic() - started, 3)
         state = {
@@ -480,12 +538,24 @@ def run_question(
         }
         with _langfuse_span(span_context) as span:
             try:
-                for raw_event in graph.stream(
-                    safe_question,
-                    thread_id=thread_id,
-                    callbacks=[handler] if handler is not None else None,
-                    metadata=trace_metadata,
-                ):
+                stream_kwargs = {
+                    "callbacks": [handler] if handler is not None else None,
+                    "metadata": trace_metadata,
+                }
+                try:
+                    event_iter = graph.stream(
+                        safe_question,
+                        thread_id=thread_id,
+                        on_event=on_event,
+                        **stream_kwargs,
+                    )
+                except TypeError:
+                    event_iter = graph.stream(
+                        safe_question,
+                        thread_id=thread_id,
+                        **stream_kwargs,
+                    )
+                for raw_event in event_iter:
                     if time.monotonic() - started >= timeout_s or timeout_state["timed_out"]:
                         raise TimeoutError(f"question exceeded {timeout_s:g}s")
                     event = mask_value(dict(raw_event))

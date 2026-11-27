@@ -932,11 +932,12 @@ def build_answer(
     missing = extracted.get("missing") or []
     conflicts = extracted.get("conflicts") or []
     insufficient = bool(extracted.get("insufficient_evidence"))
+    from .tools import display_name as _dname
     if conflicts:
         parts = []
         for conflict in conflicts:
             parts.append(
-                f"Conflicting {conflict['label']} for {conflict['company_id']}: "
+                f"Conflicting {conflict['label']} for {_dname(str(conflict['company_id']))}: "
                 f"{', '.join(conflict['values'])}"
             )
         return {
@@ -951,11 +952,11 @@ def build_answer(
         for fig in figures:
             unit = _display_unit(str(fig.get("unit") or "unit not stated in source"), query)
             parts.append(
-                f"{fig.get('company_id')} {fig.get('label')}: "
+                f"{_dname(str(fig.get('company_id')))} {fig.get('label')}: "
                 f"{fig.get('value')} ({unit})"
             )
         for item in missing:
-            parts.append(f"{item['company_id']}: label not found ({item['label']})")
+            parts.append(f"{_dname(str(item['company_id']))}: label not found ({item['label']})")
         if not parts:
             parts.append("label not found (requested figures)")
         return {
@@ -986,8 +987,8 @@ def build_answer(
         loser_unit = _display_unit(str(loser.get("unit") or "unit not stated in source"), query)
         unit = winner_unit if winner_unit != "unit not stated in source" else loser_unit
         answer = (
-            f"{winner_company} reports higher {label}: "
-            f"{winner.get('value')} vs {loser_company} {loser.get('value')}; "
+            f"{_dname(winner_company)} reports higher {label}: "
+            f"{winner.get('value')} vs {_dname(loser_company)} {loser.get('value')}; "
             f"difference {diff_text} ({unit})."
         )
     else:
@@ -997,7 +998,7 @@ def build_answer(
             prior = fig.get("prior")
             prior_text = f", prior {prior}" if prior not in (None, "") else ""
             parts.append(
-                f"{fig.get('company_id')} {fig.get('label')}: "
+                f"{_dname(str(fig.get('company_id')))} {fig.get('label')}: "
                 f"{fig.get('value')} ({unit}){prior_text}"
             )
         if len(figures) == 1 and any(t in lower for t in ("growth", "%", "percent", "percentage", "change")):

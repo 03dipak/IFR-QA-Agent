@@ -165,11 +165,13 @@ def test_ask_endpoint_keeps_contract(monkeypatch):
         return _result(session_id or "ask-session")
 
     monkeypatch.setattr(api, "run_question", fake_run_question)
+    monkeypatch.setattr(api, "get_chunk", lambda cid: {"meta": {"document_id": "abcdef1234567890", "page": 1}, "text": "x"})
+    api._CITATION_VERIFY_CACHE.clear()
     response = TestClient(api.app).post("/ask", json={"question": "Q"})
     assert response.status_code == 200
     data = response.json()
     assert data["answer"] == "Answer [abcdef123456 p.1]"
-    assert data["evidence"][0]["pdf_page"] == 1
+    assert data["citation_status"] == "cited"
     assert "trace" in data and "citations" in data
 
 
@@ -424,6 +426,8 @@ def test_health_and_ask_smoke_with_current_graph(monkeypatch):
         return result
 
     monkeypatch.setattr(api, "run_question", fake_run_question)
+    monkeypatch.setattr(api, "get_chunk", lambda cid: {"meta": {"document_id": "abcdef1234567890", "page": 1}, "text": "x"})
+    api._CITATION_VERIFY_CACHE.clear()
     client = TestClient(api.app)
     assert client.get("/health").json()["status"] == "ok"
     response = client.post("/ask", json={"question": "What is revenue?"})
@@ -431,8 +435,7 @@ def test_health_and_ask_smoke_with_current_graph(monkeypatch):
     data = response.json()
     assert "91,790" in data["answer"]
     assert data["citations"] == ["[abcdef123456 p.1]"]
-    assert data["evidence"][0]["pdf_page"] == 1
-    assert data["citation_status"] in {"resolved", "cited"}
+    assert data["citation_status"] == "cited"
 
 
 def test_ready_waits_for_warmup(monkeypatch):

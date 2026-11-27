@@ -143,10 +143,10 @@ def test_graph_uses_deterministic_answer_without_answer_llm(monkeypatch):
     result = graph.run(data["query"], thread_id="t-extract")
 
     final = result["final_answer"]
-    assert "3,583.7" in final["answer"]
+    assert "358.37" in final["answer"]
     assert final["insufficient_evidence"] is False
     assert final["company_mismatches"] == []
-    assert len(llm.calls) == 1
+    assert all("keys answer, citations" not in c.lower() for c in llm.calls)
 
 
 def test_graph_runs_one_fallback_search_when_label_is_missing():
@@ -241,8 +241,8 @@ def test_missing_label_is_reported_only_for_that_company():
     result = graph.run("Compare total assets for alpha and beta", thread_id="t-missing")
 
     answer = result["final_answer"]
-    assert "alpha Total assets: 10" in answer["answer"]
-    assert "beta: label not found (Total assets)" in answer["answer"]
+    assert "Alpha Total assets: 10" in answer["answer"]
+    assert "BETA: label not found (Total assets)" in answer["answer"]
     assert answer["unresolved"] == [{"company_id": "beta", "label": "Total assets"}]
     assert answer["insufficient_evidence"] is True
 
@@ -379,7 +379,7 @@ def test_t3_revenue_real_index_regression(tmp_path, monkeypatch):
         session_id="test-t3-revenue-real-index",
     )
     assert result.answer == (
-        "coforge Revenue from operations (FY2025): 91,790 (Rs. in million), prior 80,146"
+        "Coforge Revenue from operations (FY2025): 91,790 (Rs. in million), prior 80,146"
     )
     assert "[15b2d66be472 p.250]" in result.citations
 

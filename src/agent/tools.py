@@ -19,6 +19,8 @@ from typing import Any
 import numpy as np
 import yaml
 
+from src import request_deadline as budget
+
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 _META_CACHE_DIR = Path(os.environ.get("AGENT_META_CACHE_DIR", "data/cache"))
 LOGGER = logging.getLogger(__name__)
@@ -914,7 +916,30 @@ def _chunk_offsets_resolved(resolved_path: str) -> dict[str, tuple[int, int]]:
             for chunk_id, offset in zip(ids, raw, strict=True)}
 
 
+@lru_cache(maxsize=4)
+def _page_chunk_map_resolved(resolved_path: str) -> dict[tuple[str, str, int], str]:
+    rows = _meta_rows_resolved(resolved_path)
+    chunk_ids = json.loads((Path(resolved_path) / "chunk_ids.json").read_text(encoding="utf-8"))
+    page_map: dict[tuple[str, str, int], str] = {}
+    for chunk_id, row in zip(chunk_ids, rows, strict=False):
+        cid = str(chunk_id).strip()
+        if ":p" not in cid:
+            continue
+        company = str(row[0]).strip().lower()
+        document_id = str(row[4]).strip()
+        page = row[5]
+        if not company or not document_id or page in (None, ""):
+            continue
+        try:
+            key = (company, document_id, int(page))
+        except (TypeError, ValueError):
+            continue
+        page_map.setdefault(key, cid)
+    return page_map
+
+
 def get_chunk(chunk_id: str) -> dict[str, Any]:
+    budget.check()
     root = Path(_resolved_index_path())
     offset, size = _chunk_offsets_resolved(str(root))[chunk_id]
     with (root / "chunks.jsonl").open("rb") as fh:
@@ -1029,7 +1054,22 @@ def _display_name_map() -> dict[str, str]:
 
 def display_name(company_id: str) -> str:
     cid = str(company_id or "").strip()
-    return _display_name_map().get(cid, cid.replace("_", " ").strip())
+    if not cid:
+        return ""
+    mapped = _display_name_map().get(cid)
+    if mapped:
+        return str(mapped).strip()
+    # fallback: preserve acronyms reasonably
+    parts = cid.replace("_", " ").split()
+    out = []
+    for p in parts:
+        if p.isupper() and len(p) <= 5:
+            out.append(p)
+        elif len(p) <= 4 and p.isalpha():
+            out.append(p.upper())
+        else:
+            out.append(p.capitalize())
+    return " ".join(out).strip()
 
 
 @lru_cache(maxsize=1)
@@ -1117,7 +1157,37 @@ _METRIC_LABELS: dict[str, list[str]] = {
     "net profit": ["Net profit", "Profit after tax", "Profit for the year"],
     "profit after tax": ["Profit after tax", "Net profit", "Profit for the year"],
     "profit for the year": ["Profit for the year", "Profit after tax", "Net profit"],
+    "total liabilities": ["Total liabilities"],
+    "total equity and liabilities": ["Total equity and liabilities"],
+    "non current liabilities": ["Total non-current liabilities", "Non-current liabilities"],
+    "total non current liabilities": ["Total non-current liabilities", "Non-current liabilities"],
+    "current liabilities": ["Total current liabilities", "Current liabilities"],
+    "total current liabilities": ["Total current liabilities", "Current liabilities"],
 }
+
+
+_GET_METRIC_CACHE: dict[tuple[Any, ...], dict[str, Any]] = {}
+_GET_METRIC_CACHE_LOCK = threading.Lock()
+
+
+def clear_get_metric_cache() -> None:
+    with _GET_METRIC_CACHE_LOCK:
+        _GET_METRIC_CACHE.clear()
+
+
+def _metric_cache_key(company: str, metric: str, period: str | None, reporting_basis: str | None, statement_kind: str | None = None) -> tuple[Any, ...]:
+    try:
+        from .extract import normalize_label as _normalize_label
+        metric_key = _normalize_label(metric)
+    except Exception:
+        metric_key = str(metric or "").strip().lower()
+    return (
+        str(company or "").strip().lower(),
+        metric_key,
+        str(period or "").strip().upper() or None,
+        str(reporting_basis or "").strip().lower() or None,
+        str(statement_kind or "").strip().lower() or None,
+    )
 
 
 def get_metric(
@@ -1135,6 +1205,13 @@ def get_metric(
     company = str(company or "").strip()
     requested_period = _normalize_period_filter(period, fiscal_year)
     normalized_metric = normalize_label(metric)
+    cache_key = _metric_cache_key(company, metric, requested_period, reporting_basis, statement_kind)
+    with _GET_METRIC_CACHE_LOCK:
+        cached = _GET_METRIC_CACHE.get(cache_key)
+    if cached is not None:
+        return copy.deepcopy(cached)
+    budget.soft_check()
+
     sector = _sector_map().get(company, "")
     sector_labels = _sector_label_map().get(str(sector).lower(), {})
     banking_proxy = bool(sector and str(sector).lower() in _BANKING_SECTORS and normalized_metric in {
@@ -1171,14 +1248,22 @@ def get_metric(
             })
         # add corresponding page chunks for table hits to recover headers
         for chunk in list(out):
+            budget.soft_check()
             cid = str(chunk.get("chunk_id") or "")
             if ":t" not in cid:
                 continue
-            page = (chunk.get("meta") or {}).get("page")
-            doc = str((chunk.get("meta") or {}).get("document_id") or cid.split(":")[0])
-            if page is None or not doc:
+            meta = chunk.get("meta") or {}
+            page = meta.get("page")
+            doc = str(meta.get("document_id") or cid.split(":")[0])
+            company_id = str(meta.get("company_id") or company).strip().lower()
+            if page is None or not doc or not company_id:
                 continue
-            page_cid = f"{doc}:p{int(page)}"
+            try:
+                page_cid = _page_chunk_map_resolved(str(_resolved_index_path())).get((company_id, doc, int(page)))
+            except Exception:
+                page_cid = None
+            if not page_cid:
+                page_cid = f"{doc}:p{int(page)}"
             if page_cid in seen:
                 continue
             try:
@@ -1307,6 +1392,7 @@ def get_metric(
     fig: dict[str, Any] | None = None
     searched_periods: list[str | None] = []
     for p_search in periods_to_search:
+        budget.soft_check()
         searched_periods.append(p_search)
         new_chunks = _search_chunks(p_search)
         existing_ids = {str(c.get("chunk_id") or "") for c in chunks}
@@ -1318,6 +1404,7 @@ def get_metric(
             break
     if fig is None and requested_period:
         for p_search in searched_periods:
+            budget.soft_check()
             scan_chunks = _statement_scan_chunks(p_search)
             existing_ids = {str(c.get("chunk_id") or "") for c in chunks}
             for c in scan_chunks:
@@ -1325,6 +1412,9 @@ def get_metric(
                     chunks.append(c)
         fig = _resolve(chunks)
 
+    note = "banking revenue proxy" if banking_proxy else None
+    if fig is not None and normalized_metric == "total liabilities" and "equity" in normalize_label(str(fig.get("label") or "")):
+        fig = None
     if fig is not None:
         fig_doc = str((fig.get("chunk_id") or "")).split(":")[0]
         fig_period = str(fig.get("period") or requested_period or "").strip().lower()
@@ -1355,8 +1445,6 @@ def get_metric(
                     fig["unit"] = candidate_unit
                     fig["unit_source"] = "same_page_header"
                     break
-
-        note = "banking revenue proxy" if banking_proxy else None
         if fig.get("comparative_column"):
             note = ((note + "; ") if note else "") + "comparative column"
         printed_value = fig.get("value")
@@ -1388,7 +1476,7 @@ def get_metric(
             page = int(page) if page is not None else None
         except (TypeError, ValueError):
             page = None
-        return {
+        result = {
             "company_id": company,
             "display_name": display_name(company),
             "metric": metric,
@@ -1415,6 +1503,67 @@ def get_metric(
             "statement_header": fig.get("statement_header"),
             "raw_row": fig.get("raw_row"),
         }
+        with _GET_METRIC_CACHE_LOCK:
+            _GET_METRIC_CACHE[cache_key] = copy.deepcopy(result)
+        return result
+    if normalized_metric == "total liabilities":
+        def _is_equity_inclusive(label: str) -> bool:
+            low = normalize_label(label)
+            return "equity" in low and "liabilit" in low
+
+        for basis_try in ([reporting_basis] if reporting_basis else ["consolidated", "standalone"]):
+            nc = get_metric(company, "Total non-current liabilities", fiscal_year=fiscal_year, period=period, statement_kind=statement_kind, reporting_basis=basis_try)
+            cu = get_metric(company, "Total current liabilities", fiscal_year=fiscal_year, period=period, statement_kind=statement_kind, reporting_basis=basis_try)
+            if nc.get("missing") or cu.get("missing"):
+                continue
+            if str(nc.get("period","")).upper() != str(cu.get("period","")).upper():
+                continue
+            nc_unit = str(nc.get("unit") or "")
+            cu_unit = str(cu.get("unit") or "")
+            if nc_unit != cu_unit or "not stated" in nc_unit.lower():
+                continue
+            try:
+                total_val = Decimal(str(nc.get("value")).replace(",", "")) + Decimal(str(cu.get("value")).replace(",", ""))
+            except Exception:
+                continue
+            out_val = format(total_val.normalize(), "f")
+            if "." in out_val:
+                out_val = out_val.rstrip("0").rstrip(".")
+            result = {
+                "company_id": company,
+                "display_name": display_name(company),
+                "metric": metric,
+                "label_used": "Computed: Total non-current liabilities + Total current liabilities",
+                "printed_value": out_val,
+                "printed_unit": nc_unit,
+                "value": out_val,
+                "unit": nc_unit,
+                "citation": nc.get("citation"),
+                "document_id": nc.get("document_id"),
+                "page": nc.get("page"),
+                "period": nc.get("period") or requested_period,
+                "source_period": nc.get("source_period"),
+                "column_header": nc.get("column_header") or nc.get("statement_header"),
+                "comparative_column": bool(nc.get("comparative_column") or cu.get("comparative_column")),
+                "reporting_basis": nc.get("reporting_basis") or basis_try,
+                "statement_kind": nc.get("statement_kind"),
+                "missing": False,
+                "derived": True,
+                "note": "Computed from printed balance-sheet components; not a separately printed total-liabilities line.",
+                "sector": sector,
+                "normalized_to_crore": bool(nc.get("normalized_to_crore") and cu.get("normalized_to_crore")),
+                "excluded_for_ranking": False,
+                "statement_header": nc.get("statement_header"),
+                "raw_row": None,
+                "components": {
+                    "non_current_liabilities": {"value": nc.get("value"), "unit": nc_unit, "citation": nc.get("citation"), "page": nc.get("page"), "document_id": nc.get("document_id"), "label_used": nc.get("label_used")},
+                    "current_liabilities": {"value": cu.get("value"), "unit": cu_unit, "citation": cu.get("citation"), "page": cu.get("page"), "document_id": cu.get("document_id"), "label_used": cu.get("label_used")},
+                },
+            }
+            with _GET_METRIC_CACHE_LOCK:
+                _GET_METRIC_CACHE[cache_key] = copy.deepcopy(result)
+            return result
+
     if normalized_metric in {"operating profit", "operating profit margin"}:
         margin_requested = normalized_metric == "operating profit margin"
         # enforce same basis: try consolidated then standalone
@@ -1440,7 +1589,7 @@ def get_metric(
             exp_missing = expenses.get("missing") or not normalize_label(exp_label).startswith("total expenses")
             fin_missing = finance.get("missing")
             if rev_missing or exp_missing or fin_missing:
-                return {
+                missing_result = {
                     "company_id": company,
                     "display_name": display_name(company),
                     "metric": metric,
@@ -1464,6 +1613,9 @@ def get_metric(
                         "finance_costs": {"value": finance.get("value"), "unit": finance.get("unit"), "missing": fin_missing},
                     },
                 }
+                with _GET_METRIC_CACHE_LOCK:
+                    _GET_METRIC_CACHE[cache_key] = copy.deepcopy(missing_result)
+                return missing_result
             try:
                 rev = Decimal(str(revenue.get("value")).replace(",", ""))
                 exp = Decimal(str(expenses.get("value")).replace(",", ""))
@@ -1471,7 +1623,7 @@ def get_metric(
                 margin = (rev - exp + fin) / rev * 100 if rev != 0 else None
                 margin_val = round(float(margin), 2) if margin is not None else None
                 out_of_range = margin_val is not None and (margin_val < -50 or margin_val > 60)
-                return {
+                result = {
                     "company_id": company,
                     "metric": metric,
                     "label_used": "Derived: (Revenue - Total expenses + Finance costs) / Revenue",
@@ -1494,6 +1646,37 @@ def get_metric(
                         "finance_costs": {"value": finance.get("value"), "unit": finance.get("unit"), "missing": False, "label_used": finance.get("label_used")},
                     },
                 }
+                with _GET_METRIC_CACHE_LOCK:
+                    _GET_METRIC_CACHE[cache_key] = copy.deepcopy(result)
+                return result
+            except Exception:
+                missing_result = {
+                    "company_id": company,
+                    "display_name": display_name(company),
+                    "metric": metric,
+                    "label_used": "Derived: (Revenue - Total expenses + Finance costs) / Revenue",
+                    "value": None,
+                    "unit": "percent",
+                    "citation": [c for c in (revenue.get("citation"), expenses.get("citation"), finance.get("citation")) if c],
+                    "document_id": revenue.get("document_id") or expenses.get("document_id") or finance.get("document_id"),
+                    "page": revenue.get("page") or expenses.get("page") or finance.get("page"),
+                    "period": requested_period,
+                    "reporting_basis": revenue.get("reporting_basis"),
+                    "statement_kind": revenue.get("statement_kind"),
+                    "missing": True,
+                    "derived": True,
+                    "formula": "(Revenue - Total expenses + Finance costs) / Revenue * 100",
+                    "note": (("standalone; " if str(chosen_basis).lower()=="standalone" else "") + "calculation failed").strip("; "),
+                    "sector": sector,
+                    "components": {
+                        "revenue": {"value": revenue.get("value"), "unit": revenue.get("unit"), "missing": revenue.get("missing")},
+                        "total_expenses": {"value": expenses.get("value"), "unit": expenses.get("unit"), "missing": expenses.get("missing"), "label_used": expenses.get("label_used")},
+                        "finance_costs": {"value": finance.get("value"), "unit": finance.get("unit"), "missing": finance.get("missing")},
+                    },
+                }
+                with _GET_METRIC_CACHE_LOCK:
+                    _GET_METRIC_CACHE[cache_key] = copy.deepcopy(missing_result)
+                return missing_result
             except (InvalidOperation, ValueError):
                 pass
         if not expenses.get("missing") and not revenue.get("missing"):
@@ -1527,22 +1710,23 @@ def get_metric(
                 }
             except (InvalidOperation, ValueError):
                 pass
-    return {
+    missing_result = {
         "company_id": company,
         "display_name": display_name(company),
         "metric": metric,
-        "label_used": None,
+        "label_used": str(metric),
         "value": None,
         "unit": None,
         "citation": None,
         "period": requested_period,
-        "reporting_basis": None,
-        "statement_kind": None,
         "missing": True,
         "derived": False,
-        "note": "banking revenue proxy" if banking_proxy else None,
+        "note": note,
         "sector": sector,
     }
+    with _GET_METRIC_CACHE_LOCK:
+        _GET_METRIC_CACHE[cache_key] = copy.deepcopy(missing_result)
+    return missing_result
 
 
 def compute_growth(current: Any, prior: Any) -> dict[str, Any]:
@@ -1591,6 +1775,7 @@ def rank_companies(
     n: int = 10,
     statement_kind: str | None = None,
     reporting_basis: str | None = None,
+    on_company: Callable[[dict[str, Any]], None] | None = None,
 ) -> dict[str, Any]:
     from decimal import Decimal
 
@@ -1611,16 +1796,31 @@ def rank_companies(
     rows: list[dict[str, Any]] = []
     missing: list[dict[str, Any]] = []
     for company in companies:
+        t0 = time.monotonic()
+        try:
+            budget.soft_check()
+        except Exception as exc:
+            reason = f"Stopped by soft deadline: {exc}"
+            missing.append({"company_id": company, "reason": reason})
+            if on_company is not None:
+                on_company({"company_id": company, "display_name": display_name(company), "missing": True, "reason": reason, "latency_ms": int((time.monotonic()-t0)*1000)})
+            continue
         result = get_metric(
             company, metric, fiscal_year=fiscal_year, period=requested_period,
             statement_kind=statement_kind, reporting_basis=reporting_basis,
         )
         if result.get("missing"):
-            missing.append({"company_id": company, "reason": "No consolidated statement figure with matching year column header"})
+            reason = str(result.get("reason") or "No consolidated statement figure with matching year column header")
+            missing.append({"company_id": company, "reason": reason})
+            if on_company is not None:
+                on_company({"company_id": company, "display_name": display_name(company), "missing": True, "reason": reason, "period": result.get("period"), "citation": result.get("citation"), "latency_ms": int((time.monotonic()-t0)*1000)})
             continue
         actual_period = str(result.get("period") or "").strip().upper()
         if actual_period and requested_period and actual_period != str(requested_period).upper():
-            missing.append({"company_id": company, "reason": f"Period mismatch: got {actual_period}"})
+            reason = f"Period mismatch: got {actual_period}"
+            missing.append({"company_id": company, "reason": reason})
+            if on_company is not None:
+                on_company({"company_id": company, "display_name": display_name(company), "missing": True, "reason": reason, "period": result.get("period"), "citation": result.get("citation"), "latency_ms": int((time.monotonic()-t0)*1000)})
             continue
         unit = str(result.get("unit") or "")
         lower_unit = unit.lower()
@@ -1642,7 +1842,10 @@ def rank_companies(
             elif "crore" in lower_unit or " cr" in lower_unit or lower_unit.endswith("cr"):
                 converted = raw_value
         if converted is None or result.get("excluded_for_ranking"):
-            missing.append({"company_id": company, "reason": "Unknown or unverified unit; excluded from ranking"})
+            reason = str(result.get("reason") or "Unknown or unverified unit; excluded from ranking")
+            missing.append({"company_id": company, "reason": reason})
+            if on_company is not None:
+                on_company({"company_id": company, "display_name": display_name(company), "missing": True, "reason": reason, "period": result.get("period"), "citation": result.get("citation"), "latency_ms": int((time.monotonic()-t0)*1000)})
             continue
         row = {
             "company_id": str(result.get("company_id") or company).strip(),
@@ -1669,9 +1872,23 @@ def rank_companies(
         if isinstance(result.get("components"), dict):
             row["components"] = result["components"]
         if "revenue" in str(metric).lower() and not str(row.get("sector") or "").strip():
-            missing.append({"company_id": company, "reason": "Sector metadata unavailable"})
+            reason = "Sector metadata unavailable"
+            missing.append({"company_id": company, "reason": reason})
+            if on_company is not None:
+                on_company({"company_id": company, "display_name": display_name(company), "missing": True, "reason": reason, "latency_ms": int((time.monotonic()-t0)*1000)})
             continue
         rows.append(row)
+        if on_company is not None:
+            on_company({
+                "company_id": row["company_id"],
+                "display_name": row["display_name"],
+                "missing": False,
+                "value": row.get("value"),
+                "unit": row.get("unit"),
+                "citation": row.get("citation"),
+                "period": row.get("period"),
+                "latency_ms": int((time.monotonic()-t0)*1000),
+            })
     def _key(item: dict[str, Any]) -> Decimal:
         for field in ("value_in_crore", "value"):
             try:
@@ -1744,6 +1961,7 @@ def compare_periods(
     fiscal_year: Any = None,
     statement_kind: str | None = None,
     reporting_basis: str | None = None,
+    on_company: Callable[[dict[str, Any]], None] | None = None,
 ) -> dict[str, Any]:
     base_p = _normalize_period_filter(base_period, fiscal_year)
     compare_p = _normalize_period_filter(compare_period, fiscal_year)
@@ -1754,6 +1972,26 @@ def compare_periods(
     companies = sorted(base_companies | compare_companies)
     rows: list[dict[str, Any]] = []
     for company in companies:
+        t0 = time.monotonic()
+        try:
+            budget.soft_check()
+        except Exception as exc:
+            dn = display_name(company)
+            row = {
+                "company_id": company, "display_name": dn, "base_period": base_p, "compare_period": compare_p,
+                "base_value": None, "compare_value": None,
+                "growth_percent": None, "base_citation": None, "compare_citation": None,
+                "base_document_id": None, "compare_document_id": None,
+                "base_page": None, "compare_page": None,
+                "base_period_actual": None, "compare_period_actual": None,
+                "unit": None, "missing": True,
+                "reporting_basis": reporting_basis,
+                "note": f"Stopped by soft deadline: {exc}", "check_extraction": False,
+            }
+            rows.append(row)
+            if on_company is not None:
+                on_company({"company_id": company, "display_name": dn, "missing": True, "reason": row["note"], "latency_ms": int((time.monotonic()-t0)*1000)})
+            continue
         base_result = get_metric(
             company, metric, period=base_p, statement_kind=statement_kind,
             reporting_basis=reporting_basis,
@@ -1774,7 +2012,7 @@ def compare_periods(
                 compare_result["missing"] = True
         dn = display_name(company)
         if base_result.get("missing") or compare_result.get("missing"):
-            rows.append({
+            row = {
                 "company_id": company, "display_name": dn, "base_period": base_p, "compare_period": compare_p,
                 "base_value": base_result.get("value"), "compare_value": compare_result.get("value"),
                 "growth_percent": None, "base_citation": base_result.get("citation"), "compare_citation": compare_result.get("citation"),
@@ -1784,7 +2022,10 @@ def compare_periods(
                 "unit": base_result.get("unit") or compare_result.get("unit"), "missing": True,
                 "reporting_basis": base_result.get("reporting_basis") or compare_result.get("reporting_basis"),
                 "note": base_result.get("note") or compare_result.get("note"),
-            })
+            }
+            rows.append(row)
+            if on_company is not None:
+                on_company({"company_id": company, "display_name": dn, "missing": True, "reason": row.get("note"), "base_citation": row.get("base_citation"), "compare_citation": row.get("compare_citation"), "latency_ms": int((time.monotonic()-t0)*1000)})
             continue
         growth = compute_growth(compare_result.get("value"), base_result.get("value"))
         growth_pct = growth.get("growth_percent")
@@ -1792,7 +2033,7 @@ def compare_periods(
         note = base_result.get("note") or compare_result.get("note")
         if check_extraction:
             note = ((str(note) + "; ") if note else "") + "check extraction"
-        rows.append({
+        row = {
             "company_id": company, "display_name": dn, "base_period": base_p, "compare_period": compare_p,
             "base_value": base_result.get("value"), "compare_value": compare_result.get("value"),
             "growth_percent": growth_pct, "base_citation": base_result.get("citation"), "compare_citation": compare_result.get("citation"),
@@ -1802,7 +2043,10 @@ def compare_periods(
             "unit": base_result.get("unit") or compare_result.get("unit"), "missing": False,
             "reporting_basis": base_result.get("reporting_basis") or compare_result.get("reporting_basis"),
             "note": note, "check_extraction": check_extraction,
-        })
+        }
+        rows.append(row)
+        if on_company is not None:
+            on_company({"company_id": company, "display_name": dn, "missing": False, "growth_percent": growth_pct, "base_citation": row.get("base_citation"), "compare_citation": row.get("compare_citation"), "latency_ms": int((time.monotonic()-t0)*1000)})
     return {
         "metric": metric,
         "base_period": base_p,

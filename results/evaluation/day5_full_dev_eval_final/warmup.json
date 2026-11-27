@@ -1,0 +1,33 @@
+{
+  "created_at": "2026-11-27T06:58:40",
+  "cache_enabled": "0",
+  "retrieval_hybrid": "1",
+  "retrieval_rerank": "1",
+  "ok": true,
+  "steps": [
+    {
+      "name": "index",
+      "ok": true,
+      "result": "faiss",
+      "latency_ms": 7227
+    },
+    {
+      "name": "meta_rows",
+      "ok": true,
+      "result": "466799",
+      "latency_ms": 17937
+    },
+    {
+      "name": "reranker",
+      "ok": true,
+      "result": "True",
+      "latency_ms": 3068
+    },
+    {
+      "name": "query_embedding",
+      "ok": true,
+      "latency_s": 0.235,
+      "latency_ms": 235
+    }
+  ]
+}

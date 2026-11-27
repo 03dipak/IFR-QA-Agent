@@ -1,0 +1,32 @@
+{
+  "failure_rules": {
+    "tool_failure": "a tool raised or returned an error observation",
+    "token_exhaustion": "stopped_reason indicates token_budget",
+    "loop": "stopped_reason indicates loop detection or no progress",
+    "timeout": "stopped_reason indicates timeout",
+    "incomplete_task": "run did not complete a plan or returned no answer",
+    "false_refusal": "refused a gold answer row",
+    "missed_refusal": "answered a gold abstain/refusal row",
+    "citation_issue": "answer citation missing or not matching gold doc/page",
+    "incorrect_answer": "answer figure/text does not match gold",
+    "agent_error": "live agent raised an exception",
+    "quota_exhausted": "endpoint quota or rate-limit error"
+  },
+  "rows": [
+    {
+      "row_id": "G-037",
+      "failures": [
+        "incorrect_answer",
+        "citation_issue"
+      ],
+      "stopped_reason": "accepted"
+    },
+    {
+      "row_id": "G-039",
+      "failures": [
+        "agent_error"
+      ],
+      "stopped_reason": "accepted"
+    }
+  ]
+}
