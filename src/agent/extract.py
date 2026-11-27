@@ -346,30 +346,61 @@ def _statement_header(chunk: dict[str, Any]) -> str:
 _NON_FACE_PL_TOKENS = (
     "summarised", "summarized", "summary", "notes to", "note to",
     "segment", "subsidiary", "joint venture", "associate",
-    "breakup", "break-up",
+    "breakup", "break-up", "operating segment",
 )
 
 
 def _is_non_face_pl_context(chunk: dict[str, Any], lines: list[str], row_index: int) -> bool:
     text_low = str(chunk.get("text") or "").lower()
-    head = " ".join(str(l or "").lower() for l in lines[:12])
-    if any(tok in head for tok in ("notes to", "note to")):
+    head_lines = [str(l or "").lower() for l in lines[:20]]
+    head = " ".join(head_lines)
+    is_face_statement = any(
+        tok in h
+        for h in head_lines
+        for tok in ("statement of profit and loss", "income statement", "statement of profit")
+    ) and not any(t in head for t in ("summarised", "summarized", "summary", "reconciliation of revenue"))
+    chunk_id = str(chunk.get("chunk_id") or "")
+    meta = _meta(chunk)
+    is_table_chunk = ":t" in chunk_id or str(meta.get("chunk_type") or "").lower() == "table"
+    if is_table_chunk and not is_face_statement:
+        non_face_ctx = any(
+            tok in head
+            for tok in ("notes to", "note to", "notes forming part", "operating segment", "segment revenue", "disaggregation of revenue", "reconciliation of revenue", "summarised", "summarized", "summary")
+        ) or head_lines[:1] == ["notes"] or any(
+            "reconciliation" in str(lines[i] or "").lower() or "disaggregation of revenue" in str(lines[i] or "").lower()
+            for i in range(max(0, row_index - 10), min(len(lines), row_index + 3))
+        )
+        small_note_table = len([l for l in lines if str(l).strip()]) <= 8 and "total revenue from contracts with customers" in text_low
+        if "share of profit/(loss) from joint venture" in text_low or "share of profit from joint venture" in text_low:
+            return True
+        if non_face_ctx or small_note_table:
+            return True
+    if any(tok in head for tok in ("notes to", "note to", "notes forming part")) and not is_face_statement:
         return True
-    # inspect local section heading near row
-    for idx in range(row_index, max(-1, row_index - 12), -1):
+    if head_lines and head_lines[0].strip().startswith("notes") and not is_face_statement:
+        return True
+    if "operating segment" in head or "segment revenue" in head:
+        return True
+    local_window = " ".join(str(lines[i] or "").lower() for i in range(max(0, row_index - 10), min(len(lines), row_index + 3)))
+    if "reconciliation of revenue" in local_window or ("reconciliation of" in local_window and "contract" in local_window):
+        return True
+    if "disaggregation of revenue" in local_window and not is_face_statement:
+        return True
+    for idx in range(row_index, max(-1, row_index - 20), -1):
         low = str(lines[idx] or "").lower()
         if any(tok in low for tok in _NON_FACE_PL_TOKENS):
-            # allow "Statement of Profit and Loss" face heading alone
             if ("statement of profit and loss" in low or "income statement" in low) and not any(
                 t in low for t in ("summarised", "summarized", "summary", "reconciliation")
             ):
                 continue
             return True
+        if "reconciliation" in low or "disaggregation of revenue" in low:
+            return not is_face_statement
         if "statement of profit and loss" in low or "income statement" in low or "statement of profit" in low:
             if any(t in low for t in ("summarised", "summarized", "summary")):
                 return True
-            return False
-    return any(tok in text_low[:220] for tok in ("notes to", "note to"))
+            return any(tok in head for tok in ("notes to", "note to", "notes forming part", "operating segment")) and not is_face_statement
+    return any(tok in text_low[:220] for tok in ("notes to", "note to")) and not is_face_statement
 
 
 def _section_kind_at(lines: list[str], row_index: int) -> str | None:
@@ -618,6 +649,15 @@ def _candidates_for(
                 has_any_header = any(len(_YEAR_TOKEN.findall(str(l or ""))) >= 2 for l in lines)
                 if has_any_header:
                     continue
+                meta_period_norm = str(base.get("meta_period") or "").upper()
+                req_norm = str(period or "").upper()
+                if meta_period_norm and req_norm and meta_period_norm != req_norm:
+                    # legacy headerless: allow only closest older period, not future period
+                    try:
+                        if int(meta_period_norm[2:]) > int(req_norm[2:]):
+                            continue
+                    except Exception:
+                        continue
             if equity_profit:
                 current = numbers[-1]
                 prior = None
@@ -645,7 +685,7 @@ def _candidates_for(
             candidate.update({
                 "value": current,
                 "prior": prior,
-                "period": str(base.get("meta_period") or period or "").lower(),
+                "period": str(period or base.get("meta_period") or "").lower(),
                 "two_column": True if equity_profit else len(numbers) == 2,
                 "equity_statement": equity_profit,
                 "multi_year_row": multi_year,
@@ -790,7 +830,11 @@ def extract_figures(
         request_period = str(request.get("period") or period or "").strip() or None
         if not company or not label:
             continue
-        require_pl = normalize_label(label) in {"total expenses", "revenue from operations", "total revenue", "total income", "net sales", "profit for the year", "profit after tax", "net profit"}
+        require_pl = normalize_label(label) in {
+            "total expenses", "revenue from operations", "total revenue from operations",
+            "total revenue", "total income", "net sales", "profit for the year",
+            "profit after tax", "net profit",
+        }
         candidates = _filter_candidates(
             _candidates_for(ordered, company, label, require_pl=require_pl, period=request_period),
             request_period, basis, statement_kind,

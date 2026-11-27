@@ -48,6 +48,37 @@ for _name in (
 
 BACKEND_BUDGET_SECONDS = float(os.environ["AGENT_RUN_TIMEOUT"])
 
+_RATE_LIMIT_WINDOW_SECONDS = float(os.environ.get("API_RATE_LIMIT_WINDOW_SECONDS", "60"))
+_RATE_LIMIT_LOCK = __import__("threading").Lock()
+_RATE_LIMIT_BUCKETS: dict[str, list[float]] = {}
+
+
+def _rate_limit_client_id(request: Request) -> str:
+    if request.client and request.client.host:
+        return request.client.host
+    return "unknown"
+
+
+def _enforce_rate_limit(request: Request) -> None:
+    """Simple per-client fixed-window limit for query endpoints."""
+    limit_text = os.environ.get("API_RATE_LIMIT_PER_MINUTE", "60")
+    try:
+        limit = int(limit_text)
+    except ValueError:
+        limit = 60
+    if limit <= 0:
+        return
+    now = time.monotonic()
+    client_id = _rate_limit_client_id(request)
+    with _RATE_LIMIT_LOCK:
+        bucket = _RATE_LIMIT_BUCKETS.setdefault(client_id, [])
+        cutoff = now - _RATE_LIMIT_WINDOW_SECONDS
+        while bucket and bucket[0] <= cutoff:
+            bucket.pop(0)
+        if len(bucket) >= limit:
+            raise HTTPException(status_code=429, detail="Rate limit exceeded")
+        bucket.append(now)
+
 _CITATION_RE = re.compile(r"\[([0-9a-f]{12}) p\.(\d+)\]", re.I)
 _index_path_value = os.environ.get("AGENT_INDEX_PATH")
 if not _index_path_value:
@@ -359,6 +390,7 @@ def _conversational_response(kind: str, request_id: str, latency_ms: int) -> Ask
 @app.post("/ask", response_model=AskResponse)
 async def ask(payload: AskRequest, request: Request):
     """Route conversational inputs locally; send financial questions to LangGraph."""
+    _enforce_rate_limit(request)
     started = time.monotonic()
     request_id = uuid.uuid4().hex[:12]
     kind = classify_conversational(payload.question)
@@ -400,6 +432,7 @@ def _sse(payload: dict[str, Any]) -> str:
 @app.post("/ask/stream")
 async def ask_stream(payload: AskRequest, request: Request):
     """Stream shared service step/tool events, then the structured answer."""
+    _enforce_rate_limit(request)
     started = time.monotonic()
     request_id = uuid.uuid4().hex[:12]
     kind = classify_conversational(payload.question)

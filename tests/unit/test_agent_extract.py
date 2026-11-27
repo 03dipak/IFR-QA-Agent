@@ -379,7 +379,7 @@ def test_t3_revenue_real_index_regression(tmp_path, monkeypatch):
         session_id="test-t3-revenue-real-index",
     )
     assert result.answer == (
-        "coforge Revenue from operations: 91,790 (Rs. in million), prior 80,146"
+        "coforge Revenue from operations (FY2025): 91,790 (Rs. in million), prior 80,146"
     )
     assert "[15b2d66be472 p.250]" in result.citations
 
@@ -497,3 +497,25 @@ def test_extract_rejects_summarised_note_and_selects_face_pl_comparative():
     assert fig["value"] == "147,557"
     assert fig.get("comparative_column") is True
     assert str(fig.get("reporting_basis")).lower() == "consolidated"
+
+
+def test_face_pl_table_without_anchor_rows_is_not_rejected():
+    chunk = {
+        "chunk_id": "coforge:t999",
+        "text": (
+            "statement_kind: income_statement\n"
+            "reporting_basis: consolidated\n"
+            "Revenue from operations 91,790 80,146: Revenue | from | operations"
+        ),
+        "meta": {
+            "company_id": "coforge", "page": 250, "period": "FY2024",
+            "reporting_basis": "consolidated", "statement_kind": "income_statement",
+            "chunk_type": "table",
+        },
+    }
+    extracted = extract_figures(
+        [{"company_id": "coforge", "label": "Revenue from operations"}],
+        [chunk], basis="consolidated", statement_kind="income_statement",
+    )
+    assert extracted["missing"] == []
+    assert extracted["figures"][0]["value"] == "91,790"

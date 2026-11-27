@@ -1,6 +1,6 @@
 """Week 3-4 end-to-end agent evaluation harness (LLD-29, lld_eval.txt sections 6-9).
 
-Runs the existing hand-rolled planner->executor->critic graph (src.agents.graph)
+Runs the API agent path (src.agent.service.run_question, src.agent.graph)
 against the frozen Week 1 gold, stores per-query evidence and aggregate metrics.
 No model calls unless --live is given; mock runs are labelled not_live.
 """
@@ -10,6 +10,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import os
 import re
 import time
 from collections.abc import Callable
@@ -18,12 +19,13 @@ from pathlib import Path
 from typing import Any
 
 from src.eval.answer_scoring import citation_match
+from src.eval.prompting.runner import redact_secrets
 from src.llmops.tracing import Tracer
 
-GOLD = Path("data/eval/datasets/gold_v2_eval_v8_public.jsonl")
-RESULTS = Path("results/evaluation")
-REPORT = Path("docs/WEEK34_AGENT_EVALUATION.md")
-MODEL_ID = "Qwen/Qwen3-8B"
+GOLD = Path(os.environ.get("EVAL_GOLD_PATH", "data/eval/datasets/gold_v2_eval_v8_public.jsonl"))
+RESULTS = Path(os.environ.get("EVAL_RESULTS_DIR", "results/evaluation"))
+REPORT = Path(os.environ.get("EVAL_REPORT_PATH", "docs/WEEK34_AGENT_EVALUATION.md"))
+MODEL_ID = os.environ.get("EVAL_MODEL_ID", "Qwen/Qwen3-8B")
 COST_PER_M_PROMPT = 0.0
 COST_PER_M_COMPLETION = 0.0
 PRICE_SOURCE = "college endpoint: no published price; cost proxy is tokens only"
@@ -36,6 +38,7 @@ _CITATION_PAGE_RE = re.compile(r"p\.\s*(\d+)", re.I)
 FAILURE_CLASSES = (
     "incorrect_answer", "citation_issue", "tool_failure", "token_exhaustion",
     "loop", "timeout", "incomplete_task", "false_refusal", "missed_refusal",
+    "agent_error", "quota_exhausted",
 )
 FAILURE_RULES = {
     "tool_failure": "a tool raised or returned an error observation",
@@ -47,6 +50,8 @@ FAILURE_RULES = {
     "missed_refusal": "answered a gold abstain/refusal row",
     "citation_issue": "answer citation missing or not matching gold doc/page",
     "incorrect_answer": "answer figure/text does not match gold",
+    "agent_error": "live agent raised an exception",
+    "quota_exhausted": "endpoint quota or rate-limit error",
 }
 
 
@@ -61,6 +66,16 @@ class AgentOutput:
     refusal: str = ""
     prompt_tokens: int = 0
     completion_tokens: int = 0
+    # Completion is deliberately strict: "accepted" counts only when the run
+    # had no recorded errors and a genuine critic accept, not a fallback.
+    errors: list[str] = field(default_factory=list)
+    critic_passed: bool = False
+    critic_fallback: bool = False
+    critic_verdict: str = ""
+    completion_kind: str = ""
+    trace_id: str = ""
+    retrieved_doc_pages: list[str] = field(default_factory=list)
+    recall_k: int = 5
 
 
 def load_gold(path: Path = GOLD) -> list[dict[str, Any]]:
@@ -89,19 +104,132 @@ def mock_agent(question: str, *, row: dict[str, Any] | None = None, **_: Any) ->
                 "latency_ms": 4, "error": False}],
         tokens=40, latency_ms=10, stopped_reason="done",
         prompt_tokens=30, completion_tokens=10,
+        retrieved_doc_pages=cites, recall_k=5,
     )
 
 
-def live_agent(question: str, *, row: dict[str, Any] | None = None, **kwargs: Any) -> AgentOutput:
-    from src.agents.graph import run_agent
 
-    result = run_agent(question, **kwargs)
+
+
+def _search_hits(result: Any) -> list[dict[str, Any]]:
+    if isinstance(result, dict) and isinstance(result.get("hits"), list):
+        return [hit for hit in result["hits"] if isinstance(hit, dict)]
+    if isinstance(result, list):
+        return [hit for hit in result if isinstance(hit, dict)]
+    return []
+
+
+def _retrieved_doc_pages(state: Any) -> list[str]:
+    """Return ranked, deduplicated retrieved document/page references."""
+    if not isinstance(state, dict):
+        return []
+    refs: list[str] = []
+    seen: set[tuple[str, int]] = set()
+    for entry in state.get("tool_results", []) or []:
+        for hit in _search_hits(entry.get("result")):
+            meta = hit.get("meta") if isinstance(hit.get("meta"), dict) else {}
+            doc = str(meta.get("document_id") or hit.get("document_id") or "")
+            page = meta.get("page", hit.get("page"))
+            if not doc or not isinstance(page, int):
+                continue
+            key = (doc[:12], page)
+            if key in seen:
+                continue
+            seen.add(key)
+            refs.append(f"[{doc[:12]} p.{page}]")
+    return refs
+
+
+def _normalize_doc_page(value: Any) -> tuple[str, int] | None:
+    if isinstance(value, (tuple, list)) and len(value) >= 2:
+        try:
+            return str(value[0])[:12], int(value[1])
+        except (TypeError, ValueError):
+            return None
+    if isinstance(value, str):
+        match = re.match(r"\[?\s*([0-9a-f]{8,64})\s*p\.?\s*(\d+)\s*\]?", value, re.I)
+        if match:
+            return match.group(1)[:12], int(match.group(2))
+    return None
+
+
+def _recall_at_k(output: AgentOutput, row: dict[str, Any]) -> bool | None:
+    gold_pairs = {
+        (str(e.get("document_id") or "")[:12], int(e["pdf_page"]))
+        for e in row.get("evidence", [])
+        if isinstance(e.get("document_id"), str) and isinstance(e.get("pdf_page"), int)
+    }
+    if not gold_pairs:
+        return None
+    retrieved = [
+        pair for pair in (_normalize_doc_page(item) for item in output.retrieved_doc_pages)
+        if pair is not None
+    ]
+    k = max(1, int(output.recall_k or 1))
+    return any(pair in gold_pairs for pair in retrieved[:k])
+
+def _service_steps(events: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    steps: list[dict[str, Any]] = []
+    for event in events or []:
+        step = dict(event)
+        if "tool" not in step and "name" in step:
+            step["tool"] = step["name"]
+        steps.append(step)
+    return steps
+
+
+def _critic_fallback_from_state(state: dict[str, Any], errors: list[str]) -> bool:
+    return bool(state.get("fallback_used")) or any(
+        "critic: fallback used" in str(error) for error in errors
+    )
+
+
+def _completion_kind(state: dict[str, Any], *, critic_passed: bool,
+                     critic_fallback: bool) -> str:
+    feedback = str((state.get("critique") or {}).get("feedback") or "").lower()
+    if (
+        feedback == "safe fallback"
+        or feedback == "all detected companies have hits"
+        or feedback.endswith("(revision_cap reached)")
+    ):
+        return "deterministic_accept"
+    if critic_passed and not critic_fallback:
+        return "llm_critic_pass"
+    return ""
+
+
+def live_agent(question: str, *, row: dict[str, Any] | None = None, **kwargs: Any) -> AgentOutput:
+    """Run through the same service path as the API (src.agent.service)."""
+    from src.agent.service import run_question
+
+    result = run_question(question, session_id=kwargs.get("session_id"))
+    refusal = ""
+    if result.stop_reason == "refused":
+        refusal = result.answer
+    elif isinstance(result.state, dict):
+        refusal = str((result.state.get("refusal") or {}).get("reason") or "")
+        if result.stop_reason != "refused":
+            refusal = ""
+    state = result.state if isinstance(result.state, dict) else {}
+    errors = list(state.get("errors") or [])
+    critique = state.get("critique") or {}
+    critic_passed = str(critique.get("verdict") or "") == "accept"
+    critic_fallback = _critic_fallback_from_state(state, errors)
     return AgentOutput(
         answer=result.answer, citations=list(result.citations),
-        steps=[dict(s) for s in result.steps], tokens=result.tokens,
-        latency_ms=result.latency_ms, stopped_reason=result.stopped_reason,
-        refusal=result.refusal.reason if result.refusal else "",
-        prompt_tokens=result.tokens, completion_tokens=0,
+        steps=_service_steps(result.steps), tokens=result.token_count,
+        latency_ms=int(round(float(result.latency_s) * 1000)),
+        stopped_reason=result.stop_reason, refusal=refusal,
+        prompt_tokens=result.token_count, completion_tokens=0,
+        errors=errors, critic_passed=critic_passed,
+        critic_fallback=critic_fallback,
+        critic_verdict=str(critique.get("verdict") or ""),
+        completion_kind=_completion_kind(
+            state, critic_passed=critic_passed, critic_fallback=critic_fallback
+        ),
+        trace_id=getattr(result, "trace_id", "") or result.session_id,
+        retrieved_doc_pages=_retrieved_doc_pages(state),
+        recall_k=5,
     )
 
 
@@ -123,6 +251,14 @@ def smoke_replay_agent(path: Path) -> Callable[..., AgentOutput]:
             stopped_reason=record.get("stopped_reason") or "done",
             refusal=record.get("refusal") or "",
             prompt_tokens=int(record.get("tokens") or 0), completion_tokens=0,
+            errors=list(record.get("errors") or []),
+            critic_passed=bool(record.get("critic_passed", False)),
+            critic_fallback=bool(record.get("critic_fallback", False)),
+            critic_verdict=str(record.get("critic_verdict") or ""),
+            completion_kind=str(record.get("completion_kind") or ""),
+            trace_id=str(record.get("trace_id") or ""),
+            retrieved_doc_pages=list(record.get("retrieved_doc_pages") or []),
+            recall_k=int(record.get("recall_k") or 5),
         )
 
     return replay
@@ -234,6 +370,14 @@ def citation_correct(row: dict[str, Any], answer: str, citations: list[str]) -> 
     if not gold_pages:
         return True
     doc_ids = {str(e.get("document_id") or "")[:12] for e in row.get("evidence", [])}
+    # API results carry citations separately from answer text; score only those
+    # returned citations, never retrieved-but-uncited chunks.
+    if citations:
+        refs = _citation_refs(" ".join(str(citation) for citation in citations))
+        if not refs:
+            return False
+        return any(doc_id in doc_ids and page in gold_pages
+                   for doc_id, page in refs)
     refs = _citation_refs(answer)
     if refs:
         return any(doc_id in doc_ids and page in gold_pages for doc_id, page in refs)
@@ -256,6 +400,10 @@ def classify_failure(row: dict[str, Any], output: AgentOutput, *,
         reasons.append("loop")
     if output.stopped_reason in ("timeout", "wall_clock"):
         reasons.append("timeout")
+    if output.stopped_reason == "quota_exhausted":
+        reasons.append("quota_exhausted")
+    if output.errors:
+        reasons.append("agent_error")
     if any(step.get("error") for step in output.steps):
         reasons.append("tool_failure")
     if output.stopped_reason in ("agent_error", "no_evidence", "") or not output.answer:
@@ -277,8 +425,27 @@ def score_row(row: dict[str, Any], output: AgentOutput) -> dict[str, Any]:
     refusal_ok = refusal_correct(row, output)
     failures = classify_failure(row, output, correct=correct, cite_ok=cite_ok,
                                 refusal_ok=refusal_ok)
-    completed = output.stopped_reason in ("done", "critic_pass", "refused", "no_evidence") \
+    # Completed means a clean accepted run or one of the legacy terminal states.
+    # "accepted" is not enough by itself: errors or a critic fallback disqualify it.
+    no_errors = not output.errors and not any(
+        step.get("error") for step in output.steps
+    )
+    real_critic_pass = output.critic_passed and not output.critic_fallback
+    accepted_complete = (
+        output.stopped_reason == "accepted"
+        and no_errors
+        and real_critic_pass
         and bool(output.answer)
+    )
+    legacy_complete = (
+        output.stopped_reason in ("done", "critic_pass", "refused", "no_evidence")
+        and bool(output.answer)
+    )
+    completed = accepted_complete or legacy_complete
+    completion_kind = output.completion_kind if completed else "none"
+    if completed and completion_kind not in {"llm_critic_pass", "deterministic_accept"}:
+        completion_kind = "legacy"
+    errors = [redact_secrets(error) for error in output.errors]
     prompt = output.prompt_tokens
     completion = output.completion_tokens or max(0, output.tokens - prompt)
     cost = prompt / 1_000_000 * COST_PER_M_PROMPT + completion / 1_000_000 * COST_PER_M_COMPLETION
@@ -292,7 +459,17 @@ def score_row(row: dict[str, Any], output: AgentOutput) -> dict[str, Any]:
         "agent_steps": len(output.steps), "tokens": output.tokens,
         "prompt_tokens": prompt, "completion_tokens": completion,
         "latency_ms": output.latency_ms, "cost_proxy_usd": round(cost, 8),
-        "stopped_reason": output.stopped_reason, "failures": failures,
+        "errors": errors,
+        "critic_verdict": output.critic_verdict,
+        "critic_fallback": output.critic_fallback,
+        "completion_kind": completion_kind,
+        "trace_id": output.trace_id,
+        "retrieved_doc_pages": list(output.retrieved_doc_pages),
+        "recall_k": output.recall_k,
+        "recall_at_k": _recall_at_k(output, row),
+        "stopped_reason": output.stopped_reason,
+        "stop_reason": output.stopped_reason,
+        "failures": failures,
     }
 
 
@@ -309,6 +486,9 @@ def aggregate(rows: list[dict[str, Any]]) -> dict[str, Any]:
     def mean(key: str) -> float:
         return round(sum(float(r[key]) for r in rows) / n, 4)
 
+    recall_values = [r.get("recall_at_k") for r in rows
+                     if r.get("recall_at_k") is not None]
+    recall_k = next((r.get("recall_k") for r in rows if r.get("recall_k") is not None), None)
     return {
         "n": n,
         "n_answer": len(answer_rows), "n_abstain": len(abstain_rows),
@@ -318,8 +498,16 @@ def aggregate(rows: list[dict[str, Any]]) -> dict[str, Any]:
         "citation_correctness": round(sum(r["citation_correct"] for r in answer_rows)
                                       / len(answer_rows), 4) if answer_rows else None,
         "refusal_correctness": round(sum(r["refusal_correct"] for r in abstain_rows)
-                                     / len(abstain_rows), 4) if abstain_rows else None,
+                                      / len(abstain_rows), 4) if abstain_rows else None,
         "task_completion_rate": round(sum(r["task_completed"] for r in rows) / n, 4),
+        "task_completion_split": {
+            key: sum(1 for r in rows if r.get("completion_kind") == key)
+            for key in ("llm_critic_pass", "deterministic_accept", "legacy", "none")
+        },
+        "recall_at_k": round(sum(bool(value) for value in recall_values) / len(recall_values), 4)
+        if recall_values else None,
+        "recall_k": recall_k,
+        "n_recall_scored": len(recall_values),
         "failure_counts": failures,
         "mean_tool_calls": mean("tool_calls"), "mean_agent_steps": mean("agent_steps"),
         "mean_tokens": mean("tokens"), "mean_latency_ms": mean("latency_ms"),
@@ -342,7 +530,10 @@ def validate_run_outputs(directory: Path) -> dict[str, Any]:
             .read_text(encoding="utf-8").splitlines() if line.strip()]
     required = {"row_id", "answer_correct", "citation_correct", "refusal_correct",
                 "task_completed", "tool_calls", "agent_steps", "tokens", "latency_ms",
-                "cost_proxy_usd", "stopped_reason", "failures"}
+                "cost_proxy_usd", "stopped_reason", "stop_reason", "failures",
+                "errors", "critic_verdict", "critic_fallback", "completion_kind",
+                "trace_id",
+                "retrieved_doc_pages", "recall_k", "recall_at_k"}
     for index, row in enumerate(rows):
         missing = required - set(row)
         if missing:
@@ -453,6 +644,75 @@ def _trace_eval(run_id: str, query_id: str, output: AgentOutput, scored: dict[st
     )
 
 
+def _is_quota_error(message: str) -> bool:
+    lowered = message.lower()
+    return any(marker in lowered for marker in (
+        "429", "quota", "rate limit", "too many requests", "capacity", "throttle",
+    ))
+
+
+def _row_has_error(row: dict[str, Any]) -> bool:
+    return bool(row.get("errors")) or row.get("stopped_reason") in {
+        "agent_error", "quota_exhausted",
+    }
+
+
+def _error_output(question: str, session_id: str, exc: Exception,
+                  started: float) -> AgentOutput:
+    message = redact_secrets(f"{type(exc).__name__}: {exc}")
+    return AgentOutput(
+        answer="",
+        stopped_reason="quota_exhausted" if _is_quota_error(message) else "agent_error",
+        errors=[message],
+        latency_ms=int(round((time.monotonic() - started) * 1000)),
+        trace_id=hashlib.sha256(session_id.encode("utf-8")).hexdigest()[:32],
+    )
+
+
+def warmup_models(directory: Path) -> dict[str, Any]:
+    from src.agent import tools
+
+    directory = Path(directory)
+    directory.mkdir(parents=True, exist_ok=True)
+    steps: list[dict[str, Any]] = []
+    for name, fn in (
+        ("index", tools.warm_index),
+        ("meta_rows", tools.warm_meta_rows),
+        ("reranker", tools.warm_reranker),
+    ):
+        started = time.monotonic()
+        entry: dict[str, Any] = {"name": name, "ok": True}
+        try:
+            value = fn()
+            entry["result"] = str(value)
+        except Exception as exc:
+            entry["ok"] = False
+            entry["error"] = redact_secrets(f"{type(exc).__name__}: {exc}")
+        entry["latency_ms"] = int(round((time.monotonic() - started) * 1000))
+        steps.append(entry)
+    started = time.monotonic()
+    embedding: dict[str, Any] = {"name": "query_embedding", "ok": True}
+    try:
+        timeout_s = float(os.environ.get("QUERY_EMBED_WARM_TIMEOUT_SECONDS", "45"))
+        entry_value = tools.warm_query_embedding(timeout_s=timeout_s)
+        embedding["latency_s"] = round(float(entry_value), 3)
+    except Exception as exc:
+        embedding["ok"] = False
+        embedding["error"] = redact_secrets(f"{type(exc).__name__}: {exc}")
+    embedding["latency_ms"] = int(round((time.monotonic() - started) * 1000))
+    steps.append(embedding)
+    report = {
+        "created_at": time.strftime("%Y-%m-%dT%H:%M:%S"),
+        "cache_enabled": os.environ.get("AGENT_CACHE_ENABLED", "1"),
+        "retrieval_hybrid": os.environ.get("RETRIEVAL_HYBRID"),
+        "retrieval_rerank": os.environ.get("RETRIEVAL_RERANK"),
+        "ok": all(entry["ok"] for entry in steps),
+        "steps": steps,
+    }
+    (directory / "warmup.json").write_text(json.dumps(report, indent=2), encoding="utf-8")
+    return report
+
+
 def run_eval(
     *,
     live: bool = False,
@@ -464,6 +724,8 @@ def run_eval(
     gold_path: Path = GOLD,
     row_ids: list[str] | None = None,
     source: str | None = None,
+    warmup: bool = False,
+    max_error_rate: float = 0.05,
 ) -> dict[str, Any]:
     rows = [r for r in load_gold(gold_path) if r.get("split") == split]
     missing_row_ids: list[str] = []
@@ -477,9 +739,12 @@ def run_eval(
     directory.mkdir(parents=True, exist_ok=True)
     per_query = directory / "per_query.jsonl"
     done: set[str] = set()
+    prior_rows: list[dict[str, Any]] = []
     if per_query.exists():
-        done = {json.loads(line)["row_id"] for line in per_query.read_text(encoding="utf-8")
-                .splitlines() if line.strip()}
+        prior_rows = [json.loads(line) for line in per_query.read_text(encoding="utf-8")
+                      .splitlines() if line.strip()]
+        done = {row["row_id"] for row in prior_rows}
+    warmup_report = warmup_models(directory) if warmup and live else None
     manifest = {
         "run_id": run_id, "live": bool(live), "split": split, "limit": limit,
         "row_ids": row_ids, "missing_row_ids": missing_row_ids,
@@ -487,25 +752,45 @@ def run_eval(
         "n_rows": len(rows), "gold_hash": gold_hash(gold_path),
         "model": MODEL_ID, "cost_price_source": PRICE_SOURCE,
         "index_version": "C2-cached-50221", "prompt_version": "trackb-mvp-v1",
-        "orchestrator": "hand_rolled (src.agents.graph); no LangGraph runtime",
+        "orchestrator": "src.agent.service.run_question (src.agent.graph)",
         "created_at": time.strftime("%Y-%m-%dT%H:%M:%S"),
+        "cache_enabled": os.environ.get("AGENT_CACHE_ENABLED", "1"),
+        "warmup": warmup_report,
+        "stopped_reason": "none", "max_error_rate": max_error_rate,
     }
     (directory / "manifest.json").write_text(json.dumps(manifest, indent=2), encoding="utf-8")
     runner = agent or (live_agent if live else mock_agent)
+    remaining = [row for row in rows if row.get("row_id") not in done]
+    error_count = sum(_row_has_error(row) for row in prior_rows)
+    stop_reason = "complete"
     with per_query.open("a", encoding="utf-8") as fh:
-        for row in rows:
-            if row.get("row_id") in done:
-                continue
+        for index, row in enumerate(remaining, start=1):
             question = row.get("question_text") or row.get("question") or ""
-            kwargs = {"row": row, "session_id": f"eval_{run_id}_{row.get('row_id')}"} if live else {
-                "row": row}
-            output = runner(question, **kwargs)
+            session_id = f"eval_{run_id}_{row.get('row_id')}"
+            kwargs = {"row": row, "session_id": session_id} if live else {"row": row}
+            started = time.monotonic()
+            try:
+                output = runner(question, **kwargs)
+            except Exception as exc:
+                output = _error_output(question, session_id, exc, started)
             scored = score_row(row, output)
             fh.write(json.dumps(scored, sort_keys=True) + "\n")
             fh.flush()
             _trace_eval(run_id, str(row.get("row_id")), output, scored)
+            error_count += int(_row_has_error(scored))
+            completed = len(prior_rows) + index
+            if output.stopped_reason == "quota_exhausted":
+                stop_reason = "quota_exhausted"
+                break
+            if completed >= 20 and error_count / completed > max_error_rate:
+                stop_reason = "error_rate_exceeded"
+                break
     scored_rows = [json.loads(line) for line in per_query.read_text(encoding="utf-8").splitlines()
                    if line.strip()]
+    manifest["n_rows"] = len(scored_rows)
+    manifest["stopped_reason"] = stop_reason
+    manifest["error_count"] = error_count
+    (directory / "manifest.json").write_text(json.dumps(manifest, indent=2), encoding="utf-8")
     metrics = aggregate(scored_rows)
     (directory / "metrics.json").write_text(json.dumps(metrics, indent=2), encoding="utf-8")
     failures = [{"row_id": r["row_id"], "failures": r["failures"],
@@ -516,7 +801,8 @@ def run_eval(
     validation = validate_run_outputs(directory)
     (directory / "validation.json").write_text(json.dumps(validation, indent=2), encoding="utf-8")
     return {"manifest": manifest, "metrics": metrics, "directory": str(directory),
-            "n_failed_rows": len(failures), "validation": validation}
+            "n_failed_rows": len(failures), "validation": validation,
+            "stopped_reason": stop_reason}
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -530,6 +816,9 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--from-smoke", type=Path, default=None,
                         help="replay captured live outputs from results/agent_smoke.json")
     parser.add_argument("--row-ids", default=None, help="comma-separated gold row IDs")
+    parser.add_argument("--warmup", action="store_true", help="record model warmup separately")
+    parser.add_argument("--max-error-rate", type=float, default=0.05,
+                        help="stop when error rate exceeds this fraction")
     args = parser.parse_args(argv)
     if args.split == "holdout":
         raise SystemExit("holdout is not enabled by this harness; dev only")
@@ -538,12 +827,14 @@ def main(argv: list[str] | None = None) -> int:
     row_ids = [item.strip() for item in args.row_ids.split(",")] if args.row_ids else None
     result = run_eval(live=args.live, split=args.split, limit=args.limit,
                       run_id=args.run_id, out_dir=args.out_dir, agent=agent,
-                      row_ids=row_ids, source=source)
+                      row_ids=row_ids, source=source, warmup=args.warmup,
+                      max_error_rate=args.max_error_rate)
     report = None
     if result["validation"]["ok"]:
         report = str(write_report(result["directory"], report_path=args.report_path))
     print(json.dumps({"run_id": args.run_id, "metrics": result["metrics"],
-                      "validation": result["validation"], "report": report}, indent=2))
+                      "validation": result["validation"],
+                      "stopped_reason": result["stopped_reason"], "report": report}, indent=2))
     return 0
 
 

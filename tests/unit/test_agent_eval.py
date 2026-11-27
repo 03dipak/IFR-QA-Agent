@@ -68,7 +68,7 @@ def test_failure_classification_covers_all_taxonomy() -> None:
         (_row(), _out(answer="", stopped_reason="agent_error"), "incomplete_task"),
         (_row(), _out(refusal="policy"), "false_refusal"),
         (_row(expected_behaviour="abstain"), _out(), "missed_refusal"),
-        (_row(), _out(answer="wrong [bbbbbbbbbbbb p.7]"), "citation_issue"),
+            (_row(), _out(answer="wrong [bbbbbbbbbbbb p.7]", citations=[]), "citation_issue"),
         (_row(), _out(answer="9,999 [aaaaaaaaaaaa p.7]"), "incorrect_answer"),
     ]
     for row, output, expected in cases:
@@ -80,7 +80,7 @@ def test_score_row_has_all_measures() -> None:
     scored = ae.score_row(_row(), _out())
     for key in ("answer_correct", "citation_correct", "refusal_correct", "task_completed",
                 "tool_calls", "agent_steps", "tokens", "latency_ms", "cost_proxy_usd",
-                "stopped_reason", "failures"):
+                "stopped_reason", "stop_reason", "failures"):
         assert key in scored
     assert scored["tool_calls"] == 1
     assert scored["agent_steps"] == 1
@@ -91,8 +91,9 @@ def test_score_row_has_all_measures() -> None:
 def test_aggregate_metrics() -> None:
     rows = [
         ae.score_row(_row(row_id="A"), _out()),
-        ae.score_row(_row(row_id="B"), _out(answer="wrong [bbbbbbbbbbbb p.7]",
-                                            stopped_reason="token_budget")),
+            ae.score_row(_row(row_id="B"), _out(answer="wrong [bbbbbbbbbbbb p.7]",
+                                                citations=[],
+                                                stopped_reason="token_budget")),
         ae.score_row(_row(row_id="C", expected_behaviour="abstain"),
                      _out(answer="ABSTAIN", refusal="policy", steps=[])),
     ]
@@ -159,6 +160,25 @@ def test_run_eval_resumable_and_output_validation(monkeypatch, tmp_path: Path) -
     assert (out / "validation.json").exists()
 
 
+def test_error_rate_stop_waits_for_20_rows(monkeypatch, tmp_path: Path) -> None:
+    monkeypatch.setattr(ae, "Tracer", lambda sid: Tracer(sid, root=tmp_path / "traces"))
+    gold = tmp_path / "gold.jsonl"
+    rows = [_row(row_id=f"A{i}") for i in range(25)]
+    gold.write_text("\n".join(json.dumps(r) for r in rows) + "\n", encoding="utf-8")
+
+    def agent(question: str, *, row: dict | None = None, **_: object) -> ae.AgentOutput:
+        return ae.AgentOutput(
+            answer="answer: 1,234.56 crore [aaaaaaaaaaaa p.7]",
+            citations=["[aaaaaaaaaaaa p.7]"], stopped_reason="accepted",
+            errors=["boom"], critic_passed=True,
+        )
+
+    result = ae.run_eval(run_id="stop20", out_dir=tmp_path / "eval",
+                         agent=agent, gold_path=gold, max_error_rate=0.05)
+    assert result["manifest"]["n_rows"] == 20
+    assert result["stopped_reason"] == "error_rate_exceeded"
+
+
 def test_smoke_replay_uses_captured_output_without_new_calls(monkeypatch, tmp_path: Path) -> None:
     monkeypatch.setattr(ae, "Tracer", lambda sid: Tracer(sid, root=tmp_path / "traces"))
     smoke = tmp_path / "smoke.json"
@@ -175,6 +195,65 @@ def test_smoke_replay_uses_captured_output_without_new_calls(monkeypatch, tmp_pa
                          source="smoke_replay")
     assert result["metrics"]["answer_accuracy"] == 1.0
     assert "smoke_replay" in result["manifest"]["source"]
+
+
+def test_run_eval_redacts_agent_error_and_stops_on_error_rate(monkeypatch, tmp_path: Path) -> None:
+    monkeypatch.setattr(ae, "Tracer", lambda sid: Tracer(sid, root=tmp_path / "traces"))
+    monkeypatch.setenv("LLM_API_KEY", "sk-supersecret")
+    gold = tmp_path / "gold.jsonl"
+    gold.write_text("\n".join(json.dumps(r) for r in [
+        _row(row_id=f"A{i}") for i in range(20)
+    ]) + "\n", encoding="utf-8")
+
+    def failing(question: str, *, row: dict | None = None, **_: object) -> ae.AgentOutput:
+        raise RuntimeError("upstream failed sk-supersecret")
+
+    out = tmp_path / "errors"
+    result = ae.run_eval(run_id="errors", out_dir=out, agent=failing, gold_path=gold)
+    rows = [json.loads(line) for line in (out / "per_query.jsonl").read_text().splitlines()]
+    assert result["stopped_reason"] == "error_rate_exceeded"
+    assert len(rows) == 20
+    assert rows[0]["stopped_reason"] == "agent_error"
+    assert "agent_error" in rows[0]["failures"]
+    assert rows[0]["errors"] and "sk-supersecret" not in rows[0]["errors"][0]
+    assert result["validation"]["ok"]
+
+
+def test_run_eval_stops_immediately_on_quota(monkeypatch, tmp_path: Path) -> None:
+    monkeypatch.setattr(ae, "Tracer", lambda sid: Tracer(sid, root=tmp_path / "traces"))
+    gold = tmp_path / "gold.jsonl"
+    gold.write_text("\n".join(json.dumps(r) for r in [
+        _row(row_id="A"), _row(row_id="B"),
+    ]) + "\n", encoding="utf-8")
+
+    def failing(question: str, *, row: dict | None = None, **_: object) -> ae.AgentOutput:
+        raise RuntimeError("endpoint returned HTTP 429 quota exceeded")
+
+    out = tmp_path / "quota"
+    result = ae.run_eval(run_id="quota", out_dir=out, agent=failing, gold_path=gold)
+    rows = [json.loads(line) for line in (out / "per_query.jsonl").read_text().splitlines()]
+    assert result["stopped_reason"] == "quota_exhausted"
+    assert len(rows) == 1
+    assert rows[0]["stopped_reason"] == "quota_exhausted"
+    assert "quota_exhausted" in rows[0]["failures"]
+    assert result["validation"]["ok"]
+
+
+def test_warmup_models_writes_separate_report(monkeypatch, tmp_path: Path) -> None:
+    from src.agent import tools
+
+    monkeypatch.setattr(tools, "warm_index", lambda: "faiss")
+    monkeypatch.setattr(tools, "warm_meta_rows", lambda: 12)
+    monkeypatch.setattr(tools, "warm_reranker", lambda: True)
+    monkeypatch.setattr(tools, "warm_query_embedding", lambda timeout_s=None: 0.25)
+
+    report = ae.warmup_models(tmp_path)
+    data = json.loads((tmp_path / "warmup.json").read_text(encoding="utf-8"))
+    assert report["ok"]
+    assert [step["name"] for step in data["steps"]] == [
+        "index", "meta_rows", "reranker", "query_embedding",
+    ]
+    assert data["steps"][-1]["latency_s"] == 0.25
 
 
 def test_validate_run_outputs_detects_missing_file(tmp_path: Path) -> None:

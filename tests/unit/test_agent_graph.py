@@ -1018,3 +1018,12 @@ def test_plan_enforcement_adds_get_chunk_when_top_hit_lacks_unit():
     get_steps = [step for step in steps if step.get("tool") == "get_chunk"]
     assert get_steps and get_steps[0]["args"]["chunk_id"] == "abc:t1"
     assert any("enforced get_chunk" in note for note in notes)
+
+
+def test_alias_resolution_ignores_reading_prose() -> None:
+    ids = ["adani_green", "srf"]
+    unresolved: list[str] = []
+    assert tools.detect_companies(
+        "What is the Total assets reading for Adani Green?", ids=ids, unresolved=unresolved
+    ) == ["adani_green"]
+    assert "reading" not in unresolved

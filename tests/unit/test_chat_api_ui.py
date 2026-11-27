@@ -684,6 +684,44 @@ def test_run_question_without_langfuse_keys_disables_tracing(
     assert warnings == ["Langfuse tracing disabled: missing configuration"]
 
 
+def test_langfuse_llm_wrapper_records_generation_span():
+    captured: dict[str, Any] = {"updates": []}
+
+    class FakeSpan:
+        def update(self, **kwargs):
+            captured["updates"].append(kwargs)
+
+    class FakeSpanContext:
+        def __enter__(self):
+            return FakeSpan()
+
+        def __exit__(self, exc_type, exc, tb):
+            return False
+
+    class FakeClient:
+        def start_as_current_observation(self, **kwargs):
+            captured.setdefault("starts", []).append(kwargs)
+            return FakeSpanContext()
+
+    class Delegate:
+        def complete(self, prompt, *, max_tokens=512):
+            return "answer text"
+
+    prompt = "a prompt that must not be traced"
+    wrapper = service._LangfuseLLM(Delegate(), FakeClient(), "test-model")
+    assert wrapper.complete(prompt) == "answer text"
+
+    start = captured["starts"][0]
+    assert start["name"] == "llm_call"
+    assert start["as_type"] == "generation"
+    assert start["model"] == "test-model"
+    assert start["input"] == {"prompt_chars": len(prompt)}
+    update = captured["updates"][-1]
+    assert update["usage_details"]["total"] > 0
+    assert update["metadata"]["latency_s"] >= 0
+    assert update["output"] == {"response_chars": len("answer text")}
+
+
 def test_run_question_attaches_langfuse_handler_and_final_metadata(
     monkeypatch, tmp_path
 ):
@@ -748,16 +786,30 @@ def test_run_question_attaches_langfuse_handler_and_final_metadata(
     result = service.run_question("question", session_id="trace-session")
 
     assert result.answer == "ok"
+    assert result.trace_id == service._trace_id("trace-session")
     assert captured["starts"][0]["name"] == "question"
     assert captured["starts"][0]["as_type"] == "chain"
-    assert [
+    assert captured["starts"][0]["trace_context"] == {
+        "trace_id": service._trace_id("trace-session")
+    }
+    tool_spans = [
         kwargs for kwargs in captured["starts"] if kwargs.get("as_type") == "tool"
-    ] == [{
-        "name": "search_index",
-        "as_type": "tool",
-        "input": {"name": "search_index", "args_summary": "total assets"},
-    }]
-    assert captured["handler_kwargs"] == {"public_key": "pk-test"}
+    ]
+    assert len(tool_spans) == 1
+    assert tool_spans[0]["name"] == "search_index"
+    assert tool_spans[0]["input"] == {
+        "name": "search_index", "args_summary": "total assets"
+    }
+    assert tool_spans[0]["metadata"]["token_count"] == 3
+    assert tool_spans[0]["usage_details"]["total"] == 3
+    assert [
+        kwargs for kwargs in captured["starts"]
+        if kwargs.get("name") == "critic" and kwargs.get("as_type") == "chain"
+    ]
+    assert captured["handler_kwargs"]["public_key"] == "pk-test"
+    assert captured["handler_kwargs"]["trace_context"] == {
+        "trace_id": service._trace_id("trace-session")
+    }
     assert captured["callbacks"] == handler_instances
     assert captured["metadata"]["langfuse_session_id"] == "trace-session"
     assert captured["metadata"]["session_id"] == "trace-session"

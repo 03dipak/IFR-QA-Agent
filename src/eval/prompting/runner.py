@@ -4,11 +4,16 @@ from __future__ import annotations
 
 import hashlib
 import json
+import logging
+import os
+import re
 import subprocess
 import time
 from datetime import UTC, datetime
 from pathlib import Path
 
+from src.config import GOLD_PATH
+from src.eval.contexts import load_few_shot as load_dev_few_shot
 from src.eval.gold_rows import assert_no_holdout
 from src.eval.prompting.context import candidate_pages, pack_pages, rag_candidate_pages
 from src.eval.prompting.fewshot import load_few_shot as load_prompt_few_shot
@@ -16,13 +21,48 @@ from src.eval.prompting.inputs import load_dev_rows
 from src.eval.prompting.params import model_params, model_params_hash
 from src.eval.prompting.scoring import normalize_answer_value, score_prediction
 from src.eval.prompting.strategies import (
-    build_s1_messages, build_s2_messages, build_s3_step1_messages,
-    build_s3_step2_messages, build_s3_step3_messages,
+    build_s1_messages,
+    build_s2_messages,
+    build_s3_step1_messages,
+    build_s3_step2_messages,
+    build_s3_step3_messages,
 )
-from src.eval.contexts import load_few_shot as load_dev_few_shot
 from src.eval.prompts import build_messages, prompt_set_hash, render_prompt
-from src.config import GOLD_PATH
 from src.llm.client import LLMError, chat
+from src.safety import mask_value
+
+log = logging.getLogger(__name__)
+logger = log
+
+
+def _secret_values() -> list[str]:
+    values: list[str] = []
+    for name, value in os.environ.items():
+        if not value:
+            continue
+        upper = name.upper()
+        secret_tokens = ("KEY", "TOKEN", "SECRET", "PASSWORD", "PASSWD", "CREDENTIAL")
+        if any(token in upper for token in secret_tokens):
+            values.append(value)
+    return values
+
+
+def redact_secrets(text: object) -> str:
+    """Redact environment secrets and PII from an exception message."""
+    redacted = str(text)
+    for value in sorted(set(_secret_values()), key=len, reverse=True):
+        if value:
+            redacted = redacted.replace(value, "[REDACTED]")
+    redacted = re.sub(r"(?i)(bearer\\s+)[A-Za-z0-9._~+/=-]+", r"\\1[REDACTED]", redacted)
+    redacted = re.sub(
+        r"(?i)((?:api[_-]?key|token|secret|password)\\s*[:=]\\s*)\\S+",
+        r"\\1[REDACTED]",
+        redacted,
+    )
+    return mask_value(redacted)
+
+
+_redact_secrets = redact_secrets
 
 GOLD = Path(GOLD_PATH)
 FREEZE = Path("data/corpus/freeze_v1.json")
@@ -146,7 +186,8 @@ def rendered_prompts_for(arm: str, row: dict, *, few_shot: list[dict] | None = N
 def run_arm(arm: str, *, rows: list[dict] | None = None, smoke: bool = False,
             live: bool = True, limit: int | None = None,
             run_id: str | None = None, few_shot: list[dict] | None = None,
-            retrieval_variant: str | None = None, out_dir: Path | str | None = None) -> dict:
+            retrieval_variant: str | None = None, out_dir: Path | str | None = None,
+            label: str | None = None) -> dict:
     if rows is None:
         rows = load_dev_rows()
     assert_no_holdout(rows, context=f"week2 {arm} run")
@@ -169,7 +210,7 @@ def run_arm(arm: str, *, rows: list[dict] | None = None, smoke: bool = False,
 
     manifest = {
         "run_id": run_id, "arm": arm, "split": "dev", "smoke": bool(smoke),
-        "label": "SMOKE_NOT_SCORED" if smoke else "SCORED",
+        "label": label or ("SMOKE_NOT_SCORED" if smoke else "SCORED"),
         "started_at": datetime.now(UTC).isoformat(),
         "prompt_set_version": __import__("src.eval.prompts", fromlist=["PROMPT_SET_VERSION"]).PROMPT_SET_VERSION,
         "prompt_set_hash": prompt_set_hash(),
@@ -186,11 +227,13 @@ def run_arm(arm: str, *, rows: list[dict] | None = None, smoke: bool = False,
     processed = 0
     errors = 0
     stopped_reason = None
+    llm_error = ""
 
     for row in rows:
         rid = row.get("id") or row.get("row_id")
         if rid in completed:
             continue
+        llm_error = ""
 
         context, context_keys, packed, _pages, budget_status = _context_for(arm, row, max_tokens=max_tokens,
                                                     retrieval_variant=retrieval_variant)
@@ -245,7 +288,8 @@ def run_arm(arm: str, *, rows: list[dict] | None = None, smoke: bool = False,
                         sample_usage = {}
                         sample_status = "error"
                         sample_http = None
-                        _ = str(exc)
+                        llm_error = redact_secrets(f"{type(exc).__name__}: {exc}")
+                        log.warning("LLM call failed for %s: %s", rid, llm_error)
                     sample_latency = int((time.time() - t0) * 1000)
                     samples.append({"status": sample_status, "http_status": sample_http,
                                     "output": sample_output, "usage": sample_usage,
@@ -295,7 +339,8 @@ def run_arm(arm: str, *, rows: list[dict] | None = None, smoke: bool = False,
             else:
                 t0 = time.time()
                 try:
-                    resp = chat(step_messages, **model_params(temperature=0.0, max_tokens=512))
+                    resp = chat(step_messages,
+                                **model_params(temperature=0.0, max_tokens=512))
                     extracted = resp.text
                     step_usage = resp.usage or {}
                     step_status = "answered" if resp.status == 200 else "error"
@@ -305,7 +350,8 @@ def run_arm(arm: str, *, rows: list[dict] | None = None, smoke: bool = False,
                     step_usage = {}
                     step_status = "error"
                     step_http = None
-                    _ = str(exc)
+                    llm_error = redact_secrets(f"{type(exc).__name__}: {exc}")
+                    log.warning("LLM call failed for %s: %s", rid, llm_error)
                 step_latency = int((time.time() - t0) * 1000)
                 steps.append({"step": 1, "status": step_status, "http_status": step_http,
                               "output": extracted, "usage": step_usage, "latency_ms": step_latency,
@@ -322,7 +368,8 @@ def run_arm(arm: str, *, rows: list[dict] | None = None, smoke: bool = False,
                     rendered_hashes.append(hashlib.sha256(rendered2.encode("utf-8")).hexdigest())
                     t0 = time.time()
                     try:
-                        resp = chat(step2_messages, **model_params(temperature=0.0, max_tokens=512))
+                        resp = chat(step2_messages,
+                                **model_params(temperature=0.0, max_tokens=512))
                         computed = resp.text
                         step_usage = resp.usage or {}
                         step_status = "answered" if resp.status == 200 else "error"
@@ -332,7 +379,8 @@ def run_arm(arm: str, *, rows: list[dict] | None = None, smoke: bool = False,
                         step_usage = {}
                         step_status = "error"
                         step_http = None
-                        _ = str(exc)
+                        llm_error = redact_secrets(f"{type(exc).__name__}: {exc}")
+                        log.warning("LLM call failed for %s: %s", rid, llm_error)
                     step_latency = int((time.time() - t0) * 1000)
                     steps.append({"step": 2, "status": step_status, "http_status": step_http,
                                   "output": computed, "usage": step_usage, "latency_ms": step_latency,
@@ -349,7 +397,8 @@ def run_arm(arm: str, *, rows: list[dict] | None = None, smoke: bool = False,
                     rendered_hashes.append(hashlib.sha256(rendered3.encode("utf-8")).hexdigest())
                     t0 = time.time()
                     try:
-                        resp = chat(step3_messages, **model_params(temperature=0.0, max_tokens=512))
+                        resp = chat(step3_messages,
+                                **model_params(temperature=0.0, max_tokens=512))
                         output = resp.text
                         step_usage = resp.usage or {}
                         step_status = "answered" if resp.status == 200 else "error"
@@ -359,7 +408,8 @@ def run_arm(arm: str, *, rows: list[dict] | None = None, smoke: bool = False,
                         step_usage = {}
                         step_status = "error"
                         step_http = None
-                        _ = str(exc)
+                        llm_error = redact_secrets(f"{type(exc).__name__}: {exc}")
+                        log.warning("LLM call failed for %s: %s", rid, llm_error)
                     step_latency = int((time.time() - t0) * 1000)
                     steps.append({"step": 3, "status": step_status, "http_status": step_http,
                                   "output": output, "usage": step_usage, "latency_ms": step_latency,
@@ -421,7 +471,8 @@ def run_arm(arm: str, *, rows: list[dict] | None = None, smoke: bool = False,
                     usage = {}
                     http_status = None
                     status = "error"
-                    _ = str(exc)
+                    llm_error = redact_secrets(f"{type(exc).__name__}: {exc}")
+                    log.warning("LLM call failed for %s: %s", rid, llm_error)
                 latency_ms = int((time.time() - t0) * 1000)
             context_pages = sorted([list(k) for k in context_keys])
             record_extra = {}
@@ -433,13 +484,14 @@ def run_arm(arm: str, *, rows: list[dict] | None = None, smoke: bool = False,
             "run_id": run_id, "arm": arm, "row_id": rid,
             "flow_bucket": row.get("flow_bucket"),
             "status": status, "http_status": http_status,
+            "error": llm_error,
             "output": output, "usage": usage, "latency_ms": latency_ms,
             "context_pages": context_pages,
             "rendered_prompt_hashes": rendered_hashes,
             "rendered_prompt_hash": (rendered_hashes[0] if rendered_hashes else None),
             "prompt_set_hash": prompt_set_hash(),
             "model_params_hash": params_hash,
-            "label": "SMOKE_NOT_SCORED" if smoke else "SCORED",
+            "label": manifest["label"],
         }
         record.update(record_extra)
         record["score"] = score_prediction(row, output, set(tuple(x) for x in context_pages))

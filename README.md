@@ -105,6 +105,7 @@ final answer, critique, steps used, token count, and errors.
 
 Required environment variables:
 
+- `LLM_BASE_URL` — base URL for prompt-baseline/runner LLM calls (placeholder: `http://replace-me/v1`)
 - `LLM_CHAT_URL` — OpenAI-compatible chat endpoint (base URL or `/chat/completions`)
 - `LLM_MODEL` — chat model name
 - `LLM_API_KEY` — bearer token for the endpoint

@@ -29,6 +29,13 @@ _QUERY_EMBED_LOCK = threading.Lock()
 _WARMUP_QUERY = "annual report revenue"
 
 
+def _cache_enabled() -> bool:
+    value = os.environ.get("AGENT_CACHE_ENABLED")
+    if value is None:
+        return True
+    return value.strip().lower() in {"1", "true", "yes", "on"}
+
+
 @lru_cache(maxsize=1)
 def _retrieval_config() -> dict[str, Any]:
     path = Path("configs/retrieval.yaml")
@@ -260,7 +267,7 @@ def _meta_rows_resolved(resolved_path: str) -> tuple[tuple[str, str, str, str, s
     ids = json.loads((root / "chunk_ids.json").read_text(encoding="utf-8"))
     meta = json.loads((root / "meta.json").read_text(encoding="utf-8"))
     cache = _meta_cache_path(root, meta)
-    if cache.is_file():
+    if cache.is_file() and _cache_enabled():
         try:
             with cache.open("rb") as handle:
                 cached = pickle.load(handle)
@@ -282,6 +289,8 @@ def _meta_rows_resolved(resolved_path: str) -> tuple[tuple[str, str, str, str, s
     empty = _meta_row({})
     resolved = tuple(rows.get(str(chunk_id), empty) for chunk_id in ids)
     try:
+        if not _cache_enabled():
+            raise OSError("cache disabled")
         cache.parent.mkdir(parents=True, exist_ok=True)
         temp = cache.with_suffix(".tmp")
         with temp.open("wb") as handle:
@@ -334,7 +343,7 @@ def _query_embedding(query: str, index: Any, path: str) -> np.ndarray:
     model = str(meta.get("model") or embedder)
     key = (model, query_text)
     with _QUERY_EMBED_LOCK:
-        cached = _QUERY_EMBED_CACHE.get(key)
+        cached = _QUERY_EMBED_CACHE.get(key) if _cache_enabled() else None
     if cached is not None:
         return cached
     started = time.monotonic()
@@ -344,8 +353,9 @@ def _query_embedding(query: str, index: Any, path: str) -> np.ndarray:
         "query_embedding_end latency_s=%.3f cache_hit=false",
         time.monotonic() - started,
     )
-    with _QUERY_EMBED_LOCK:
-        _QUERY_EMBED_CACHE[key] = vector
+    if _cache_enabled():
+        with _QUERY_EMBED_LOCK:
+            _QUERY_EMBED_CACHE[key] = vector
     return vector
 
 
@@ -395,7 +405,7 @@ _COMPANY_STOPWORDS = {
     "difference", "ended", "equity", "figure", "figures", "financial", "flow",
     "for", "from", "higher", "how", "income", "larger", "many", "march",
     "million", "much", "operations", "period", "printed", "profit", "quarter",
-    "revenue", "standalone", "statement", "statements", "the", "their", "total",
+    "reading", "revenue", "standalone", "statement", "statements", "the", "their", "total",
     "versus", "what", "which", "with", "would", "year",
 } | _GENERIC_COMPANY_TOKENS
 
@@ -819,16 +829,18 @@ def search_index(
             return {"hits": [], "match_info": {"excluded_empty_period": 0}}
         requested_basis = _normalize_basis(reporting_basis)
         path = _resolved_index_path()
-        cache_path = _search_cache_dir() / (
-            _search_cache_key(
-                query, k, company, period, statement_kind, doc_type,
-                reporting_basis, path, rerank_pool=rerank_pool,
-            ) + ".json"
-        )
-        cached = _read_search_cache(cache_path)
-        if cached is not None:
-            LOGGER.info("search_cache_hit call=%d path=%s", call_number, cache_path.name)
-            return cached
+        cache_path = None
+        if _cache_enabled():
+            cache_path = _search_cache_dir() / (
+                _search_cache_key(
+                    query, k, company, period, statement_kind, doc_type,
+                    reporting_basis, path, rerank_pool=rerank_pool,
+                ) + ".json"
+            )
+            cached = _read_search_cache(cache_path)
+            if cached is not None:
+                LOGGER.info("search_cache_hit call=%d path=%s", call_number, cache_path.name)
+                return cached
         index = _open_index(path)
         hybrid = _hybrid_enabled()
         has_filters = bool(
@@ -875,7 +887,8 @@ def search_index(
         match_info["final_doc_type_filter"] = cur_dt
         match_info["final_reporting_basis_filter"] = cur_basis
         result = {"hits": hits, "match_info": match_info}
-        _write_search_cache(cache_path, result)
+        if cache_path is not None:
+            _write_search_cache(cache_path, result)
         return result
     finally:
         LOGGER.info(
@@ -1268,6 +1281,11 @@ def get_metric(
                 continue
             if "consolidated" not in text_low and basis != "consolidated":
                 continue
+            head = " ".join(text_low.splitlines()[:20])
+            if any(tok in head for tok in ("notes to", "note to", "notes forming part", "summarised", "summarized", "summary", "operating segment", "segment revenue", "reconciliation of revenue")):
+                continue
+            if text_low.lstrip().startswith("notes"):
+                continue
             has_label = any(
                 normalize_label(line.split(':',1)[0]) in wanted_label_norms
                 or any(normalize_label(line.split(':',1)[0]) == normalize_label(lbl) for lbl in wanted_label_norms)
@@ -1278,8 +1296,7 @@ def get_metric(
                 has_label = any(normalize_label(lbl) in text_norm for lbl in wanted_label_norms)
             if not has_label and "revenue from operations" not in text_low and "total revenue" not in text_low:
                 continue
-            # Prefer face consolidated P&L pages over notes.
-            is_note = "notes to" in text_low[:160] or "note " in text_low[:60]
+            is_note = "notes to" in text_low[:180] or "note " in text_low[:60]
             out.append({"chunk_id": cid, "text": text, "meta": meta, "_is_note": is_note})
         out.sort(key=lambda c: (1 if c.get("_is_note") else 0, str(c.get("chunk_id") or "")))
         for c in out:
@@ -1287,17 +1304,20 @@ def get_metric(
         return out
 
     chunks: list[dict[str, Any]] = []
+    fig: dict[str, Any] | None = None
+    searched_periods: list[str | None] = []
     for p_search in periods_to_search:
+        searched_periods.append(p_search)
         new_chunks = _search_chunks(p_search)
         existing_ids = {str(c.get("chunk_id") or "") for c in chunks}
         for c in new_chunks:
             if str(c.get("chunk_id") or "") not in existing_ids:
                 chunks.append(c)
-    fig = _resolve(chunks)
-    if requested_period:
-        # Always run deterministic local statement scan after the single filtered lookup;
-        # it uses preloaded metadata/offsets and no embedding/rerank calls.
-        for p_search in periods_to_search:
+        fig = _resolve(chunks)
+        if fig is not None:
+            break
+    if fig is None and requested_period:
+        for p_search in searched_periods:
             scan_chunks = _statement_scan_chunks(p_search)
             existing_ids = {str(c.get("chunk_id") or "") for c in chunks}
             for c in scan_chunks:
@@ -1589,18 +1609,18 @@ def rank_companies(
         deduped.append(canon)
     companies=deduped
     rows: list[dict[str, Any]] = []
-    missing: list[str] = []
+    missing: list[dict[str, Any]] = []
     for company in companies:
         result = get_metric(
             company, metric, fiscal_year=fiscal_year, period=requested_period,
             statement_kind=statement_kind, reporting_basis=reporting_basis,
         )
         if result.get("missing"):
-            missing.append(company)
+            missing.append({"company_id": company, "reason": "No consolidated statement figure with matching year column header"})
             continue
         actual_period = str(result.get("period") or "").strip().upper()
         if actual_period and requested_period and actual_period != str(requested_period).upper():
-            missing.append(company)
+            missing.append({"company_id": company, "reason": f"Period mismatch: got {actual_period}"})
             continue
         unit = str(result.get("unit") or "")
         lower_unit = unit.lower()
@@ -1621,54 +1641,35 @@ def rank_companies(
                 converted = raw_value / Decimal("100")
             elif "crore" in lower_unit or " cr" in lower_unit or lower_unit.endswith("cr"):
                 converted = raw_value
-            elif "unit not stated" in lower_unit or not lower_unit:
-                if raw_value >= Decimal("1000000000"):
-                    converted = raw_value / Decimal("10000000")
         if converted is None or result.get("excluded_for_ranking"):
-            missing.append(company)
+            missing.append({"company_id": company, "reason": "Unknown or unverified unit; excluded from ranking"})
             continue
         row = {
             "company_id": str(result.get("company_id") or company).strip(),
             "display_name": str(result.get("display_name") or display_name(company)),
             "value": result.get("value"),
+            "printed_value": result.get("printed_value"),
+            "printed_unit": result.get("printed_unit"),
             "unit": unit,
             "value_in_crore": str(converted),
             "citation": result.get("citation"),
+            "document_id": result.get("document_id"),
+            "page": result.get("page"),
             "period": result.get("period"),
+            "source_period": result.get("source_period"),
             "reporting_basis": result.get("reporting_basis"),
             "derived": result.get("derived", False),
             "label_used": result.get("label_used"),
             "note": result.get("note"),
             "sector": result.get("sector") or _sector_map().get(company),
+            "column_header": result.get("column_header"),
+            "comparative_column": bool(result.get("comparative_column")),
+            "raw_row": result.get("raw_row"),
         }
         if isinstance(result.get("components"), dict):
             row["components"] = result["components"]
         if "revenue" in str(metric).lower() and not str(row.get("sector") or "").strip():
-            missing.append(company)
-            continue
-        # 5x YoY revenue sanity guard
-        if "revenue" in str(metric).lower() and "growth" not in str(metric).lower() and "margin" not in str(metric).lower():
-            try:
-                py = None
-                if requested_period and re.fullmatch(r"FY\d{4}", str(requested_period)):
-                    py = "FY" + str(int(str(requested_period)[2:]) - 1)
-                if py:
-                    prev = get_metric(company, metric, period=py, statement_kind=statement_kind, reporting_basis=reporting_basis)
-                    if not prev.get("missing"):
-                        prev_val, _, prev_norm = _normalize_value_to_crore(prev.get("value"), prev.get("unit"))
-                        if prev_norm:
-                            cur = Decimal(str(row.get("value_in_crore")))
-                            prv = Decimal(str(prev_val))
-                            if prv != 0:
-                                growth = (cur - prv) / prv * 100
-                                if growth > Decimal("100") or growth < Decimal("-50"):
-                                    missing.append(company)
-                                    row["note"] = "check extraction"
-                                    continue
-            except Exception:
-                pass
-        if "revenue" in str(metric).lower() and not str(row.get("sector") or "").strip():
-            missing.append(company)
+            missing.append({"company_id": company, "reason": "Sector metadata unavailable"})
             continue
         rows.append(row)
     def _key(item: dict[str, Any]) -> Decimal:

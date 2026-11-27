@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import hashlib
 import logging
 import os
 import threading
@@ -46,6 +47,60 @@ class QuestionResult:
     token_count: int
     stop_reason: str = ""
     error_type: str = "none"
+    trace_id: str = ""
+
+
+def _trace_id(thread_id: str) -> str:
+    return hashlib.sha256(thread_id.encode("utf-8")).hexdigest()[:32]
+
+
+class _LangfuseLLM:
+    def __init__(self, delegate: Any, client: Any, model: str) -> None:
+        self.delegate = delegate
+        self.client = client
+        self.model = model
+
+    def complete(self, prompt: str, *, max_tokens: int = 512) -> str:
+        if self.client is None:
+            return self.delegate.complete(prompt, max_tokens=max_tokens)
+        started = time.monotonic()
+        with _langfuse_span(self.client.start_as_current_observation(
+            name="llm_call",
+            as_type="generation",
+            model=self.model,
+            input={"prompt_chars": len(prompt)},
+        )) as span:
+            try:
+                text = self.delegate.complete(prompt, max_tokens=max_tokens)
+            except Exception as exc:
+                _update_langfuse_span(
+                    span,
+                    {
+                        "error_type": type(exc).__name__,
+                        "latency_s": round(time.monotonic() - started, 3),
+                    },
+                    "",
+                )
+                raise
+            latency_s = round(time.monotonic() - started, 3)
+            estimated_input = max(1, len(prompt) // 4)
+            estimated_output = max(1, len(text) // 4)
+            _update_langfuse_span(
+                span,
+                {
+                    "latency_s": latency_s,
+                    "estimated_tokens": estimated_input + estimated_output,
+                    "estimated_input_tokens": estimated_input,
+                    "estimated_output_tokens": estimated_output,
+                },
+                output={"response_chars": len(text)},
+                usage_details={
+                    "input": estimated_input,
+                    "output": estimated_output,
+                    "total": estimated_input + estimated_output,
+                },
+            )
+            return text
 
 
 def _warn_langfuse_once(message: str) -> None:
@@ -98,12 +153,14 @@ def _langfuse_setup(question: str, thread_id: str) -> tuple[Any, Any, Any]:
                 base_url=base_url or None,
             )
             _LANGFUSE_CLIENTS[cache_key] = client
-        handler = CallbackHandler(public_key=public_key)
+        trace_context = {"trace_id": _trace_id(thread_id)}
+        handler = CallbackHandler(public_key=public_key, trace_context=trace_context)
         span_context = client.start_as_current_observation(
             name="question",
             as_type="chain",
-            input=question,
-            metadata={"session_id": thread_id},
+            trace_context=trace_context,
+            input=mask_value(question),
+            metadata={"session_id": thread_id, "trace_id": trace_context["trace_id"]},
         )
     except Exception:
         _warn_langfuse_once("Langfuse tracing disabled: setup failed")
@@ -111,7 +168,13 @@ def _langfuse_setup(question: str, thread_id: str) -> tuple[Any, Any, Any]:
     return client, handler, span_context
 
 
-def _record_langfuse_tool(client: Any, event: dict[str, Any]) -> None:
+def _record_langfuse_tool(
+    client: Any,
+    event: dict[str, Any],
+    *,
+    latency_s: float,
+    token_count: int,
+) -> None:
     if client is None or event.get("type") != "tool":
         return
     try:
@@ -124,17 +187,62 @@ def _record_langfuse_tool(client: Any, event: dict[str, Any]) -> None:
             name=str(event.get("name") or "tool"),
             as_type="tool",
             input=input_data,
+            metadata={"latency_s": latency_s, "token_count": token_count},
+            usage_details={
+                "input": token_count,
+                "output": 0,
+                "total": token_count,
+            },
         ):
             pass
     except Exception:
         _warn_langfuse_once("Langfuse tool span failed")
 
 
-def _update_langfuse_span(span: Any, metadata: dict[str, Any], output: Any) -> None:
+def _record_langfuse_critic(
+    client: Any,
+    state: dict[str, Any],
+    *,
+    latency_s: float,
+    token_count: int,
+) -> None:
+    if client is None:
+        return
+    critique = state.get("critique") or {}
+    feedback = str(critique.get("feedback") or "")
+    verdict = str(critique.get("verdict") or "")
+    fallback = bool(state.get("fallback_used")) or "fallback" in feedback.lower()
+    try:
+        with client.start_as_current_observation(
+            name="critic",
+            as_type="chain",
+            input={"citations": mask_value(state.get("citations") or [])},
+            output={"verdict": verdict, "fallback": fallback},
+            metadata={
+                "latency_s": latency_s,
+                "token_count": token_count,
+                "critic_verdict": verdict,
+                "critic_fallback": fallback,
+            },
+        ):
+            pass
+    except Exception:
+        _warn_langfuse_once("Langfuse critic span failed")
+
+
+def _update_langfuse_span(
+    span: Any,
+    metadata: dict[str, Any],
+    output: Any,
+    usage_details: dict[str, int] | None = None,
+) -> None:
     if span is None:
         return
     try:
-        span.update(output=output, metadata=metadata)
+        if usage_details is None:
+            span.update(output=output, metadata=metadata)
+        else:
+            span.update(output=output, metadata=metadata, usage_details=usage_details)
     except Exception:
         _warn_langfuse_once("Langfuse span update failed")
 
@@ -145,14 +253,23 @@ def _langfuse_metadata(
     error_type: str,
     latency_s: float,
     token_count: int,
+    state: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
-    return {
+    state = state or {}
+    critique = state.get("critique") or {}
+    errors = list(state.get("errors") or [])
+    feedback = str(critique.get("feedback") or "")
+    metadata = {
         "session_id": thread_id,
         "stop_reason": stop_reason,
         "error_type": error_type,
         "latency_s": latency_s,
         "token_count": token_count,
+        "errors": mask_value(errors),
+        "critic_verdict": str(critique.get("verdict") or ""),
+        "critic_fallback": bool(state.get("fallback_used")) or "fallback" in feedback.lower(),
     }
+    return metadata
 
 
 def _flush_langfuse(client: Any) -> None:
@@ -324,6 +441,7 @@ def run_question(
             token_count=0,
             stop_reason="refused",
             error_type="refused",
+            trace_id=_trace_id(thread_id),
         )
         _write_log(
             safe_question, decision.reason, [], latency_s, [], thread_id, "",
@@ -350,9 +468,11 @@ def run_question(
     client: Any = None
     graph: Any = None
     try:
-        llm = EnvLLM()
-        graph = AgentGraph(llm=llm)
         client, handler, span_context = _langfuse_setup(safe_question, thread_id)
+        llm = EnvLLM()
+        if client is not None:
+            llm = _LangfuseLLM(llm, client, os.environ.get("LLM_MODEL", ""))
+        graph = AgentGraph(llm=llm)
         trace_metadata = {
             "langfuse_session_id": thread_id,
             "langfuse_trace_name": "ifr-question",
@@ -372,8 +492,12 @@ def run_question(
                     if event.get("type") == "state":
                         state = dict(event.get("state") or {})
                         continue
-                    _record_langfuse_tool(client, event)
                     event["elapsed_s"] = round(time.monotonic() - started, 3)
+                    _record_langfuse_tool(
+                        client, event,
+                        latency_s=event["elapsed_s"],
+                        token_count=int(state.get("token_count") or graph.budget.used),
+                    )
                     log.info(
                         "stage name=%s kind=%s elapsed_s=%.3f",
                         event.get("node") or event.get("name") or event.get("stage") or "step",
@@ -395,7 +519,9 @@ def run_question(
                 token_count = int(state.get("token_count") or graph.budget.used)
                 _update_langfuse_span(
                     span,
-                    _langfuse_metadata(thread_id, stop_reason, error_type, latency_s, token_count),
+                    _langfuse_metadata(
+                        thread_id, stop_reason, error_type, latency_s, token_count, state
+                    ),
                     "",
                 )
                 raise
@@ -407,6 +533,7 @@ def run_question(
             latency_s = round(time.monotonic() - started, 3)
             stop_reason = str(state.get("stop_reason") or "")
             token_count = int(state.get("token_count") or graph.budget.used)
+            trace_id = _trace_id(thread_id) if client is not None else ""
             result = QuestionResult(
                 state=state,
                 answer=answer,
@@ -420,11 +547,15 @@ def run_question(
                 token_count=token_count,
                 stop_reason=stop_reason,
                 error_type=_error_type(stop_reason, state, ""),
+                trace_id=trace_id,
+            )
+            _record_langfuse_critic(
+                client, state, latency_s=latency_s, token_count=token_count
             )
             _update_langfuse_span(
                 span,
                 _langfuse_metadata(
-                    thread_id, stop_reason, result.error_type, latency_s, token_count
+                    thread_id, stop_reason, result.error_type, latency_s, token_count, state
                 ),
                 {"answer": mask_value(answer), "citations": mask_value(citations)},
             )

@@ -27,6 +27,24 @@ def test_runner_checkpoint_and_no_holdout(tmp_path, monkeypatch):
     assert manifest2["n_completed_before"] == 1
 
 
+def test_runner_disables_chat_cache_and_accepts_label(tmp_path, monkeypatch):
+    seen = []
+
+    def fake_chat(messages, **kwargs):
+        seen.append(kwargs)
+        return _fake_chat(messages, **kwargs)
+
+    monkeypatch.setattr("src.eval.prompting.runner.chat", fake_chat)
+    monkeypatch.setattr("src.eval.prompting.runner.OUT_DIR", tmp_path)
+    rows = [{"id": "G-001", "row_id": "G-001", "split": "dev", "status": "active",
+             "expected_behaviour": "answer", "expected_answer": "1",
+             "expected_value": 1, "question_text": "q", "flow_bucket": "b"}]
+    manifest = run_arm("B0", rows=rows, smoke=True, live=True, limit=1,
+                       run_id="labelrun", label="run after agent code")
+    assert manifest["label"] == "run after agent code"
+    assert seen and all(call.get("cache") is False for call in seen)
+
+
 def test_context_cache_is_cached():
     from src.eval.prompting import context
     cache = context.load_context_cache()
