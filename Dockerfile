@@ -8,6 +8,8 @@ COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 # Copy dependency and application files
 COPY pyproject.toml uv.lock README.md ./
 COPY src/ ./src/
+COPY config/sector_label_map.json ./config/sector_label_map.json
+COPY data/company_sectors.json ./data/company_sectors.json
 COPY .env.example ./
 
 # Create venv and install dependencies
