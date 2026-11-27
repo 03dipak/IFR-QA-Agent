@@ -8,10 +8,21 @@ services:
       LLM_CHAT_URL: ${LLM_CHAT_URL:?set LLM_CHAT_URL in .env}
       LLM_MODEL: ${LLM_MODEL:?set LLM_MODEL in .env}
       LLM_API_KEY: ${LLM_API_KEY:?set LLM_API_KEY in .env}
-      LLM_CA_CERT: ${LLM_CA_CERT:-}
+            LLM_EMBEDDINGS_URL: ${LLM_EMBEDDINGS_URL:?set LLM_EMBEDDINGS_URL in .env}
+      EMBEDDINGS_MODEL: ${EMBEDDINGS_MODEL:-bge-small-en-v1.5}
+      EMBEDDINGS_API_KEY: ${EMBEDDINGS_API_KEY:-}
+      EMBEDDINGS_CA_CERT: /etc/ssl/certs/embeddings-ca.pem
       BACKEND_URL: http://api:8000
     volumes:
       - ./results/full_index_v2/bge_small:/app/results/full_index_v2/bge_small:ro
+      - type: bind
+        source: ${LLM_CA_CERT:?set LLM_CA_CERT in .env}
+        target: /etc/ssl/certs/llm-ca.pem
+        read_only: true
+      - type: bind
+        source: ${EMBEDDINGS_CA_CERT:?set EMBEDDINGS_CA_CERT in .env}
+        target: /etc/ssl/certs/embeddings-ca.pem
+        read_only: true
     ports:
       - "8000:8000"
 
