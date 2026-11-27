@@ -11,6 +11,9 @@ __pycache__
 !.env.example
 results
 data
+!data/
+data/*
+!data/company_sectors.json
 eval
 tests
 docs
